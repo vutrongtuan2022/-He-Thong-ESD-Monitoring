@@ -1,0 +1,43 @@
+.container {
+	border-radius: 8px;
+	background: #fff;
+	padding: 24px;
+	box-shadow: 0px 6px 30px 0px rgba(175, 190, 211, 0.15);
+	margin-top: 16px;
+
+	h4 {
+		color: #141416;
+		font-size: 26px;
+		font-weight: 700;
+		margin-bottom: 16px;
+	}
+
+	.top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 16px;
+	}
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 16px;
+}
+
+.main_search {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.search {
+	min-width: 360px;
+}
+
+.filter {
+	min-width: 200px;
+}

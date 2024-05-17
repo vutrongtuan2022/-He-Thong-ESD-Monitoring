@@ -1,0 +1,23 @@
+@import '../../../styles/variables';
+
+$padding: 16px;
+
+.container {
+	padding: $padding;
+
+	&.bg {
+		background: #fff;
+	}
+}
+
+@media (max-width: $widthTablet) {
+	.container {
+		padding: calc($padding - 8px);
+	}
+}
+
+@media (max-width: $widthMobile) {
+	.container {
+		padding: calc($padding - 8px);
+	}
+}

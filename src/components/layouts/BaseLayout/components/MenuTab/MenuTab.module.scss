@@ -1,0 +1,183 @@
+@import '../../../../../styles/variables';
+
+$padding: 20px;
+
+.container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	background-color: #ffffff;
+}
+
+.header {
+	width: 100%;
+	position: relative;
+	padding-left: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: $padding;
+
+	&.header_small {
+		width: auto;
+	}
+
+	.left {
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+
+		.logo_icon {
+			width: 54px;
+			height: 22px;
+		}
+
+		.title_logo {
+			user-select: none;
+			color: var(--dark-2);
+			font-size: 20px;
+			font-weight: 700;
+			margin-left: 6px;
+			margin-bottom: -6px;
+		}
+	}
+}
+
+// Menu full
+.menu {
+	flex: 1;
+	width: 100%;
+	overflow: auto;
+	padding: 0 $padding;
+
+	.group {
+		margin-bottom: 4px;
+
+		& + .group {
+			margin-top: 24px;
+		}
+	}
+
+	.groupTitle {
+		color: var(--neutrals-2);
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 12px;
+		text-transform: uppercase;
+		margin: 12px 0;
+	}
+
+	.itemGroup {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 20px;
+		padding: 10px 12px;
+		border-radius: 8px;
+		cursor: pointer;
+		user-select: none;
+
+		&.small {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		& + .itemGroup {
+			margin-top: 4px;
+		}
+
+		&.active {
+			color: var(--light);
+			background: var(--bg-primary);
+
+			// i {
+			// 	filter: initial;
+			// }
+		}
+
+		&:hover {
+			color: var(--light);
+			background: var(--bg-primary);
+
+			i {
+				filter: initial;
+			}
+		}
+	}
+}
+
+// Menu small
+.menu {
+	&.menu_small {
+		padding: 0 10px;
+
+		.groupTitle {
+			padding: 0;
+			text-align: center;
+		}
+	}
+}
+
+@media (max-width: $widthTablet) {
+	.header {
+		width: auto;
+
+		&.header_small {
+			width: auto;
+		}
+
+		.left {
+			.title_logo {
+				display: none;
+			}
+		}
+	}
+
+	// Menu full
+	.menu {
+		padding: 0 8px;
+
+		.groupTitle {
+			padding: 0;
+			text-align: center;
+		}
+
+		.itemGroup {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			i {
+				width: 20px;
+			}
+
+			.item_text {
+				display: none;
+			}
+
+			&.small {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				i {
+					width: 55%;
+					max-width: 24px;
+				}
+			}
+		}
+	}
+}

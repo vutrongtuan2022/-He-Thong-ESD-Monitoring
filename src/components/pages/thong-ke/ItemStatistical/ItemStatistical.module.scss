@@ -1,0 +1,32 @@
+.container {
+	padding: 24px 32px;
+	border-radius: 8px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 8px;
+	border: 1px solid #dae2ee;
+}
+
+.value {
+	color: #141416;
+	font-size: 28px;
+	font-weight: 700;
+}
+
+.text {
+	color: #777e90;
+	font-size: 14px;
+	font-weight: 500;
+	margin-top: 6px;
+}
+
+.icon {
+	width: 64px;
+	height: 64px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 8px;
+}

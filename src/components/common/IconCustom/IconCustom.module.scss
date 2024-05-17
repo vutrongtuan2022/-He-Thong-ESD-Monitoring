@@ -1,0 +1,32 @@
+.container {
+	width: fit-content;
+	height: fit-content;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	user-select: none;
+	padding: 4px;
+	transition: 0.3s;
+
+	i {
+		width: fit-content;
+		height: fit-content;
+	}
+
+	&:active {
+		transform: scale(0.9);
+	}
+
+	&.edit {
+		&:hover {
+			color: var(--primary) !important;
+		}
+	}
+
+	&.delete {
+		&:hover {
+			color: var(--danger) !important;
+		}
+	}
+}

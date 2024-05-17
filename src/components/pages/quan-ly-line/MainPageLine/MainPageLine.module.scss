@@ -1,0 +1,47 @@
+.main_action {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+	.dots {
+		cursor: pointer;
+		transform: 0.3s;
+		opacity: 0.7;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		&:active {
+			transform: scale(0.9);
+		}
+	}
+}
+
+.main_search {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.search {
+	min-width: 360px;
+}
+
+.filter {
+	min-width: 200px;
+}
+
+.table {
+	margin-top: 16px;
+}
+
+.link {
+	font-weight: 700;
+	color: var(--primary);
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
