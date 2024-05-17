@@ -1,0 +1,21 @@
+.container {
+	padding: 24px;
+	border-radius: 8px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.value {
+	color: #141416;
+	font-size: 28px;
+	font-weight: 700;
+}
+
+.text {
+	color: #777e90;
+	font-size: 14px;
+	font-weight: 500;
+	margin-top: 6px;
+}
