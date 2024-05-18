@@ -3,13 +3,14 @@ import {PropsPageDetailUser} from './interfaces';
 import styles from './PageDetailUser.module.scss';
 import Link from 'next/link';
 import {IoArrowBackOutline} from 'react-icons/io5';
-import {LuPencil} from 'react-icons/lu';
+
 import {PATH} from '~/constants/config';
 import {HiDotsHorizontal} from 'react-icons/hi';
 import clsx from 'clsx';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Avatar from '~/components/common/Avatar';
+import {CiLock} from 'react-icons/ci';
 
 const PageDetailUser = ({}: PropsPageDetailUser) => {
 	return (
@@ -39,9 +40,9 @@ const PageDetailUser = ({}: PropsPageDetailUser) => {
 						</Link>
 
 						<div className={styles.list_btn}>
-							<div className={styles.btn_LuPencil}>
-								<LuPencil color='#23262F' fontSize={16} fontWeight={600} />
-								<p>Chỉnh sửa</p>
+							<div className={styles.btn_CiLock}>
+								<CiLock color='#23262F' fontSize={16} fontWeight={600} />
+								<p>Khóa lại</p>
 							</div>
 							<div className={styles.btn_HiDots}>
 								<HiDotsHorizontal color='#23262F' fontSize={20} fontWeight={1000} />
