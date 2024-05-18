@@ -6,9 +6,6 @@ import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
-
-import {MdCast} from 'react-icons/md';
-import {FaRegHourglassHalf} from 'react-icons/fa6';
 import ListTransmitter from '../ListTransmitter';
 import TableInfor from '../TableInfor';
 

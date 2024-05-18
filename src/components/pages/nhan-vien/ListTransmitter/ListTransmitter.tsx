@@ -12,7 +12,7 @@ import {useRouter} from 'next/router';
 import {LuCheck, LuPencil} from 'react-icons/lu';
 import Button from '~/components/common/Button';
 import HeadlessTippy from '@tippyjs/react/headless';
-import {CiLock} from 'react-icons/ci';
+
 import {Trash} from 'iconsax-react';
 import {BsThreeDots} from 'react-icons/bs';
 import Link from 'next/link';
