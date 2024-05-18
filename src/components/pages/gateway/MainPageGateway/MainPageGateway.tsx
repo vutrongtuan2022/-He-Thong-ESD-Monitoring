@@ -21,7 +21,6 @@ import {Trash} from 'iconsax-react';
 import Status from '~/components/common/Status';
 import Popup from '~/components/common/Popup';
 import PopupCreate from '../PopupCreate';
-import {FaEye, FaRegEye} from 'react-icons/fa';
 import Image from 'next/image';
 import ListTransmitterMainPage from '../ListTransmitterMainPage';
 function MainPageGateway({}: PropsMainPageGateway) {

@@ -143,6 +143,10 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 								},
 								{
 									title: 'Chức vụ',
+									render: (data: any) => <>Giám đốc</>,
+								},
+								{
+									title: 'Vai trò',
 									render: (data: any) => <>Admin</>,
 								},
 								{

@@ -115,11 +115,22 @@ function MainTransmitter({}: PropsMainTransmitter) {
 						<div className={styles.filter}>
 							<FilterCustom
 								isSearch
-								name='Team'
-								query='_team'
+								name='Pin'
+								query='_pin'
 								listFilter={[
-									{id: 1, name: 'Team 1'},
-									{id: 2, name: 'Team 2'},
+									{id: 1, name: 'Pin 1'},
+									{id: 2, name: 'Pin 2'},
+								]}
+							/>
+						</div>
+						<div className={styles.filter}>
+							<FilterCustom
+								isSearch
+								name='Trạng thái NG'
+								query='_statusNG'
+								listFilter={[
+									{id: 1, name: 'Online'},
+									{id: 2, name: 'Offline'},
 								]}
 							/>
 						</div>
