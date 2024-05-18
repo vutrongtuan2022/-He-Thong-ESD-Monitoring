@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import {PropsDetailStatistical} from './interfaces';
 import styles from './DetailStatistical.module.scss';
@@ -7,10 +6,11 @@ import TabNavLink from '~/components/common/TabNavLink';
 import {PATH} from '~/constants/config';
 import Search from '~/components/common/Search';
 import FilterCustom from '~/components/common/FilterCustom';
-import Button from '~/components/common/Button';
-import icons from '~/constants/images/icons';
+import {useRouter} from 'next/router';
 
 function DetailStatistical({}: PropsDetailStatistical) {
+	const router = useRouter();
+	const {_type} = router.query;
 	return (
 		<div className={styles.container}>
 			<h4>Báo cáo chi tiết</h4>
@@ -53,6 +53,9 @@ function DetailStatistical({}: PropsDetailStatistical) {
 					</div>
 				</div>
 			</div>
+			{!_type && <div>a</div>}
+			{_type == 'time-ng' && <div>b</div>}
+			{_type == 'total-time' && <div>c</div>}
 		</div>
 	);
 }

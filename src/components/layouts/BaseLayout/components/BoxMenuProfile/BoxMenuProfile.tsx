@@ -26,6 +26,7 @@ function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 
 	const handleLogout = () => {
 		store.dispatch(logout());
+		router.push(PATH.Login);
 	};
 
 	return (

@@ -13,7 +13,7 @@
 	right: 0;
 	left: calc($width-tab);
 	transition: width $duration ease-in-out, left $duration ease-in-out;
-	z-index: 100;
+	z-index: 1;
 
 	&.small {
 		width: calc(100% - $width-tab-hidden);
