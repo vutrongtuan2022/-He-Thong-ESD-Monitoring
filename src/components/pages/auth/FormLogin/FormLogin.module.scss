@@ -2,23 +2,33 @@
 	border-radius: 20px;
 	background: var(--bg-light);
 	padding: 48px;
-	width: 520px;
+	width: 707px;
 }
 
+.header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 .title {
-	color: var(--dark);
-	font-size: 28px;
+	color: #2f3d50;
+	font-size: 20px;
+	font-style: normal;
 	font-weight: 700;
-	line-height: 36px;
+	margin-bottom: 4px;
 }
 
+.logo_icon {
+	width: 130px;
+	height: 54px;
+	margin-bottom: 24px;
+}
 .text {
-	margin-top: 4px;
-	color: var(--neutrals);
-	font-size: 14px;
+	color: #9ca8b9;
+	font-size: 13px;
 	font-style: normal;
-	font-weight: 500;
-	line-height: 20px;
+	font-weight: 400;
 }
 
 .form,

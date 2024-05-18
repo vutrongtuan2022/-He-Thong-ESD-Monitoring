@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-
+import Image from 'next/image';
 import {PropsFormLogin} from './interfaces';
 import styles from './FormLogin.module.scss';
 import Form, {FormContext, Input} from '~/components/common/Form';
-import {ShieldSecurity, User} from 'iconsax-react';
+import {Icon, ShieldSecurity, User} from 'iconsax-react';
 import Link from 'next/link';
 import {PATH} from '~/constants/config';
 import Button from '~/components/common/Button';
@@ -19,6 +19,8 @@ import md5 from 'md5';
 import {toastWarn} from '~/common/funcs/toast';
 import {setStateLogin, setToken} from '~/redux/reducer/auth';
 import {setInfoUser} from '~/redux/reducer/user';
+import ImageFill from '~/components/common/ImageFill';
+import icons from '~/constants/images/icons';
 
 function FormLogin({}: PropsFormLogin) {
 	const router = useRouter();
@@ -78,8 +80,13 @@ function FormLogin({}: PropsFormLogin) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={login.isLoading} />
-			<h4 className={styles.title}>Đăng nhập</h4>
-			<p className={styles.text}>Chào mừng bạn đến với hệ thống kế toán điện tử Thái Hưng</p>
+			<div className={styles.header}>
+
+			<Image src={icons.logo} className={styles.logo_icon} alt='Logo' />
+				<h4 className={styles.title}>ĐĂNG NHẬP TÀI KHOẢN</h4>
+				<p className={styles.text}>Chào mừng bạn đến với hệ thống EDS monitoring . Đăng nhập để bắt đầu sử dụng</p>
+			</div>
+
 			<div className={styles.form}>
 				<Form form={form} setForm={setForm} onSubmit={handleSubmit}>
 					<Input
