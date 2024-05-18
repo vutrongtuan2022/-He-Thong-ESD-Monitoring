@@ -11,12 +11,13 @@ import BoxMenuProfile from '../BoxMenuProfile';
 import {useSelector} from 'react-redux';
 import {RootState, store} from '~/redux/store';
 import {setFullMenu} from '~/redux/reducer/site';
+import BoxNoti from '../BoxNoti';
 
 function Header({title}: PropsHeader) {
 	const {fullMenu} = useSelector((state: RootState) => state.site);
 
 	const [openMenu, setOpenMenu] = useState<boolean>(false);
-
+	const [openNoti, setOpenNoti] = useState<boolean>(false);
 	return (
 		<div className={styles.container}>
 			<div className={styles.left}>
@@ -34,9 +35,18 @@ function Header({title}: PropsHeader) {
 			</div>
 
 			<div className={styles.right}>
-				<div className={styles.icon_bell}>
-					<ImageFill style_1_1='true' src={icons.bell} />
-				</div>
+			<TippyHeadless
+					maxWidth={'100%'}
+					interactive
+					visible={openNoti}
+					onClickOutside={() => setOpenNoti(false)}
+					placement='bottom'
+					render={(attrs: any) => <BoxNoti />}
+				>
+					<div className={styles.icon_bell} onClick={() => setOpenNoti(!openNoti)}>
+						<ImageFill style_1_1='true' src={icons.bell} />
+					</div>
+				</TippyHeadless>
 				<TippyHeadless
 					maxWidth={'100%'}
 					interactive

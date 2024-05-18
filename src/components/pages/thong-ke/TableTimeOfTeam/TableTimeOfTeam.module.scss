@@ -1,0 +1,49 @@
+
+
+.flex {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.main_search {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.search {
+	min-width: 360px;
+}
+
+.filter {
+	min-width: 200px;
+}
+
+.table {
+	margin-top: 16px;
+}
+
+.link {
+	font-weight: 700;
+	color: var(--primary);
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.parameter {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	color: #777e90;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 600;
+	text-transform: uppercase;
+	span {
+		color: #171832;
+	}
+}
