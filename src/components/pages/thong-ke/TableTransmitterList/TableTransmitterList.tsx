@@ -1,19 +1,10 @@
 import React, {Fragment} from 'react';
-
-import Image from 'next/image';
-
 import {PropsTableTransmitterList} from './interfaces';
 import styles from './TableTransmitterList.module.scss';
-import Search from '~/components/common/Search';
-import FilterCustom from '~/components/common/FilterCustom';
 import DataWrapper from '~/components/common/DataWrapper';
 import Table from '~/components/common/Table';
 import Link from 'next/link';
-import Status from '~/components/common/Status';
-import Moment from 'react-moment';
 import Pagination from '~/components/common/Pagination';
-import Button from '~/components/common/Button';
-import icons from '~/constants/images/icons';
 import clsx from 'clsx';
 
 function TableTransmitterList({}: PropsTableTransmitterList) {

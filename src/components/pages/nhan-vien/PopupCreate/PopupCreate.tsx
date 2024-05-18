@@ -2,12 +2,9 @@ import React, {useState} from 'react';
 
 import {PropsPopupCreate} from './interfaces';
 import styles from './PopupCreate.module.scss';
-import {GrSearch} from 'react-icons/gr';
-import clsx from 'clsx';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
 import Form, {Input} from '~/components/common/Form';
-import TextArea from '~/components/common/Form/components/TextArea';
 import Select, {Option} from '~/components/common/Select';
 import AvatarChange from '~/components/common/AvatarChange';
 

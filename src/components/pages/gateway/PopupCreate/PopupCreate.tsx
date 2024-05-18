@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-
 import {PropsPopupCreate} from './interfaces';
 import styles from './PopupCreate.module.scss';
-import {GrSearch} from 'react-icons/gr';
 import clsx from 'clsx';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';

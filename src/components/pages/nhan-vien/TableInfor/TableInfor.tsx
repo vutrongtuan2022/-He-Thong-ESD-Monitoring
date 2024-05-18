@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from 'react';
-
 import {PropsTableInfor} from './interfaces';
 import styles from './TableInfor.module.scss';
-
 import {useRouter} from 'next/router';
-import {LuCheck, LuPencil} from 'react-icons/lu';
 import Button from '~/components/common/Button';
 import Image from 'next/image';
 import icons from '~/constants/images/icons';
