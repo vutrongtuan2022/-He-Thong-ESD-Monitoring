@@ -1,0 +1,139 @@
+.wrapper {
+	background-color: #fff;
+	padding: 24px;
+	border-radius: 20px;
+}
+
+.main_action {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+	.dots {
+		cursor: pointer;
+		transform: 0.3s;
+		opacity: 0.7;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		&:active {
+			transform: scale(0.9);
+		}
+	}
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.header_title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+	p {
+		color: #23262f;
+		font-size: 20px;
+		font-weight: 700;
+	}
+}
+
+.des {
+	margin-top: 4px;
+	color: #777e90;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.main {
+	margin-top: 24px;
+}
+
+.avatar {
+	width: 120px;
+	height: 120px;
+	border-radius: 4px;
+}
+
+.box_info {
+	display: flex;
+	gap: 16px;
+}
+
+.info {
+	flex: 1;
+
+	.name {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		.role {
+			padding: 4px 12px;
+			border-radius: 4px;
+			background: rgba(45, 116, 255, 0.1);
+			color: #2d74ff;
+			font-size: 10px;
+			font-weight: 700;
+			text-transform: uppercase;
+		}
+
+		h5 {
+			color: #23262f;
+			font-size: 16px;
+			font-weight: 600;
+		}
+	}
+
+	.item {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: 8px;
+		color: #777e90;
+		font-size: 14px;
+		font-weight: 500;
+	}
+
+	.icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.line {
+	background: #e1e5ed;
+	height: 1px;
+	width: 100%;
+	margin: 32px 0;
+}
+
+.changePass {
+	width: 50%;
+
+	h5 {
+		color: #23262f;
+		font-size: 20px;
+		font-weight: 700;
+		margin-bottom: 6px;
+	}
+
+	p {
+		color: #777e90;
+		font-size: 14px;
+		font-weight: 500;
+	}
+}
+
+.form {
+	margin-top: 24px;
+}
+
+.btn {
+	margin-top: 16px;
+}

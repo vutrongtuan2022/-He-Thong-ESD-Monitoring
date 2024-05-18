@@ -32,7 +32,7 @@ function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 	return (
 		<Fragment>
 			<div className={styles.container}>
-				<Link href={PATH.Profile} className={clsx(styles.item, {[styles.active]: checkActive(PATH.Profile)})}>
+				<Link onClick={onCLose} href={PATH.Profile} className={clsx(styles.item, {[styles.active]: checkActive(PATH.Profile)})}>
 					<div className={styles.icon}>
 						<UserOctagon size='20' color='#6F767E' />
 					</div>
