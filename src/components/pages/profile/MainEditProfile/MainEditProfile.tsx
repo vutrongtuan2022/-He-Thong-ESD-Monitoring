@@ -195,7 +195,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 								<Select
 									isSearch
 									name='position'
-									value={form.position}
+									value={form.position || null}
 									placeholder='Chức vụ'
 									onChange={(position) =>
 										setForm((prev: any) => ({
@@ -211,7 +211,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 								<Select
 									isSearch
 									name='role'
-									value={form.role}
+									value={form.role || null}
 									placeholder='Vai trò'
 									onChange={(role) =>
 										setForm((prev: any) => ({
@@ -230,7 +230,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 								<Select
 									isSearch
 									name='province'
-									value={form.province}
+									value={form.province || null}
 									placeholder='Chọn tỉnh, thành phố'
 									onChange={(province) =>
 										setForm((prev: any) => ({
@@ -251,7 +251,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 									<Select
 										isSearch
 										name='district'
-										value={form.district}
+										value={form.district || null}
 										placeholder='Chọn quận/huyện'
 										onChange={(district) =>
 											setForm((prev: any) => ({
@@ -272,7 +272,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 								<Select
 									isSearch
 									name='ward'
-									value={form.ward}
+									value={form.ward || null}
 									placeholder='Chọn xã, phường'
 									onChange={(ward) =>
 										setForm((prev: any) => ({

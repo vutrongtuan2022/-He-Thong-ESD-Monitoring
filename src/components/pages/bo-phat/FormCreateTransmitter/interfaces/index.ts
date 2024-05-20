@@ -2,7 +2,9 @@ export interface PropsFormCreateTransmitter {
 	onClose: () => void;
 }
 export interface IForm {
-	mac: string;
+	macNumber: string;
 	name: string;
-	team: string;
+	gatewayUuid: string;
+	teamUuid: string;
+	status: number;
 }

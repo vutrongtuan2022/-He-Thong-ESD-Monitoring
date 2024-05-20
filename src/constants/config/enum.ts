@@ -1,8 +1,12 @@
 export enum QUERY_KEY {
 	dropdown_danh_sach_khu_vuc,
 	dropdown_danh_sach_nguoi_dung,
+	dropdown_danh_sach_team,
+	dropdown_danh_sach_gateway,
 	danh_sach_team,
 	chi_tiet_team,
+	danh_sach_bo_phat,
+	chi_tiet_bo_phat,
 }
 
 export enum TYPE_DATE {
@@ -38,12 +42,18 @@ export enum STATE_DEVICE_NG {
 	BI_NG,
 }
 
-export enum ONLINE_DEVICE {
+export enum STATE_ONLINE_DEVICE {
 	OFFLINE,
 	ONLINE,
 }
 
 export enum STATUS_DEVICE {
-	KHONG_HOAT_DONG,
-	HOAT_DONG,
+	KHONG_SU_DUNG,
+	SU_DUNG,
+}
+
+export enum SIGNAL_STATUS_DEVICE {
+	YEU,
+	MANH,
+	TRUNG_BINH,
 }

@@ -1,22 +1,21 @@
-import { ArrowDown2 } from 'iconsax-react';
-import { BiCheck } from 'react-icons/bi';
-import { PropsFilterCustom } from './interfaces';
+import {BiCheck} from 'react-icons/bi';
+import {PropsFilterCustom} from './interfaces';
 import TippyHeadless from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import styles from './FilterCustom.module.scss';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { removeVietnameseTones } from '~/common/funcs/optionConvert';
-import { IoMdArrowDropdown } from 'react-icons/io';
+import {useRouter} from 'next/router';
+import {useState} from 'react';
+import {removeVietnameseTones} from '~/common/funcs/optionConvert';
+import {IoMdArrowDropdown} from 'react-icons/io';
 
-function FilterCustom({ listFilter, name, query, isSearch, disabled = false }: PropsFilterCustom) {
+function FilterCustom({listFilter, name, query, isSearch, disabled = false}: PropsFilterCustom) {
 	const router = useRouter();
-	const { [query]: queryStr, ...rest } = router.query;
+	const {[query]: queryStr, ...rest} = router.query;
 
 	const [open, setOpen] = useState<boolean>(false);
 	const [keyword, setKeyword] = useState<string>('');
 
-	function getNameMethod(arr: { id: number | string; name: string }[], id: number | string) {
+	function getNameMethod(arr: {id: number | string; name: string}[], id: number | string) {
 		const item = arr?.find((v) => v.id == id) || null;
 		return item?.name || 'Tất cả';
 	}
@@ -84,7 +83,7 @@ function FilterCustom({ listFilter, name, query, isSearch, disabled = false }: P
 												},
 											},
 											undefined,
-											{ scroll: false }
+											{scroll: false}
 										);
 									}}
 								>
@@ -101,7 +100,7 @@ function FilterCustom({ listFilter, name, query, isSearch, disabled = false }: P
 			)}
 		>
 			<div
-				className={clsx(styles.dealer, { [styles.active]: open, [styles.disabled]: disabled })}
+				className={clsx(styles.dealer, {[styles.active]: open, [styles.disabled]: disabled})}
 				onClick={() => {
 					if (disabled) {
 						setOpen(false);
@@ -116,7 +115,7 @@ function FilterCustom({ listFilter, name, query, isSearch, disabled = false }: P
 					<p className={styles.text}>{getNameMethod(listFilter, queryStr as string)}</p>
 				</div>
 				<div className={styles.icon_arrow}>
-					<IoMdArrowDropdown color='#B1B5C3'  size={20} />
+					<IoMdArrowDropdown color='#B1B5C3' size={20} />
 				</div>
 			</div>
 		</TippyHeadless>
