@@ -21,6 +21,26 @@ const categoryServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	listTeam: (
+		data: {
+			keyword: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Category/category_team`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	listGateway: (
+		data: {
+			keyword: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Category/category_gateway`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default categoryServices;

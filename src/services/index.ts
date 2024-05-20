@@ -80,10 +80,13 @@ export const httpRequest = async ({
 		if (err?.status === 401) {
 			store.dispatch(logout());
 		} else if (typeof err == 'string') {
-			showMessageFailed && toastWarn({msg: err || 'Có lỗi đã xảy ra'});
+			showMessageFailed && toastWarn({msg: err || 'Có lỗi đã xảy ra!'});
 			setLoading && setLoading(() => false);
 		} else if (err.code == 'ERR_NETWORK' || err.code == 'ECONNABORTED') {
 			showMessageFailed && toastInfo({msg: 'Kiểm tra kết nối internet'});
+			setLoading && setLoading(() => false);
+		} else {
+			showMessageFailed && toastWarn({msg: 'Có lỗi đã xảy ra!'});
 			setLoading && setLoading(() => false);
 		}
 	} finally {

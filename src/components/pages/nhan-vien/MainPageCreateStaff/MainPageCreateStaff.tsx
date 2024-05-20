@@ -238,7 +238,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 										isSearch
 										name='CCCD'
 										placeholder='Nhập số căn cước'
-										value={form?.CCCD}
+										value={form?.CCCD || null}
 										onChange={(e: any) =>
 											setForm((prev: any) => ({
 												...prev,
@@ -260,7 +260,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 									isSearch
 									name='CCCD'
 									placeholder='Lựa chọn'
-									value={form?.CCCD}
+									value={form?.CCCD || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
 											...prev,

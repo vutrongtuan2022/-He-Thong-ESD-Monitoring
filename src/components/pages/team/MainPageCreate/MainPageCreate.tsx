@@ -179,7 +179,7 @@ function MainPageCreate({}: PropsMainPageCreate) {
 									isSearch
 									name='status'
 									placeholder='Chọn trạng thái'
-									value={Number(form?.status)}
+									value={Number(form?.status) || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
 											...prev,
@@ -203,7 +203,7 @@ function MainPageCreate({}: PropsMainPageCreate) {
 										isSearch
 										name='leaderUuid'
 										placeholder='Người quản lý *'
-										value={form?.leaderUuid}
+										value={form?.leaderUuid || null}
 										onChange={(e: any) =>
 											setForm((prev: any) => ({
 												...prev,
@@ -225,7 +225,7 @@ function MainPageCreate({}: PropsMainPageCreate) {
 									isSearch
 									name='areaUuid'
 									placeholder='Chọn khu vực quản lý'
-									value={form?.areaUuid}
+									value={form?.areaUuid || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
 											...prev,

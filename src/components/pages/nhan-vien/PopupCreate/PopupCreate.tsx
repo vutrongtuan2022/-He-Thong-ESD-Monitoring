@@ -30,7 +30,7 @@ function PopupCreate({onClose}: PropsPopupCreate) {
 					isSearch
 					name=''
 					placeholder='Lựa chọn'
-					value={form?.CCCD}
+					value={form?.CCCD || null}
 					onChange={(e: any) =>
 						setForm((prev: any) => ({
 							...prev,

@@ -183,7 +183,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 								<Select
 									isSearch
 									name='position'
-									value={form.position}
+									value={form.position || null}
 									placeholder='Chọn chức vụ'
 									onChange={(position) =>
 										setForm((prev: any) => ({
@@ -204,7 +204,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 									<Select
 										isSearch
 										name='level'
-										value={form.level}
+										value={form.level || null}
 										placeholder='Cấp độ'
 										onChange={(level) =>
 											setForm((prev: any) => ({
@@ -238,7 +238,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 									<Select
 										isSearch
 										name='manager'
-										value={form.manager}
+										value={form.manager || null}
 										placeholder='Lữa chọn'
 										onChange={(manager) =>
 											setForm((prev: any) => ({
