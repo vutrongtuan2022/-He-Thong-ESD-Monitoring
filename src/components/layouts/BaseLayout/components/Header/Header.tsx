@@ -18,6 +18,7 @@ function Header({title}: PropsHeader) {
 
 	const [openMenu, setOpenMenu] = useState<boolean>(false);
 	const [openNoti, setOpenNoti] = useState<boolean>(false);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.left}>
@@ -35,7 +36,7 @@ function Header({title}: PropsHeader) {
 			</div>
 
 			<div className={styles.right}>
-			<TippyHeadless
+				<TippyHeadless
 					maxWidth={'100%'}
 					interactive
 					visible={openNoti}

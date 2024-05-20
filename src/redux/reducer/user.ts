@@ -1,12 +1,11 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 interface IUser {
+	token: string;
 	uuid: string;
 	userName: string;
-	userUuid: string | null;
 	avatar: string | null;
-	fullname: string | null;
-	regencyUuid: string | null;
+	fullname: string;
 }
 
 export interface UserState {

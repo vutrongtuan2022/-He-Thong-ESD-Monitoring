@@ -3,14 +3,17 @@ import axiosClient from '.';
 const authServices = {
 	login: (
 		data: {
-			username: string;
+			userName: string;
 			password: string;
-			ip: string;
-			address: string;
 		},
 		tokenAxios?: any
 	) => {
-		return axiosClient.post(`/Account/login`, data, {
+		return axiosClient.post(`/Auth/login`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	logout: (data: {}, tokenAxios?: any) => {
+		return axiosClient.post(`/Auth/logout`, data, {
 			cancelToken: tokenAxios,
 		});
 	},
