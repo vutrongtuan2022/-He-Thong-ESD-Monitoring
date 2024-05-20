@@ -19,8 +19,7 @@ axiosClient.interceptors.request.use(async (config) => {
 	config.headers.Authorization = token ? 'Bearer ' + token : null;
 
 	config.data = {
-		time: 'string',
-		keyCert: 'string',
+		...getKeyCert(),
 		...config.data,
 	};
 

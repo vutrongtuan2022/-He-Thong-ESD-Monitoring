@@ -10,6 +10,9 @@ import clsx from 'clsx';
 import Dialog from '~/components/common/Dialog';
 import {store} from '~/redux/store';
 import {logout} from '~/redux/reducer/auth';
+import {useMutation} from '@tanstack/react-query';
+import {httpRequest} from '~/services';
+import authServices from '~/services/authServices';
 
 function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 	const router = useRouter();
@@ -24,9 +27,24 @@ function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 		[router]
 	);
 
+	const fucnLogout = useMutation({
+		mutationFn: () =>
+			httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Đăng xuất thành công!',
+				http: authServices.logout({}),
+			}),
+		onSuccess(data) {
+			if (data) {
+				store.dispatch(logout());
+				router.push(PATH.Login);
+			}
+		},
+	});
+
 	const handleLogout = () => {
-		store.dispatch(logout());
-		router.push(PATH.Login);
+		return fucnLogout.mutate();
 	};
 
 	return (

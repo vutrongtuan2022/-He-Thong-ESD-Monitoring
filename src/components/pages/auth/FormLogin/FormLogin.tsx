@@ -3,7 +3,7 @@ import Image from 'next/image';
 import {PropsFormLogin} from './interfaces';
 import styles from './FormLogin.module.scss';
 import Form, {FormContext, Input} from '~/components/common/Form';
-import {Icon, ShieldSecurity, User} from 'iconsax-react';
+import {ShieldSecurity, User} from 'iconsax-react';
 import Link from 'next/link';
 import {PATH} from '~/constants/config';
 import Button from '~/components/common/Button';
@@ -13,21 +13,16 @@ import {useMutation} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import authServices from '~/services/authServices';
 import Loading from '~/components/common/Loading';
-import {useSelector} from 'react-redux';
-import {RootState, store} from '~/redux/store';
-import md5 from 'md5';
+import {store} from '~/redux/store';
 import {toastWarn} from '~/common/funcs/toast';
 import {setStateLogin, setToken} from '~/redux/reducer/auth';
 import {setInfoUser} from '~/redux/reducer/user';
-import ImageFill from '~/components/common/ImageFill';
 import icons from '~/constants/images/icons';
 
 function FormLogin({}: PropsFormLogin) {
 	const router = useRouter();
 
 	const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
-
-	const {ip} = useSelector((state: RootState) => state.site);
 
 	const [form, setForm] = useState<{username: string; password: string}>({username: '', password: ''});
 
@@ -38,30 +33,16 @@ function FormLogin({}: PropsFormLogin) {
 				showMessageSuccess: true,
 				msgSuccess: 'Đăng nhập thành công!',
 				http: authServices.login({
-					username: form.username,
-					password: md5(form.password),
-					ip: ip,
-					address: '',
+					userName: form.username,
+					password: form.password,
 				}),
 			}),
 		onSuccess(data) {
 			if (data) {
 				store.dispatch(setToken(data.token));
-				store.dispatch(
-					setInfoUser({
-						userName: data.userName,
-						uuid: data.uuid,
-						avatar: data.avatar,
-						fullname: data.fullname,
-						regencyUuid: data.regencyUuid,
-						userUuid: data.userUuid,
-					})
-				);
+				store.dispatch(setInfoUser(data));
 				store.dispatch(setStateLogin(true));
-
 				router.replace(PATH.Home, undefined, {scroll: false});
-
-				console.log(data);
 			}
 		},
 	});
@@ -71,18 +52,14 @@ function FormLogin({}: PropsFormLogin) {
 		// 	return toastWarn({msg: 'Mật khẩu mới bao gồm tối thiểu 6 ký tự gồm chữ hoa, chữ thường và số.'});
 		// }
 
-		// login.mutate();
-		// console.log();
-
-		router.push(PATH.Home);
+		return login.mutate();
 	};
 
 	return (
 		<div className={styles.container}>
 			<Loading loading={login.isLoading} />
 			<div className={styles.header}>
-
-			<Image src={icons.logo} className={styles.logo_icon} alt='Logo' />
+				<Image src={icons.logo} className={styles.logo_icon} alt='Logo' />
 				<h4 className={styles.title}>ĐĂNG NHẬP TÀI KHOẢN</h4>
 				<p className={styles.text}>Chào mừng bạn đến với hệ thống EDS monitoring . Đăng nhập để bắt đầu sử dụng</p>
 			</div>

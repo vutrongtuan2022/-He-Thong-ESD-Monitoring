@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
 
 import {PropsMainChart} from './interfaces';
 import styles from './MainChart.module.scss';
