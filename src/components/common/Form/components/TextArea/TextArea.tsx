@@ -6,7 +6,7 @@ import {ContextData} from '../Input/interfaces';
 import {FormContext} from '../../contexts';
 import clsx from 'clsx';
 
-function TextArea({placeholder, name, isRequired = false, textRequired, max, min, label, blur, showDone}: PropsTextArea) {
+function TextArea({placeholder, name, isRequired = false, textRequired, max, min, label, blur, showDone, ...props}: PropsTextArea) {
 	const data = useContext<ContextData>(FormContext);
 
 	const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -109,6 +109,7 @@ function TextArea({placeholder, name, isRequired = false, textRequired, max, min
 		<div className={styles.container}>
 			{label ? <label className={styles.label}>{label}</label> : null}
 			<textarea
+				{...props}
 				className={clsx(styles.textarea, {
 					[styles.focus]: isFocus,
 					[styles.done]: showDone && data.isDone,

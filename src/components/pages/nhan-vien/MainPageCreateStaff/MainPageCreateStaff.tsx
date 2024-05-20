@@ -9,7 +9,10 @@ import {PATH} from '~/constants/config';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import DatePicker from '~/components/common/DatePicker';
-import {GENDER} from '~/constants/config/enum';
+import {GENDER, STATUS_GENERAL} from '~/constants/config/enum';
+import {useMutation} from '@tanstack/react-query';
+import {httpRequest} from '~/services';
+import userServices from '~/services/userServices';
 const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 	const [date, setDate] = useState<string>('');
 	const [form, setForm] = useState<any>({
@@ -25,6 +28,34 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 		address: '',
 		note: '',
 		personnel: '',
+	});
+
+	const upsertUser = useMutation({
+		mutationFn: () =>
+			httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Thêm mới nhân viên!',
+				http: userServices.upsertUser({
+					uuid: null,
+					fullname: '',
+					userName: '',
+					email: '',
+					address: '',
+					avatar: '',
+					birthday: '',
+					phone: '',
+					gender: GENDER.NAM,
+					role: '',
+					status: STATUS_GENERAL.MO,
+					teamUuid: '',
+				}),
+			}),
+		onSuccess(data) {
+			if (data) {
+				console.log(data);
+			}
+		},
 	});
 
 	return (

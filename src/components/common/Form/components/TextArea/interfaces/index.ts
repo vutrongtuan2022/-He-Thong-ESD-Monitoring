@@ -8,4 +8,6 @@ export interface PropsTextArea {
 	max?: number;
 	blur?: boolean;
 	showDone?: boolean;
+
+	[props: string]: any;
 }

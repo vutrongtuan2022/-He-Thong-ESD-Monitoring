@@ -16,6 +16,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(async (config) => {
 	const token = store.getState().auth.token;
+
 	config.headers.Authorization = token ? 'Bearer ' + token : null;
 
 	config.data = {
@@ -45,6 +46,7 @@ axiosClient.interceptors.response.use(
 export default axiosClient;
 
 export const httpRequest = async ({
+	isList = false,
 	http,
 	setLoading,
 	msgSuccess = 'Thành công',
@@ -52,6 +54,7 @@ export const httpRequest = async ({
 	showMessageFailed = false,
 	onError,
 }: {
+	isList?: boolean;
 	http: any;
 	setLoading?: (any: any) => void;
 	onError?: () => void;
@@ -67,14 +70,14 @@ export const httpRequest = async ({
 		if (res.error.code === 0) {
 			showMessageSuccess && msgSuccess && toastSuccess({msg: msgSuccess || res?.error?.message});
 			setLoading && setLoading(() => false);
-			return res?.data || true;
+			return isList ? res : res.data || true;
 		} else {
 			setLoading && setLoading(() => false);
 			onError && onError();
 			throw res?.error?.message;
 		}
 	} catch (err: any) {
-		if (err?.error?.code === 401 || err?.response?.status == 401) {
+		if (err?.status === 401) {
 			store.dispatch(logout());
 		} else if (typeof err == 'string') {
 			showMessageFailed && toastWarn({msg: err || 'Có lỗi đã xảy ra'});

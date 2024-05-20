@@ -36,6 +36,7 @@ export enum PATH {
 	CaiDat = '/cai-dat',
 
 	ThemNhanvien = '/nhan-vien/them-moi',
+	ThemTeam = '/team/them-moi',
 }
 
 export const Menu: {
