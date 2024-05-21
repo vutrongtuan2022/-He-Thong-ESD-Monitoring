@@ -46,7 +46,6 @@ axiosClient.interceptors.response.use(
 export default axiosClient;
 
 export const httpRequest = async ({
-	isList = false,
 	http,
 	setLoading,
 	msgSuccess = 'Thành công',
@@ -54,7 +53,6 @@ export const httpRequest = async ({
 	showMessageFailed = false,
 	onError,
 }: {
-	isList?: boolean;
 	http: any;
 	setLoading?: (any: any) => void;
 	onError?: () => void;
@@ -70,7 +68,7 @@ export const httpRequest = async ({
 		if (res.error.code === 0) {
 			showMessageSuccess && msgSuccess && toastSuccess({msg: msgSuccess || res?.error?.message});
 			setLoading && setLoading(() => false);
-			return isList ? res : res.data || true;
+			return res.data || true;
 		} else {
 			setLoading && setLoading(() => false);
 			onError && onError();
