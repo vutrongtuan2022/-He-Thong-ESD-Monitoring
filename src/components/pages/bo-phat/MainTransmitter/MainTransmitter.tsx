@@ -40,11 +40,12 @@ function MainTransmitter({}: PropsMainTransmitter) {
 
 	const {_page, _pageSize, _keyword, _pin, _onlineState, _ngState, _status, importExcel} = router.query;
 
+	const [file, setFile] = useState<any>(null);
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
-
 	const [dataUpdate, setDataUpdate] = useState<IDevice | null>(null);
 	const [dataDelete, setDataDelete] = useState<IDevice | null>(null);
 
+	// Lấy danh sách thiết bị
 	const listDevices = useQuery([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword, _pin, _onlineState, _ngState, _status], {
 		queryFn: () =>
 			httpRequest({
@@ -59,6 +60,11 @@ function MainTransmitter({}: PropsMainTransmitter) {
 						toDouble: _pin && Number(_pin) < 100 ? Number(_pin) : 100,
 						fromDouble: 0,
 					},
+					edS_Static: null,
+					gatewayUuid: '',
+					teamUuid: '',
+					factoryAreaUuid: '',
+					timeLastOnline: null,
 				}),
 			}),
 		select(data) {
@@ -66,6 +72,7 @@ function MainTransmitter({}: PropsMainTransmitter) {
 		},
 	});
 
+	// Đổi trạng thái thiết bị
 	const changeStatusDevice = useMutation({
 		mutationFn: () => {
 			return httpRequest({
@@ -95,6 +102,7 @@ function MainTransmitter({}: PropsMainTransmitter) {
 		},
 	});
 
+	// Func export excel
 	const exportExcel = useMutation({
 		mutationFn: () => {
 			return httpRequest({
@@ -119,6 +127,50 @@ function MainTransmitter({}: PropsMainTransmitter) {
 		},
 	});
 
+	// Func import excel
+	const fucnImportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Import file thành công!',
+				http: deviceServices.importExcel({
+					FileData: file,
+					Type: 1,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				handleCloseImportExcel();
+				queryClient.invalidateQueries([
+					QUERY_KEY.danh_sach_bo_phat,
+					_page,
+					_pageSize,
+					_keyword,
+					_pin,
+					_onlineState,
+					_ngState,
+					_status,
+				]);
+			}
+		},
+	});
+
+	// Close popup import excel
+	const handleCloseImportExcel = () => {
+		const {importExcel, ...rest} = router.query;
+
+		setFile(null);
+		router.replace(
+			{
+				query: rest,
+			},
+			undefined,
+			{scroll: false}
+		);
+	};
+
 	const handleChangeStatusDevice = async () => {
 		if (!dataDelete?.uuid) {
 			return toastWarn({msg: 'Không tìm thấy thiết bị!'});
@@ -131,9 +183,13 @@ function MainTransmitter({}: PropsMainTransmitter) {
 		exportExcel.mutate();
 	};
 
+	const handleImportExcel = async () => {
+		fucnImportExcel.mutate();
+	};
+
 	return (
 		<div className={styles.container}>
-			<Loading loading={changeStatusDevice.isLoading || exportExcel.isLoading} />
+			<Loading loading={changeStatusDevice.isLoading || exportExcel.isLoading || fucnImportExcel.isLoading} />
 			<Breadcrumb
 				listUrls={[
 					{
@@ -348,7 +404,6 @@ function MainTransmitter({}: PropsMainTransmitter) {
 				note='Bạn có chắc chắn muốn đổi trạng thái bộ phát này?'
 				onSubmit={handleChangeStatusDevice}
 			/>
-
 			<Popup open={openCreate} onClose={() => setOpenCreate(false)}>
 				<FormCreateTransmitter onClose={() => setOpenCreate(false)} />
 			</Popup>
@@ -356,21 +411,14 @@ function MainTransmitter({}: PropsMainTransmitter) {
 				<FormUpdateTransmitter dataUpdate={dataUpdate} onClose={() => setDataUpdate(null)} />
 			</Popup>
 
-			<Popup
-				open={importExcel == 'open'}
-				onClose={() => {
-					const {importExcel, ...rest} = router.query;
-
-					router.replace(
-						{
-							query: rest,
-						},
-						undefined,
-						{scroll: false}
-					);
-				}}
-			>
-				<ImportExcel />
+			<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
+				<ImportExcel
+					name='file-device'
+					file={file}
+					setFile={setFile}
+					onClose={handleCloseImportExcel}
+					onSubmit={handleImportExcel}
+				/>
 			</Popup>
 		</div>
 	);

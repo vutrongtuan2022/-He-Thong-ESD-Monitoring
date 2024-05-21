@@ -42,11 +42,11 @@ const deviceServices = {
 			edS_Static?: {
 				fromDouble: number;
 				toDouble: number;
-			};
+			} | null;
 			timeLastOnline?: {
 				fromDate: string;
 				toDate: string;
-			};
+			} | null;
 			gatewayUuid?: string;
 			teamUuid?: string;
 			factoryAreaUuid?: string;
@@ -95,6 +95,15 @@ const deviceServices = {
 	) => {
 		return axiosClient.post(`/Device/export_excel`, data, {
 			cancelToken: tokenAxios,
+		});
+	},
+	importExcel: (data: {FileData: any; Type: any}, tokenAxios?: any) => {
+		return axiosClient.put(`/Device/import_excel`, data, {
+			cancelToken: tokenAxios,
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				Accept: 'text/plain',
+			},
 		});
 	},
 };

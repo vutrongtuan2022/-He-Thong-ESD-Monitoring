@@ -1,9 +1,7 @@
-export interface PropsImportExcel {}
-
-export interface Template {
-	MaDat: string;
-	MoTa: string;
-	Red: number;
-	Green: number;
-	Blue: number;
+export interface PropsImportExcel {
+	name: string;
+	file: any;
+	setFile: (any: any) => void;
+	onClose: () => void;
+	onSubmit: () => void;
 }
