@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import {PropsHistoryTransmitter} from './interfaces';
+import {IDeviceNGHistory, PropsHistoryTransmitter} from './interfaces';
 import styles from './HistoryTransmitter.module.scss';
 import Search from '~/components/common/Search';
 import FilterCustom from '~/components/common/FilterCustom';
@@ -101,29 +101,27 @@ function HistoryTransmitter({}: PropsHistoryTransmitter) {
 						column={[
 							{
 								title: 'STT',
-								render: (data: any, index: number) => <>{index + 1}</>,
+								render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 							},
 							{
 								title: 'Thời gian phát hiện NG',
-								render: (data: any) => (
-									<Moment date={'Fri May 17 2024 09:49:15 GMT+0700 (Indochina Time)'} format='HH:mm, DD/MM/YYYY' />
-								),
+								render: (data: IDeviceNGHistory) => <Moment date={data.timeNgStart} format='HH:mm, DD/MM/YYYY' />,
 							},
 							{
 								title: 'Khoảng thời gian NG',
-								render: (data: any) => <>20 phút 2 giây</>,
+								render: (data: IDeviceNGHistory) => <>{data.totalNgMinutes}</>,
 							},
 							{
 								title: 'Giá trị tĩnh điện',
-								render: (data: any) => <>8^4</>,
+								render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
 							},
 							{
 								title: 'Thuộc team',
-								render: (data: any) => <>Team của Dương Minh Nghĩa</>,
+								render: (data: IDeviceNGHistory) => <>{data.teamName}</>,
 							},
 							{
 								title: 'Mã team',
-								render: (data: any) => <>24444112</>,
+								render: (data: IDeviceNGHistory) => <>{data.teamCode}</>,
 							},
 						]}
 					/>
