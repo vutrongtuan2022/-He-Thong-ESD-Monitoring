@@ -27,6 +27,18 @@ const deviceServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	updateTeamUsing: (
+		data: {
+			uuid: string;
+			teamUuid: string | null;
+			note: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Device/update_team_using`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 	listDevice: (
 		data: {
 			pageSize: number;

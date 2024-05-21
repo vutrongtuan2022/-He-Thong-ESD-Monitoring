@@ -65,8 +65,8 @@ function FilterCustom({listFilter, name, query, isSearch, disabled = false}: Pro
 							)}
 						</div>
 						{listFilter
-							.filter((v) => removeVietnameseTones(v.name).includes(keyword ? removeVietnameseTones(keyword) : ''))
-							.map((v, i) => (
+							?.filter((v) => removeVietnameseTones(v.name).includes(keyword ? removeVietnameseTones(keyword) : ''))
+							?.map((v, i) => (
 								<div
 									key={i}
 									className={clsx(styles.option, {

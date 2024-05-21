@@ -24,9 +24,7 @@ function FormCreateTransmitter({onClose}: PropsFormCreateTransmitter) {
 	const [form, setForm] = useState<IForm>({
 		macNumber: '',
 		name: '',
-		gatewayUuid: '',
 		teamUuid: '',
-		status: STATUS_DEVICE.SU_DUNG,
 	});
 
 	// GET LIST DROPDOWN
@@ -34,18 +32,6 @@ function FormCreateTransmitter({onClose}: PropsFormCreateTransmitter) {
 		queryFn: () =>
 			httpRequest({
 				http: categoryServices.listTeam({
-					keyword: '',
-				}),
-			}),
-		select(data) {
-			return data;
-		},
-	});
-
-	const listGateways = useQuery([QUERY_KEY.dropdown_danh_sach_gateway], {
-		queryFn: () =>
-			httpRequest({
-				http: categoryServices.listGateway({
 					keyword: '',
 				}),
 			}),
@@ -65,9 +51,9 @@ function FormCreateTransmitter({onClose}: PropsFormCreateTransmitter) {
 					uuid: '',
 					name: form.name,
 					macNumber: form.macNumber,
-					gatewayUuid: form.gatewayUuid,
 					teamUuid: form.teamUuid,
-					status: form.status,
+					status: STATUS_DEVICE.SU_DUNG,
+					gatewayUuid: '',
 				}),
 			}),
 		onSuccess(data) {
@@ -86,9 +72,7 @@ function FormCreateTransmitter({onClose}: PropsFormCreateTransmitter) {
 				setForm({
 					macNumber: '',
 					name: '',
-					gatewayUuid: '',
 					teamUuid: '',
-					status: STATUS_DEVICE.SU_DUNG,
 				});
 			}
 		},
@@ -134,22 +118,6 @@ function FormCreateTransmitter({onClose}: PropsFormCreateTransmitter) {
 				/>
 				<div className='mt'>
 					<Select
-						name='gatewayUuid'
-						value={form.gatewayUuid || null}
-						placeholder='Lựa chọn gateway'
-						onChange={(e) =>
-							setForm((prev) => ({
-								...prev,
-								gatewayUuid: e.target.value,
-							}))
-						}
-						label={<span>Chọn gateway</span>}
-					>
-						{listGateways?.data?.items?.map((v: any) => (
-							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
-						))}
-					</Select>
-					<Select
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
@@ -162,24 +130,9 @@ function FormCreateTransmitter({onClose}: PropsFormCreateTransmitter) {
 						}
 						label={<span>Thuộc team</span>}
 					>
-						{listTeams?.data?.items?.map((v: any) => (
+						{listTeams?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 						))}
-					</Select>
-					<Select
-						name='status'
-						value={Number(form?.status)}
-						placeholder='Lựa chọn trạng thái'
-						onChange={(e) =>
-							setForm((prev) => ({
-								...prev,
-								status: e.target.value,
-							}))
-						}
-						label={<span>Trạng thái</span>}
-					>
-						<Option title='Sử dụng' value={STATUS_DEVICE.SU_DUNG} />
-						<Option title='Không sử dụng' value={STATUS_DEVICE.KHONG_SU_DUNG} />
 					</Select>
 				</div>
 

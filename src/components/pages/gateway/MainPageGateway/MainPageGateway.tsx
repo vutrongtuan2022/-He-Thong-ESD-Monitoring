@@ -5,7 +5,6 @@ import styles from './MainPageGateway.module.scss';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Dialog from '~/components/common/Dialog';
 import Button from '~/components/common/Button';
-import {useRouter} from 'next/router';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
@@ -13,12 +12,11 @@ import Popup from '~/components/common/Popup';
 import PopupCreate from '../PopupCreate';
 import Image from 'next/image';
 import ListTransmitterMainPage from '../ListTransmitterMainPage';
-function MainPageGateway({}: PropsMainPageGateway) {
-	const router = useRouter();
-	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
 
-	const {_page, _pageSize, _keyword, _manager, _dateFrom, _dateTo} = router.query;
+function MainPageGateway({}: PropsMainPageGateway) {
+	const [openCreate, setOpenCreate] = useState<boolean>(false);
 	const [openDelete, setOpenDelete] = useState<boolean>(false);
+
 	return (
 		<div className={styles.container}>
 			<Breadcrumb
@@ -81,7 +79,7 @@ function MainPageGateway({}: PropsMainPageGateway) {
 				}
 			/>
 			<WrapperContainer>
-				<ListTransmitterMainPage />
+				<ListTransmitterMainPage onOpenCreate={() => setOpenCreate(true)} />
 				<Dialog
 					danger
 					open={openDelete}
@@ -91,7 +89,7 @@ function MainPageGateway({}: PropsMainPageGateway) {
 					onSubmit={() => setOpenDelete(false)}
 				/>
 			</WrapperContainer>
-			<Popup open={OpenCreate} onClose={() => setOpenCreate(false)}>
+			<Popup open={openCreate} onClose={() => setOpenCreate(false)}>
 				<PopupCreate onClose={() => setOpenCreate(false)} />
 			</Popup>
 		</div>

@@ -25,9 +25,7 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 		uuid: '',
 		macNumber: '',
 		name: '',
-		gatewayUuid: '',
 		teamUuid: '',
-		status: STATUS_DEVICE.SU_DUNG,
 	});
 
 	// SET FORM UPDATE
@@ -37,9 +35,7 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 				uuid: dataUpdate.uuid,
 				macNumber: dataUpdate.macNumber,
 				name: dataUpdate.name,
-				gatewayUuid: dataUpdate.gatewayUuid || '',
 				teamUuid: dataUpdate.teamUuid || '',
-				status: dataUpdate.status,
 			});
 			console.log(dataUpdate);
 		}
@@ -50,18 +46,6 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 		queryFn: () =>
 			httpRequest({
 				http: categoryServices.listTeam({
-					keyword: '',
-				}),
-			}),
-		select(data) {
-			return data;
-		},
-	});
-
-	const listGateways = useQuery([QUERY_KEY.dropdown_danh_sach_gateway], {
-		queryFn: () =>
-			httpRequest({
-				http: categoryServices.listGateway({
 					keyword: '',
 				}),
 			}),
@@ -81,9 +65,9 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 					uuid: form.uuid,
 					name: form.name,
 					macNumber: form.macNumber,
-					gatewayUuid: form.gatewayUuid,
 					teamUuid: form.teamUuid,
-					status: form.status,
+					status: STATUS_DEVICE.SU_DUNG,
+					gatewayUuid: '',
 				}),
 			}),
 		onSuccess(data) {
@@ -103,9 +87,7 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 					uuid: '',
 					macNumber: '',
 					name: '',
-					gatewayUuid: '',
 					teamUuid: '',
-					status: STATUS_DEVICE.SU_DUNG,
 				});
 			}
 		},
@@ -154,22 +136,6 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 				/>
 				<div className='mt'>
 					<Select
-						name='gatewayUuid'
-						value={form.gatewayUuid || null}
-						placeholder='Lựa chọn gateway'
-						onChange={(e) =>
-							setForm((prev) => ({
-								...prev,
-								gatewayUuid: e.target.value,
-							}))
-						}
-						label={<span>Chọn gateway</span>}
-					>
-						{listGateways?.data?.items?.map((v: any) => (
-							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
-						))}
-					</Select>
-					<Select
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
@@ -182,24 +148,9 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 						}
 						label={<span>Thuộc team</span>}
 					>
-						{listTeams?.data?.items?.map((v: any) => (
+						{listTeams?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 						))}
-					</Select>
-					<Select
-						name='status'
-						value={Number(form?.status)}
-						placeholder='Lựa chọn trạng thái'
-						onChange={(e) =>
-							setForm((prev) => ({
-								...prev,
-								status: e.target.value,
-							}))
-						}
-						label={<span>Trạng thái</span>}
-					>
-						<Option title='Sử dụng' value={STATUS_DEVICE.SU_DUNG} />
-						<Option title='Không sử dụng' value={STATUS_DEVICE.KHONG_SU_DUNG} />
 					</Select>
 				</div>
 

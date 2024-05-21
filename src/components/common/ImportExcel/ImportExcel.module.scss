@@ -148,3 +148,17 @@
 		font-weight: 600;
 	}
 }
+
+.clear {
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+	margin-top: 4px;
+	cursor: pointer;
+	user-select: none;
+	transition: 0.3s;
+
+	&:active {
+		transform: scale(0.9);
+	}
+}

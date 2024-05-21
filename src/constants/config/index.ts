@@ -80,7 +80,7 @@ export const Menu: {
 	},
 ];
 
-export const KEY_STORE = 'ADMIN-EDS';
+export const KEY_STORE = 'ADMIN-ESD';
 
 export const ListOptionTimePicker: {
 	name: string;
