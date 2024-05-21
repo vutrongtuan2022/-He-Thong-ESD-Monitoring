@@ -1,47 +1,18 @@
 import clsx from 'clsx';
-// import * as XLSX from 'xlsx';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
 import React, {Fragment, useState} from 'react';
 
 import icons from '~/constants/images/icons';
-import Popup from '~/components/common/Popup';
 import Button from '~/components/common/Button';
-// import {toastError, toastWarn} from '~/common/func/toast';
 
 import styles from './ImportExcel.module.scss';
-import {PropsImportExcel, Template} from './interfaces';
-// import {convertFileSize} from '~/common/func/optionConvert';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {httpRequest} from '~/services';
-// import colorSevices from '~/services/colorServices';
-// import useQueryParams from '~/common/hooks/useQueryParams';
-import {QUERY_KEY} from '~/constants/config/enum';
-import Loading from '~/components/common/Loading';
+import {PropsImportExcel} from './interfaces';
+import {convertFileSize} from '~/common/funcs/optionConvert';
 import background from '~/constants/images/background';
+import {toastError} from '~/common/funcs/toast';
 
-function ImportExcel({}: PropsImportExcel) {
-	const router = useRouter();
-
-	const queryClient = useQueryClient();
-	// const {page, keyword, pageSize} = useQueryParams();
-
-	const {importExcel, ...rest} = router.query;
-
+function ImportExcel({name, file, setFile, onClose, onSubmit}: PropsImportExcel) {
 	const [dragging, setDragging] = useState<boolean>(false);
-	const [selectedFile, setSelectedFile] = useState<any>(null);
-	const [listData, setListData] = useState<any[]>([]);
-
-	const handleClose = () => {
-		setSelectedFile(null);
-		router.replace(
-			{
-				query: rest,
-			},
-			undefined,
-			{scroll: false}
-		);
-	};
 
 	const handleDragEnter = (e: any) => {
 		e.preventDefault();
@@ -65,65 +36,21 @@ function ImportExcel({}: PropsImportExcel) {
 	};
 
 	async function convertData(file: any) {
-		// try {
-		// 	const reader = new FileReader();
-		// 	reader.onload = (evt: any) => {
-		// 		const bstr = evt.target.result;
-		// 		const wb = XLSX.read(bstr, {type: 'binary'});
-		// 		const wsname = wb.SheetNames[0];
-		// 		const ws = wb.Sheets[wsname];
-		// 		const data: Template[] = XLSX.utils.sheet_to_json(ws);
-		// 		const convert = data.map((v: Template) => ({
-		// 			code: v['MaDat'],
-		// 			description: v['MoTa'],
-		// 			red: v['Red'],
-		// 			green: v['Green'],
-		// 			blue: v['Blue'],
-		// 		}));
-		// 		if (convert.length > 0) {
-		// 			setListData(convert);
-		// 			setSelectedFile(file);
-		// 		} else {
-		// 			return toastWarn({msg: 'Không có dữ liệu trong file đầu vào'});
-		// 		}
-		// 	};
-		// 	reader.readAsBinaryString(file);
-		// } catch (err) {
-		// 	return toastError({
-		// 		msg: 'Không nạp được dữ liệu, vui lòng kiểm tra file đầu vào',
-		// 	});
-		// }
+		try {
+			const reader = new FileReader();
+			reader.onload = (evt: any) => {
+				setFile(file);
+			};
+			reader.readAsBinaryString(file);
+		} catch (err) {
+			return toastError({
+				msg: 'Không nạp được dữ liệu, vui lòng kiểm tra file đầu vào',
+			});
+		}
 	}
-
-	// const createManyColor = useMutation({
-	// 	mutationFn: () =>
-	// 		httpRequest({
-	// 			showMessageFailed: true,
-	// 			showMessageSuccess: true,
-	// 			http: colorSevices.createManyColor({data: listData}),
-	// 		}),
-	// 	onSuccess: (data) => {
-	// 		if (data) {
-	// 			queryClient.invalidateQueries([QUERY_KEY.ma_mau, page, pageSize, keyword]);
-	// 			setSelectedFile(null);
-	// 			router.replace(
-	// 				{
-	// 					query: rest,
-	// 				},
-	// 				undefined,
-	// 				{scroll: false}
-	// 			);
-	// 		}
-	// 	},
-	// });
-
-	const handleSubmit = () => {
-		// createManyColor.mutate();
-	};
 
 	return (
 		<Fragment>
-			{/* <Loading loading={createManyColor.isLoading} /> */}
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<h2 className={styles.title}>Nhập file từ Excel</h2>
@@ -136,7 +63,7 @@ function ImportExcel({}: PropsImportExcel) {
 					</p>
 				</div>
 				<div className={styles.main}>
-					{selectedFile && listData?.length > 0 ? (
+					{file ? (
 						<div className={styles.selectedFile}>
 							<div className={styles.file}>
 								<div className={styles.icon}>
@@ -145,13 +72,13 @@ function ImportExcel({}: PropsImportExcel) {
 									</i>
 								</div>
 								<div className={styles.info}>
-									<p className={styles.name}>{selectedFile?.name}</p>
-									{/* <p className={styles.size}>{convertFileSize(selectedFile?.size / 1000)}</p> */}
+									<p className={styles.name}>{file?.name}</p>
+									<p className={styles.size}>{convertFileSize(file?.size / 1000)}</p>
 								</div>
-								<label htmlFor='file-work' className={styles.change}>
+								<label htmlFor={`file-work-${name}`} className={styles.change}>
 									<input
 										hidden
-										id='file-work'
+										id={`file-work-${name}`}
 										type='file'
 										accept='.xls, .xlsx, .csv'
 										onClick={(e: any) => {
@@ -172,7 +99,7 @@ function ImportExcel({}: PropsImportExcel) {
 							className={clsx(styles.inputFile, {
 								[styles.dragging]: dragging,
 							})}
-							htmlFor='file-work'
+							htmlFor={`file-work-${name}`}
 						>
 							<div className={styles.groupEmpty}>
 								<div className={styles.imageEmpty}>
@@ -183,7 +110,7 @@ function ImportExcel({}: PropsImportExcel) {
 							</div>
 							<input
 								hidden
-								id='file-work'
+								id={`file-work-${name}`}
 								type='file'
 								accept='.xls, .xlsx, .csv'
 								onChange={handleFileChange}
@@ -195,10 +122,10 @@ function ImportExcel({}: PropsImportExcel) {
 					)}
 				</div>
 				<div className={styles.groupBtn}>
-					<Button p_8_40 maxContent div bold primary disable={!selectedFile} rounded_6 onClick={handleSubmit}>
-						Tải lên
+					<Button p_8_40 maxContent div bold primary disable={!file} rounded_6 onClick={onSubmit}>
+						Lựa chọn
 					</Button>
-					<Button p_8_40 maxContent bold grey_2 rounded_6 div onClick={handleClose}>
+					<Button p_8_40 maxContent bold grey_2 rounded_6 div onClick={onClose}>
 						Đóng
 					</Button>
 				</div>
