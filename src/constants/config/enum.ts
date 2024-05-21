@@ -7,6 +7,7 @@ export enum QUERY_KEY {
 	chi_tiet_team,
 	danh_sach_bo_phat,
 	chi_tiet_bo_phat,
+	danh_sach_nhan_vien,
 }
 
 export enum TYPE_DATE {
@@ -56,4 +57,9 @@ export enum SIGNAL_STATUS_DEVICE {
 	YEU,
 	MANH,
 	TRUNG_BINH,
+}
+
+export enum STATUS_USER {
+	HAVEACCOUNT = 1,
+	NOACCOUNT,
 }

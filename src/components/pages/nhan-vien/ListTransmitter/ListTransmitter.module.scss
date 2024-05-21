@@ -76,3 +76,15 @@
 		text-decoration: underline;
 	}
 }
+
+.status {
+	font-weight: 700;
+
+	&.haveaccount {
+		color: var(--green);
+	}
+
+	&.noaccount {
+		color: var(--danger);
+	}
+}
