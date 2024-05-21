@@ -1,6 +1,6 @@
 import axiosClient from '.';
 
-import {GENDER, STATUS_GENERAL} from '~/constants/config/enum';
+import {GENDER, STATUS_GENERAL, STATUS_USER} from '~/constants/config/enum';
 
 const userServices = {
 	upsertUser: (
@@ -21,6 +21,39 @@ const userServices = {
 		tokenAxios?: any
 	) => {
 		return axiosClient.post(`/User/upsert_user`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	listUser: (
+		data: {
+			pageSize: number;
+			page: number;
+			keyword: string;
+			teamUuid: string;
+			timeCreated: {
+				fromDate: string | null;
+				toDate: string | null;
+			} | null;
+			status: STATUS_USER | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/User/page_list_user`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	upsertUserUser: (
+		data: {
+			uuid: string | null;
+			macNumber: string | null;
+			name: string | null;
+			gatewayUuid: string | null;
+			teamUuid: string | null;
+			status: number | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/User/upsert_user_device`, data, {
 			cancelToken: tokenAxios,
 		});
 	},
