@@ -33,12 +33,27 @@ const userServices = {
 			timeCreated: {
 				fromDate: string | null;
 				toDate: string | null;
-			};
+			} | null;
 			status: STATUS_USER | null;
 		},
 		tokenAxios?: any
 	) => {
 		return axiosClient.post(`/User/page_list_user`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	upsertUserUser: (
+		data: {
+			uuid: string | null;
+			macNumber: string | null;
+			name: string | null;
+			gatewayUuid: string | null;
+			teamUuid: string | null;
+			status: number | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/User/upsert_user_device`, data, {
 			cancelToken: tokenAxios,
 		});
 	},

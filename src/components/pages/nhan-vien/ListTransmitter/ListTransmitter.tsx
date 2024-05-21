@@ -117,14 +117,14 @@ function ListTransmitter({}: PropsListTransmitter) {
 							listFilter={[
 								{
 									id: 1,
-									name: ' Vị trí 1',
+									name: ' Chức vụ 1',
 								},
 								{
 									id: 2,
-									name: ' Vị trí 2',
+									name: ' Chức vụ 2',
 								},
 							]}
-							name='Vị trí'
+							name='Chức vụ'
 							query='_electric'
 						/>
 					</div>
@@ -172,14 +172,15 @@ function ListTransmitter({}: PropsListTransmitter) {
 								render: (data: IUser) => (
 									<p
 										className={clsx(styles.status, {
-											[styles.haveaccount]: data.status == STATUS_USER.HAVEACCOUNT,
-											[styles.noaccount]: data.status == STATUS_USER.NOACCOUNT,
+											[styles.haveaccount]: data.userName !== '',
+											[styles.noaccount]: data.userName === '',
 										})}
 									>
-										{data.status == STATUS_USER.HAVEACCOUNT ? 'Đã cấp' : 'Chưa cấp'}
+										{data.userName !== '' ? 'Đã cấp' : 'Chưa cấp'}
 									</p>
 								),
 							},
+
 							{
 								title: 'Ngày tạo',
 								render: (data: IUser) => <>{data.timeCreated || '---'}</>,
