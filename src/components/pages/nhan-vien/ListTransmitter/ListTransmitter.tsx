@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Status from '~/components/common/Status';
-import {PropsListTransmitter} from './interfaces';
+import {IUser, PropsListTransmitter} from './interfaces';
 import styles from './ListTransmitter.module.scss';
 import Search from '~/components/common/Search';
 import FilterCustom from '~/components/common/FilterCustom';
@@ -20,18 +20,45 @@ import {AiOutlineUserAdd} from 'react-icons/ai';
 import PopupCreate from '../PopupCreate';
 import Popup from '~/components/common/Popup';
 import Dialog from '~/components/common/Dialog';
+import {useQuery} from '@tanstack/react-query';
+import {QUERY_KEY, STATUS_USER} from '~/constants/config/enum';
+import {httpRequest} from '~/services';
+import userServices from '~/services/userServices';
+import clsx from 'clsx';
 
 function ListTransmitter({}: PropsListTransmitter) {
 	const router = useRouter();
+
+	const {_page, _pageSize, _status, _keyword, _teamUuid} = router.query;
+
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
 	const [openDelete, setOpenDelete] = useState<boolean>(false);
-	const {_page, _pageSize, _keyword} = router.query;
 	const [data, setData] = useState<any[]>([]);
 	const [open, setOpen] = useState<number | null>(null);
 
 	const handleToggle = (index: number) => {
 		setOpen((prev) => (prev === index ? null : index));
 	};
+
+	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _pageSize, _keyword, _status, _teamUuid], {
+		queryFn: () =>
+			httpRequest({
+				http: userServices.listUser({
+					pageSize: Number(_pageSize) || 20,
+					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
+					status: _status ? Number(_status) : null,
+					timeCreated: {
+						fromDate: '2023-05-21T02:36:42.699Z',
+						toDate: '2024-05-21T02:36:42.699Z',
+					},
+					teamUuid: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
 	useEffect(() => {
 		setData([
 			{
@@ -67,22 +94,22 @@ function ListTransmitter({}: PropsListTransmitter) {
 						</div>
 					)}
 					<div style={{minWidth: 360}}>
-						<Search placeholder='Tìm kiếm theo tên nhân viên, mã nhân viên' />
+						<Search keyName='_keyword' placeholder='Tìm kiếm theo tên nhân viên, mã nhân viên' />
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
 							listFilter={[
 								{
-									id: 1,
-									name: ' Trạng thái 1',
+									id: STATUS_USER.HAVEACCOUNT,
+									name: 'Có tài khoản',
 								},
 								{
-									id: 2,
-									name: ' Trạng thái 2',
+									id: STATUS_USER.NOACCOUNT,
+									name: 'Không có tài khoản',
 								},
 							]}
 							name='Trạng thái'
-							query='_electric'
+							query='_status'
 						/>
 					</div>
 					<div style={{minWidth: 240}}>
@@ -105,52 +132,61 @@ function ListTransmitter({}: PropsListTransmitter) {
 				<div></div>
 			</div>
 			<div className={styles.table}>
-				<DataWrapper data={[1, 2, 3]} loading={false} noti={<Noti des='Hiện tại chưa có bộ phát nào ?' />}>
+				<DataWrapper data={listUser?.data?.items} loading={false} noti={<Noti des='Hiện tại chưa có bộ phát nào ?' />}>
 					<Table
-						data={data}
+						data={listUser?.data?.items}
 						onSetData={setData}
 						column={[
 							{
-								checkBox: true,
+								// checkBox: true,
 								title: 'STT',
 								render: (data: any, index: number) => <>{index + 1}</>,
 							},
 
 							{
 								title: 'Mã nhân viên',
-								render: (data: any) => (
-									<Link href={`/nhan-vien/6478384343`} className={styles.link}>
-										6478384343
+								render: (data: IUser) => (
+									<Link href={`/nhan-vien/${data.userid}`} className={styles.link}>
+										{data.userid || '---'}
 									</Link>
 								),
 							},
 							{
 								title: 'Tên nhân viên',
-								render: (data: any) => <p>Nguyễn Thị E</p>,
+								render: (data: IUser) => <p>{data.fullname}</p>,
 							},
 							{
 								title: 'Chức vụ',
-								render: (data: any) => <p>Quản lý</p>,
+								render: (data: IUser) => <p>{data.role || '---'}</p>,
 							},
 							{
 								title: 'Thuộc team',
-								render: (data: any) => <p>Team sản xuất Nguyễn Văn A</p>,
+								render: (data: IUser) => <p>{data.teamname || '---'}</p>,
 							},
 							{
 								title: 'Leader team',
-								render: (data: any) => <>Nguyễn Văn A</>,
+								render: (data: IUser) => <>{data.nameleader || '---'}</>,
 							},
 							{
 								title: 'Tài khoản',
-								render: (data: any) => <Status status='Online' />,
+								render: (data: IUser) => (
+									<p
+										className={clsx(styles.status, {
+											[styles.haveaccount]: data.status == STATUS_USER.HAVEACCOUNT,
+											[styles.noaccount]: data.status == STATUS_USER.NOACCOUNT,
+										})}
+									>
+										{data.status == STATUS_USER.HAVEACCOUNT ? 'Đã cấp' : 'Chưa cấp'}
+									</p>
+								),
 							},
 							{
 								title: 'Ngày tạo',
-								render: (data: any) => <>10/04/2024, 14:09:39</>,
+								render: (data: IUser) => <>{data.timeCreated || '---'}</>,
 							},
 							{
 								title: '',
-								render: (data: any, index: number) => (
+								render: (data: IUser, index: number) => (
 									<HeadlessTippy
 										interactive
 										visible={open === index}
@@ -159,7 +195,7 @@ function ListTransmitter({}: PropsListTransmitter) {
 											<div className={styles.mainOption}>
 												<div className={styles.item} onClick={() => setOpenCreate(true)}>
 													<AiOutlineUserAdd size={18} />
-													<p>Thêm tài khoản</p>
+													<p>Cấp tài khoản</p>
 												</div>
 												<div
 													className={styles.item}
@@ -197,7 +233,7 @@ function ListTransmitter({}: PropsListTransmitter) {
 				/>
 				<Pagination
 					currentPage={Number(_page) || 1}
-					total={400}
+					total={listUser?.data?.pagination.totalCount || 0}
 					pageSize={Number(_pageSize) || 20}
 					dependencies={[_pageSize, _keyword]}
 				/>
