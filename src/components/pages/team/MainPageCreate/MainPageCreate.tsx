@@ -57,6 +57,18 @@ function MainPageCreate({}: PropsMainPageCreate) {
 		},
 	});
 
+	const listTeams = useQuery([QUERY_KEY.dropdown_danh_sach_team], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listTeam({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
 	// API
 	const upsertTeam = useMutation({
 		mutationFn: () =>
@@ -72,7 +84,6 @@ function MainPageCreate({}: PropsMainPageCreate) {
 					status: form.status,
 					notes: form.note,
 					uuid: '',
-					devices: '',
 					rootUuid: '',
 					parentUuid: '',
 				}),
@@ -175,50 +186,52 @@ function MainPageCreate({}: PropsMainPageCreate) {
 								/>
 								<Select
 									isSearch
-									name='status'
-									placeholder='Chọn trạng thái'
-									value={Number(form?.status) || null}
+									name='leaderUuid'
+									placeholder='Người quản lý *'
+									value={form?.leaderUuid || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
 											...prev,
-											status: e.target.value,
+											leaderUuid: e.target.value,
 										}))
 									}
 									label={
 										<span>
-											Trạng thái <span style={{color: 'red'}}>*</span>
+											Người quản lý<span style={{color: 'red'}}>*</span>
 										</span>
 									}
 								>
-									<Option title={'Hoạt động'} value={STATUS_GENERAL.MO} />
-									<Option title={'Không hoạt động'} value={STATUS_GENERAL.KHOA} />
+									{listUsers.data?.map((v: any) => (
+										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+									))}
+								</Select>
+							</div>
+
+							<div className={clsx('mt')}>
+								<Select
+									isSearch
+									name='parentUuid'
+									placeholder='Team cấp trên'
+									value={form?.parentUuid || null}
+									onChange={(e: any) =>
+										setForm((prev: any) => ({
+											...prev,
+											parentUuid: e.target.value,
+										}))
+									}
+									label={
+										<span>
+											Team cấp trên<span style={{color: 'red'}}>*</span>
+										</span>
+									}
+								>
+									{listTeams.data?.map((v: any) => (
+										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+									))}
 								</Select>
 							</div>
 
 							<div className={clsx('mt', 'col_2')}>
-								<div>
-									<Select
-										isSearch
-										name='leaderUuid'
-										placeholder='Người quản lý *'
-										value={form?.leaderUuid || null}
-										onChange={(e: any) =>
-											setForm((prev: any) => ({
-												...prev,
-												leaderUuid: e.target.value,
-											}))
-										}
-										label={
-											<span>
-												Người quản lý<span style={{color: 'red'}}>*</span>
-											</span>
-										}
-									>
-										{listUsers?.data?.items?.map((v: any) => (
-											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
-										))}
-									</Select>
-								</div>
 								<Select
 									isSearch
 									name='areaUuid'
@@ -236,10 +249,32 @@ function MainPageCreate({}: PropsMainPageCreate) {
 										</span>
 									}
 								>
-									{listAreas?.data?.items?.map((v: any) => (
+									{listAreas.data?.map((v: any) => (
 										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 									))}
 								</Select>
+								<div>
+									<Select
+										isSearch
+										name='status'
+										placeholder='Chọn trạng thái'
+										value={Number(form?.status) || null}
+										onChange={(e: any) =>
+											setForm((prev: any) => ({
+												...prev,
+												status: e.target.value,
+											}))
+										}
+										label={
+											<span>
+												Trạng thái <span style={{color: 'red'}}>*</span>
+											</span>
+										}
+									>
+										<Option title={'Hoạt động'} value={STATUS_GENERAL.MO} />
+										<Option title={'Không hoạt động'} value={STATUS_GENERAL.KHOA} />
+									</Select>
+								</div>
 							</div>
 							<div className={clsx('mt')}>
 								<TextArea name='note' placeholder='Nhập mô tả' label={<span>Mô tả</span>} />

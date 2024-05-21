@@ -8,31 +8,71 @@ import Search from '~/components/common/Search';
 import FilterCustom from '~/components/common/FilterCustom';
 import DataWrapper from '~/components/common/DataWrapper';
 import Table from '~/components/common/Table';
-import Link from 'next/link';
-import Status from '~/components/common/Status';
 import Moment from 'react-moment';
 import Pagination from '~/components/common/Pagination';
 import Button from '~/components/common/Button';
 import icons from '~/constants/images/icons';
+import {useQuery} from '@tanstack/react-query';
+import {QUERY_KEY} from '~/constants/config/enum';
+import {httpRequest} from '~/services';
+import categoryServices from '~/services/categoryServices';
+import {useRouter} from 'next/router';
+import ngHistoryServices from '~/services/ngHistoryServices';
+import Noti from '~/components/common/DataWrapper/components/Noti';
 
 function HistoryTransmitter({}: PropsHistoryTransmitter) {
+	const router = useRouter();
+	const {_id, _page, _pageSize, _keyword, _teamUuid} = router.query;
+
+	// GET LIST DROPDOWN
+	const listTeams = useQuery([QUERY_KEY.dropdown_danh_sach_team], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listTeam({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
+	const listHistoryDevices = useQuery([QUERY_KEY.lich_su_bo_phat_LG, _id, _page, _pageSize, _keyword, _teamUuid], {
+		queryFn: () =>
+			httpRequest({
+				http: ngHistoryServices.listNGhistory({
+					pageSize: Number(_pageSize) || 20,
+					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
+					deviceUuid: _id as string,
+					teamUuid: (_teamUuid as string) || '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+		enabled: !!_id,
+	});
+
+	console.log(listHistoryDevices);
+
 	return (
 		<div className={styles.container}>
 			<h4>Lịch sử bộ phát NG (04)</h4>
 			<div className={styles.flex}>
 				<div className={styles.main_search}>
 					<div className={styles.search}>
-						<Search placeholder='Tìm kiếm theo số MAC, tên thiết bị' />
+						<Search keyName='_keyword' placeholder='Tìm kiếm theo số MAC, tên thiết bị' />
 					</div>
 					<div className={styles.filter}>
 						<FilterCustom
 							isSearch
 							name='Team'
-							query='_team'
-							listFilter={[
-								{id: 1, name: 'Team 1'},
-								{id: 2, name: 'Team 2'},
-							]}
+							query='_teamUuid'
+							listFilter={listTeams?.data?.map((v: any) => ({
+								id: v?.uuid,
+								name: v?.name,
+							}))}
 						/>
 					</div>
 				</div>
@@ -51,9 +91,13 @@ function HistoryTransmitter({}: PropsHistoryTransmitter) {
 				</div>
 			</div>
 			<div className={styles.table}>
-				<DataWrapper data={[1, 2, 3]} loading={false}>
+				<DataWrapper
+					data={listHistoryDevices?.data?.items}
+					loading={listHistoryDevices.isLoading}
+					noti={<Noti disableButton title='Danh sách trống!' des='Danh sách lịch sử NG của thiết bị trống!' />}
+				>
 					<Table
-						data={[1, 2, 3]}
+						data={listHistoryDevices?.data?.items}
 						column={[
 							{
 								title: 'STT',
@@ -83,7 +127,12 @@ function HistoryTransmitter({}: PropsHistoryTransmitter) {
 							},
 						]}
 					/>
-					<Pagination currentPage={1} total={400} pageSize={20} dependencies={[]} />
+					<Pagination
+						currentPage={Number(_page) || 1}
+						pageSize={Number(_pageSize) || 20}
+						total={listHistoryDevices?.data?.pagination?.totalCount}
+						dependencies={[_pageSize, _keyword, _teamUuid]}
+					/>
 				</DataWrapper>
 			</div>
 		</div>

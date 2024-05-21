@@ -1,12 +1,10 @@
 import React, {Fragment, useState} from 'react';
-import Image from 'next/image';
 import {IDataDetailDevice, PropsInfoTransmitter} from './interfaces';
 import styles from './InfoTransmitter.module.scss';
 import Link from 'next/link';
 import {PATH} from '~/constants/config';
 import {IoArrowBackOutline} from 'react-icons/io5';
 import Button from '~/components/common/Button';
-import icons from '~/constants/images/icons';
 import Dialog from '~/components/common/Dialog';
 import {useRouter} from 'next/router';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
@@ -15,6 +13,8 @@ import {httpRequest} from '~/services';
 import deviceServices from '~/services/deviceServices';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
+import Popup from '~/components/common/Popup';
+import PopupAssign from '../PopupAssign';
 
 function InfoTransmitter({}: PropsInfoTransmitter) {
 	const router = useRouter();
@@ -23,7 +23,9 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 	const {_id} = router.query;
 
 	const [data, setData] = useState<IDataDetailDevice>();
+
 	const [openCancel, setOpenCancel] = useState<boolean>(false);
+	const [openAssign, setOpenAssign] = useState<boolean>(false);
 
 	useQuery([QUERY_KEY.chi_tiet_bo_phat, _id], {
 		queryFn: () =>
@@ -38,15 +40,16 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 		enabled: !!_id,
 	});
 
-	const changeStatusDevice = useMutation({
+	const cancelTeamUsing = useMutation({
 		mutationFn: () => {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
-				http: deviceServices.updateDeviceStatus({
+				msgSuccess: 'Hủy quyền sử dụng thành công!',
+				http: deviceServices.updateTeamUsing({
 					uuid: data?.uuid!,
-					status: data?.status! == STATUS_DEVICE.SU_DUNG ? STATUS_DEVICE.KHONG_SU_DUNG : STATUS_DEVICE.SU_DUNG,
+					teamUuid: null,
+					note: '',
 				}),
 			});
 		},
@@ -63,12 +66,12 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 			return toastWarn({msg: 'Không tìm thấy thiết bị!'});
 		}
 
-		return changeStatusDevice.mutate();
+		return cancelTeamUsing.mutate();
 	};
 
 	return (
 		<Fragment>
-			<Loading loading={changeStatusDevice.isLoading} />
+			<Loading loading={cancelTeamUsing.isLoading} />
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<Link href={PATH.BoPhat} className={styles.header_title}>
@@ -76,12 +79,12 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 						<p>Thông tin bộ phát</p>
 					</Link>
 					<div className={styles.list_btn}>
-						{data?.status == STATUS_DEVICE.SU_DUNG ? (
+						{data?.teamUuid ? (
 							<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold onClick={() => setOpenCancel(true)}>
 								Hủy quyền sử dụng
 							</Button>
 						) : (
-							<Button className={styles.btn} rounded_8 w_fit p_6_16 blue_light bold onClick={() => setOpenCancel(true)}>
+							<Button className={styles.btn} rounded_8 w_fit p_6_16 blue_light bold onClick={() => setOpenAssign(true)}>
 								Mở quyền sử dụng
 							</Button>
 						)}
@@ -99,7 +102,7 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 								{data?.macNumber}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Thuộc team: </span> {data?.teamName ? `Team của ${data?.teamName}` : '---'}
+								<span style={{marginRight: 6}}>Thuộc team: </span> {data?.teamName ? `Team ${data?.teamName}` : '---'}
 							</td>
 						</tr>
 						<tr>
@@ -107,7 +110,7 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 								<span style={{marginRight: 6}}>Tên thiết bị: </span> {data?.name}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Mã team: </span> {data?.teamName ? `Team của ${data?.teamName}` : '---'}
+								<span style={{marginRight: 6}}>Mã team: </span> {data?.codeTeam ? `Mã team ${data?.codeTeam}` : '---'}
 							</td>
 						</tr>
 						<tr>
@@ -115,7 +118,8 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 								<span style={{marginRight: 6}}>Giá trị tĩnh điện hiện tại:</span> {data?.edsStatic || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Leader team: </span> {data?.teamName ? `Team của ${data?.teamName}` : '---'}
+								<span style={{marginRight: 6}}>Leader team: </span>{' '}
+								{data?.teamLeaderName ? `Team của ${data?.teamLeaderName}` : '---'}
 							</td>
 						</tr>
 						<tr>
@@ -124,13 +128,13 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 							</td>
 							<td rowSpan={5} className={styles.description}>
 								<span style={{marginRight: 6}}>Ghi chú:</span>
-								{'---'}
+								{data?.notes || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<span style={{marginRight: 6}}>Gateway đang kết nối: </span>
-								{data?.gatewayName}
+								{data?.gatewayName || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -174,10 +178,14 @@ function InfoTransmitter({}: PropsInfoTransmitter) {
 				danger
 				open={openCancel}
 				onClose={() => setOpenCancel(false)}
-				title='Đổi trạng thái'
-				note='Bạn có chắc chắn muốn đổi trạng thái bộ phát này?'
+				title='Hủy quyền sử dụng'
+				note='Bạn có chắc chắn muốn hủy quyền sử dụng cho gateway này?'
 				onSubmit={handleCancel}
 			/>
+
+			<Popup open={openAssign} onClose={() => setOpenAssign(false)}>
+				<PopupAssign onClose={() => setOpenAssign(false)} />
+			</Popup>
 		</Fragment>
 	);
 }

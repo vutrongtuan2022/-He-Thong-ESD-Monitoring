@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Status from '~/components/common/Status';
-import {PropsListTransmitterMainPage} from './interfaces';
+import {IGateway, PropsListTransmitterMainPage} from './interfaces';
 import styles from './ListTransmitterMainPage.module.scss';
 import Search from '~/components/common/Search';
 import FilterCustom from '~/components/common/FilterCustom';
@@ -10,121 +10,139 @@ import Table from '~/components/common/Table';
 import Pagination from '~/components/common/Pagination';
 import {useRouter} from 'next/router';
 import {LuCheck, LuPencil} from 'react-icons/lu';
-import Button from '~/components/common/Button';
 import HeadlessTippy from '@tippyjs/react/headless';
 import {CiLock} from 'react-icons/ci';
 import {Trash} from 'iconsax-react';
 import {BsThreeDots} from 'react-icons/bs';
 import Link from 'next/link';
 import Dialog from '~/components/common/Dialog';
+import {QUERY_KEY, STATE_GATEWAY} from '~/constants/config/enum';
+import {useQuery} from '@tanstack/react-query';
+import {httpRequest} from '~/services';
+import categoryServices from '~/services/categoryServices';
+import gatewayServices from '~/services/gatewayServices';
+import Moment from 'react-moment';
+import StateGateway from '../StateGateway';
 
-function ListTransmitterMainPage({}: PropsListTransmitterMainPage) {
+function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 	const router = useRouter();
 
-	const {_page, _pageSize, _keyword} = router.query;
-	const [data, setData] = useState<any[]>([]);
+	const {_page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
+
 	const [open, setOpen] = useState<number | null>(null);
 	const [openDelete, setOpenDelete] = useState<boolean>(false);
 
 	const handleToggle = (index: number) => {
 		setOpen((prev) => (prev === index ? null : index));
 	};
-	useEffect(() => {
-		setData([
-			{
-				id: 1,
-				name: 'name 1',
-				index: 0,
-				isChecked: false,
-			},
-			{
-				id: 2,
-				name: 'name 2',
-				index: 1,
-				isChecked: false,
-			},
-			{
-				id: 3,
-				name: 'name 3',
-				index: 2,
-				isChecked: false,
-			},
-		]);
-	}, []);
+
+	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listArea({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
+	// Lấy danh sách gateway
+	const listGateways = useQuery([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid], {
+		queryFn: () =>
+			httpRequest({
+				http: gatewayServices.listGateway({
+					pageSize: Number(_pageSize) || 20,
+					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
+					state: _state ? Number(_state) : null,
+					factoryAreaUuid: (_factoryAreaUuid as string) || '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.control}>
 				<div className={styles.left}>
-					{data?.some((x) => x.isChecked !== false) && (
-						<div>
-							<Button className={styles.btn} rounded_8 w_fit icon={<LuCheck size={20} />}>
-								Xác nhận xử lý
-							</Button>
-						</div>
-					)}
 					<div style={{minWidth: 360}}>
-						<Search placeholder='Tìm kiếm theo tên gateway, ID' />
+						<Search keyName='_keyword' placeholder='Tìm kiếm theo tên gateway, ID' />
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
+							name='Trạng thái'
+							query='_state'
 							listFilter={[
 								{
-									id: 1,
-									name: ' Trạng thái 1',
+									id: STATE_GATEWAY.HOAT_DONG,
+									name: 'Hoạt động',
 								},
 								{
-									id: 2,
-									name: ' Trạng thái 2',
+									id: STATE_GATEWAY.KHONG_HOAT_DONG,
+									name: 'Không hoạt động',
 								},
 							]}
-							name='Trạng thái'
-							query='_electric'
+						/>
+					</div>
+					<div style={{minWidth: 240}}>
+						<FilterCustom
+							name='Khu vực'
+							query='_factoryAreaUuid'
+							listFilter={listAreas?.data?.map((v: any) => ({
+								id: v?.uuid,
+								name: v?.name,
+							}))}
 						/>
 					</div>
 				</div>
 				<div></div>
 			</div>
 			<div className={styles.table}>
-				<DataWrapper data={[1, 2, 3]} loading={false} noti={<Noti des='Hiện tại chưa có bộ phát nào ?' />}>
+				<DataWrapper
+					data={listGateways?.data?.items}
+					loading={listGateways?.isLoading}
+					noti={<Noti des='Hiện tại chưa có gateway nào ?' titleButton='Thêm gateway' onClick={onOpenCreate} />}
+				>
 					<Table
-						data={data}
-						onSetData={setData}
+						data={listGateways?.data?.items}
 						column={[
 							{
-								checkBox: true,
 								title: 'STT',
-								render: (data: any, index: number) => <>{index + 1}</>,
+								render: (data: IGateway, index: number) => <>{index + 1}</>,
 							},
 
 							{
 								title: 'ID gateway',
-								render: (data: any) => (
-									<Link href={`/gateway/6478384343`} className={styles.link}>
-										6478384343
+								render: (data: IGateway) => (
+									<Link href={`/gateway/${data.uuid}`} className={styles.link}>
+										{data.code}
 									</Link>
 								),
 							},
 
 							{
 								title: 'Tên gateway',
-								render: (data: any) => <p>Gateway khu A</p>,
+								render: (data: IGateway) => <p>{data.name}</p>,
 							},
 							{
 								title: 'SL bộ phát đang kết nối',
-								render: (data: any) => <>3</>,
+								render: (data: IGateway) => <>{data.connection}</>,
 							},
 							{
 								title: 'Trạng thái',
-								render: (data: any) => <Status status='Online' />,
+								render: (data: IGateway) => <StateGateway state={data.state} />,
 							},
 							{
 								title: 'Online lần cuối',
-								render: (data: any) => <>10/04/2024, 14:09:39</>,
+								render: (data: IGateway) => <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' />,
 							},
 							{
 								title: '',
-								render: (data: any, index: number) => (
+								render: (data: IGateway, index: number) => (
 									<HeadlessTippy
 										interactive
 										visible={open === index}
@@ -160,6 +178,12 @@ function ListTransmitterMainPage({}: PropsListTransmitterMainPage) {
 							},
 						]}
 					/>
+					<Pagination
+						currentPage={Number(_page) || 1}
+						total={listGateways?.data?.pagination?.totalCount}
+						pageSize={Number(_pageSize) || 20}
+						dependencies={[_pageSize, _keyword, _state, _factoryAreaUuid]}
+					/>
 				</DataWrapper>
 				<Dialog
 					danger
@@ -168,12 +192,6 @@ function ListTransmitterMainPage({}: PropsListTransmitterMainPage) {
 					title='Xóa gateway'
 					note='Bạn có chắc chắn muốn xóa gateway này?'
 					onSubmit={() => setOpenDelete(false)}
-				/>
-				<Pagination
-					currentPage={Number(_page) || 1}
-					total={400}
-					pageSize={Number(_pageSize) || 20}
-					dependencies={[_pageSize, _keyword]}
 				/>
 			</div>
 		</div>

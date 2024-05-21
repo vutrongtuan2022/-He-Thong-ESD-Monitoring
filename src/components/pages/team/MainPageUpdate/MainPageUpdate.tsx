@@ -95,7 +95,6 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 					areaUuid: form.areaUuid,
 					status: form.status,
 					notes: form.note,
-					devices: '',
 					rootUuid: '',
 					parentUuid: '',
 				}),
@@ -240,7 +239,7 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 											</span>
 										}
 									>
-										{listUsers?.data?.items?.map((v: any) => (
+										{listUsers?.data?.map((v: any) => (
 											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 										))}
 									</Select>
@@ -262,7 +261,7 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 										</span>
 									}
 								>
-									{listAreas?.data?.items?.map((v: any) => (
+									{listAreas?.data?.map((v: any) => (
 										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 									))}
 								</Select>

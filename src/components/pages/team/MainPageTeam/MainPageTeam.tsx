@@ -13,9 +13,35 @@ import GridColumn from '~/components/layouts/GridColumn';
 import ItemDashboard from '../../dashboard/ItemDashboard';
 import {MdCast} from 'react-icons/md';
 import {HiOutlineUserGroup} from 'react-icons/hi';
-import {User} from 'iconsax-react';
+import {Data, TextalignJustifycenter, User} from 'iconsax-react';
+import Search from '~/components/common/Search';
+import FilterCustom from '~/components/common/FilterCustom';
+import {useQuery} from '@tanstack/react-query';
+import {QUERY_KEY} from '~/constants/config/enum';
+import {httpRequest} from '~/services';
+import categoryServices from '~/services/categoryServices';
+import {useRouter} from 'next/router';
+import clsx from 'clsx';
+import TableTeam from '../TableTeam';
+import TreeTeam from '../TreeTeam';
 
 function MainPageTeam({}: PropsMainPageTeam) {
+	const router = useRouter();
+
+	const {_view} = router.query;
+
+	const listUsers = useQuery([QUERY_KEY.dropdown_danh_sach_nguoi_dung], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listUser({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
 	return (
 		<div className={styles.container}>
 			<Breadcrumb
@@ -84,6 +110,76 @@ function MainPageTeam({}: PropsMainPageTeam) {
 						<ItemDashboard value={80} text='Tổng nhân viên trong team' icon={<User size={30} color='#4DBFDD' />} />
 						<ItemDashboard value={80} text='Tổng thiết bị trong team' icon={<MdCast size={30} color='#4DBFDD' />} />
 					</GridColumn>
+				</div>
+				<div className={styles.head}>
+					<div className={styles.box_filter}>
+						<div className={styles.search}>
+							<Search keyName='_keyword' placeholder='Tìm kiếm theo số MAC, tên thiết bị' />
+						</div>
+						<div className={styles.filter}>
+							<FilterCustom
+								isSearch
+								name='Leader'
+								query='_leaderUuid'
+								listFilter={listUsers?.data?.map((v: any) => ({
+									id: v?.uuid,
+									name: v?.name,
+								}))}
+							/>
+						</div>
+					</div>
+					<div className={styles.control}>
+						<div
+							className={clsx(styles.item, {[styles.active]: !_view})}
+							onClick={() => {
+								const {_view, ...rest} = router.query;
+
+								return router.replace(
+									{
+										pathname: router.pathname,
+										query: {
+											...rest,
+										},
+									},
+									undefined,
+									{
+										scroll: false,
+										shallow: false,
+									}
+								);
+							}}
+						>
+							<TextalignJustifycenter size={20} color='#fff' />
+						</div>
+						<div
+							className={clsx(styles.item, {[styles.active]: _view == 'tree'})}
+							onClick={() => {
+								const {_view, ...rest} = router.query;
+
+								return router.replace(
+									{
+										pathname: router.pathname,
+										query: {
+											...rest,
+											_view: 'tree',
+										},
+									},
+									undefined,
+									{
+										scroll: false,
+										shallow: false,
+									}
+								);
+							}}
+						>
+							<Data size={20} color='#fff' />
+						</div>
+					</div>
+				</div>
+
+				<div className={styles.wrapper}>
+					{!_view && <TableTeam />}
+					{_view == 'tree' && <TreeTeam />}
 				</div>
 			</WrapperContainer>
 		</div>

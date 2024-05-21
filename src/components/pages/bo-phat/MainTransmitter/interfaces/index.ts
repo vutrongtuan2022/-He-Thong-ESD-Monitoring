@@ -16,4 +16,7 @@ export interface IDevice {
 	status: number;
 	gatewayName: string | null;
 	teamName: string | null;
+	teamLeaderName: string | null;
+	notes: string | null;
+	code: string | null;
 }

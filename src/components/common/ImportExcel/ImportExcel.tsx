@@ -75,19 +75,24 @@ function ImportExcel({name, file, setFile, onClose, onSubmit}: PropsImportExcel)
 									<p className={styles.name}>{file?.name}</p>
 									<p className={styles.size}>{convertFileSize(file?.size / 1000)}</p>
 								</div>
-								<label htmlFor={`file-work-${name}`} className={styles.change}>
-									<input
-										hidden
-										id={`file-work-${name}`}
-										type='file'
-										accept='.xls, .xlsx, .csv'
-										onClick={(e: any) => {
-											e.target.value = null;
-										}}
-										onChange={handleFileChange}
-									/>
-									Thay thế
-								</label>
+								<div>
+									<label htmlFor={`file-work-${name}`} className={styles.change}>
+										<input
+											hidden
+											id={`file-work-${name}`}
+											type='file'
+											accept='.xls, .xlsx, .csv'
+											onClick={(e: any) => {
+												e.target.value = null;
+											}}
+											onChange={handleFileChange}
+										/>
+										Thay thế
+									</label>
+									<div className={styles.clear} onClick={() => setFile(null)}>
+										Xóa
+									</div>
+								</div>
 							</div>
 						</div>
 					) : (
@@ -122,11 +127,11 @@ function ImportExcel({name, file, setFile, onClose, onSubmit}: PropsImportExcel)
 					)}
 				</div>
 				<div className={styles.groupBtn}>
-					<Button p_8_40 maxContent div bold primary disable={!file} rounded_6 onClick={onSubmit}>
-						Lựa chọn
-					</Button>
 					<Button p_8_40 maxContent bold grey_2 rounded_6 div onClick={onClose}>
 						Đóng
+					</Button>
+					<Button p_8_40 maxContent div bold primary disable={!file} rounded_6 onClick={onSubmit}>
+						Lựa chọn
 					</Button>
 				</div>
 			</div>

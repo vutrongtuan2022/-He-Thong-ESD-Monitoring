@@ -4,7 +4,5 @@ export interface PropsFormCreateTransmitter {
 export interface IForm {
 	macNumber: string;
 	name: string;
-	gatewayUuid: string;
 	teamUuid: string;
-	status: number;
 }

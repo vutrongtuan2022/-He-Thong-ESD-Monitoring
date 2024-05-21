@@ -9,7 +9,5 @@ export interface IFormUpdate {
 	uuid: string;
 	macNumber: string;
 	name: string;
-	gatewayUuid: string;
 	teamUuid: string;
-	status: number;
 }

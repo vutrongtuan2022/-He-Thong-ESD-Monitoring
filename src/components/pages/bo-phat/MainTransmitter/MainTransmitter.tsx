@@ -33,6 +33,7 @@ import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import clsx from 'clsx';
 import ImportExcel from '~/components/common/ImportExcel';
+import Noti from '~/components/common/DataWrapper/components/Noti';
 
 function MainTransmitter({}: PropsMainTransmitter) {
 	const router = useRouter();
@@ -43,7 +44,7 @@ function MainTransmitter({}: PropsMainTransmitter) {
 	const [file, setFile] = useState<any>(null);
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
 	const [dataUpdate, setDataUpdate] = useState<IDevice | null>(null);
-	const [dataDelete, setDataDelete] = useState<IDevice | null>(null);
+	const [dataChangeStatus, setDataChangeStatus] = useState<IDevice | null>(null);
 
 	// Lấy danh sách thiết bị
 	const listDevices = useQuery([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword, _pin, _onlineState, _ngState, _status], {
@@ -80,14 +81,14 @@ function MainTransmitter({}: PropsMainTransmitter) {
 				showMessageSuccess: true,
 				msgSuccess: 'Thay đổi trạng thái thành công!',
 				http: deviceServices.updateDeviceStatus({
-					uuid: dataDelete?.uuid!,
-					status: dataDelete?.status! == STATUS_DEVICE.SU_DUNG ? STATUS_DEVICE.KHONG_SU_DUNG : STATUS_DEVICE.SU_DUNG,
+					uuid: dataChangeStatus?.uuid!,
+					status: dataChangeStatus?.status! == STATUS_DEVICE.SU_DUNG ? STATUS_DEVICE.KHONG_SU_DUNG : STATUS_DEVICE.SU_DUNG,
 				}),
 			});
 		},
 		onSuccess(data) {
 			if (data) {
-				setDataDelete(null);
+				setDataChangeStatus(null);
 				queryClient.invalidateQueries([
 					QUERY_KEY.danh_sach_bo_phat,
 					_page,
@@ -172,7 +173,7 @@ function MainTransmitter({}: PropsMainTransmitter) {
 	};
 
 	const handleChangeStatusDevice = async () => {
-		if (!dataDelete?.uuid) {
+		if (!dataChangeStatus?.uuid) {
 			return toastWarn({msg: 'Không tìm thấy thiết bị!'});
 		}
 
@@ -307,7 +308,18 @@ function MainTransmitter({}: PropsMainTransmitter) {
 						</div>
 					</div>
 					<div className={styles.table}>
-						<DataWrapper data={listDevices?.data?.items} loading={listDevices.isLoading}>
+						<DataWrapper
+							data={listDevices?.data?.items}
+							loading={listDevices.isLoading}
+							noti={
+								<Noti
+									title='Bộ phát trống'
+									des='Danh sách bộ phát trống!'
+									titleButton='Thêm mới bộ phát'
+									onClick={() => setOpenCreate(true)}
+								/>
+							}
+						>
 							<Table
 								data={listDevices?.data?.items}
 								column={[
@@ -333,7 +345,7 @@ function MainTransmitter({}: PropsMainTransmitter) {
 									},
 									{
 										title: 'Leader team',
-										render: (data: IDevice) => <>{data.teamName || '---'}</>,
+										render: (data: IDevice) => <>{data.teamLeaderName || '---'}</>,
 									},
 									{
 										title: 'Phần trăm pin',
@@ -377,7 +389,7 @@ function MainTransmitter({}: PropsMainTransmitter) {
 													icon={<Trash size='22' />}
 													tooltip='Khóa'
 													color='#777E90'
-													onClick={() => setDataDelete(data)}
+													onClick={() => setDataChangeStatus(data)}
 												/>
 											</div>
 										),
@@ -398,8 +410,8 @@ function MainTransmitter({}: PropsMainTransmitter) {
 			{/* POPUP */}
 			<Dialog
 				danger
-				open={!!dataDelete}
-				onClose={() => setDataDelete(null)}
+				open={!!dataChangeStatus}
+				onClose={() => setDataChangeStatus(null)}
 				title='Đổi trạng thái'
 				note='Bạn có chắc chắn muốn đổi trạng thái bộ phát này?'
 				onSubmit={handleChangeStatusDevice}
@@ -410,7 +422,6 @@ function MainTransmitter({}: PropsMainTransmitter) {
 			<Popup open={!!dataUpdate} onClose={() => setDataUpdate(null)}>
 				<FormUpdateTransmitter dataUpdate={dataUpdate} onClose={() => setDataUpdate(null)} />
 			</Popup>
-
 			<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
 				<ImportExcel
 					name='file-device'

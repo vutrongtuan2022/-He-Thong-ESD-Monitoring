@@ -10,7 +10,6 @@ const teamServices = {
 			name: string;
 			leaderUuid: string;
 			areaUuid: string;
-			devices: string;
 			notes: string;
 			status: number;
 		},

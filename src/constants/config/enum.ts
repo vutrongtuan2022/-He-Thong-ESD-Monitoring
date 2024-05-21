@@ -7,6 +7,8 @@ export enum QUERY_KEY {
 	chi_tiet_team,
 	danh_sach_bo_phat,
 	chi_tiet_bo_phat,
+	lich_su_bo_phat_LG,
+	danh_sach_gateway,
 }
 
 export enum TYPE_DATE {
@@ -56,4 +58,9 @@ export enum SIGNAL_STATUS_DEVICE {
 	YEU,
 	MANH,
 	TRUNG_BINH,
+}
+
+export enum STATE_GATEWAY {
+	KHONG_HOAT_DONG,
+	HOAT_DONG,
 }

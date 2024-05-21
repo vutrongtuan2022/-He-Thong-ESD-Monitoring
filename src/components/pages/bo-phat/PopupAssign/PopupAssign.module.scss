@@ -1,0 +1,36 @@
+.container {
+	width: 628px;
+	border-radius: 20px;
+	background: #fff;
+	padding: 28px;
+
+	h4 {
+		color: #171832;
+		font-size: 20px;
+		font-weight: 700;
+		margin-bottom: 16px;
+	}
+}
+
+.btn {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.close {
+	position: absolute;
+	right: 32px;
+	top: 32px;
+	cursor: pointer;
+	user-select: none;
+	font-size: 24px;
+	color: var(--dark-2);
+	transition: 0.3s;
+
+	&:active {
+		transform: scale(0.9);
+	}
+}
