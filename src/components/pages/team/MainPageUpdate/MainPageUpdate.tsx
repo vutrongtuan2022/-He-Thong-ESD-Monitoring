@@ -59,7 +59,6 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
 		queryFn: () =>
 			httpRequest({
-				isList: true,
 				http: categoryServices.listArea({
 					keyword: '',
 				}),
@@ -72,7 +71,6 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 	const listUsers = useQuery([QUERY_KEY.dropdown_danh_sach_nguoi_dung], {
 		queryFn: () =>
 			httpRequest({
-				isList: true,
 				http: categoryServices.listUser({
 					keyword: '',
 				}),

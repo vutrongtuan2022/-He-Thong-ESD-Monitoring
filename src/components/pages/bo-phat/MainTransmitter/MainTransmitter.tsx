@@ -32,12 +32,13 @@ import StatusDevice from '../StatusDevice';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import clsx from 'clsx';
+import ImportExcel from '~/components/common/ImportExcel';
 
 function MainTransmitter({}: PropsMainTransmitter) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _keyword, _pin, _onlineState, _ngState, _status} = router.query;
+	const {_page, _pageSize, _keyword, _pin, _onlineState, _ngState, _status, importExcel} = router.query;
 
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
 
@@ -47,7 +48,6 @@ function MainTransmitter({}: PropsMainTransmitter) {
 	const listDevices = useQuery([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword, _pin, _onlineState, _ngState, _status], {
 		queryFn: () =>
 			httpRequest({
-				isList: true,
 				http: deviceServices.listDevice({
 					pageSize: Number(_pageSize) || 20,
 					page: Number(_page) || 1,
@@ -170,6 +170,22 @@ function MainTransmitter({}: PropsMainTransmitter) {
 								blue_light
 								bold
 								icon={<Image alt='icon import' src={icons.import_excel} width={20} height={20} />}
+								onClick={() =>
+									router.replace(
+										{
+											pathname: router.pathname,
+											query: {
+												...router.query,
+												importExcel: 'open',
+											},
+										},
+										undefined,
+										{
+											scroll: false,
+											shallow: false,
+										}
+									)
+								}
 							>
 								Import excel
 							</Button>
@@ -338,6 +354,23 @@ function MainTransmitter({}: PropsMainTransmitter) {
 			</Popup>
 			<Popup open={!!dataUpdate} onClose={() => setDataUpdate(null)}>
 				<FormUpdateTransmitter dataUpdate={dataUpdate} onClose={() => setDataUpdate(null)} />
+			</Popup>
+
+			<Popup
+				open={importExcel == 'open'}
+				onClose={() => {
+					const {importExcel, ...rest} = router.query;
+
+					router.replace(
+						{
+							query: rest,
+						},
+						undefined,
+						{scroll: false}
+					);
+				}}
+			>
+				<ImportExcel />
 			</Popup>
 		</div>
 	);

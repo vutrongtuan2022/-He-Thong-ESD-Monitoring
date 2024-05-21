@@ -49,7 +49,6 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 	const listTeams = useQuery([QUERY_KEY.dropdown_danh_sach_team], {
 		queryFn: () =>
 			httpRequest({
-				isList: true,
 				http: categoryServices.listTeam({
 					keyword: '',
 				}),
@@ -62,7 +61,6 @@ function FormUpdateTransmitter({dataUpdate, onClose}: PropsFormUpdateTransmitter
 	const listGateways = useQuery([QUERY_KEY.dropdown_danh_sach_gateway], {
 		queryFn: () =>
 			httpRequest({
-				isList: true,
 				http: categoryServices.listGateway({
 					keyword: '',
 				}),

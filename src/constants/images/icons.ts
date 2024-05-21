@@ -22,6 +22,7 @@ import icon_warn from '../../../public/static/images/icon_warn.svg';
 import icon_trash from '../../../public/static/images/icon_trash.svg';
 import icon_note from '../../../public/static/images/icon_note.svg';
 import icon_edit from '../../../public/static/images/icon_edit.svg';
+import XSL from '../../../public/static/images/XSL.svg';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -49,4 +50,5 @@ export default {
 	add,
 	icon_warn,
 	icon_edit,
+	XSL,
 };
