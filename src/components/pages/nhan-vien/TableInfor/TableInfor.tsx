@@ -1,21 +1,40 @@
 import React, {useEffect, useState} from 'react';
-import {PropsTableInfor} from './interfaces';
+import {IUserDetail, PropsTableInfor} from './interfaces';
 import styles from './TableInfor.module.scss';
 import {useRouter} from 'next/router';
 import Button from '~/components/common/Button';
 import Image from 'next/image';
 import icons from '~/constants/images/icons';
 import Link from 'next/link';
+import {httpRequest} from '~/services';
 import {IoArrowBackOutline} from 'react-icons/io5';
 import clsx from 'clsx';
+import userServices from '~/services/userServices';
 import {PATH} from '~/constants/config';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {QUERY_KEY} from '~/constants/config/enum';
 
 function TableInfor({}: PropsTableInfor) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
+
+	const {_id} = router.query;
 
 	const {_page, _pageSize, _keyword} = router.query;
-	const [data, setData] = useState<any[]>([]);
+	const [data, setData] = useState<IUserDetail>();
 
+	useQuery([QUERY_KEY.chi_tiet_nhan_vien, _id], {
+		queryFn: () =>
+			httpRequest({
+				http: userServices.userDetail({
+					uuid: _id as string,
+				}),
+			}),
+		onSuccess(data) {
+			setData(data);
+		},
+		enabled: !!_id,
+	});
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
@@ -56,44 +75,45 @@ function TableInfor({}: PropsTableInfor) {
 					</colgroup>
 					<tr>
 						<td>
-							<span style={{marginRight: 6}}>Mã nhân viên: </span> 2444212333
+							<span style={{marginRight: 6}}>Mã nhân viên: </span> {data?.code || '---'}
 						</td>
 						<td>
-							<span style={{marginRight: 6}}>Chức vụ: </span> Nhân viên
+							<span style={{marginRight: 6}}>Chức vụ: </span> {data?.role || '---'}
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: 6}}>Họ và tên: </span> Vũ Văn Anh
+							<span style={{marginRight: 6}}>Họ và tên: </span> {data?.fullname || '---'}
 						</td>
 						<td>
-							<span style={{marginRight: 6}}>Thuộc team: : </span> Team sản xuất Nguyễn Thị A
+							<span style={{marginRight: 6}}>Thuộc team: : </span> {data?.teamName ? `Team ${data?.teamName}` : '---'}
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: 6}}>Email: </span> vuvananh22@gmail.com
+							<span style={{marginRight: 6}}>Email: </span> {data?.email || '---'}
 						</td>
 						<td>
-							<span style={{marginRight: 6}}>Leader team: </span> Nguyễn Thị A
+							<span style={{marginRight: 6}}>Leader team: </span> {data?.leadName || '---'}
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: 6}}>Số điện thoại: </span> 0324442522
+							<span style={{marginRight: 6}}>Số điện thoại: </span> {data?.phone || '---'}
 						</td>
 						<td>
-							<span style={{marginRight: 6}}>Tạo lúc: </span> 10/04/2024, 14:09:39
+							<span style={{marginRight: 6}}>Tạo lúc: </span> {data?.timeCreated || '---'}
 						</td>
 					</tr>
-					<tr>
+
+					{/* <tr>
 						<td>
-							<span style={{marginRight: 6}}>Số CCCD: </span> 142882966
+							<span style={{marginRight: 6}}>Số CCCD: </span>
 						</td>
 						<td>
-							<span style={{marginRight: 6}}>Cập nhập lần cuối: </span> 20/04/2024, 12:04:23
+							<span style={{marginRight: 6}}>Cập nhập lần cuối: </span>
 						</td>
-					</tr>
+					</tr> */}
 				</table>
 			</div>
 		</div>

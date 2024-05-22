@@ -30,11 +30,12 @@ const userServices = {
 			page: number;
 			keyword: string;
 			teamUuid: string;
+			username: string | null;
 			timeCreated: {
 				fromDate: string | null;
 				toDate: string | null;
 			} | null;
-			status: STATUS_USER | null;
+			status: string | null;
 		},
 		tokenAxios?: any
 	) => {
@@ -54,6 +55,12 @@ const userServices = {
 		tokenAxios?: any
 	) => {
 		return axiosClient.post(`/User/upsert_user_device`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+
+	userDetail: (data: {uuid: string}, tokenAxios?: any) => {
+		return axiosClient.post(`/User/user_detail`, data, {
 			cancelToken: tokenAxios,
 		});
 	},

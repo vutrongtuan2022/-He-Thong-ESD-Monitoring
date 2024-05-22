@@ -4,12 +4,16 @@ export interface PropsListTransmitter {}
 
 export interface IUser {
 	uuid: string | null;
+	username: string | null;
 	userName: string | null;
 	fullname: string | null;
 	teamUuid: string | null;
-	teamname: string | null;
+	teamName: string | null;
+
+	code: string | null;
 	gender: string | null;
 	email: string | null;
+
 	phone: number;
 	status: STATUS_USER | null;
 	address: string | null;
@@ -18,7 +22,7 @@ export interface IUser {
 	role: string | null;
 	timeCreated: string | null;
 	userid: string | null;
-	nameleader: string | null;
+	leadName: string | null;
 }
 
 export interface IPage {
