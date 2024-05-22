@@ -19,3 +19,15 @@
 	font-weight: 500;
 	margin-top: 6px;
 }
+
+.loading {
+	width: fit-content;
+	height: fit-content;
+	animation: spinner 1.5s linear infinite;
+}
+
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}

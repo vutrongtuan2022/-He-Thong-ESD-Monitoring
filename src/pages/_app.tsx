@@ -6,7 +6,10 @@ import '~/styles/_globals.scss';
 
 import Head from 'next/head';
 import {NextPage} from 'next';
+import {useRouter} from 'next/router';
 import type {AppProps} from 'next/app';
+import trans from '~/locale/i18n';
+
 import {Fragment, ReactElement, ReactNode} from 'react';
 
 import AppProvider from '~/contexts/AppProvider';
@@ -26,6 +29,10 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({Component, pageProps}: AppPropsWithLayout) {
+	const router = useRouter();
+	const {locale} = router;
+	trans.changeLanguage(locale);
+
 	const getLayout = Component.getLayout ?? ((page) => page);
 
 	return (

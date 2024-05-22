@@ -23,6 +23,8 @@ import icon_trash from '../../../public/static/images/icon_trash.svg';
 import icon_note from '../../../public/static/images/icon_note.svg';
 import icon_edit from '../../../public/static/images/icon_edit.svg';
 import XSL from '../../../public/static/images/XSL.svg';
+import vietnam from '../../../public/static/images/vietname.svg';
+import icon_en from '../../../public/static/images/icon_en.svg';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -51,4 +53,6 @@ export default {
 	icon_warn,
 	icon_edit,
 	XSL,
+	vietnam,
+	icon_en,
 };

@@ -1,0 +1,13 @@
+{
+	"Common": {
+		"home": "Trang chủ"
+	},
+	"Overview": {
+		"text": "Báo cáo tổng quan",
+		"overview": "Tổng quan",
+		"totalDevice": "Tổng số bộ phát",
+		"totalDeviceOnline": "Số bộ phát đang hoạt động",
+		"totalDeviceNG": "Số bộ phát NG",
+		"longestNGTime": "Khoảng thời gian NG lâu nhất"
+	}
+}

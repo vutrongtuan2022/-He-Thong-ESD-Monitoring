@@ -7,6 +7,7 @@ import {LuUserCircle2} from 'react-icons/lu';
 import {BiSolidVector} from 'react-icons/bi';
 import {IoSettingsSharp, IoWifiSharp} from 'react-icons/io5';
 import {RxDashboard} from 'react-icons/rx';
+import icons from '../images/icons';
 
 export const MAXIMUM_FILE = 10; //MB
 
@@ -113,5 +114,18 @@ export const ListOptionTimePicker: {
 	{
 		name: 'Lựa chọn',
 		value: TYPE_DATE.LUA_CHON,
+	},
+];
+
+export const Languageses = [
+	{
+		title: 'Vietnamese',
+		code: 'vi',
+		icon: icons.vietnam,
+	},
+	{
+		title: 'English',
+		code: 'en',
+		icon: icons.icon_en,
 	},
 ];

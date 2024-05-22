@@ -59,9 +59,9 @@ const deviceServices = {
 				fromDate: string;
 				toDate: string;
 			} | null;
-			gatewayUuid?: string;
+			gatewayUuid?: string | null;
 			teamUuid?: string;
-			factoryAreaUuid?: string;
+			factoryAreaUuid?: string | null;
 		},
 		tokenAxios?: any
 	) => {
