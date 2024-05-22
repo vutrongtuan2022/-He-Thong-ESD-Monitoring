@@ -29,7 +29,7 @@ import clsx from 'clsx';
 function ListTransmitter({}: PropsListTransmitter) {
 	const router = useRouter();
 
-	const {_page, _pageSize, _status, _keyword, _teamUuid} = router.query;
+	const {_page, _pageSize, _status, _username, _keyword, _teamUuid} = router.query;
 
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
 	const [openDelete, setOpenDelete] = useState<boolean>(false);
@@ -40,14 +40,15 @@ function ListTransmitter({}: PropsListTransmitter) {
 		setOpen((prev) => (prev === index ? null : index));
 	};
 
-	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _pageSize, _keyword, _status, _teamUuid], {
+	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status, _teamUuid], {
 		queryFn: () =>
 			httpRequest({
 				http: userServices.listUser({
 					pageSize: Number(_pageSize) || 20,
 					page: Number(_page) || 1,
 					keyword: _keyword ? (_keyword as string) : '',
-					status: _status ? Number(_status) : null,
+					username: _username ? (_username as string) : null,
+					status: _status ? (_status as string) : null,
 					timeCreated: {
 						fromDate: '2023-05-21T02:36:42.699Z',
 						toDate: '2024-05-21T02:36:42.699Z',
@@ -109,7 +110,7 @@ function ListTransmitter({}: PropsListTransmitter) {
 								},
 							]}
 							name='Trạng thái'
-							query='_status'
+							query='_username'
 						/>
 					</div>
 					<div style={{minWidth: 240}}>
@@ -146,8 +147,8 @@ function ListTransmitter({}: PropsListTransmitter) {
 							{
 								title: 'Mã nhân viên',
 								render: (data: IUser) => (
-									<Link href={`/nhan-vien/${data.userid}`} className={styles.link}>
-										{data.userid || '---'}
+									<Link href={`/nhan-vien/${data.uuid}`} className={styles.link}>
+										{data.code || '---'}
 									</Link>
 								),
 							},
@@ -161,11 +162,11 @@ function ListTransmitter({}: PropsListTransmitter) {
 							},
 							{
 								title: 'Thuộc team',
-								render: (data: IUser) => <p>{data.teamname || '---'}</p>,
+								render: (data: IUser) => <p>{data.teamName || '---'}</p>,
 							},
 							{
 								title: 'Leader team',
-								render: (data: IUser) => <>{data.nameleader || '---'}</>,
+								render: (data: IUser) => <>{data.leadName || '---'}</>,
 							},
 							{
 								title: 'Tài khoản',
@@ -194,7 +195,13 @@ function ListTransmitter({}: PropsListTransmitter) {
 										placement='bottom'
 										render={(attrs) => (
 											<div className={styles.mainOption}>
-												<div className={styles.item} onClick={() => setOpenCreate(true)}>
+												<div
+													className={styles.item}
+													onClick={() => {
+														setOpenCreate(true);
+														setOpen(null);
+													}}
+												>
 													<AiOutlineUserAdd size={18} />
 													<p>Cấp tài khoản</p>
 												</div>
