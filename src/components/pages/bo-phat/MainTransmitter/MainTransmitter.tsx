@@ -387,7 +387,7 @@ function MainTransmitter({}: PropsMainTransmitter) {
 												<IconCustom
 													delete
 													icon={<Trash size='22' />}
-													tooltip='Khóa'
+													tooltip='Xóa'
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
 												/>
@@ -426,6 +426,7 @@ function MainTransmitter({}: PropsMainTransmitter) {
 				<ImportExcel
 					name='file-device'
 					file={file}
+					pathTemplate='/static/files/Mau_Import_Device.xlsx'
 					setFile={setFile}
 					onClose={handleCloseImportExcel}
 					onSubmit={handleImportExcel}

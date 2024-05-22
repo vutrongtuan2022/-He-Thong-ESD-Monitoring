@@ -84,7 +84,7 @@ export const httpRequest = async ({
 			showMessageFailed && toastInfo({msg: 'Kiểm tra kết nối internet'});
 			setLoading && setLoading(() => false);
 		} else {
-			showMessageFailed && toastWarn({msg: 'Có lỗi đã xảy ra!'});
+			showMessageFailed && toastWarn({msg: err?.error?.message || 'Có lỗi đã xảy ra!'});
 			setLoading && setLoading(() => false);
 		}
 	} finally {

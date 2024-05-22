@@ -10,6 +10,7 @@ export enum QUERY_KEY {
 	chi_tiet_bo_phat,
 	lich_su_bo_phat_LG,
 	danh_sach_gateway,
+	chi_tiet_gateway,
 	danh_sach_nhan_vien,
 	danh_sach_nhan_vien_team,
 	danh_sach_bo_phat_team,
@@ -68,6 +69,11 @@ export enum SIGNAL_STATUS_DEVICE {
 }
 
 export enum STATE_GATEWAY {
+	OFFLINE,
+	ONLINE,
+}
+
+export enum STATUS_GATEWAY {
 	KHONG_HOAT_DONG,
 	HOAT_DONG,
 }

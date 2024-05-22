@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import Status from '~/components/common/Status';
+import React, {useState} from 'react';
 import {IGateway, PropsListTransmitterMainPage} from './interfaces';
 import styles from './ListTransmitterMainPage.module.scss';
 import Search from '~/components/common/Search';
@@ -9,27 +8,30 @@ import Noti from '~/components/common/DataWrapper/components/Noti';
 import Table from '~/components/common/Table';
 import Pagination from '~/components/common/Pagination';
 import {useRouter} from 'next/router';
-import {LuCheck, LuPencil} from 'react-icons/lu';
-import HeadlessTippy from '@tippyjs/react/headless';
-import {CiLock} from 'react-icons/ci';
 import {Trash} from 'iconsax-react';
-import {BsThreeDots} from 'react-icons/bs';
 import Link from 'next/link';
 import Dialog from '~/components/common/Dialog';
-import {QUERY_KEY, STATE_GATEWAY} from '~/constants/config/enum';
-import {useQuery} from '@tanstack/react-query';
+import {QUERY_KEY, STATE_GATEWAY, STATUS_GATEWAY} from '~/constants/config/enum';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import categoryServices from '~/services/categoryServices';
 import gatewayServices from '~/services/gatewayServices';
 import Moment from 'react-moment';
 import StateGateway from '../StateGateway';
 import IconCustom from '~/components/common/IconCustom';
+import Popup from '~/components/common/Popup';
+import PopupUpdate from '../PopupUpdate';
+import {toastWarn} from '~/common/funcs/toast';
+import Loading from '~/components/common/Loading';
+import {LuPencil} from 'react-icons/lu';
 
 function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
 	const {_page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
 
+	const [dataUpdate, setDataUpdate] = useState<IGateway | null>(null);
 	const [dataDelete, setDataDelete] = useState<IGateway | null>(null);
 
 	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
@@ -54,6 +56,7 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 					keyword: _keyword ? (_keyword as string) : '',
 					state: _state ? Number(_state) : null,
 					factoryAreaUuid: (_factoryAreaUuid as string) || '',
+					status: STATUS_GATEWAY.HOAT_DONG,
 				}),
 			}),
 		select(data) {
@@ -61,8 +64,36 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 		},
 	});
 
+	const funcDeleteGateway = useMutation({
+		mutationFn: () =>
+			httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Xóa gateway thành công!',
+				http: gatewayServices.updateStatusGateway({
+					uuid: dataDelete?.uuid!,
+					status: dataDelete?.status == STATUS_GATEWAY.HOAT_DONG ? STATUS_GATEWAY.KHONG_HOAT_DONG : STATUS_GATEWAY.HOAT_DONG,
+				}),
+			}),
+		onSuccess(data) {
+			if (data) {
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid]);
+				setDataDelete(null);
+			}
+		},
+	});
+
+	const deleteGateway = async () => {
+		if (!dataDelete?.uuid) {
+			return toastWarn({msg: 'Không tìm thấy gateway!'});
+		}
+
+		return funcDeleteGateway.mutate();
+	};
+
 	return (
 		<div className={styles.container}>
+			<Loading loading={funcDeleteGateway.isLoading} />
 			<div className={styles.control}>
 				<div className={styles.left}>
 					<div style={{minWidth: 360}}>
@@ -74,12 +105,12 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 							query='_state'
 							listFilter={[
 								{
-									id: STATE_GATEWAY.HOAT_DONG,
-									name: 'Hoạt động',
+									id: STATE_GATEWAY.ONLINE,
+									name: 'Online',
 								},
 								{
-									id: STATE_GATEWAY.KHONG_HOAT_DONG,
-									name: 'Không hoạt động',
+									id: STATE_GATEWAY.OFFLINE,
+									name: 'Offline',
 								},
 							]}
 						/>
@@ -149,15 +180,15 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 											icon={<LuPencil fontSize={20} fontWeight={600} />}
 											tooltip='Chỉnh sửa'
 											color='#777E90'
-											// onClick={() => setDataUpdate(data)}
+											onClick={() => setDataUpdate(data)}
 										/>
 
 										<IconCustom
 											delete
 											icon={<Trash size='22' />}
-											tooltip='Khóa'
+											tooltip='Xóa'
 											color='#777E90'
-											// onClick={() => setDataChangeStatus(data)}
+											onClick={() => setDataDelete(data)}
 										/>
 									</div>
 								),
@@ -171,14 +202,17 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 						dependencies={[_pageSize, _keyword, _state, _factoryAreaUuid]}
 					/>
 				</DataWrapper>
-				{/* <Dialog
+				<Dialog
 					danger
-					open={openDelete}
-					onClose={() => setOpenDelete(false)}
-					title='Xóa gateway'
+					open={!!dataDelete}
+					onClose={() => setDataDelete(null)}
+					title='Xóa dữ liệu'
 					note='Bạn có chắc chắn muốn xóa gateway này?'
-					onSubmit={() => setOpenDelete(false)}
-				/> */}
+					onSubmit={deleteGateway}
+				/>
+				<Popup open={!!dataUpdate} onClose={() => setDataUpdate(null)}>
+					<PopupUpdate dataUpdate={dataUpdate} onClose={() => setDataUpdate(null)} />
+				</Popup>
 			</div>
 		</div>
 	);

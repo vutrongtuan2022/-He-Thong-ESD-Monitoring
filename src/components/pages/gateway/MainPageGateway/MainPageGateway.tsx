@@ -12,13 +12,92 @@ import Popup from '~/components/common/Popup';
 import PopupCreate from '../PopupCreate';
 import Image from 'next/image';
 import ListTransmitterMainPage from '../ListTransmitterMainPage';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {httpRequest} from '~/services';
+import gatewayServices from '~/services/gatewayServices';
+import {QUERY_KEY, STATUS_GATEWAY} from '~/constants/config/enum';
+import {useRouter} from 'next/router';
+import Loading from '~/components/common/Loading';
+import ImportExcel from '~/components/common/ImportExcel';
 
 function MainPageGateway({}: PropsMainPageGateway) {
+	const router = useRouter();
+	const queryClient = useQueryClient();
+
+	const {importExcel, _page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
+
+	const [file, setFile] = useState<any>(null);
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
 	const [openDelete, setOpenDelete] = useState<boolean>(false);
 
+	// Func export excel
+	const exportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				http: gatewayServices.exportExcel({
+					pageSize: Number(_pageSize) || 20,
+					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
+					state: _state ? Number(_state) : null,
+					factoryAreaUuid: (_factoryAreaUuid as string) || '',
+					status: STATUS_GATEWAY.HOAT_DONG,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
+			}
+		},
+	});
+
+	// Func import excel
+	const fucnImportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Import file thành công!',
+				http: gatewayServices.importExcel({
+					FileData: file,
+					Type: 1,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				handleCloseImportExcel();
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid]);
+			}
+		},
+	});
+
+	// Close popup import excel
+	const handleCloseImportExcel = () => {
+		const {importExcel, ...rest} = router.query;
+
+		setFile(null);
+		router.replace(
+			{
+				query: rest,
+			},
+			undefined,
+			{scroll: false}
+		);
+	};
+
+	const handleExportExcel = async () => {
+		exportExcel.mutate();
+	};
+
+	const handleImportExcel = async () => {
+		fucnImportExcel.mutate();
+	};
+
 	return (
 		<div className={styles.container}>
+			<Loading loading={exportExcel.isLoading} />
+
 			<Breadcrumb
 				listUrls={[
 					{
@@ -41,6 +120,7 @@ function MainPageGateway({}: PropsMainPageGateway) {
 								green
 								bold
 								icon={<Image alt='icon export' src={icons.export_excel} width={20} height={20} />}
+								onClick={handleExportExcel}
 							>
 								Export excel
 							</Button>
@@ -54,6 +134,22 @@ function MainPageGateway({}: PropsMainPageGateway) {
 								blue_light
 								bold
 								icon={<Image alt='icon import' src={icons.import_excel} width={20} height={20} />}
+								onClick={() =>
+									router.replace(
+										{
+											pathname: router.pathname,
+											query: {
+												...router.query,
+												importExcel: 'open',
+											},
+										},
+										undefined,
+										{
+											scroll: false,
+											shallow: false,
+										}
+									)
+								}
 							>
 								Import excel
 							</Button>
@@ -91,6 +187,16 @@ function MainPageGateway({}: PropsMainPageGateway) {
 			</WrapperContainer>
 			<Popup open={openCreate} onClose={() => setOpenCreate(false)}>
 				<PopupCreate onClose={() => setOpenCreate(false)} />
+			</Popup>
+			<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
+				<ImportExcel
+					name='file-device'
+					file={file}
+					pathTemplate='/static/files/Mau_Import_Gateway.xlsx'
+					setFile={setFile}
+					onClose={handleCloseImportExcel}
+					onSubmit={handleImportExcel}
+				/>
 			</Popup>
 		</div>
 	);

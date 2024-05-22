@@ -11,7 +11,7 @@ import {convertFileSize} from '~/common/funcs/optionConvert';
 import background from '~/constants/images/background';
 import {toastError} from '~/common/funcs/toast';
 
-function ImportExcel({name, file, setFile, onClose, onSubmit}: PropsImportExcel) {
+function ImportExcel({name, file, pathTemplate, setFile, onClose, onSubmit}: PropsImportExcel) {
 	const [dragging, setDragging] = useState<boolean>(false);
 
 	const handleDragEnter = (e: any) => {
@@ -56,7 +56,7 @@ function ImportExcel({name, file, setFile, onClose, onSubmit}: PropsImportExcel)
 					<h2 className={styles.title}>Nhập file từ Excel</h2>
 					<p className={styles.note}>Bạn có thể tải tệp .xls, .xlsx, .csv lên bản của mình</p>
 					<p className={styles.download}>
-						<a download href='/static/files/Mau_Import_Device.xlsx' style={{color: '#2A85FF'}}>
+						<a download href={pathTemplate} style={{color: '#2A85FF'}}>
 							Tải xuống{' '}
 						</a>
 						Tệp tài liệu mẫu
