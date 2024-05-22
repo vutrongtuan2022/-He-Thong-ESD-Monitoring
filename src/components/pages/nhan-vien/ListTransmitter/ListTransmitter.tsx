@@ -49,10 +49,7 @@ function ListTransmitter({}: PropsListTransmitter) {
 					keyword: _keyword ? (_keyword as string) : '',
 					username: _username ? (_username as string) : null,
 					status: _status ? (_status as string) : null,
-					timeCreated: {
-						fromDate: '2023-05-21T02:36:42.699Z',
-						toDate: '2024-05-21T02:36:42.699Z',
-					},
+					timeCreated: null,
 					teamUuid: '',
 				}),
 			}),
@@ -60,28 +57,6 @@ function ListTransmitter({}: PropsListTransmitter) {
 			return data;
 		},
 	});
-	useEffect(() => {
-		setData([
-			{
-				id: 1,
-				name: 'name 1',
-				index: 0,
-				isChecked: false,
-			},
-			{
-				id: 2,
-				name: 'name 2',
-				index: 1,
-				isChecked: false,
-			},
-			{
-				id: 3,
-				name: 'name 3',
-				index: 2,
-				isChecked: false,
-			},
-		]);
-	}, []);
 
 	return (
 		<div className={styles.container}>
@@ -136,12 +111,11 @@ function ListTransmitter({}: PropsListTransmitter) {
 				<DataWrapper data={listUser?.data?.items} loading={false} noti={<Noti des='Hiện tại chưa có bộ phát nào ?' />}>
 					<Table
 						data={listUser?.data?.items}
-						onSetData={setData}
 						column={[
 							{
 								// checkBox: true,
 								title: 'STT',
-								render: (data: any, index: number) => <>{index + 1}</>,
+								render: (data: IUser, index: number) => <>{index + 1}</>,
 							},
 
 							{
@@ -230,6 +204,13 @@ function ListTransmitter({}: PropsListTransmitter) {
 							},
 						]}
 					/>
+
+					<Pagination
+						currentPage={Number(_page) || 1}
+						total={listUser?.data?.pagination?.totalCount}
+						pageSize={Number(_pageSize) || 20}
+						dependencies={[_pageSize, _keyword, _status]}
+					/>
 				</DataWrapper>
 				<Dialog
 					danger
@@ -238,12 +219,6 @@ function ListTransmitter({}: PropsListTransmitter) {
 					title='Xóa nhân viên'
 					note='Bạn có chắc chắn muốn xóa nhân viên này?'
 					onSubmit={() => setOpenDelete(false)}
-				/>
-				<Pagination
-					currentPage={Number(_page) || 1}
-					total={listUser?.data?.pagination.totalCount || 0}
-					pageSize={Number(_pageSize) || 20}
-					dependencies={[_pageSize, _keyword]}
 				/>
 			</div>
 			<Popup open={OpenCreate} onClose={() => setOpenCreate(false)}>

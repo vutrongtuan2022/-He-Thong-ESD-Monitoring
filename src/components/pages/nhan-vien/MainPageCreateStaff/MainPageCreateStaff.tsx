@@ -16,6 +16,7 @@ import userServices from '~/services/userServices';
 import {useRouter} from 'next/router';
 import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
+import moment from 'moment';
 const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 	const [date, setDate] = useState<string>('');
 	const [form, setForm] = useState<IForm>({
@@ -47,12 +48,12 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 					fullname: form.fullname,
 					userName: form.userName,
 					email: form.email,
-					address: '',
+					address: form.address,
 					avatar: '',
-					birthday: '',
-					phone: '',
+					birthday: form.birthday,
+					phone: form.phone,
 					gender: GENDER.NAM,
-					role: '',
+					role: form.role,
 					code: form.code,
 					status: STATUS_GENERAL.MO,
 					teamUuid: '',
@@ -74,6 +75,9 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 		}
 		if (!form.email) {
 			return toastWarn({msg: 'Vui lòng nhập email!'});
+		}
+		if (!form.phone) {
+			return toastWarn({msg: 'Vui lòng nhập phone!'});
 		}
 
 		return upsertUser.mutate();
@@ -182,10 +186,11 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 										placeholder='Chọn ngày sinh'
 										value={date}
 										onSetValue={(newDate) => {
-											setDate(newDate);
+											const formattedDate = moment(newDate).format('YYYY-MM-DD');
+											setDate(formattedDate);
 											setForm((prevForm) => ({
 												...prevForm,
-												birthday: newDate,
+												birthday: formattedDate,
 											}));
 										}}
 										name='birthday'

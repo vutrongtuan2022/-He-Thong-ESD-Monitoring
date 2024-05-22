@@ -7,10 +7,10 @@ export interface IForm {
 	code: string;
 	gender: number;
 	email: string;
-	phone: string | null;
-	address: string | null;
-	birthday: string | null;
+	phone: string;
+	address: string;
+	birthday: string;
 	avatar: string | null;
-	role: string | null;
-	status: string | null;
+	role: string;
+	status: string;
 }
