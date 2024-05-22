@@ -16,6 +16,25 @@ const gatewayServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	upsertGateway: (
+		data: {
+			uuid: string;
+			code: string;
+			name: string;
+			notes: string;
+			status: number;
+			factoryAreaUuid?: string | null;
+			connection?: number | null;
+			state?: number | null;
+			ipConnect?: string | null;
+			timeLastOnline?: string | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Gateway/upsert_gateway`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default gatewayServices;

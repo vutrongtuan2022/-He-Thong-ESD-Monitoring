@@ -10,6 +10,10 @@ export enum QUERY_KEY {
 	lich_su_bo_phat_LG,
 	danh_sach_gateway,
 	danh_sach_nhan_vien,
+	danh_sach_nhan_vien_team,
+	danh_sach_bo_phat_team,
+	danh_sach_lich_su_team,
+	trang_chu_tong_quan,
 }
 
 export enum TYPE_DATE {

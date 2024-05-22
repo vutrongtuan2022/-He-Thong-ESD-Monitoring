@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import {Fragment, ReactElement} from 'react';
 import BaseLayout from '~/components/layouts/BaseLayout';
-import MaindDashboard from '~/components/pages/dashboard/MaindDashboard';
+import MaindDashboard from '~/components/pages/dashboard/MainDashboard';
 
 export default function Home() {
 	return (

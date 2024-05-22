@@ -23,18 +23,14 @@ import categoryServices from '~/services/categoryServices';
 import gatewayServices from '~/services/gatewayServices';
 import Moment from 'react-moment';
 import StateGateway from '../StateGateway';
+import IconCustom from '~/components/common/IconCustom';
 
 function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 	const router = useRouter();
 
 	const {_page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
 
-	const [open, setOpen] = useState<number | null>(null);
-	const [openDelete, setOpenDelete] = useState<boolean>(false);
-
-	const handleToggle = (index: number) => {
-		setOpen((prev) => (prev === index ? null : index));
-	};
+	const [dataDelete, setDataDelete] = useState<IGateway | null>(null);
 
 	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
 		queryFn: () =>
@@ -123,10 +119,13 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 									</Link>
 								),
 							},
-
 							{
 								title: 'Tên gateway',
-								render: (data: IGateway) => <p>{data.name}</p>,
+								render: (data: IGateway) => <p>{data.name || '---'}</p>,
+							},
+							{
+								title: 'Khu vực quản lý',
+								render: (data: IGateway) => <p>{data.factoryName || '---'}</p>,
 							},
 							{
 								title: 'SL bộ phát đang kết nối',
@@ -143,37 +142,23 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 							{
 								title: '',
 								render: (data: IGateway, index: number) => (
-									<HeadlessTippy
-										interactive
-										visible={open === index}
-										placement='bottom'
-										render={(attrs) => (
-											<div className={styles.mainOption}>
-												<div className={styles.item}>
-													<CiLock size={18} />
-													<p>Khóa lại</p>
-												</div>
-												<div
-													className={styles.item}
-													onClick={() => {
-														router.push(`/nguoi-dung/chinh-sua?_id=${123}`);
-													}}
-												>
-													<LuPencil size={18} />
-													<p>Chỉnh sửa</p>
-												</div>
-												<div className={styles.item} onClick={() => setOpenDelete(true)}>
-													<Trash size={18} />
-													<p>Xóa bỏ</p>
-												</div>
-											</div>
-										)}
-										onClickOutside={() => setOpen(null)}
-									>
-										<div className={styles.btn} onClick={() => handleToggle(index)}>
-											<BsThreeDots className={styles.dots} size={20} />
-										</div>
-									</HeadlessTippy>
+									<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+										<IconCustom
+											edit
+											icon={<LuPencil fontSize={20} fontWeight={600} />}
+											tooltip='Chỉnh sửa'
+											color='#777E90'
+											// onClick={() => setDataUpdate(data)}
+										/>
+
+										<IconCustom
+											delete
+											icon={<Trash size='22' />}
+											tooltip='Khóa'
+											color='#777E90'
+											// onClick={() => setDataChangeStatus(data)}
+										/>
+									</div>
 								),
 							},
 						]}
@@ -185,14 +170,14 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 						dependencies={[_pageSize, _keyword, _state, _factoryAreaUuid]}
 					/>
 				</DataWrapper>
-				<Dialog
+				{/* <Dialog
 					danger
 					open={openDelete}
 					onClose={() => setOpenDelete(false)}
 					title='Xóa gateway'
 					note='Bạn có chắc chắn muốn xóa gateway này?'
 					onSubmit={() => setOpenDelete(false)}
-				/>
+				/> */}
 			</div>
 		</div>
 	);

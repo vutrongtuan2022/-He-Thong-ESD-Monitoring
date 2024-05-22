@@ -1,86 +1,115 @@
 import React from 'react';
 
-import {PropsTableTeam} from './interfaces';
+import {ITableTeam, PropsTableTeam} from './interfaces';
 import styles from './TableTeam.module.scss';
 import DataWrapper from '~/components/common/DataWrapper';
 import Noti from '~/components/common/DataWrapper/components/Noti';
 import Table from '~/components/common/Table';
 import Link from 'next/link';
 import Moment from 'react-moment';
+import {useQuery} from '@tanstack/react-query';
+import {QUERY_KEY} from '~/constants/config/enum';
+import {httpRequest} from '~/services';
+import teamServices from '~/services/teamServices';
+import {useRouter} from 'next/router';
+import Pagination from '~/components/common/Pagination';
+import IconCustom from '~/components/common/IconCustom';
+import {LuPencil} from 'react-icons/lu';
+import {Trash} from 'iconsax-react';
 
 function TableTeam({}: PropsTableTeam) {
+	const router = useRouter();
+
+	const {_page, _pageSize, _keyword, _leaderUuid} = router.query;
+
+	const pageListTeams = useQuery([QUERY_KEY.danh_sach_team, _pageSize, _keyword, _leaderUuid], {
+		queryFn: () =>
+			httpRequest({
+				http: teamServices.pageListTeam({
+					keyword: _keyword as string,
+					page: Number(_page) || 1,
+					pageSize: Number(_pageSize) || 20,
+					status: null,
+					leaderUuid: _leaderUuid ? (_leaderUuid as string) : null,
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
 	return (
 		<div className={styles.container}>
-			<DataWrapper data={[1, 2, 3]} loading={false} noti={<Noti title='Team trống' des='Danh sách team trống!' />}>
+			<DataWrapper
+				data={pageListTeams?.data?.items}
+				loading={pageListTeams.isLoading}
+				noti={<Noti title='Team trống' des='Danh sách team trống!' />}
+			>
 				<Table
-					data={[1, 2, 3]}
+					data={pageListTeams?.data?.items}
 					column={[
 						{
 							title: 'STT',
-							render: (data: any, index: number) => <>{index + 1}</>,
+							render: (data: ITableTeam, index: number) => <>{index + 1}</>,
 						},
 						{
 							title: 'Tên team',
-							render: (data: any) => <>{1}</>,
-						},
-						{
-							title: 'Mã team',
-							render: (data: any) => (
+							render: (data: ITableTeam) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
-									{data.macNumber}
+									{data.name || '---'}
 								</Link>
 							),
 						},
 						{
+							title: 'Mã team',
+							render: (data: ITableTeam) => <>{data.code || '---'}</>,
+						},
+						{
 							title: 'Người quản lý team',
-							render: (data: any) => <>{data.teamName || '---'}</>,
+							render: (data: ITableTeam) => <>{data.leaderName || '---'}</>,
 						},
 						{
 							title: 'Số thành viên',
-							render: (data: any) => <>{data.teamName || '---'}</>,
+							render: (data: ITableTeam) => <>{data.totalUser || 0}</>,
 						},
 						{
 							title: 'Số thiết bị',
-							render: (data: any) => <>{data.battery}%</>,
+							render: (data: ITableTeam) => <>{data.totalDevices || 0}</>,
 						},
 						{
 							title: 'Khu vực',
-							render: (data: any) => <>{data.battery}%</>,
+							render: (data: ITableTeam) => <>{'---'}</>,
 						},
 						{
-							title: 'Online lần cuối',
-							render: (data: any) => <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' />,
-						},
-						// {
-						// 	title: 'Tác vụ',
-						// 	render: (data: any) => (
-						// 		<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
-						// 			<IconCustom
-						// 				edit
-						// 				icon={<LuPencil fontSize={20} fontWeight={600} />}
-						// 				tooltip='Chỉnh sửa'
-						// 				color='#777E90'
-						// 				onClick={() => setDataUpdate(data)}
-						// 			/>
+							title: 'Tác vụ',
+							render: (data: ITableTeam) => (
+								<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+									<IconCustom
+										edit
+										icon={<LuPencil fontSize={20} fontWeight={600} />}
+										tooltip='Chỉnh sửa'
+										color='#777E90'
+										href={`/team/chinh-sua?_id=${data.uuid}`}
+									/>
 
-						// 			<IconCustom
-						// 				delete
-						// 				icon={<Trash size='22' />}
-						// 				tooltip='Khóa'
-						// 				color='#777E90'
-						// 				onClick={() => setDataChangeStatus(data)}
-						// 			/>
-						// 		</div>
-						// 	),
-						// },
+									<IconCustom
+										delete
+										icon={<Trash size='22' />}
+										tooltip='Khóa'
+										color='#777E90'
+										// onClick={() => setDataChangeStatus(data)}
+									/>
+								</div>
+							),
+						},
 					]}
 				/>
-				{/* <Pagination
+				<Pagination
 					currentPage={Number(_page) || 1}
-					total={listDevices?.data?.pagination?.totalCount}
 					pageSize={Number(_pageSize) || 20}
-					dependencies={[_pageSize, _keyword, _pin, _onlineState, _ngState, _status]}
-				/> */}
+					total={pageListTeams?.data?.pagination?.totalCount}
+					dependencies={[_pageSize, _keyword, _leaderUuid]}
+				/>
 			</DataWrapper>
 		</div>
 	);
