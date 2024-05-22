@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {PropsMainPageCreateStaff} from './interfaces';
+import {IForm, PropsMainPageCreateStaff} from './interfaces';
 import styles from './MainPageCreateStaff.module.scss';
 import Button from '~/components/common/Button';
 import Form, {Input} from '~/components/common/Form';
@@ -9,26 +9,32 @@ import {PATH} from '~/constants/config';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import DatePicker from '~/components/common/DatePicker';
-import {GENDER, STATUS_GENERAL} from '~/constants/config/enum';
-import {useMutation} from '@tanstack/react-query';
+import {GENDER, QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import userServices from '~/services/userServices';
+import {useRouter} from 'next/router';
+import categoryServices from '~/services/categoryServices';
+import {toastWarn} from '~/common/funcs/toast';
 const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 	const [date, setDate] = useState<string>('');
-	const [form, setForm] = useState<any>({
-		avatar: '',
-		name: '',
-		CCCD: '',
+	const [form, setForm] = useState<IForm>({
+		userName: '',
+		fullname: '',
+		teamUuid: '',
+		gender: 0,
 		email: '',
 		phone: '',
-		code: '',
-		province: '',
-		district: '',
-		ward: '',
 		address: '',
-		note: '',
-		personnel: '',
+		birthday: '2024-05-22',
+		avatar: '',
+		role: '',
+		status: '',
+		code: '',
 	});
+	const router = useRouter();
+	const queryClient = useQueryClient();
+	const {_page, _pageSize, _keyword, _pin, _onlineState, _ngState, _status} = router.query;
 
 	const upsertUser = useMutation({
 		mutationFn: () =>
@@ -37,16 +43,17 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 				showMessageSuccess: true,
 				msgSuccess: 'Thêm mới nhân viên!',
 				http: userServices.upsertUser({
-					uuid: null,
-					fullname: '',
-					userName: '',
-					email: '',
+					uuid: '',
+					fullname: form.fullname,
+					userName: form.userName,
+					email: form.email,
 					address: '',
 					avatar: '',
 					birthday: '',
 					phone: '',
 					gender: GENDER.NAM,
 					role: '',
+					code: form.code,
 					status: STATUS_GENERAL.MO,
 					teamUuid: '',
 				}),
@@ -55,6 +62,44 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 			if (data) {
 				console.log(data);
 			}
+		},
+	});
+
+	const handleSubmit = async () => {
+		if (!form.code) {
+			return toastWarn({msg: 'Vui lòng nhập mã nhân viên!'});
+		}
+		if (!form.fullname) {
+			return toastWarn({msg: 'Vui lòng nhập tên nhân viên!'});
+		}
+		if (!form.email) {
+			return toastWarn({msg: 'Vui lòng nhập email!'});
+		}
+
+		return upsertUser.mutate();
+	};
+
+	const listTeams = useQuery([QUERY_KEY.dropdown_danh_sach_team], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listTeam({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
+	const listRoles = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listRole({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
 		},
 	});
 
@@ -87,7 +132,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 							<Button href={PATH.NhanVien} p_10_24 rounded_2 grey_outline>
 								Hủy bỏ
 							</Button>
-							<Button p_10_24 rounded_2 primary>
+							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
 								Lưu lại
 							</Button>
 						</div>
@@ -97,8 +142,8 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 							<div className={clsx('col_2')}>
 								<div>
 									<Input
-										name='name'
-										value={form.name || ''}
+										name='code'
+										value={form.code || ''}
 										label={
 											<span>
 												Mã nhân viên <span style={{color: 'red'}}>*</span>
@@ -108,8 +153,8 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 									/>
 								</div>
 								<Input
-									name='name'
-									value={form.name || ''}
+									name='fullname'
+									value={form.fullname || ''}
 									label={
 										<span>
 											Họ và tên <span style={{color: 'red'}}>*</span>
@@ -121,14 +166,14 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 
 							<div className={clsx('mt', 'col_2')}>
 								<Input
-									name='CCCD'
-									value={form.CCCD || ''}
+									name='address'
+									value={form.address || ''}
 									label={
 										<span>
-											Số CCCD<span style={{color: 'red'}}>*</span>
+											Địa chỉ<span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Nhập mã số CCCD'
+									placeholder='Nhập địa chỉ'
 								/>
 								<div className={clsx('col_2')}>
 									<DatePicker
@@ -136,8 +181,14 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 										label={'Ngày sinh'}
 										placeholder='Chọn ngày sinh'
 										value={date}
-										onSetValue={setDate}
-										name='dateOfBirth'
+										onSetValue={(newDate) => {
+											setDate(newDate);
+											setForm((prevForm) => ({
+												...prevForm,
+												birthday: newDate,
+											}));
+										}}
+										name='birthday'
 										onClean={true}
 									/>
 									<div className={styles.gennder}>
@@ -236,46 +287,38 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 								<div>
 									<Select
 										isSearch
-										name='CCCD'
-										placeholder='Nhập số căn cước'
-										value={form?.CCCD || null}
-										onChange={(e: any) =>
-											setForm((prev: any) => ({
+										name='role'
+										value={form.role || null}
+										placeholder='Lựa chọn'
+										onChange={(e) =>
+											setForm((prev) => ({
 												...prev,
-												personnel: e.target.value,
+												role: e.target.value,
 											}))
 										}
-										label={
-											<span>
-												Chức vụ <span style={{color: 'red'}}>*</span>
-											</span>
-										}
+										label={<span>Chức vụ</span>}
 									>
-										<Option title='Nhân viên 1' value={1} />
-										<Option title='Nhân viên 2' value={2} />
-										<Option title='Nhân viên 3' value={3} />
+										{listRoles?.data?.map((v: any) => (
+											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+										))}
 									</Select>
 								</div>
 								<Select
 									isSearch
-									name='CCCD'
+									name='teamUuid'
+									value={form.teamUuid || null}
 									placeholder='Lựa chọn'
-									value={form?.CCCD || null}
-									onChange={(e: any) =>
-										setForm((prev: any) => ({
+									onChange={(e) =>
+										setForm((prev) => ({
 											...prev,
-											personnel: e.target.value,
+											teamUuid: e.target.value,
 										}))
 									}
-									label={
-										<span>
-											Thuộc team <span style={{color: 'red'}}>*</span>
-										</span>
-									}
+									label={<span>Thuộc team</span>}
 								>
-									<Option title='team 1' value={1} />
-									<Option title='team 2' value={2} />
-									<Option title='team 3' value={3} />
+									{listTeams?.data?.map((v: any) => (
+										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+									))}
 								</Select>
 							</div>
 						</Form>

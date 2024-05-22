@@ -17,6 +17,7 @@ const userServices = {
 			avatar: string;
 			role: string;
 			status: STATUS_GENERAL;
+			code: string;
 		},
 		tokenAxios?: any
 	) => {
@@ -40,21 +41,6 @@ const userServices = {
 		tokenAxios?: any
 	) => {
 		return axiosClient.post(`/User/page_list_user`, data, {
-			cancelToken: tokenAxios,
-		});
-	},
-	upsertUserUser: (
-		data: {
-			uuid: string | null;
-			macNumber: string | null;
-			name: string | null;
-			gatewayUuid: string | null;
-			teamUuid: string | null;
-			status: number | null;
-		},
-		tokenAxios?: any
-	) => {
-		return axiosClient.post(`/User/upsert_user_device`, data, {
 			cancelToken: tokenAxios,
 		});
 	},
