@@ -2,7 +2,7 @@ import {PropsHeader} from './interfaces';
 import TippyHeadless from '@tippyjs/react/headless';
 
 import styles from './Header.module.scss';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import ImageFill from '~/components/common/ImageFill';
 import clsx from 'clsx';
 import icons from '~/constants/images/icons';
@@ -12,12 +12,21 @@ import {useSelector} from 'react-redux';
 import {RootState, store} from '~/redux/store';
 import {setFullMenu} from '~/redux/reducer/site';
 import BoxNoti from '../BoxNoti';
+import {Languageses} from '~/constants/config';
+import Link from 'next/link';
+import {useRouter} from 'next/router';
+import {RiArrowDownSFill} from 'react-icons/ri';
+import Image from 'next/image';
 
 function Header({title}: PropsHeader) {
+	const router = useRouter();
 	const {fullMenu} = useSelector((state: RootState) => state.site);
 
 	const [openMenu, setOpenMenu] = useState<boolean>(false);
 	const [openNoti, setOpenNoti] = useState<boolean>(false);
+	const [openLanguagese, setOpenLanguagese] = useState<boolean>(false);
+
+	const chooseLang = useMemo(() => Languageses.find((v) => v.code == router.locale), [router.locale]);
 
 	return (
 		<div className={styles.container}>
@@ -36,6 +45,43 @@ function Header({title}: PropsHeader) {
 			</div>
 
 			<div className={styles.right}>
+				<TippyHeadless
+					maxWidth={'100%'}
+					interactive
+					visible={openLanguagese}
+					onClickOutside={() => setOpenLanguagese(false)}
+					placement='bottom'
+					render={() => (
+						<div className={styles.option}>
+							{Languageses.map((v) => (
+								<Link
+									key={v.code}
+									locale={v.code}
+									href={router.asPath}
+									className={clsx(styles.lang_item, {
+										[styles.active]: chooseLang?.code == v.code,
+									})}
+									onClick={() => setOpenLanguagese(false)}
+								>
+									<Image src={v?.icon} alt='icon lang' width={20} height={16} />
+									<p>{v?.title}</p>
+								</Link>
+							))}
+						</div>
+					)}
+				>
+					<div className={styles.lang} onClick={() => setOpenLanguagese(!openLanguagese)}>
+						<Image src={chooseLang?.icon} alt='icon lang' width={20} height={16} />
+						<p>{chooseLang?.title}</p>
+						<i
+							className={clsx(styles.icon_arrow, {
+								[styles.active_icon]: openLanguagese,
+							})}
+						>
+							<RiArrowDownSFill />
+						</i>
+					</div>
+				</TippyHeadless>
 				<TippyHeadless
 					maxWidth={'100%'}
 					interactive

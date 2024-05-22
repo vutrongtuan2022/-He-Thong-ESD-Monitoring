@@ -6,17 +6,73 @@ import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
 import Form, {Input} from '~/components/common/Form';
 import TextArea from '~/components/common/Form/components/TextArea';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {httpRequest} from '~/services';
+import gatewayServices from '~/services/gatewayServices';
+import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
+import {useRouter} from 'next/router';
+import {toastWarn} from '~/common/funcs/toast';
+import Loading from '~/components/common/Loading';
 
 function PopupCreate({onClose}: PropsPopupCreate) {
-	const [keyword, setKeyword] = useState<string>('');
-	const [form, setForm] = useState<any>({code: '', name: '', description: ''});
-	const handleSubmit = () => {
-		console.log(form);
+	const router = useRouter();
+	const queryClient = useQueryClient();
+
+	const {_page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
+
+	const [form, setForm] = useState<{
+		code: string;
+		name: string;
+		description: string;
+	}>({code: '', name: '', description: ''});
+
+	const upsertGateway = useMutation({
+		mutationFn: () =>
+			httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Thêm mới gateway thành công!',
+				http: gatewayServices.upsertGateway({
+					uuid: '',
+					code: form.code,
+					name: form.name,
+					notes: form.description,
+					status: STATUS_GENERAL.MO,
+					connection: null,
+					factoryAreaUuid: null,
+					ipConnect: null,
+					state: null,
+					timeLastOnline: null,
+				}),
+			}),
+		onSuccess(data) {
+			if (data) {
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid]);
+				onClose();
+				setForm({
+					code: '',
+					name: '',
+					description: '',
+				});
+			}
+		},
+	});
+
+	const handleSubmit = async () => {
+		if (!form.code) {
+			return toastWarn({msg: 'Vui lòng nhập code gateway!'});
+		}
+		if (!form.name) {
+			return toastWarn({msg: 'Vui lòng nhập tên gateway!'});
+		}
+
+		return upsertGateway.mutate();
 	};
 
 	return (
 		<div className={styles.container}>
 			<h4>Thêm mới gateway</h4>
+			<Loading loading={upsertGateway.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
 					type='text'

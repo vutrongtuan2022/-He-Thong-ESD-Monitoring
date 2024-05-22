@@ -14,16 +14,16 @@ function MainChart({}: PropsMainChart) {
 			<div className={styles.head}>
 				<h4>Biểu đồ thống kê số lượng bộ phát NG</h4>
 				<div className={styles.right}>
-					<div className={styles.item}>
-						<Image src={icons.icon_chart_1} alt='Icon chart' />
-						<p>
-							Bộ phát hoạt động: <span style={{color: '#4ECB71'}}>10</span>
-						</p>
-					</div>
 					<div style={{marginLeft: '12px'}} className={styles.item}>
 						<Image src={icons.icon_chart_2} alt='Icon chart' />
 						<p>
 							Bộ phát NG: <span style={{color: '#FF6666'}}>10</span>
+						</p>
+					</div>
+					<div className={styles.item}>
+						<Image src={icons.icon_chart_1} alt='Icon chart' />
+						<p>
+							Bộ phát hoạt động: <span style={{color: '#4ECB71'}}>10</span>
 						</p>
 					</div>
 				</div>
@@ -35,8 +35,8 @@ function MainChart({}: PropsMainChart) {
 						<XAxis dataKey='time' />
 						<Tooltip />
 						<YAxis />
-						<Line type='monotone' dataKey='Bộ phát hoạt động' stroke='#4ECB71' strokeWidth={3} />
-						<Line type='monotone' dataKey='Bộ phát NG' stroke='#FF6666' strokeWidth={3} />
+						<Line type='linear' dataKey='Bộ phát hoạt động' stroke='#4ECB71' strokeWidth={3} />
+						<Line type='linear' dataKey='Bộ phát NG' stroke='#FF6666' strokeWidth={3} />
 					</LineChart>
 				</ResponsiveContainer>
 			</div>

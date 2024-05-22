@@ -29,6 +29,20 @@ const teamServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	pageListTeam: (
+		data: {
+			pageSize: number;
+			page: number;
+			keyword: string;
+			status: number | null;
+			leaderUuid: string | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`Team/page_list_team`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default teamServices;
