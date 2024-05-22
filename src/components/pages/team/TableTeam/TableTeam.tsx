@@ -95,7 +95,7 @@ function TableTeam({}: PropsTableTeam) {
 									<IconCustom
 										delete
 										icon={<Trash size='22' />}
-										tooltip='Khóa'
+										tooltip='Xóa'
 										color='#777E90'
 										// onClick={() => setDataChangeStatus(data)}
 									/>

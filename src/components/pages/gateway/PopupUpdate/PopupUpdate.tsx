@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {PropsPopupCreate} from './interfaces';
-import styles from './PopupCreate.module.scss';
+import React, {useEffect, useState} from 'react';
+import {PropsPopupUpdate} from './interfaces';
+import styles from './PopupUpdate.module.scss';
 import clsx from 'clsx';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
@@ -14,35 +14,47 @@ import {useRouter} from 'next/router';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 
-function PopupCreate({onClose}: PropsPopupCreate) {
+function PopupUpdate({dataUpdate, onClose}: PropsPopupUpdate) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
 	const {_page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
 
 	const [form, setForm] = useState<{
+		uuid: string;
 		code: string;
 		name: string;
 		description: string;
-	}>({code: '', name: '', description: ''});
+	}>({uuid: '', code: '', name: '', description: ''});
+
+	useEffect(() => {
+		if (dataUpdate) {
+			setForm({
+				uuid: dataUpdate.uuid,
+				code: dataUpdate.code,
+				name: dataUpdate.name,
+				description: dataUpdate.notes,
+			});
+		}
+	}, [dataUpdate]);
 
 	const upsertGateway = useMutation({
 		mutationFn: () =>
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thêm mới gateway thành công!',
+				msgSuccess: 'Chỉnh sửa gateway thành công!',
 				http: gatewayServices.upsertGateway({
-					uuid: '',
+					uuid: form.uuid,
 					code: form.code,
 					name: form.name,
 					notes: form.description,
-					status: STATUS_GENERAL.MO,
-					state: STATE_GATEWAY.ONLINE,
-					connection: 0,
-					factoryAreaUuid: null,
-					ipConnect: '',
-					timeLastOnline: null,
+					status: dataUpdate?.status!,
+					state: dataUpdate?.state!,
+					connection: dataUpdate?.connection,
+					factoryAreaUuid: dataUpdate?.factoryAreaUuid,
+					ipConnect: dataUpdate?.ipConnect,
+					timeLastOnline: dataUpdate?.timeLastOnline,
 				}),
 			}),
 		onSuccess(data) {
@@ -50,6 +62,7 @@ function PopupCreate({onClose}: PropsPopupCreate) {
 				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid]);
 				onClose();
 				setForm({
+					uuid: '',
 					code: '',
 					name: '',
 					description: '',
@@ -71,7 +84,7 @@ function PopupCreate({onClose}: PropsPopupCreate) {
 
 	return (
 		<div className={styles.container}>
-			<h4>Thêm mới gateway</h4>
+			<h4>Chỉnh sửa gateway</h4>
 			<Loading loading={upsertGateway.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
@@ -106,7 +119,7 @@ function PopupCreate({onClose}: PropsPopupCreate) {
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							Xác nhận
+							Cập nhật
 						</Button>
 					</div>
 				</div>
@@ -119,4 +132,4 @@ function PopupCreate({onClose}: PropsPopupCreate) {
 	);
 }
 
-export default PopupCreate;
+export default PopupUpdate;

@@ -1,4 +1,4 @@
-import {STATE_GATEWAY} from '~/constants/config/enum';
+import {STATE_GATEWAY, STATUS_GATEWAY} from '~/constants/config/enum';
 import axiosClient from '.';
 
 const gatewayServices = {
@@ -8,6 +8,7 @@ const gatewayServices = {
 			page: number;
 			keyword: string;
 			state: STATE_GATEWAY | null;
+			status: STATUS_GATEWAY | null;
 			factoryAreaUuid: string;
 		},
 		tokenAxios?: any
@@ -32,6 +33,51 @@ const gatewayServices = {
 		tokenAxios?: any
 	) => {
 		return axiosClient.post(`/Gateway/upsert_gateway`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	updateStatusGateway: (
+		data: {
+			uuid: string;
+			status: number;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Gateway/update_gateway_status`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	exportExcel: (
+		data: {
+			pageSize: number;
+			page: number;
+			keyword: string;
+			state: STATE_GATEWAY | null;
+			status: STATUS_GATEWAY | null;
+			factoryAreaUuid: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Gateway/export_excel`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	importExcel: (data: {FileData: any; Type: any}, tokenAxios?: any) => {
+		return axiosClient.put(`/Gateway/import_excel`, data, {
+			cancelToken: tokenAxios,
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				Accept: 'text/plain',
+			},
+		});
+	},
+	detailGateway: (
+		data: {
+			uuid: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Gateway/gateway_detail`, data, {
 			cancelToken: tokenAxios,
 		});
 	},
