@@ -3,6 +3,7 @@ export enum QUERY_KEY {
 	dropdown_danh_sach_nguoi_dung,
 	dropdown_danh_sach_team,
 	dropdown_danh_sach_gateway,
+	dropdown_danh_sach_chuc_vu,
 	danh_sach_team,
 	chi_tiet_team,
 	danh_sach_bo_phat,

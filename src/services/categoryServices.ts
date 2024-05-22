@@ -41,6 +41,16 @@ const categoryServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	listRole: (
+		data: {
+			keyword: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Category/category_role`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default categoryServices;
