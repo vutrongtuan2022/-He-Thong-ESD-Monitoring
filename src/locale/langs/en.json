@@ -1,0 +1,13 @@
+{
+	"Common": {
+		"home": "Home"
+	},
+	"Overview": {
+		"text": "Overview report",
+		"overview": "Overview",
+		"totalDevice": "Total Devices",
+		"totalDeviceOnline": "Devices Online",
+		"totalDeviceNG": "Devices NG",
+		"longestNGTime": "Longest NG Time"
+	}
+}

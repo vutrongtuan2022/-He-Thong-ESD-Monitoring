@@ -86,6 +86,7 @@ function ListTransmitterMainPage({onOpenCreate}: PropsListTransmitterMainPage) {
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
+							isSearch
 							name='Khu vực'
 							query='_factoryAreaUuid'
 							listFilter={listAreas?.data?.map((v: any) => ({

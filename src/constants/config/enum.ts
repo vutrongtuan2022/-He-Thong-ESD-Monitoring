@@ -14,6 +14,7 @@ export enum QUERY_KEY {
 	danh_sach_bo_phat_team,
 	danh_sach_lich_su_team,
 	trang_chu_tong_quan,
+	chi_tiet_nhan_vien,
 }
 
 export enum TYPE_DATE {
@@ -71,6 +72,6 @@ export enum STATE_GATEWAY {
 }
 
 export enum STATUS_USER {
-	HAVEACCOUNT = 1,
-	NOACCOUNT,
+	HAVEACCOUNT = '1',
+	NOACCOUNT = '0',
 }

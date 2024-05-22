@@ -31,6 +31,7 @@ function TableUser({}: PropsTableUser) {
 						fromDate: null,
 						toDate: null,
 					},
+					username: '',
 				}),
 			}),
 		select(data) {
