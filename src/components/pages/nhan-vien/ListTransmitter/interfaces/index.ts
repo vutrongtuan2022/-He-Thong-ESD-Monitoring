@@ -24,8 +24,3 @@ export interface IUser {
 	userid: string | null;
 	leadName: string | null;
 }
-
-export interface IPage {
-	totalCount: number;
-	totalPage: number;
-}
