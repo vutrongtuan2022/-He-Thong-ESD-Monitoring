@@ -51,6 +51,16 @@ const categoryServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	listDevice: (
+		data: {
+			keyword: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Category/category_device`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default categoryServices;

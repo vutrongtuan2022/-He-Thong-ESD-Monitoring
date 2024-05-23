@@ -31,7 +31,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 		birthday: '2024-05-22',
 		avatar: '',
 		role: '',
-		status: STATUS_GENERAL.MO,
+		status: STATUS_GENERAL.SU_DUNG,
 		code: '',
 	});
 	const router = useRouter();
@@ -56,8 +56,8 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 					gender: form.gender,
 					role: form.role,
 					code: form.code,
-					status: form.status || STATUS_GENERAL.MO,
-					teamUuid: form.teamUuid,
+					status: STATUS_GENERAL.SU_DUNG,
+					teamUuid: '',
 				}),
 			}),
 		onSuccess(data) {

@@ -49,7 +49,7 @@ function ListTransmitter({}: PropsListTransmitter) {
 				msgSuccess: 'Thay đổi trạng thái thành công!',
 				http: userServices.updateUserStatus({
 					uuid: dataChangeStatus?.uuid!,
-					status: dataChangeStatus?.status! == STATUS_GENERAL.MO ? STATUS_GENERAL.KHOA : STATUS_GENERAL.MO,
+					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
 				}),
 			});
 		},

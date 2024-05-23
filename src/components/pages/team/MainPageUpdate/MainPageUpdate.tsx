@@ -31,7 +31,7 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 		leaderUuid: '',
 		areaUuid: '',
 		note: '',
-		status: STATUS_GENERAL.MO,
+		status: STATUS_GENERAL.SU_DUNG,
 	});
 
 	// GET DETAIL TEAM
@@ -215,8 +215,8 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 										</span>
 									}
 								>
-									<Option title={'Hoạt động'} value={STATUS_GENERAL.MO} />
-									<Option title={'Không hoạt động'} value={STATUS_GENERAL.KHOA} />
+									<Option title={'Hoạt động'} value={STATUS_GENERAL.SU_DUNG} />
+									<Option title={'Không hoạt động'} value={STATUS_GENERAL.KHONG_SU_DUNG} />
 								</Select>
 							</div>
 

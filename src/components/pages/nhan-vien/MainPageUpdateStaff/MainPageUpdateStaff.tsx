@@ -36,7 +36,7 @@ const MainPageUpdateStaff = ({dataUpdate}: PropsMainPageUpdateStaff) => {
 		birthday: '',
 		avatar: '',
 		role: '',
-		status: STATUS_GENERAL.MO,
+		status: STATUS_GENERAL.SU_DUNG,
 		code: '',
 	});
 

@@ -1,4 +1,4 @@
-import {STATE_GATEWAY, STATUS_GATEWAY} from '~/constants/config/enum';
+import {STATE_GATEWAY, STATUS_GENERAL} from '~/constants/config/enum';
 import axiosClient from '.';
 
 const gatewayServices = {
@@ -8,7 +8,7 @@ const gatewayServices = {
 			page: number;
 			keyword: string;
 			state: STATE_GATEWAY | null;
-			status: STATUS_GATEWAY | null;
+			status: STATUS_GENERAL | null;
 			factoryAreaUuid: string;
 		},
 		tokenAxios?: any
@@ -53,7 +53,7 @@ const gatewayServices = {
 			page: number;
 			keyword: string;
 			state: STATE_GATEWAY | null;
-			status: STATUS_GATEWAY | null;
+			status: STATUS_GENERAL | null;
 			factoryAreaUuid: string;
 		},
 		tokenAxios?: any

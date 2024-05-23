@@ -50,7 +50,7 @@ const deviceServices = {
 			battery: {
 				fromDouble: number;
 				toDouble: number;
-			};
+			} | null;
 			edS_Static?: {
 				fromDouble: number;
 				toDouble: number;

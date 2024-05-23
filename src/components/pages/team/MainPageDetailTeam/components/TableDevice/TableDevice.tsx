@@ -8,14 +8,13 @@ import Link from 'next/link';
 import Table from '~/components/common/Table';
 import Noti from '~/components/common/DataWrapper/components/Noti';
 import {httpRequest} from '~/services';
-import teamServices from '~/services/teamServices';
 import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEY} from '~/constants/config/enum';
 import {useRouter} from 'next/router';
 import deviceServices from '~/services/deviceServices';
-import {IDevice} from '~/components/pages/bo-phat/MainTransmitter/interfaces';
+import {IDevice} from '~/components/pages/bo-phat/MainDevice/interfaces';
 import Moment from 'react-moment';
-import StatusDevice from '~/components/pages/bo-phat/StatusDevice';
+import StateDevice from '~/components/pages/bo-phat/StateDevice';
 
 function TableDevice({}: PropsTableDevice) {
 	const router = useRouter();
@@ -81,7 +80,7 @@ function TableDevice({}: PropsTableDevice) {
 						},
 						{
 							title: 'Trạng thái',
-							render: (data: IDevice) => <StatusDevice status={data.state} />,
+							render: (data: IDevice) => <StateDevice status={data.state} />,
 						},
 						{
 							title: 'Oniline lần cuối',

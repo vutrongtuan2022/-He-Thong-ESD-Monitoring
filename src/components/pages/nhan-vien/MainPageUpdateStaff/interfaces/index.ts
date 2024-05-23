@@ -2,7 +2,7 @@ import {STATUS_GENERAL} from '~/constants/config/enum';
 import {IUser} from '../../ListTransmitter/interfaces';
 
 export interface PropsMainPageUpdateStaff {
-	dataUpdate: IUser;
+	dataUpdate?: IUser;
 }
 
 export interface IFormUpdate {
