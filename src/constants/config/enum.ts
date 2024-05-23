@@ -17,7 +17,7 @@ export enum QUERY_KEY {
 	danh_sach_lich_su_team,
 	trang_chu_tong_quan,
 	chi_tiet_nhan_vien,
-	chinh_sua_nhan_vien,
+	danh_sach_tai_khoan,
 }
 
 export enum TYPE_DATE {
@@ -83,3 +83,7 @@ export enum STATUS_USER {
 	HAVEACCOUNT = '1',
 	NOACCOUNT = '0',
 }
+// export enum STATUS_ACCOUNT {
+// 	KHOA,
+// 	HOAT_DONG,
+// }
