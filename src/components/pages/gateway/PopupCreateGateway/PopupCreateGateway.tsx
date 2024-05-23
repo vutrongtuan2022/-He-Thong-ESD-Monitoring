@@ -18,7 +18,7 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
+	const {_page, _pageSize, _keyword, _state, _status, _factoryAreaUuid} = router.query;
 
 	const [form, setForm] = useState<{
 		code: string;
@@ -47,7 +47,7 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 			}),
 		onSuccess(data) {
 			if (data) {
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _status, _factoryAreaUuid]);
 				onClose();
 				setForm({
 					code: '',

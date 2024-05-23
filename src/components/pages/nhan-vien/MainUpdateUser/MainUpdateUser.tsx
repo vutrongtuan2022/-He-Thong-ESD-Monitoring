@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {IFormUpdate, PropsMainPageUpdateStaff} from './interfaces';
-import styles from './MainPageUpdateStaff.module.scss';
+import {IFormUpdate, PropsMainUpdateUser} from './interfaces';
+import styles from './MainUpdateUser.module.scss';
 import Button from '~/components/common/Button';
 import Form, {Input} from '~/components/common/Form';
 import clsx from 'clsx';
@@ -18,7 +18,7 @@ import userServices from '~/services/userServices';
 import {toastWarn} from '~/common/funcs/toast';
 import moment from 'moment';
 
-const MainPageUpdateStaff = ({dataUpdate}: PropsMainPageUpdateStaff) => {
+const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
@@ -51,7 +51,7 @@ const MainPageUpdateStaff = ({dataUpdate}: PropsMainPageUpdateStaff) => {
 	});
 
 	useEffect(() => {
-		if (isSuccess && data) {
+		if (data) {
 			setForm({
 				uuid: data.uuid,
 				userName: data.userName || '',
@@ -345,7 +345,7 @@ const MainPageUpdateStaff = ({dataUpdate}: PropsMainPageUpdateStaff) => {
 								<Select
 									isSearch
 									name='teamUuid'
-									value={form.teamUuid || ''}
+									value={form.teamUuid || null}
 									placeholder='Lựa chọn'
 									onChange={(e) =>
 										setForm((prev) => ({
@@ -356,7 +356,7 @@ const MainPageUpdateStaff = ({dataUpdate}: PropsMainPageUpdateStaff) => {
 									label={<span>Thuộc team</span>}
 								>
 									{listTeams?.data?.map((v: any) => (
-										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+										<Option key={v?.uuid} title={v?.name} value={v?.name} />
 									))}
 								</Select>
 							</div>
@@ -368,4 +368,4 @@ const MainPageUpdateStaff = ({dataUpdate}: PropsMainPageUpdateStaff) => {
 	);
 };
 
-export default MainPageUpdateStaff;
+export default MainUpdateUser;

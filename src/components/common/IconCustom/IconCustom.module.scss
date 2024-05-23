@@ -10,12 +10,18 @@
 	transition: 0.3s;
 
 	i {
-		width: fit-content;
-		height: fit-content;
+		width: 24px;
+		height: 24px;
 	}
 
 	&:active {
 		transform: scale(0.9);
+	}
+
+	&.create {
+		&:hover {
+			color: #35c244 !important;
+		}
 	}
 
 	&.edit {
@@ -27,6 +33,12 @@
 	&.delete {
 		&:hover {
 			color: var(--danger) !important;
+		}
+	}
+
+	&.warn {
+		&:hover {
+			color: var(--warn) !important;
 		}
 	}
 }
