@@ -50,6 +50,11 @@ const userServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	updateUserStatus: (data: {uuid: string; status: number}, tokenAxios?: any) => {
+		return axiosClient.post(`/User/update_user_status`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default userServices;

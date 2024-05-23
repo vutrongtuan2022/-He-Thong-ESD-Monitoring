@@ -20,17 +20,18 @@ import {AiOutlineUserAdd} from 'react-icons/ai';
 import PopupCreate from '../PopupCreate';
 import Popup from '~/components/common/Popup';
 import Dialog from '~/components/common/Dialog';
-import {useQuery} from '@tanstack/react-query';
-import {QUERY_KEY, STATUS_USER} from '~/constants/config/enum';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {QUERY_KEY, STATUS_GENERAL, STATUS_USER} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import userServices from '~/services/userServices';
 import clsx from 'clsx';
+import {toastWarn} from '~/common/funcs/toast';
 
 function ListTransmitter({}: PropsListTransmitter) {
 	const router = useRouter();
-
+	const queryClient = useQueryClient();
 	const {_page, _pageSize, _status, _username, _keyword, _teamUuid} = router.query;
-
+	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
 	const [openDelete, setOpenDelete] = useState<boolean>(false);
 	const [data, setData] = useState<any[]>([]);
@@ -39,6 +40,26 @@ function ListTransmitter({}: PropsListTransmitter) {
 	const handleToggle = (index: number) => {
 		setOpen((prev) => (prev === index ? null : index));
 	};
+
+	const changeStatusDevice = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Thay đổi trạng thái thành công!',
+				http: userServices.updateUserStatus({
+					uuid: dataChangeStatus?.uuid!,
+					status: dataChangeStatus?.status! == STATUS_GENERAL.MO ? STATUS_GENERAL.KHOA : STATUS_GENERAL.MO,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				setDataChangeStatus(null);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_nhan_vien, _page, _pageSize, _keyword, _status]);
+			}
+		},
+	});
 
 	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status, _teamUuid], {
 		queryFn: () =>
@@ -57,6 +78,14 @@ function ListTransmitter({}: PropsListTransmitter) {
 			return data;
 		},
 	});
+
+	const handleChangeStatusDevice = async () => {
+		if (!dataChangeStatus?.uuid) {
+			return toastWarn({msg: 'Không tìm thấy thiết bị!'});
+		}
+
+		return changeStatusDevice.mutate();
+	};
 
 	return (
 		<div className={styles.container}>
@@ -182,15 +211,15 @@ function ListTransmitter({}: PropsListTransmitter) {
 												<div
 													className={styles.item}
 													onClick={() => {
-														router.push(`/nhan-vien/chinh-sua?_id=${123}`);
+														router.push(`/nhan-vien/chinh-sua?_id=${data.uuid}`);
 													}}
 												>
 													<LuPencil size={18} />
 													<p>Chỉnh sửa</p>
 												</div>
-												<div className={styles.item} onClick={() => setOpenDelete(true)}>
+												<div className={styles.item} onClick={() => setDataChangeStatus(data)}>
 													<Trash size={18} />
-													<p>Xóa bỏ</p>
+													<p>Thay đổi</p>
 												</div>
 											</div>
 										)}
@@ -214,11 +243,11 @@ function ListTransmitter({}: PropsListTransmitter) {
 				</DataWrapper>
 				<Dialog
 					danger
-					open={openDelete}
-					onClose={() => setOpenDelete(false)}
-					title='Xóa nhân viên'
-					note='Bạn có chắc chắn muốn xóa nhân viên này?'
-					onSubmit={() => setOpenDelete(false)}
+					open={!!dataChangeStatus}
+					onClose={() => setDataChangeStatus(null)}
+					title='Đổi trạng thái'
+					note='Bạn có chắc chắn muốn đổi trạng thái nhân viên này?'
+					onSubmit={handleChangeStatusDevice}
 				/>
 			</div>
 			<Popup open={OpenCreate} onClose={() => setOpenCreate(false)}>
