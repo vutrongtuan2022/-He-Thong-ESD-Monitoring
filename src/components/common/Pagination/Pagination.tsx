@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {Fragment, useEffect, useMemo, useState} from 'react';
 
 import {PropsPagination} from './interfaces';
 import styles from './Pagination.module.scss';
@@ -177,61 +177,65 @@ function Pagination({total, pageSize, currentPage, onSetPage, onSetpageSize, dep
 	}, dependencies);
 
 	return (
-		<div className={styles.container}>
-			<div className={styles.left}>
-				<p className={styles.text}>Hiển thị </p>
-				<TippyHeadless
-					maxWidth={'100%'}
-					interactive
-					visible={openLimit}
-					onClickOutside={() => setOpenLimit(false)}
-					placement='bottom-end'
-					render={(attrs: any) => (
-						<div className={styles.list_limit}>
-							{pageSizes.map((v, i) => (
-								<div
-									key={i}
-									className={clsx(styles.item_limit, {
-										[styles.activeItemLimit]: pageSize == v,
-									})}
-									onClick={() => handleSetPageSize(v)}
-								>
-									{v}
+		<Fragment>
+			{total > 0 && (
+				<div className={styles.container}>
+					<div className={styles.left}>
+						<p className={styles.text}>Hiển thị </p>
+						<TippyHeadless
+							maxWidth={'100%'}
+							interactive
+							visible={openLimit}
+							onClickOutside={() => setOpenLimit(false)}
+							placement='bottom-end'
+							render={(attrs: any) => (
+								<div className={styles.list_limit}>
+									{pageSizes.map((v, i) => (
+										<div
+											key={i}
+											className={clsx(styles.item_limit, {
+												[styles.activeItemLimit]: pageSize == v,
+											})}
+											onClick={() => handleSetPageSize(v)}
+										>
+											{v}
+										</div>
+									))}
 								</div>
-							))}
-						</div>
-					)}
-				>
-					<div
-						className={clsx(styles.limit, {
-							[styles.activeLimit]: openLimit,
-						})}
-						onClick={() => setOpenLimit(!openLimit)}
-					>
-						<span>{pageSize}</span>
-						<div className={styles.icon_arrow}>
-							<MdArrowDropDown size={20} />
-						</div>
+							)}
+						>
+							<div
+								className={clsx(styles.limit, {
+									[styles.activeLimit]: openLimit,
+								})}
+								onClick={() => setOpenLimit(!openLimit)}
+							>
+								<span>{pageSize}</span>
+								<div className={styles.icon_arrow}>
+									<MdArrowDropDown size={20} />
+								</div>
+							</div>
+						</TippyHeadless>
+						<p className={styles.text}>
+							trên tổng <span style={{fontWeight: '600'}}>{total}</span> kết quả
+						</p>
 					</div>
-				</TippyHeadless>
-				<p className={styles.text}>
-					trên tổng <span style={{fontWeight: '600'}}>{total}</span> kết quả
-				</p>
-			</div>
-			<div className={styles.pages}>
-				{currentPage > 1 && (
-					<button className={clsx([styles.btn, styles.left])} onClick={handlePrev}>
-						<IoChevronBackOutline />
-					</button>
-				)}
-				{items}
-				{currentPage < Math.ceil(total / Number(pageSize)) && (
-					<button className={clsx([styles.btn, styles.right])} onClick={handleNext}>
-						<IoChevronForwardOutline />
-					</button>
-				)}
-			</div>
-		</div>
+					<div className={styles.pages}>
+						{currentPage > 1 && (
+							<button className={clsx([styles.btn, styles.left])} onClick={handlePrev}>
+								<IoChevronBackOutline />
+							</button>
+						)}
+						{items}
+						{currentPage < Math.ceil(total / Number(pageSize)) && (
+							<button className={clsx([styles.btn, styles.right])} onClick={handleNext}>
+								<IoChevronForwardOutline />
+							</button>
+						)}
+					</div>
+				</div>
+			)}
+		</Fragment>
 	);
 }
 

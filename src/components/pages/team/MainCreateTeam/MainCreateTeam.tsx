@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 
-import {PropsMainPageUpdate} from './interfaces';
-import styles from './MainPageUpdate.module.scss';
+import {PropsMainCreateTeam} from './interfaces';
+import styles from './MainCreateTeam.module.scss';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
@@ -20,39 +20,25 @@ import Loading from '~/components/common/Loading';
 import {toastWarn} from '~/common/funcs/toast';
 import {useRouter} from 'next/router';
 
-function MainPageUpdate({}: PropsMainPageUpdate) {
+interface IFrom {
+	name: string;
+	code: string;
+	leaderUuid: string;
+	areaUuid: string;
+	parentUuid: string;
+	note: string;
+}
+
+function MainCreateTeam({}: PropsMainCreateTeam) {
 	const router = useRouter();
 
-	const {_id} = router.query;
-
-	const [form, setForm] = useState<any>({
+	const [form, setForm] = useState<IFrom>({
 		name: '',
 		code: '',
 		leaderUuid: '',
 		areaUuid: '',
+		parentUuid: '',
 		note: '',
-		status: STATUS_GENERAL.SU_DUNG,
-	});
-
-	// GET DETAIL TEAM
-	useQuery([QUERY_KEY.chi_tiet_team], {
-		queryFn: () =>
-			httpRequest({
-				http: teamServices.detailTeam({
-					uuid: _id as string,
-				}),
-			}),
-		onSuccess(data) {
-			return setForm({
-				name: data.name,
-				code: data.code,
-				leaderUuid: data.leaderUuid,
-				areaUuid: data.areaUuid,
-				note: data.notes,
-				status: data.status,
-			});
-		},
-		enabled: !!_id,
 	});
 
 	// GET LIST DROPDOWN
@@ -80,6 +66,18 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 		},
 	});
 
+	const listTeams = useQuery([QUERY_KEY.dropdown_danh_sach_team], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listTeam({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
 	// API
 	const upsertTeam = useMutation({
 		mutationFn: () =>
@@ -88,19 +86,27 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 				showMessageSuccess: true,
 				msgSuccess: 'Thêm mới team thành công!',
 				http: teamServices.upsertTeam({
-					uuid: _id as string,
-					code: form.code,
+					uuid: '',
 					name: form.name,
+					code: form.code,
 					leaderUuid: form.leaderUuid,
 					areaUuid: form.areaUuid,
-					status: form.status,
+					parentUuid: form.parentUuid,
 					notes: form.note,
+					status: STATUS_GENERAL.SU_DUNG,
 					rootUuid: '',
-					parentUuid: '',
 				}),
 			}),
 		onSuccess(data) {
 			if (data) {
+				setForm({
+					name: '',
+					code: '',
+					leaderUuid: '',
+					areaUuid: '',
+					parentUuid: '',
+					note: '',
+				});
 				router.replace(PATH.Team, undefined, {
 					scroll: false,
 					shallow: false,
@@ -111,14 +117,11 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 
 	// SUBMIT
 	const handleSubmit = async () => {
-		if (!_id) {
-			return toastWarn({msg: 'Không tìm thấy team!'});
+		if (!form.name) {
+			return toastWarn({msg: 'Vui lòng nhập tên team!'});
 		}
 		if (!form.code) {
 			return toastWarn({msg: 'Vui lòng nhập mã team!'});
-		}
-		if (!form.name) {
-			return toastWarn({msg: 'Vui lòng nhập tên team!'});
 		}
 		if (!form.leaderUuid) {
 			return toastWarn({msg: 'Vui lòng chọn người quản lý!'});
@@ -144,7 +147,7 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 					},
 					{
 						path: '',
-						title: 'Chỉnh sửa team',
+						title: 'Thêm mới team',
 					},
 				]}
 				action={
@@ -159,7 +162,7 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<div className={styles.left}>
-							<h4>Chỉnh sửa team</h4>
+							<h4>Thêm mới team</h4>
 							<p>Điền đầy đủ các thông tin team</p>
 						</div>
 						<div className={styles.right}>
@@ -167,7 +170,7 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 								Hủy bỏ
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								Cập nhật
+								Lưu lại
 							</Button>
 						</div>
 					</div>
@@ -175,48 +178,49 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 					<div className={styles.form}>
 						<Form form={form} setForm={setForm}>
 							<Input
+								name='name'
+								value={form.name || ''}
 								type='text'
-								name='code'
-								value={form.code || ''}
 								label={
 									<span>
-										Mã team <span style={{color: 'red'}}>*</span>
+										Tên team <span style={{color: 'red'}}>*</span>
 									</span>
 								}
-								placeholder='Nhập mã team'
+								placeholder='Nhập tên team'
 							/>
 
 							<div className={clsx('mt', 'col_2')}>
 								<Input
+									name='code'
+									value={form.code || ''}
 									type='text'
-									name='name'
-									value={form.name || ''}
 									label={
 										<span>
-											Tên team <span style={{color: 'red'}}>*</span>
+											Mã team <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Nhập tên team'
+									placeholder='Nhập mã team'
 								/>
 								<Select
 									isSearch
-									name='status'
-									placeholder='Chọn trạng thái'
-									value={Number(form?.status) || null}
+									name='leaderUuid'
+									placeholder='Người quản lý'
+									value={form?.leaderUuid || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
 											...prev,
-											status: e.target.value,
+											leaderUuid: e.target.value,
 										}))
 									}
 									label={
 										<span>
-											Trạng thái <span style={{color: 'red'}}>*</span>
+											Người quản lý<span style={{color: 'red'}}>*</span>
 										</span>
 									}
 								>
-									<Option title={'Hoạt động'} value={STATUS_GENERAL.SU_DUNG} />
-									<Option title={'Không hoạt động'} value={STATUS_GENERAL.KHONG_SU_DUNG} />
+									{listUsers.data?.map((v: any) => (
+										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+									))}
 								</Select>
 							</div>
 
@@ -224,22 +228,18 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 								<div>
 									<Select
 										isSearch
-										name='leaderUuid'
-										placeholder='Người quản lý *'
-										value={form?.leaderUuid || null}
+										name='parentUuid'
+										placeholder='Team cấp trên'
+										value={form?.parentUuid || null}
 										onChange={(e: any) =>
 											setForm((prev: any) => ({
 												...prev,
-												leaderUuid: e.target.value,
+												parentUuid: e.target.value,
 											}))
 										}
-										label={
-											<span>
-												Người quản lý<span style={{color: 'red'}}>*</span>
-											</span>
-										}
+										label={<span>Team cấp trên</span>}
 									>
-										{listUsers?.data?.map((v: any) => (
+										{listTeams.data?.map((v: any) => (
 											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 										))}
 									</Select>
@@ -261,7 +261,7 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 										</span>
 									}
 								>
-									{listAreas?.data?.map((v: any) => (
+									{listAreas.data?.map((v: any) => (
 										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 									))}
 								</Select>
@@ -277,4 +277,4 @@ function MainPageUpdate({}: PropsMainPageUpdate) {
 	);
 }
 
-export default MainPageUpdate;
+export default MainCreateTeam;

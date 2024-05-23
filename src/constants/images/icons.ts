@@ -25,6 +25,7 @@ import icon_edit from '../../../public/static/images/icon_edit.svg';
 import XSL from '../../../public/static/images/XSL.svg';
 import vietnam from '../../../public/static/images/vietname.svg';
 import icon_en from '../../../public/static/images/icon_en.svg';
+import icon_table_empty from '../../../public/static/images/icon_table_empty.png';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -55,4 +56,5 @@ export default {
 	XSL,
 	vietnam,
 	icon_en,
+	icon_table_empty,
 };

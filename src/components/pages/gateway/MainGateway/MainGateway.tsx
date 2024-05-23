@@ -38,7 +38,7 @@ function MainGateway({}: PropsMainGateway) {
 					keyword: _keyword ? (_keyword as string) : '',
 					state: _state ? Number(_state) : null,
 					factoryAreaUuid: (_factoryAreaUuid as string) || '',
-					status: STATUS_GENERAL.SU_DUNG,
+					status: _status ? Number(_status) : null,
 				}),
 			});
 		},
@@ -94,7 +94,7 @@ function MainGateway({}: PropsMainGateway) {
 
 	return (
 		<div className={styles.container}>
-			<Loading loading={exportExcel.isLoading} />
+			<Loading loading={fucnImportExcel.isLoading || exportExcel.isLoading} />
 
 			<Breadcrumb
 				listUrls={[

@@ -19,6 +19,7 @@ import categoryServices from '~/services/categoryServices';
 import {useRouter} from 'next/router';
 import ngHistoryServices from '~/services/ngHistoryServices';
 import Noti from '~/components/common/DataWrapper/components/Noti';
+import {formatTimeHistory} from '~/common/funcs/optionConvert';
 
 function HistoryDevice({}: PropsHistoryDevice) {
 	const router = useRouter();
@@ -59,9 +60,6 @@ function HistoryDevice({}: PropsHistoryDevice) {
 			<h4>Lịch sử bộ phát NG</h4>
 			<div className={styles.flex}>
 				<div className={styles.main_search}>
-					<div className={styles.search}>
-						<Search keyName='_keyword' placeholder='Tìm kiếm theo số MAC, tên thiết bị' />
-					</div>
 					<div className={styles.filter}>
 						<FilterCustom
 							isSearch
@@ -107,7 +105,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 							},
 							{
 								title: 'Khoảng thời gian NG',
-								render: (data: IDeviceNGHistory) => <>{data.totalNgMinutes}</>,
+								render: (data: IDeviceNGHistory) => <>{formatTimeHistory(data.totalNgMinutes || 0)}</>,
 							},
 							{
 								title: 'Giá trị tĩnh điện',

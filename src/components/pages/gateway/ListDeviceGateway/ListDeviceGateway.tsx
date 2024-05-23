@@ -11,14 +11,16 @@ import {useRouter} from 'next/router';
 import Button from '~/components/common/Button';
 import Image from 'next/image';
 import icons from '~/constants/images/icons';
-import {useQuery} from '@tanstack/react-query';
-import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
+import {useMutation, useQuery} from '@tanstack/react-query';
+import {QUERY_KEY} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import categoryServices from '~/services/categoryServices';
 import deviceServices from '~/services/deviceServices';
 import {IDevice} from '../../bo-phat/MainDevice/interfaces';
 import StateDevice from '../../bo-phat/StateDevice';
 import Link from 'next/link';
+import gatewayServices from '~/services/gatewayServices';
+import Loading from '~/components/common/Loading';
 
 function ListDeviceGateway({}: PropsListDeviceGateway) {
 	const router = useRouter();
@@ -47,7 +49,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 					page: Number(_page) || 1,
 					keyword: _keyword ? (_keyword as string) : '',
 					gatewayUuid: (_id as string) || '',
-					status: STATUS_GENERAL.SU_DUNG,
+					status: null,
 					onlineState: null,
 					ngState: null,
 					battery: null,
@@ -63,8 +65,31 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 		enabled: !!_id,
 	});
 
+	// Func export excel
+	const exportGatewayDeviceExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				http: gatewayServices.exportGatewayDevicecExcel({
+					pageSize: Number(_pageSize) || 20,
+					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
+					uuid: null,
+					gatewayUuid: _id as string,
+					status: null,
+					teamUuid: _team ? (_team as string) : null,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
+			}
+		},
+	});
+
 	return (
 		<div className={styles.container}>
+			<Loading loading={exportGatewayDeviceExcel.isLoading} />
 			<h4>Danh sách bộ phát đang kết nối</h4>
 			<div className={styles.control}>
 				<div className={styles.left}>
@@ -92,6 +117,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 						green
 						bold
 						icon={<Image alt='icon export' src={icons.export_excel} width={20} height={20} />}
+						onClick={exportGatewayDeviceExcel.mutate}
 					>
 						Export excel
 					</Button>
@@ -140,13 +166,13 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 							},
 						]}
 					/>
-					<Pagination
-						currentPage={Number(_page) || 1}
-						pageSize={Number(_pageSize) || 20}
-						dependencies={[_pageSize, _keyword, _id, _team]}
-						total={listDevices?.data?.pagination?.totalCount}
-					/>
 				</DataWrapper>
+				<Pagination
+					currentPage={Number(_page) || 1}
+					pageSize={Number(_pageSize) || 20}
+					dependencies={[_pageSize, _keyword, _id, _team]}
+					total={listDevices?.data?.pagination?.totalCount}
+				/>
 			</div>
 		</div>
 	);

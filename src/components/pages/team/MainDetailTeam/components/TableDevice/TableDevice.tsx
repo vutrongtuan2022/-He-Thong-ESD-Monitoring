@@ -28,12 +28,9 @@ function TableDevice({}: PropsTableDevice) {
 					keyword: '',
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
-					status: null,
 					teamUuid: _id as string,
-					battery: {
-						toDouble: 100,
-						fromDouble: 0,
-					},
+					status: null,
+					battery: null,
 					ngState: null,
 					onlineState: null,
 					edS_Static: null,
@@ -88,13 +85,13 @@ function TableDevice({}: PropsTableDevice) {
 						},
 					]}
 				/>
-				<Pagination
-					currentPage={Number(_page) || 1}
-					pageSize={Number(_pageSize) || 20}
-					total={listDeviceTeams?.data?.pagination?.totalCount}
-					dependencies={[_id, _pageSize, _table]}
-				/>
 			</DataWrapper>
+			<Pagination
+				currentPage={Number(_page) || 1}
+				pageSize={Number(_pageSize) || 20}
+				total={listDeviceTeams?.data?.pagination?.totalCount}
+				dependencies={[_id, _pageSize, _table]}
+			/>
 		</div>
 	);
 }

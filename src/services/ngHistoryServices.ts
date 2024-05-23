@@ -7,7 +7,7 @@ const ngHistoryServices = {
 			page: number;
 			keyword: string;
 			teamUuid: string | null;
-			deviceUuid: string;
+			deviceUuid: string | null;
 		},
 		tokenAxios?: any
 	) => {

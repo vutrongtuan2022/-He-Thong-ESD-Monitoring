@@ -225,13 +225,13 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 							},
 						]}
 					/>
-					<Pagination
-						currentPage={Number(_page) || 1}
-						total={listGateways?.data?.pagination?.totalCount}
-						pageSize={Number(_pageSize) || 20}
-						dependencies={[_pageSize, _keyword, _state, _status, _factoryAreaUuid]}
-					/>
 				</DataWrapper>
+				<Pagination
+					currentPage={Number(_page) || 1}
+					total={listGateways?.data?.pagination?.totalCount}
+					pageSize={Number(_pageSize) || 20}
+					dependencies={[_pageSize, _keyword, _state, _status, _factoryAreaUuid]}
+				/>
 				<Dialog
 					warn
 					open={!!dataChange}

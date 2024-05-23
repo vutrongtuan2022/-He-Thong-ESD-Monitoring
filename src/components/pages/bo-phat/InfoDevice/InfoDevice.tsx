@@ -102,7 +102,7 @@ function InfoDevice({}: PropsInfoDevice) {
 								{data?.macNumber}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Thuộc team: </span> {data?.teamName ? `Team ${data?.teamName}` : '---'}
+								<span style={{marginRight: 6}}>Thuộc team: </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -110,7 +110,7 @@ function InfoDevice({}: PropsInfoDevice) {
 								<span style={{marginRight: 6}}>Tên thiết bị: </span> {data?.name}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Mã team: </span> {data?.codeTeam ? `Mã team ${data?.codeTeam}` : '---'}
+								<span style={{marginRight: 6}}>Mã team: </span> {data?.codeTeam || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -118,8 +118,8 @@ function InfoDevice({}: PropsInfoDevice) {
 								<span style={{marginRight: 6}}>Giá trị tĩnh điện hiện tại:</span> {data?.edsStatic || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Leader team: </span>{' '}
-								{data?.teamLeaderName ? `Team của ${data?.teamLeaderName}` : '---'}
+								<span style={{marginRight: 6}}>Leader team: </span>
+								{data?.teamLeaderName || '---'}
 							</td>
 						</tr>
 						<tr>
