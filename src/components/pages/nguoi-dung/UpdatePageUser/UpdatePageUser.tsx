@@ -43,7 +43,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 						path: PATH.Home,
 					},
 					{
-						title: 'Quản lý người dùng',
+						title: 'Quản lý tài khoản',
 						path: PATH.NguoiDung,
 					},
 					{
@@ -146,6 +146,25 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 												/>
 												<label className={styles.input_lable} htmlFor='female'>
 													Nữ
+												</label>
+											</div>
+											<div className={styles.item_radio}>
+												<input
+													id='female'
+													className={styles.input_radio}
+													type='radio'
+													name='gender'
+													value={form.gender}
+													checked={form.gender == GENDER.KHAC}
+													onChange={(e) =>
+														setForm((prev: any) => ({
+															...prev,
+															gender: GENDER.KHAC,
+														}))
+													}
+												/>
+												<label className={styles.input_lable} htmlFor='female'>
+													Khác
 												</label>
 											</div>
 										</div>

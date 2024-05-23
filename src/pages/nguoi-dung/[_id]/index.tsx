@@ -7,8 +7,8 @@ export default function Page() {
 	return (
 		<Fragment>
 			<Head>
-				<title>Chi tiết người dùng</title>
-				<meta name='description' content='Chi tiết người dùng' />
+				<title>Chi tiết tài khoản</title>
+				<meta name='description' content='Chi tiết tài khoản' />
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
@@ -19,5 +19,5 @@ export default function Page() {
 }
 
 Page.getLayout = function (Page: ReactElement) {
-	return <BaseLayout title='Chi tiết Quán lý người dùng'>{Page}</BaseLayout>;
+	return <BaseLayout title='Chi tiết tài khoản'>{Page}</BaseLayout>;
 };
