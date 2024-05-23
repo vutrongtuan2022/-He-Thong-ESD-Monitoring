@@ -55,7 +55,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 					gender: GENDER.NAM,
 					role: form.role,
 					code: form.code,
-					status: STATUS_GENERAL.MO,
+					status: STATUS_GENERAL.SU_DUNG,
 					teamUuid: '',
 				}),
 			}),

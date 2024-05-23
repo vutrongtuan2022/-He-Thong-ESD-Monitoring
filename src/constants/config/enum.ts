@@ -3,6 +3,7 @@ export enum QUERY_KEY {
 	dropdown_danh_sach_nguoi_dung,
 	dropdown_danh_sach_team,
 	dropdown_danh_sach_gateway,
+	dropdown_danh_sach_device,
 	dropdown_danh_sach_chuc_vu,
 	danh_sach_team,
 	chi_tiet_team,
@@ -38,8 +39,8 @@ export enum GENDER {
 }
 
 export enum STATUS_GENERAL {
-	KHOA,
-	MO,
+	KHONG_SU_DUNG,
+	SU_DUNG,
 }
 
 export enum TYPE_UPLOAD {
@@ -57,11 +58,6 @@ export enum STATE_ONLINE_DEVICE {
 	ONLINE,
 }
 
-export enum STATUS_DEVICE {
-	KHONG_SU_DUNG,
-	SU_DUNG,
-}
-
 export enum SIGNAL_STATUS_DEVICE {
 	YEU,
 	MANH,
@@ -71,11 +67,6 @@ export enum SIGNAL_STATUS_DEVICE {
 export enum STATE_GATEWAY {
 	OFFLINE,
 	ONLINE,
-}
-
-export enum STATUS_GATEWAY {
-	KHONG_HOAT_DONG,
-	HOAT_DONG,
 }
 
 export enum STATUS_USER {

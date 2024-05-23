@@ -22,7 +22,7 @@ import {httpRequest} from '~/services';
 import categoryServices from '~/services/categoryServices';
 import {useRouter} from 'next/router';
 import clsx from 'clsx';
-import TableTeam from '../TableTeam';
+import TableTeam from '../MainTableTeam';
 import TreeTeam from '../TreeTeam';
 
 function MainPageTeam({}: PropsMainPageTeam) {
