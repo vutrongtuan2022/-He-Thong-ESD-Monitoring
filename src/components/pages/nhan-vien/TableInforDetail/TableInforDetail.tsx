@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {IUserDetail, PropsTableInfor} from './interfaces';
-import styles from './TableInfor.module.scss';
+import {IUserDetail, PropsTableInforDetail} from './interfaces';
+import styles from './TableInforDetail.module.scss';
 import {useRouter} from 'next/router';
 import Button from '~/components/common/Button';
 import Image from 'next/image';
@@ -14,7 +14,7 @@ import {PATH} from '~/constants/config';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEY} from '~/constants/config/enum';
 
-function TableInfor({}: PropsTableInfor) {
+function TableInforDetail({}: PropsTableInforDetail) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
@@ -122,4 +122,4 @@ function TableInfor({}: PropsTableInfor) {
 	);
 }
 
-export default TableInfor;
+export default TableInforDetail;

@@ -1,4 +1,4 @@
-export interface PropsTableInfor {}
+export interface PropsTableInforDetail {}
 
 export interface IUserDetail {
 	uuid: string | null;

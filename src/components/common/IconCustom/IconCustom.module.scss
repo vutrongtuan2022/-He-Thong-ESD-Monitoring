@@ -18,6 +18,12 @@
 		transform: scale(0.9);
 	}
 
+	&.create {
+		&:hover {
+			color: #35c244 !important;
+		}
+	}
+
 	&.edit {
 		&:hover {
 			color: var(--primary) !important;

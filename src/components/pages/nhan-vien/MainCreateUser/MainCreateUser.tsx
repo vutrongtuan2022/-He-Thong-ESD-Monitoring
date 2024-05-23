@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {IForm, PropsMainPageCreateStaff} from './interfaces';
-import styles from './MainPageCreateStaff.module.scss';
+import {IForm, PropsMainCreateUser} from './interfaces';
+import styles from './MainCreateUser.module.scss';
 import Button from '~/components/common/Button';
 import Form, {Input} from '~/components/common/Form';
 import clsx from 'clsx';
@@ -18,7 +18,7 @@ import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
 import moment from 'moment';
 
-const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
+const MainCreateUser = ({}: PropsMainCreateUser) => {
 	const [date, setDate] = useState<string>('');
 	const [form, setForm] = useState<IForm>({
 		userName: '',
@@ -57,7 +57,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 					role: form.role,
 					code: form.code,
 					status: STATUS_GENERAL.SU_DUNG,
-					teamUuid: '',
+					teamUuid: form.teamUuid,
 				}),
 			}),
 		onSuccess(data) {
@@ -335,4 +335,4 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 	);
 };
 
-export default MainPageCreateStaff;
+export default MainCreateUser;

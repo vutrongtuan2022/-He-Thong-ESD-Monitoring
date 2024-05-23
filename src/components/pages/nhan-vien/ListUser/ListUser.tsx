@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Status from '~/components/common/Status';
-import {IUser, PropsListTransmitter} from './interfaces';
-import styles from './ListTransmitter.module.scss';
+import {IUser, PropsListUser} from './interfaces';
+import styles from './ListUser.module.scss';
 import Search from '~/components/common/Search';
 import FilterCustom from '~/components/common/FilterCustom';
 import DataWrapper from '~/components/common/DataWrapper';
@@ -12,7 +12,7 @@ import {useRouter} from 'next/router';
 import {LuCheck, LuPencil} from 'react-icons/lu';
 import Button from '~/components/common/Button';
 import HeadlessTippy from '@tippyjs/react/headless';
-
+import Loading from '~/components/common/Loading';
 import {Trash} from 'iconsax-react';
 import {BsThreeDots} from 'react-icons/bs';
 import Link from 'next/link';
@@ -26,10 +26,13 @@ import {httpRequest} from '~/services';
 import userServices from '~/services/userServices';
 import clsx from 'clsx';
 import {toastWarn} from '~/common/funcs/toast';
+import IconCustom from '~/components/common/IconCustom';
+import categoryServices from '~/services/categoryServices';
 
-function ListTransmitter({}: PropsListTransmitter) {
+function ListUser({}: PropsListUser) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
+	const [file, setFile] = useState<any>(null);
 	const {_page, _pageSize, _status, _username, _keyword, _teamUuid} = router.query;
 	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
@@ -79,12 +82,88 @@ function ListTransmitter({}: PropsListTransmitter) {
 		},
 	});
 
+	const listUsers = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listRole({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
+	// Func export excel
+	// const exportExcel = useMutation({
+	// 	mutationFn: () => {
+	// 		return httpRequest({
+	// 			http: userServices.exportExcel({
+	// 				pageSize: Number(_pageSize) || 20,
+	// 				page: Number(_page) || 1,
+	// 				keyword: _keyword ? (_keyword as string) : '',
+	// 				status: STATUS_GENERAL.SU_DUNG,
+	// 				teamUuid: '',
+	// 				username: _username ? (_username as string) : '',
+	// 				timeCreated: _timeCreated ? Number(_timeCreated) : null,
+	// 			}),
+	// 		});
+	// 	},
+	// 	onSuccess(data) {
+	// 		if (data) {
+	// 			window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
+	// 		}
+	// 	},
+	// });
+
+	// Func import excel
+	const fucnImportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Import file thành công!',
+				http: userServices.importExcel({
+					FileData: file,
+					Type: 1,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				handleCloseImportExcel();
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword]);
+			}
+		},
+	});
+
+	// Close popup import excel
+	const handleCloseImportExcel = () => {
+		const {importExcel, ...rest} = router.query;
+
+		setFile(null);
+		router.replace(
+			{
+				query: rest,
+			},
+			undefined,
+			{scroll: false}
+		);
+	};
+
 	const handleChangeStatusDevice = async () => {
 		if (!dataChangeStatus?.uuid) {
 			return toastWarn({msg: 'Không tìm thấy thiết bị!'});
 		}
-
 		return changeStatusDevice.mutate();
+	};
+
+	// const handleExportExcel = async () => {
+	// 	exportExcel.mutate();
+	// };
+
+	const handleImportExcel = async () => {
+		fucnImportExcel.mutate();
 	};
 
 	return (
@@ -119,25 +198,24 @@ function ListTransmitter({}: PropsListTransmitter) {
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
-							listFilter={[
-								{
-									id: 1,
-									name: ' Chức vụ 1',
-								},
-								{
-									id: 2,
-									name: ' Chức vụ 2',
-								},
-							]}
+							isSearch
 							name='Chức vụ'
-							query='_electric'
+							query='_role'
+							listFilter={listUsers?.data?.map((v: any) => ({
+								id: v?.uuid,
+								name: v?.name,
+							}))}
 						/>
 					</div>
 				</div>
 				<div></div>
 			</div>
 			<div className={styles.table}>
-				<DataWrapper data={listUser?.data?.items} loading={false} noti={<Noti des='Hiện tại chưa có bộ phát nào ?' />}>
+				<DataWrapper
+					data={listUser?.data?.items}
+					noti={<Noti des='Hiện tại chưa có bộ phát nào ?' />}
+					loading={listUser?.isLoading}
+				>
 					<Table
 						data={listUser?.data?.items}
 						column={[
@@ -189,46 +267,40 @@ function ListTransmitter({}: PropsListTransmitter) {
 								title: 'Ngày tạo',
 								render: (data: IUser) => <>{data.timeCreated || '---'}</>,
 							},
+
 							{
-								title: '',
+								title: 'Tác vụ',
 								render: (data: IUser, index: number) => (
-									<HeadlessTippy
-										interactive
-										visible={open === index}
-										placement='bottom'
-										render={(attrs) => (
-											<div className={styles.mainOption}>
-												<div
-													className={styles.item}
-													onClick={() => {
-														setOpenCreate(true);
-														setOpen(null);
-													}}
-												>
-													<AiOutlineUserAdd size={18} />
-													<p>Cấp tài khoản</p>
-												</div>
-												<div
-													className={styles.item}
-													onClick={() => {
-														router.push(`/nhan-vien/chinh-sua?_id=${data.uuid}`);
-													}}
-												>
-													<LuPencil size={18} />
-													<p>Chỉnh sửa</p>
-												</div>
-												<div className={styles.item} onClick={() => setDataChangeStatus(data)}>
-													<Trash size={18} />
-													<p>Thay đổi</p>
-												</div>
-											</div>
-										)}
-										onClickOutside={() => setOpen(null)}
-									>
-										<div className={styles.btn} onClick={() => handleToggle(index)}>
-											<BsThreeDots className={styles.dots} size={20} />
-										</div>
-									</HeadlessTippy>
+									<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+										<IconCustom
+											create
+											icon={<AiOutlineUserAdd size='22' />}
+											tooltip='cấp account'
+											color='#777E90'
+											onClick={() => {
+												setOpenCreate(true);
+												setOpen(null);
+											}}
+										/>
+
+										<IconCustom
+											edit
+											icon={<LuPencil fontSize={20} fontWeight={600} />}
+											tooltip='Chỉnh sửa'
+											color='#777E90'
+											onClick={() => {
+												router.push(`/nhan-vien/chinh-sua?_id=${data.uuid}`);
+											}}
+										/>
+
+										<IconCustom
+											delete
+											icon={<Trash size='22' />}
+											tooltip='Thay đổi trạng thái'
+											color='#777E90'
+											onClick={() => setDataChangeStatus(data)}
+										/>
+									</div>
 								),
 							},
 						]}
@@ -257,4 +329,4 @@ function ListTransmitter({}: PropsListTransmitter) {
 	);
 }
 
-export default ListTransmitter;
+export default ListUser;
