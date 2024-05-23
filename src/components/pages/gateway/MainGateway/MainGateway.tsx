@@ -3,7 +3,6 @@ import icons from '~/constants/images/icons';
 import {PropsMainGateway} from './interfaces';
 import styles from './MainGateway.module.scss';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
-import Dialog from '~/components/common/Dialog';
 import Button from '~/components/common/Button';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
@@ -24,11 +23,10 @@ function MainGateway({}: PropsMainGateway) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {importExcel, _page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
+	const {importExcel, _page, _pageSize, _keyword, _state, _status, _factoryAreaUuid} = router.query;
 
 	const [file, setFile] = useState<any>(null);
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
-	const [openDelete, setOpenDelete] = useState<boolean>(false);
 
 	// Func export excel
 	const exportExcel = useMutation({
@@ -67,7 +65,7 @@ function MainGateway({}: PropsMainGateway) {
 		onSuccess(data) {
 			if (data) {
 				handleCloseImportExcel();
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _status, _factoryAreaUuid]);
 			}
 		},
 	});
@@ -176,15 +174,8 @@ function MainGateway({}: PropsMainGateway) {
 			/>
 			<WrapperContainer>
 				<ListGateway onOpenCreate={() => setOpenCreate(true)} />
-				<Dialog
-					danger
-					open={openDelete}
-					onClose={() => setOpenDelete(false)}
-					title='Xóa Gateway'
-					note='Bạn có chắc chắn muốn xóa gateway này?'
-					onSubmit={() => setOpenDelete(false)}
-				/>
 			</WrapperContainer>
+
 			<Popup open={openCreate} onClose={() => setOpenCreate(false)}>
 				<PopupCreateGateway onClose={() => setOpenCreate(false)} />
 			</Popup>

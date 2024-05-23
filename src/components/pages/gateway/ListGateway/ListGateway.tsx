@@ -8,7 +8,7 @@ import Noti from '~/components/common/DataWrapper/components/Noti';
 import Table from '~/components/common/Table';
 import Pagination from '~/components/common/Pagination';
 import {useRouter} from 'next/router';
-import {Trash} from 'iconsax-react';
+import {Lock} from 'iconsax-react';
 import Link from 'next/link';
 import Dialog from '~/components/common/Dialog';
 import {QUERY_KEY, STATE_GATEWAY, STATUS_GENERAL} from '~/constants/config/enum';
@@ -29,10 +29,10 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
+	const {_page, _pageSize, _keyword, _state, _status, _factoryAreaUuid} = router.query;
 
 	const [dataUpdate, setDataUpdate] = useState<IGateway | null>(null);
-	const [dataDelete, setDataDelete] = useState<IGateway | null>(null);
+	const [dataChange, setDataChange] = useState<IGateway | null>(null);
 
 	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
 		queryFn: () =>
@@ -47,7 +47,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 	});
 
 	// Lấy danh sách gateway
-	const listGateways = useQuery([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid], {
+	const listGateways = useQuery([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _status, _factoryAreaUuid], {
 		queryFn: () =>
 			httpRequest({
 				http: gatewayServices.listGateway({
@@ -56,7 +56,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					keyword: _keyword ? (_keyword as string) : '',
 					state: _state ? Number(_state) : null,
 					factoryAreaUuid: (_factoryAreaUuid as string) || '',
-					status: STATUS_GENERAL.SU_DUNG,
+					status: _status ? Number(_status) : null,
 				}),
 			}),
 		select(data) {
@@ -64,36 +64,36 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 		},
 	});
 
-	const funcDeleteGateway = useMutation({
+	const funcChangeStatus = useMutation({
 		mutationFn: () =>
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Xóa gateway thành công!',
+				msgSuccess: 'Chuyển trạng thái thành công!',
 				http: gatewayServices.updateStatusGateway({
-					uuid: dataDelete?.uuid!,
-					status: dataDelete?.status == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
+					uuid: dataChange?.uuid!,
+					status: dataChange?.status == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
 				}),
 			}),
 		onSuccess(data) {
 			if (data) {
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid]);
-				setDataDelete(null);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _status, _factoryAreaUuid]);
+				setDataChange(null);
 			}
 		},
 	});
 
-	const deleteGateway = async () => {
-		if (!dataDelete?.uuid) {
+	const handleChangeStatusGateway = async () => {
+		if (!dataChange?.uuid) {
 			return toastWarn({msg: 'Không tìm thấy gateway!'});
 		}
 
-		return funcDeleteGateway.mutate();
+		return funcChangeStatus.mutate();
 	};
 
 	return (
 		<div className={styles.container}>
-			<Loading loading={funcDeleteGateway.isLoading} />
+			<Loading loading={funcChangeStatus.isLoading} />
 			<div className={styles.control}>
 				<div className={styles.left}>
 					<div style={{minWidth: 360}}>
@@ -101,7 +101,18 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
-							name='Trạng thái'
+							isSearch
+							name='Khu vực'
+							query='_factoryAreaUuid'
+							listFilter={listAreas?.data?.map((v: any) => ({
+								id: v?.uuid,
+								name: v?.name,
+							}))}
+						/>
+					</div>
+					<div style={{minWidth: 240}}>
+						<FilterCustom
+							name='Hoạt động'
 							query='_state'
 							listFilter={[
 								{
@@ -117,13 +128,18 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
-							isSearch
-							name='Khu vực'
-							query='_factoryAreaUuid'
-							listFilter={listAreas?.data?.map((v: any) => ({
-								id: v?.uuid,
-								name: v?.name,
-							}))}
+							name='Trạng thái'
+							query='_status'
+							listFilter={[
+								{
+									id: STATUS_GENERAL.SU_DUNG,
+									name: 'Sử dụng',
+								},
+								{
+									id: STATUS_GENERAL.KHONG_SU_DUNG,
+									name: 'Không sử dụng',
+								},
+							]}
 						/>
 					</div>
 				</div>
@@ -164,16 +180,30 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								render: (data: IGateway) => <>{data.connection}</>,
 							},
 							{
-								title: 'Trạng thái',
+								title: 'Hoạt động',
 								render: (data: IGateway) => <StateGateway state={data.state} />,
+							},
+							{
+								title: 'Trạng thái',
+								render: (data: IGateway) => (
+									<>
+										{data?.status == STATUS_GENERAL.SU_DUNG ? (
+											<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+										) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
+											<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+										) : (
+											'---'
+										)}
+									</>
+								),
 							},
 							{
 								title: 'Online lần cuối',
 								render: (data: IGateway) => <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' />,
 							},
 							{
-								title: '',
-								render: (data: IGateway, index: number) => (
+								title: 'Tác vụ',
+								render: (data: IGateway) => (
 									<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 										<IconCustom
 											edit
@@ -184,11 +214,11 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 										/>
 
 										<IconCustom
-											delete
-											icon={<Trash size='22' />}
-											tooltip='Xóa'
+											warn
+											icon={<Lock size='22' />}
+											tooltip='Khóa'
 											color='#777E90'
-											onClick={() => setDataDelete(data)}
+											onClick={() => setDataChange(data)}
 										/>
 									</div>
 								),
@@ -199,16 +229,16 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 						currentPage={Number(_page) || 1}
 						total={listGateways?.data?.pagination?.totalCount}
 						pageSize={Number(_pageSize) || 20}
-						dependencies={[_pageSize, _keyword, _state, _factoryAreaUuid]}
+						dependencies={[_pageSize, _keyword, _state, _status, _factoryAreaUuid]}
 					/>
 				</DataWrapper>
 				<Dialog
-					danger
-					open={!!dataDelete}
-					onClose={() => setDataDelete(null)}
-					title='Xóa dữ liệu'
-					note='Bạn có chắc chắn muốn xóa gateway này?'
-					onSubmit={deleteGateway}
+					warn
+					open={!!dataChange}
+					onClose={() => setDataChange(null)}
+					title='Chuyển trạng thái'
+					note='Bạn có chắc chắn chuyển trạng thái cho gateway này?'
+					onSubmit={handleChangeStatusGateway}
 				/>
 				<Popup open={!!dataUpdate} onClose={() => setDataUpdate(null)}>
 					<PopupUpdateGateway dataUpdate={dataUpdate} onClose={() => setDataUpdate(null)} />

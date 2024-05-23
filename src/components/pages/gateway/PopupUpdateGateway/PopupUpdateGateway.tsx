@@ -18,7 +18,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_id, _page, _pageSize, _keyword, _state, _factoryAreaUuid} = router.query;
+	const {_id, _page, _pageSize, _keyword, _state, _status, _factoryAreaUuid} = router.query;
 
 	const [form, setForm] = useState<{
 		uuid: string;
@@ -60,7 +60,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 		onSuccess(data) {
 			if (data) {
 				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_gateway, _id]);
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _factoryAreaUuid]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_gateway, _page, _pageSize, _keyword, _state, _status, _factoryAreaUuid]);
 				onClose();
 				setForm({
 					uuid: '',
