@@ -21,6 +21,7 @@ export enum QUERY_KEY {
 	trang_chu_tong_quan,
 	chi_tiet_nhan_vien,
 	danh_sach_tai_khoan,
+	chinh_sua_nhan_vien,
 }
 
 export enum TYPE_DATE {

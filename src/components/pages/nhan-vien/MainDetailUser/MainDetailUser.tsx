@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {PropsMainPageDetailStaff} from './interfaces';
-import styles from './MainPageDetailStaff.module.scss';
+import {PropsMainDetailUser} from './interfaces';
+import styles from './MainDetailUser.module.scss';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
-import TableInfor from '../TableInfor';
+import TableInfor from '../TableInforDetail';
 
-function MainPageDetailStaff({}: PropsMainPageDetailStaff) {
+function MainDetailUser({}: PropsMainDetailUser) {
 	return (
 		<div className={styles.container}>
 			<Breadcrumb
@@ -41,4 +41,4 @@ function MainPageDetailStaff({}: PropsMainPageDetailStaff) {
 	);
 }
 
-export default MainPageDetailStaff;
+export default MainDetailUser;

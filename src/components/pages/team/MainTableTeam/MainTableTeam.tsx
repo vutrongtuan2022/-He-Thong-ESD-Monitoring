@@ -148,13 +148,13 @@ function MainTableTeam({}: PropsMainTableTeam) {
 						},
 					]}
 				/>
-				<Pagination
-					currentPage={Number(_page) || 1}
-					pageSize={Number(_pageSize) || 20}
-					total={pageListTeams?.data?.pagination?.totalCount}
-					dependencies={[_pageSize, _keyword, _leaderUuid, _status]}
-				/>
 			</DataWrapper>
+			<Pagination
+				currentPage={Number(_page) || 1}
+				pageSize={Number(_pageSize) || 20}
+				total={pageListTeams?.data?.pagination?.totalCount}
+				dependencies={[_pageSize, _keyword, _leaderUuid, _status]}
+			/>
 
 			{/* POPUP */}
 			<Dialog

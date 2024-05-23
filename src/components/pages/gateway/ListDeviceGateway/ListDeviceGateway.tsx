@@ -166,13 +166,13 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 							},
 						]}
 					/>
-					<Pagination
-						currentPage={Number(_page) || 1}
-						pageSize={Number(_pageSize) || 20}
-						dependencies={[_pageSize, _keyword, _id, _team]}
-						total={listDevices?.data?.pagination?.totalCount}
-					/>
 				</DataWrapper>
+				<Pagination
+					currentPage={Number(_page) || 1}
+					pageSize={Number(_pageSize) || 20}
+					dependencies={[_pageSize, _keyword, _id, _team]}
+					total={listDevices?.data?.pagination?.totalCount}
+				/>
 			</div>
 		</div>
 	);

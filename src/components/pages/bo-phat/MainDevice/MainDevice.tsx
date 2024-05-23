@@ -411,13 +411,13 @@ function MainDevice({}: PropsMainDevice) {
 									},
 								]}
 							/>
-							<Pagination
-								currentPage={Number(_page) || 1}
-								total={listDevices?.data?.pagination?.totalCount}
-								pageSize={Number(_pageSize) || 20}
-								dependencies={[_pageSize, _keyword, _pin, _onlineState, _status, _ngState]}
-							/>
 						</DataWrapper>
+						<Pagination
+							currentPage={Number(_page) || 1}
+							pageSize={Number(_pageSize) || 20}
+							total={listDevices?.data?.pagination?.totalCount}
+							dependencies={[_pageSize, _keyword, _pin, _onlineState, _status, _ngState]}
+						/>
 					</div>
 				</div>
 			</WrapperContainer>

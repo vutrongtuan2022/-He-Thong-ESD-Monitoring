@@ -1,6 +1,6 @@
 import {STATUS_GENERAL, STATUS_USER} from '~/constants/config/enum';
 
-export interface PropsListTransmitter {}
+export interface PropsListUser {}
 
 export interface IUser {
 	uuid: string;
@@ -13,7 +13,7 @@ export interface IUser {
 	gender: number;
 	email: string | null;
 	phone: string | null;
-	status: STATUS_GENERAL | null;
+	status: number;
 	address: string | null;
 	birthday: string | null;
 	avatar: string | null;

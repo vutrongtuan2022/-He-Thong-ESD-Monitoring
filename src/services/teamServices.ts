@@ -70,6 +70,11 @@ const teamServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	listTeamChild: (data: {pageSize: number; page: number; uuid: string}, tokenAxios?: any) => {
+		return axiosClient.post(`Team/page_list_child_team`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default teamServices;

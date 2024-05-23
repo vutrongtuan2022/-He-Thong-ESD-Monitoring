@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {PropsTableTeam} from './interfaces';
+import {ITeamChild, PropsTableTeam} from './interfaces';
 import DataWrapper from '~/components/common/DataWrapper';
 import {useRouter} from 'next/router';
 import {useQuery} from '@tanstack/react-query';
@@ -17,41 +17,40 @@ import Link from 'next/link';
 function TableTeam({}: PropsTableTeam) {
 	const router = useRouter();
 
-	const {_page, _pageSize} = router.query;
+	const {_id, _page, _pageSize, _table} = router.query;
 
-	const pageListTeams = useQuery([QUERY_KEY.danh_sach_team, _pageSize], {
+	const listTeamChild = useQuery([QUERY_KEY.danh_sach_team_con, _page, _id, _pageSize], {
 		queryFn: () =>
 			httpRequest({
-				http: teamServices.pageListTeam({
-					keyword: '',
+				http: teamServices.listTeamChild({
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
-					status: null,
-					leaderUuid: null,
+					uuid: _id as string,
 				}),
 			}),
 		select(data) {
 			return data;
 		},
+		enabled: !!_id,
 	});
 
 	return (
 		<div>
 			<DataWrapper
-				data={pageListTeams?.data?.items}
-				loading={pageListTeams.isLoading}
+				data={listTeamChild?.data?.items}
+				loading={listTeamChild.isLoading}
 				noti={<Noti title='Team trống' des='Danh sách team trống!' disableButton />}
 			>
 				<Table
-					data={pageListTeams?.data?.items}
+					data={listTeamChild?.data?.items}
 					column={[
 						{
 							title: 'STT',
-							render: (data: any, index: number) => <>{index + 1}</>,
+							render: (data: ITeamChild, index: number) => <>{index + 1}</>,
 						},
 						{
 							title: 'Tên team',
-							render: (data: any) => (
+							render: (data: ITeamChild) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
 								</Link>
@@ -59,27 +58,27 @@ function TableTeam({}: PropsTableTeam) {
 						},
 						{
 							title: 'Mã team',
-							render: (data: any) => <>{data.code || '---'}</>,
+							render: (data: ITeamChild) => <>{data.code || '---'}</>,
 						},
 						{
 							title: 'Người quản lý',
-							render: (data: any) => <>{data.leaderName || '---'}</>,
+							render: (data: ITeamChild) => <>{data.leaderName || '---'}</>,
 						},
 						{
 							title: 'Số thành viên',
-							render: (data: any) => <>{data.totalUser || 0}</>,
+							render: (data: ITeamChild) => <>{data.totalUser || 0}</>,
 						},
 						{
 							title: 'Số thiết bị',
-							render: (data: any) => <>{data.totalDevices || 0}</>,
+							render: (data: ITeamChild) => <>{data.totalDevices || 0}</>,
 						},
 					]}
 				/>
 				<Pagination
 					currentPage={Number(_page) || 1}
 					pageSize={Number(_pageSize) || 20}
-					total={pageListTeams?.data?.pagination?.totalCount}
-					dependencies={[_pageSize]}
+					total={listTeamChild?.data?.pagination?.totalCount}
+					dependencies={[_id, _pageSize, _table]}
 				/>
 			</DataWrapper>
 		</div>

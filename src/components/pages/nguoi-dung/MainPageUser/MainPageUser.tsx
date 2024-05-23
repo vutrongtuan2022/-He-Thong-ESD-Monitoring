@@ -206,23 +206,24 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 								},
 							]}
 						/>
-						<Dialog
-							danger
-							open={openDelete}
-							onClose={() => setOpenDelete(false)}
-							title='Xóa Người Dùng'
-							note='Bạn có chắc chắn muốn xóa người dùng này?'
-							onSubmit={() => setOpenDelete(false)}
-						/>
-						<Pagination
-							currentPage={Number(_page) || 1}
-							total={400}
-							pageSize={Number(_pageSize) || 20}
-							dependencies={[_pageSize, _keyword, _manager, _dateFrom, _dateTo]}
-						/>
 					</DataWrapper>
+					<Pagination
+						currentPage={Number(_page) || 1}
+						total={400}
+						pageSize={Number(_pageSize) || 20}
+						dependencies={[_pageSize, _keyword, _manager, _dateFrom, _dateTo]}
+					/>
 				</div>
 			</WrapperContainer>
+
+			<Dialog
+				danger
+				open={openDelete}
+				onClose={() => setOpenDelete(false)}
+				title='Xóa Người Dùng'
+				note='Bạn có chắc chắn muốn xóa người dùng này?'
+				onSubmit={() => setOpenDelete(false)}
+			/>
 		</div>
 	);
 };

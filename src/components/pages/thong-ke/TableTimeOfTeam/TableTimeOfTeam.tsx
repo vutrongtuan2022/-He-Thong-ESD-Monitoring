@@ -62,8 +62,8 @@ function TableTimeOfTeam({}: PropsTableTimeOfTeam) {
 							},
 						]}
 					/>
-					<Pagination currentPage={1} total={400} pageSize={20} dependencies={[]} />
 				</DataWrapper>
+				<Pagination currentPage={1} total={400} pageSize={20} dependencies={[]} />
 			</div>
 		</Fragment>
 	);
