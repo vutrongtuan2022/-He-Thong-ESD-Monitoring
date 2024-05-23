@@ -9,7 +9,7 @@ import {IoArrowBackOutline} from 'react-icons/io5';
 import clsx from 'clsx';
 import {PATH} from '~/constants/config';
 import {useRouter} from 'next/router';
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEY, STATE_GATEWAY, STATUS_GENERAL} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import gatewayServices from '~/services/gatewayServices';
@@ -22,6 +22,7 @@ import PopupUpdateGateway from '../PopupUpdateGateway';
 
 function TableInforGateway({}: PropsTableInforGateway) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
 	const {_id} = router.query;
 
@@ -42,12 +43,12 @@ function TableInforGateway({}: PropsTableInforGateway) {
 		enabled: !!_id,
 	});
 
-	const funcDeleteGateway = useMutation({
+	const funcChangeStatusGateway = useMutation({
 		mutationFn: () =>
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Xóa gateway thành công!',
+				msgSuccess: 'Thay đổi trạng thái thành công!',
 				http: gatewayServices.updateStatusGateway({
 					uuid: data?.uuid!,
 					status: data?.status == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -56,25 +57,22 @@ function TableInforGateway({}: PropsTableInforGateway) {
 		onSuccess(data) {
 			if (data) {
 				setOpenDelete(false);
-				router.replace(PATH.Gateway, undefined, {
-					scroll: false,
-					shallow: false,
-				});
+				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_gateway, _id]);
 			}
 		},
 	});
 
-	const deleteGateway = async () => {
+	const handleChangeStatusGateway = async () => {
 		if (!data?.uuid) {
 			return toastWarn({msg: 'Không tìm thấy gateway!'});
 		}
 
-		return funcDeleteGateway.mutate();
+		return funcChangeStatusGateway.mutate();
 	};
 
 	return (
 		<div className={styles.container}>
-			<Loading loading={funcDeleteGateway.isLoading} />
+			<Loading loading={funcChangeStatusGateway.isLoading} />
 			<div className={styles.header}>
 				<Link href={PATH.Gateway} className={styles.header_title}>
 					<IoArrowBackOutline fontSize={20} fontWeight={600} />
@@ -82,7 +80,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 				</Link>
 				<div className={styles.list_btn}>
 					<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold onClick={() => setOpenDelete(true)}>
-						Xóa
+						Khóa
 					</Button>
 					<Button className={styles.btn} rounded_8 w_fit p_6_16 blue_light bold onClick={() => setDataUpdate(data)}>
 						Chỉnh sửa
@@ -132,13 +130,14 @@ function TableInforGateway({}: PropsTableInforGateway) {
 				</table>
 			</div>
 			<Dialog
-				danger
+				warn
 				open={openDelete}
 				onClose={() => setOpenDelete(false)}
-				title='Xóa dữ liệu'
-				note='Bạn có chắc chắn muốn xóa gateway này?'
-				onSubmit={deleteGateway}
+				title='Chuyển trạng thái'
+				note='Bạn có chắc chắn chuyển trạng thái cho gateway này?'
+				onSubmit={handleChangeStatusGateway}
 			/>
+
 			<Popup open={!!dataUpdate} onClose={() => setDataUpdate(null)}>
 				<PopupUpdateGateway dataUpdate={dataUpdate} onClose={() => setDataUpdate(null)} />
 			</Popup>
