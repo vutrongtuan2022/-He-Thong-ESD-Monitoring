@@ -22,6 +22,7 @@ import Image from 'next/image';
 import icons from '~/constants/images/icons';
 import Link from 'next/link';
 import Dialog from '~/components/common/Dialog';
+import IconCustom from '~/components/common/IconCustom';
 
 const MainPageUser = ({}: PropsMainPageUser) => {
 	const router = useRouter();
@@ -33,6 +34,23 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 	const handleToggle = (index: number) => {
 		setOpen((prev) => (prev === index ? null : index));
 	};
+	// const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status, _teamUuid], {
+	// 	queryFn: () =>
+	// 		httpRequest({
+	// 			http: userServices.listUser({
+	// 				pageSize: Number(_pageSize) || 20,
+	// 				page: Number(_page) || 1,
+	// 				keyword: _keyword ? (_keyword as string) : '',
+	// 				username: _username ? (_username as string) : null,
+	// 				status: _status ? (_status as string) : null,
+	// 				timeCreated: null,
+	// 				teamUuid: '',
+	// 			}),
+	// 		}),
+	// 	select(data) {
+	// 		return data;
+	// 	},
+	// });
 	return (
 		<div className={styles.container}>
 			<Breadcrumb
@@ -42,7 +60,7 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 						path: PATH.Home,
 					},
 					{
-						title: 'Quản lý người dùng',
+						title: 'Quản lý tài khoản',
 						path: PATH.NguoiDung,
 					},
 				]}
@@ -155,40 +173,36 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 								},
 								{
 									title: '',
-									render: (data: any, index: number) => (
-										<HeadlessTippy
-											interactive
-											visible={open === index}
-											placement='bottom'
-											render={(attrs) => (
-												<div className={styles.mainOption}>
-													<div className={styles.item}>
-														<CiLock size={18} />
-														<p>Khoa lai</p>
-													</div>
-													<div
-														className={styles.item}
-														onClick={() => {
-															router.push(`/nguoi-dung/chinh-sua?_id=${123}`);
-														}}
-													>
-														<LuPencil size={18} />
-														<p>Chinh sua</p>
-													</div>
-													<div className={styles.item} onClick={() => setOpenDelete(true)}>
-														<Trash size={18} />
-														<p>Xoa bo</p>
-													</div>
-												</div>
-											)}
-											onClickOutside={() => setOpen(null)}
-										>
-											<div className={styles.btn} onClick={() => handleToggle(index)}>
-												<BsThreeDots className={styles.dots} color='#23262f' size={20} />
-											</div>
-										</HeadlessTippy>
+									render: (data: any) => (
+										<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+											<IconCustom
+												edit
+												icon={<CiLock fontSize={20} fontWeight={600} />}
+												tooltip=' Khoa lai '
+												color='#777E90'
+												// onClick={() => {
+												// 	router.push(`/nguoi-dung/chinh-sua?_id=${123}`);
+												// }}
+											/>
+											<IconCustom
+												edit
+												icon={<LuPencil fontSize={20} fontWeight={600} />}
+												tooltip='Chỉnh sửa'
+												color='#777E90'
+												onClick={() => {
+													router.push(`/nguoi-dung/chinh-sua?_id=${123}`);
+												}}
+											/>
+
+											<IconCustom
+												delete
+												icon={<Trash size='22' />}
+												tooltip='Xóa'
+												color='#777E90'
+												onClick={() => setOpenDelete(true)}
+											/>
+										</div>
 									),
-									//<BsThreeDots className={styles.dots} color='#23262f' size={20} />,
 								},
 							]}
 						/>
