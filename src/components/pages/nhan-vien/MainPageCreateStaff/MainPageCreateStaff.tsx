@@ -17,20 +17,21 @@ import {useRouter} from 'next/router';
 import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
 import moment from 'moment';
+
 const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 	const [date, setDate] = useState<string>('');
 	const [form, setForm] = useState<IForm>({
 		userName: '',
 		fullname: '',
 		teamUuid: '',
-		gender: 0,
+		gender: GENDER.NAM,
 		email: '',
 		phone: '',
 		address: '',
 		birthday: '2024-05-22',
 		avatar: '',
 		role: '',
-		status: '',
+		status: STATUS_GENERAL.SU_DUNG,
 		code: '',
 	});
 	const router = useRouter();
@@ -52,7 +53,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 					avatar: '',
 					birthday: form.birthday,
 					phone: form.phone,
-					gender: GENDER.NAM,
+					gender: form.gender,
 					role: form.role,
 					code: form.code,
 					status: STATUS_GENERAL.SU_DUNG,
@@ -61,7 +62,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 			}),
 		onSuccess(data) {
 			if (data) {
-				console.log(data);
+				router.push(PATH.NhanVien);
 			}
 		},
 	});
@@ -196,7 +197,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 										name='birthday'
 										onClean={true}
 									/>
-									<div className={styles.gennder}>
+									<div className={styles.gender}>
 										<label className={styles.title}>Giới tính</label>
 										<div className={styles.group_radio}>
 											<div className={styles.item_radio}>
@@ -205,16 +206,16 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 													className={styles.input_radio}
 													type='radio'
 													name='gender'
-													value={form.gender}
-													checked={form.gender == GENDER.NAM}
+													value={GENDER.NAM}
+													checked={form.gender === GENDER.NAM}
 													onChange={(e) =>
-														setForm((prev: any) => ({
+														setForm((prev) => ({
 															...prev,
 															gender: GENDER.NAM,
 														}))
 													}
 												/>
-												<label className={styles.input_lable} htmlFor='male'>
+												<label className={styles.input_label} htmlFor='male'>
 													Nam
 												</label>
 											</div>
@@ -225,16 +226,16 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 													className={styles.input_radio}
 													type='radio'
 													name='gender'
-													value={form.gender}
-													checked={form.gender == GENDER.NU}
+													value={GENDER.NU}
+													checked={form.gender === GENDER.NU}
 													onChange={(e) =>
-														setForm((prev: any) => ({
+														setForm((prev) => ({
 															...prev,
 															gender: GENDER.NU,
 														}))
 													}
 												/>
-												<label className={styles.input_lable} htmlFor='female'>
+												<label className={styles.input_label} htmlFor='female'>
 													Nữ
 												</label>
 											</div>
@@ -245,16 +246,16 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 													className={styles.input_radio}
 													type='radio'
 													name='gender'
-													value={form.gender}
-													checked={form.gender == GENDER.KHAC}
+													value={GENDER.KHAC}
+													checked={form.gender === GENDER.KHAC}
 													onChange={(e) =>
-														setForm((prev: any) => ({
+														setForm((prev) => ({
 															...prev,
 															gender: GENDER.KHAC,
 														}))
 													}
 												/>
-												<label className={styles.input_lable} htmlFor='other'>
+												<label className={styles.input_label} htmlFor='other'>
 													Khác
 												</label>
 											</div>
@@ -304,7 +305,7 @@ const MainPageCreateStaff = ({}: PropsMainPageCreateStaff) => {
 										label={<span>Chức vụ</span>}
 									>
 										{listRoles?.data?.map((v: any) => (
-											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+											<Option key={v?.uuid} title={v?.name} value={v?.name} />
 										))}
 									</Select>
 								</div>
