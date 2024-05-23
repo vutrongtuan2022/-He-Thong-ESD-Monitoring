@@ -1,18 +1,21 @@
 import React from 'react';
 
-import {INGHistory, PropsTableHistory} from './interfaces';
-import styles from './TableHistory.module.scss';
+import {PropsTableHistory} from './interfaces';
 import DataWrapper from '~/components/common/DataWrapper';
 import Pagination from '~/components/common/Pagination';
-import Link from 'next/link';
 import Table from '~/components/common/Table';
 import Noti from '~/components/common/DataWrapper/components/Noti';
-import teamServices from '~/services/teamServices';
 import {httpRequest} from '~/services';
 import {QUERY_KEY} from '~/constants/config/enum';
 import {useQuery} from '@tanstack/react-query';
 import {useRouter} from 'next/router';
 import ngHistoryServices from '~/services/ngHistoryServices';
+import {IDeviceNGHistory} from '~/components/pages/bo-phat/HistoryDevice/interfaces';
+import Link from 'next/link';
+
+import styles from './TableHistory.module.scss';
+import Moment from 'react-moment';
+import {formatTimeHistory} from '~/common/funcs/optionConvert';
 
 function TableHistory({}: PropsTableHistory) {
 	const router = useRouter();
@@ -27,7 +30,7 @@ function TableHistory({}: PropsTableHistory) {
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					teamUuid: _id as string,
-					deviceUuid: '',
+					deviceUuid: null,
 				}),
 			}),
 		select(data) {
@@ -48,32 +51,32 @@ function TableHistory({}: PropsTableHistory) {
 					column={[
 						{
 							title: 'STT',
-							render: (data: INGHistory, index: number) => <>{index + 1}</>,
+							render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 						},
-						// {
-						// 	title: 'Mã thiết bị',
-						// 	render: (data: INGHistory) => (
-						// 		<Link href={`/bo-phat/${data.uuid}`} className={styles.link}>
-						// 			{data. || '---'}
-						// 		</Link>
-						// 	),
-						// },
-						// {
-						// 	title: 'Mã team',
-						// 	render: (data: INGHistory) => <>{data.code || '---'}</>,
-						// },
-						// {
-						// 	title: 'Người quản lý',
-						// 	render: (data: INGHistory) => <>{data.leaderName || '---'}</>,
-						// },
-						// {
-						// 	title: 'Số thành viên',
-						// 	render: (data: INGHistory) => <>{data.totalUser || 0}</>,
-						// },
-						// {
-						// 	title: 'Số thiết bị',
-						// 	render: (data: INGHistory) => <>{data.totalDevices || 0}</>,
-						// },
+						{
+							title: 'Số MAC',
+							render: (data: IDeviceNGHistory) => (
+								<Link href={`/bo-phat/${data.deviceUuid}`} className={styles.link}>
+									{data.macNumber || '---'}
+								</Link>
+							),
+						},
+						{
+							title: 'Tên thiết bị',
+							render: (data: IDeviceNGHistory) => <>{data.deviceName || '---'}</>,
+						},
+						{
+							title: 'Giá trị tĩnh điện',
+							render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
+						},
+						{
+							title: 'Thời gian phát hiện NG',
+							render: (data: IDeviceNGHistory) => <Moment date={data.timeNgStart} format='HH:mm, DD/MM/YYYY' />,
+						},
+						{
+							title: 'Khoảng thời gian NG',
+							render: (data: IDeviceNGHistory) => <>{formatTimeHistory(data.totalNgMinutes || 0)}</>,
+						},
 					]}
 				/>
 				<Pagination

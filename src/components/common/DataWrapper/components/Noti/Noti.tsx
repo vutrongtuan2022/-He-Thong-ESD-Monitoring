@@ -6,7 +6,7 @@ import Button from '~/components/common/Button';
 
 function Noti({
 	disableButton,
-	img = icons.emptyCongTy,
+	img = icons.icon_table_empty,
 	title = 'Dữ liệu trống',
 	des = 'Hiện tại dữ liệu đang trống!',
 	titleButton = ' Tạo ngay',

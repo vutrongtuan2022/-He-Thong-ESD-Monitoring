@@ -1,19 +1,19 @@
-export interface PropsMainTableTeam {}
+export interface PropsMainDetailTeam {}
 
-export interface ITeam {
+export interface IDataDetailTeam {
 	uuid: string;
+	parentUuid: string | null;
 	code: string;
+	parentName: string | null;
+	totalUnderTeam: number;
 	name: string;
 	leaderUuid: string;
+	leadCode: string;
 	leaderName: string;
 	totalDevices: number;
 	totalUser: number;
 	notes: string;
 	timeCreated: string;
 	status: number;
-	parentUuid: string;
-	parentName: string;
-	totalUnderTeam: number;
-	leadCode: string | null;
 	areaName: string;
 }

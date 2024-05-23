@@ -81,6 +81,22 @@ const gatewayServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	exportGatewayDevicecExcel: (
+		data: {
+			pageSize: number;
+			page: number;
+			keyword: string;
+			uuid: string | null;
+			status: number | null;
+			gatewayUuid: string;
+			teamUuid: string | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Gateway/export_gateway_device_excel`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default gatewayServices;

@@ -16,6 +16,7 @@ import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEY} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import dashboardServices from '~/services/dashboardServices';
+import {formatTimeHistory} from '~/common/funcs/optionConvert';
 
 function MainDashboard({}: PropsMainDashboard) {
 	const dashboardOverview = useQuery([QUERY_KEY.trang_chu_tong_quan], {
@@ -71,7 +72,7 @@ function MainDashboard({}: PropsMainDashboard) {
 					/>
 					<ItemDashboard
 						isLoading={dashboardOverview.isLoading}
-						value={dashboardOverview?.data?.longestNGTime}
+						value={formatTimeHistory(dashboardOverview?.data?.longestNGTime || 0)}
 						text='Khoảng thời gian NG lâu nhất'
 						icon={<FaRegHourglassHalf size={30} color='#ED8145' />}
 					/>

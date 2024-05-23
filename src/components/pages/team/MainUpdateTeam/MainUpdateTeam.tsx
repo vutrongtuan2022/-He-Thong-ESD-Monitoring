@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 
-import {PropsMainPageCreate} from './interfaces';
-import styles from './MainPageCreate.module.scss';
+import {PropsMainUpdateTeam} from './interfaces';
+import styles from './MainUpdateTeam.module.scss';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
@@ -14,22 +14,59 @@ import TextArea from '~/components/common/Form/components/TextArea';
 import teamServices from '~/services/teamServices';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
-import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
+import {QUERY_KEY} from '~/constants/config/enum';
 import categoryServices from '~/services/categoryServices';
 import Loading from '~/components/common/Loading';
 import {toastWarn} from '~/common/funcs/toast';
 import {useRouter} from 'next/router';
+import {IDataDetailTeam} from '../MainDetailTeam/interfaces';
 
-function MainPageCreate({}: PropsMainPageCreate) {
+interface IFrom {
+	name: string;
+	code: string;
+	leaderUuid: string;
+	areaUuid: string;
+	parentUuid: string;
+	note: string;
+}
+
+function MainUpdateTeam({}: PropsMainUpdateTeam) {
 	const router = useRouter();
 
-	const [form, setForm] = useState<any>({
+	const {_id} = router.query;
+
+	const [dataDetail, setDataDetail] = useState<IDataDetailTeam>();
+	const [form, setForm] = useState<IFrom>({
 		name: '',
 		code: '',
 		leaderUuid: '',
 		areaUuid: '',
+		parentUuid: '',
 		note: '',
-		status: STATUS_GENERAL.SU_DUNG,
+	});
+
+	// GET DETAIL TEAM
+	useQuery([QUERY_KEY.chi_tiet_team, _id], {
+		queryFn: () =>
+			httpRequest({
+				http: teamServices.detailTeam({
+					uuid: _id as string,
+				}),
+			}),
+		onSuccess(data) {
+			if (data) {
+				setDataDetail(data);
+				setForm({
+					name: data.name,
+					code: data.code,
+					leaderUuid: data.leaderUuid,
+					areaUuid: data.areaUuid,
+					note: data.notes,
+					parentUuid: data?.parentUuid,
+				});
+			}
+		},
+		enabled: !!_id,
 	});
 
 	// GET LIST DROPDOWN
@@ -75,21 +112,29 @@ function MainPageCreate({}: PropsMainPageCreate) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thêm mới team thành công!',
+				msgSuccess: 'Chỉnh sửa team thành công!',
 				http: teamServices.upsertTeam({
-					code: form.code,
+					uuid: _id as string,
 					name: form.name,
+					code: form.code,
 					leaderUuid: form.leaderUuid,
 					areaUuid: form.areaUuid,
-					status: form.status,
+					parentUuid: form.parentUuid,
 					notes: form.note,
-					uuid: '',
-					rootUuid: '',
-					parentUuid: '',
+					status: dataDetail?.status!,
+					rootUuid: null,
 				}),
 			}),
 		onSuccess(data) {
 			if (data) {
+				setForm({
+					name: '',
+					code: '',
+					leaderUuid: '',
+					areaUuid: '',
+					parentUuid: '',
+					note: '',
+				});
 				router.replace(PATH.Team, undefined, {
 					scroll: false,
 					shallow: false,
@@ -100,11 +145,14 @@ function MainPageCreate({}: PropsMainPageCreate) {
 
 	// SUBMIT
 	const handleSubmit = async () => {
-		if (!form.code) {
-			return toastWarn({msg: 'Vui lòng nhập mã team!'});
+		if (!_id) {
+			return toastWarn({msg: 'Không tìm thấy team!'});
 		}
 		if (!form.name) {
 			return toastWarn({msg: 'Vui lòng nhập tên team!'});
+		}
+		if (!form.code) {
+			return toastWarn({msg: 'Vui lòng nhập mã team!'});
 		}
 		if (!form.leaderUuid) {
 			return toastWarn({msg: 'Vui lòng chọn người quản lý!'});
@@ -130,7 +178,7 @@ function MainPageCreate({}: PropsMainPageCreate) {
 					},
 					{
 						path: '',
-						title: 'Thêm mới team',
+						title: 'Chỉnh sửa team',
 					},
 				]}
 				action={
@@ -145,7 +193,7 @@ function MainPageCreate({}: PropsMainPageCreate) {
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<div className={styles.left}>
-							<h4>Thêm mới team</h4>
+							<h4>Chỉnh sửa team</h4>
 							<p>Điền đầy đủ các thông tin team</p>
 						</div>
 						<div className={styles.right}>
@@ -153,7 +201,7 @@ function MainPageCreate({}: PropsMainPageCreate) {
 								Hủy bỏ
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								Lưu lại
+								Cập nhật
 							</Button>
 						</div>
 					</div>
@@ -161,33 +209,33 @@ function MainPageCreate({}: PropsMainPageCreate) {
 					<div className={styles.form}>
 						<Form form={form} setForm={setForm}>
 							<Input
-								name='code'
-								value={form.code || ''}
+								name='name'
+								value={form.name || ''}
 								type='text'
 								label={
 									<span>
-										Mã team <span style={{color: 'red'}}>*</span>
+										Tên team <span style={{color: 'red'}}>*</span>
 									</span>
 								}
-								placeholder='Nhập mã team'
+								placeholder='Nhập tên team'
 							/>
 
 							<div className={clsx('mt', 'col_2')}>
 								<Input
-									name='name'
-									value={form.name || ''}
+									name='code'
+									value={form.code || ''}
 									type='text'
 									label={
 										<span>
-											Tên team <span style={{color: 'red'}}>*</span>
+											Mã team <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Nhập tên team'
+									placeholder='Nhập mã team'
 								/>
 								<Select
 									isSearch
 									name='leaderUuid'
-									placeholder='Người quản lý *'
+									placeholder='Người quản lý'
 									value={form?.leaderUuid || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
@@ -207,31 +255,26 @@ function MainPageCreate({}: PropsMainPageCreate) {
 								</Select>
 							</div>
 
-							<div className={clsx('mt')}>
-								<Select
-									isSearch
-									name='parentUuid'
-									placeholder='Team cấp trên'
-									value={form?.parentUuid || null}
-									onChange={(e: any) =>
-										setForm((prev: any) => ({
-											...prev,
-											parentUuid: e.target.value,
-										}))
-									}
-									label={
-										<span>
-											Team cấp trên<span style={{color: 'red'}}>*</span>
-										</span>
-									}
-								>
-									{listTeams.data?.map((v: any) => (
-										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
-									))}
-								</Select>
-							</div>
-
 							<div className={clsx('mt', 'col_2')}>
+								<div>
+									<Select
+										isSearch
+										name='parentUuid'
+										placeholder='Team cấp trên'
+										value={form?.parentUuid || null}
+										onChange={(e: any) =>
+											setForm((prev: any) => ({
+												...prev,
+												parentUuid: e.target.value,
+											}))
+										}
+										label={<span>Team cấp trên</span>}
+									>
+										{listTeams.data?.map((v: any) => (
+											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+										))}
+									</Select>
+								</div>
 								<Select
 									isSearch
 									name='areaUuid'
@@ -253,31 +296,9 @@ function MainPageCreate({}: PropsMainPageCreate) {
 										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 									))}
 								</Select>
-								<div>
-									<Select
-										isSearch
-										name='status'
-										placeholder='Chọn trạng thái'
-										value={Number(form?.status) || null}
-										onChange={(e: any) =>
-											setForm((prev: any) => ({
-												...prev,
-												status: e.target.value,
-											}))
-										}
-										label={
-											<span>
-												Trạng thái <span style={{color: 'red'}}>*</span>
-											</span>
-										}
-									>
-										<Option title={'Hoạt động'} value={STATUS_GENERAL.SU_DUNG} />
-										<Option title={'Không hoạt động'} value={STATUS_GENERAL.KHONG_SU_DUNG} />
-									</Select>
-								</div>
 							</div>
 							<div className={clsx('mt')}>
-								<TextArea name='note' placeholder='Nhập mô tả' label={<span>Mô tả</span>} />
+								<TextArea name='note' value={form.note} placeholder='Nhập mô tả' label={<span>Mô tả</span>} />
 							</div>
 						</Form>
 					</div>
@@ -287,4 +308,4 @@ function MainPageCreate({}: PropsMainPageCreate) {
 	);
 }
 
-export default MainPageCreate;
+export default MainUpdateTeam;
