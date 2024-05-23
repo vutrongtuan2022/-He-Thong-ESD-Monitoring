@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {PropsMainPageUser} from './interfaces';
+import {IAccount, PropsMainPageUser} from './interfaces';
 import styles from './MainPageUser.module.scss';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import {useRouter} from 'next/router';
@@ -23,11 +23,12 @@ import icons from '~/constants/images/icons';
 import Link from 'next/link';
 import Dialog from '~/components/common/Dialog';
 import IconCustom from '~/components/common/IconCustom';
+import StateAccount from '../StateAccount';
 
 const MainPageUser = ({}: PropsMainPageUser) => {
 	const router = useRouter();
 	const {_page, _pageSize, _keyword, _manager, _dateFrom, _dateTo} = router.query;
-	const [openDelete, setOpenDelete] = useState<boolean>(false);
+	const [openClock, setOpenClock] = useState<boolean>(false);
 
 	const [open, setOpen] = useState<number | null>(null);
 
@@ -79,32 +80,6 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 								Export excel
 							</Button>
 						</div>
-						<div>
-							<Button
-								className={styles.btn}
-								rounded_8
-								w_fit
-								p_6_16
-								blue_light
-								bold
-								icon={<Image alt='icon import' src={icons.import_excel} width={20} height={20} />}
-							>
-								Import excel
-							</Button>
-						</div>
-						{/* <div>
-							<Button
-								className={styles.btn}
-								rounded_8
-								w_fit
-								p_6_16
-								primary
-								bold
-								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
-							>
-								Thêm mới
-							</Button>
-						</div> */}
 						<div className={styles.box_icon}>
 							<BsThreeDots className={styles.dots} color='#23262f' size={20} />
 						</div>
@@ -121,7 +96,7 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 							<FilterCustom
 								isSearch
 								name='Trạng thái'
-								query='_manager'
+								query='_onlineState'
 								listFilter={[
 									{id: 1, name: 'Hoạt động'},
 									{id: 2, name: 'Đang khóa'},
@@ -141,19 +116,19 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 								},
 								{
 									title: 'Mã người dùng',
-									render: (data: any) => <>ND0001</>,
+									render: (data: any) => <>nv01</>,
 								},
 								{
 									title: 'Tên người dùng',
 									render: (data: any) => (
-										<Link href={`/nguoi-dung/123`} className={styles.DetailUser}>
-											Nguyễn Văn A
+										<Link href={`/nguoi-dung/{123}}`} className={styles.DetailUser}>
+											jhagjdsyu
 										</Link>
 									),
 								},
 								{
 									title: 'Email',
-									render: (data: any) => <>nguyenvana23@gmail.com</>,
+									render: (data: any) => <>skdjsdj@gmail.com</>,
 								},
 								{
 									title: 'Số điện thoại',
@@ -170,6 +145,7 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 								{
 									title: 'Trạng thái',
 									render: (data: any) => <Status status='Online' />,
+									// render: (data: any) => <StateAccount />,
 								},
 								{
 									title: '',
@@ -180,6 +156,7 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 												icon={<CiLock fontSize={20} fontWeight={600} />}
 												tooltip=' Khoa lai '
 												color='#777E90'
+												onClick={() => setOpenClock(true)}
 												// onClick={() => {
 												// 	router.push(`/nguoi-dung/chinh-sua?_id=${123}`);
 												// }}
@@ -192,14 +169,6 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 												onClick={() => {
 													router.push(`/nguoi-dung/chinh-sua?_id=${123}`);
 												}}
-											/>
-
-											<IconCustom
-												delete
-												icon={<Trash size='22' />}
-												tooltip='Xóa'
-												color='#777E90'
-												onClick={() => setOpenDelete(true)}
 											/>
 										</div>
 									),
@@ -218,11 +187,11 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 
 			<Dialog
 				danger
-				open={openDelete}
-				onClose={() => setOpenDelete(false)}
-				title='Xóa Người Dùng'
-				note='Bạn có chắc chắn muốn xóa người dùng này?'
-				onSubmit={() => setOpenDelete(false)}
+				open={openClock}
+				onClose={() => setOpenClock(false)}
+				title='Khóa Người Dùng'
+				note='Bạn có chắc chắn muốn khóa người dùng này?'
+				onSubmit={() => setOpenClock(false)}
 			/>
 		</div>
 	);

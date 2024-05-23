@@ -22,11 +22,11 @@ const PageDetailUser = ({}: PropsPageDetailUser) => {
 						path: PATH.Home,
 					},
 					{
-						title: 'Quản lý người dùng',
+						title: 'Quản lý tài khoản',
 						path: PATH.NguoiDung,
 					},
 					{
-						title: 'Chi tiết người dùng',
+						title: 'Chi tiết tài khoản',
 						path: '',
 					},
 				]}

@@ -77,7 +77,7 @@ export enum STATUS_USER {
 	HAVEACCOUNT = '1',
 	NOACCOUNT = '0',
 }
-// export enum STATUS_ACCOUNT {
-// 	KHOA,
+// export enum STATE_ONLINE_ACCOUNT {
 // 	HOAT_DONG,
+// 	DANG_KHOA,
 // }
