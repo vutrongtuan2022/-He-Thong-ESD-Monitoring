@@ -45,7 +45,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 					page: Number(_page) || 1,
 					keyword: _keyword ? (_keyword as string) : '',
 					deviceUuid: _id as string,
-					teamUuid: (_teamUuid as string) || '',
+					teamUuid: (_teamUuid as string) || null,
 				}),
 			}),
 		select(data) {

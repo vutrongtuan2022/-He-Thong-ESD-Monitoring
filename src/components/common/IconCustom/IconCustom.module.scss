@@ -10,8 +10,8 @@
 	transition: 0.3s;
 
 	i {
-		width: fit-content;
-		height: fit-content;
+		width: 24px;
+		height: 24px;
 	}
 
 	&:active {
@@ -33,6 +33,12 @@
 	&.delete {
 		&:hover {
 			color: var(--danger) !important;
+		}
+	}
+
+	&.warn {
+		&:hover {
+			color: var(--warn) !important;
 		}
 	}
 }

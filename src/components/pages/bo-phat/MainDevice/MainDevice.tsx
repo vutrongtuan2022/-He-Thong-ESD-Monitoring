@@ -16,7 +16,7 @@ import Table from '~/components/common/Table';
 import Moment from 'react-moment';
 import IconCustom from '~/components/common/IconCustom';
 import {LuPencil} from 'react-icons/lu';
-import {Trash} from 'iconsax-react';
+import {Lock} from 'iconsax-react';
 import Dialog from '~/components/common/Dialog';
 import Button from '~/components/common/Button';
 import icons from '~/constants/images/icons';
@@ -38,7 +38,7 @@ function MainDevice({}: PropsMainDevice) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _keyword, _pin, _onlineState, _ngState, importExcel} = router.query;
+	const {_page, _pageSize, _keyword, _pin, _onlineState, _status, _ngState, importExcel} = router.query;
 
 	const [file, setFile] = useState<any>(null);
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
@@ -46,7 +46,7 @@ function MainDevice({}: PropsMainDevice) {
 	const [dataChangeStatus, setDataChangeStatus] = useState<IDevice | null>(null);
 
 	// Lấy danh sách thiết bị
-	const listDevices = useQuery([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword, _pin, _onlineState, _ngState], {
+	const listDevices = useQuery([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword, _pin, _onlineState, _status, _ngState], {
 		queryFn: () =>
 			httpRequest({
 				http: deviceServices.listDevice({
@@ -55,7 +55,7 @@ function MainDevice({}: PropsMainDevice) {
 					keyword: _keyword ? (_keyword as string) : '',
 					onlineState: _onlineState ? Number(_onlineState) : null,
 					ngState: _ngState ? Number(_ngState) : null,
-					status: STATUS_GENERAL.SU_DUNG,
+					status: _status ? Number(_status) : null,
 					battery: {
 						toDouble: _pin && Number(_pin) < 100 ? Number(_pin) : 100,
 						fromDouble: 0,
@@ -78,7 +78,7 @@ function MainDevice({}: PropsMainDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Xóa bộ phát thành công!',
+				msgSuccess: 'Thay đổi trạng thái thành công!',
 				http: deviceServices.updateDeviceStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -88,7 +88,16 @@ function MainDevice({}: PropsMainDevice) {
 		onSuccess(data) {
 			if (data) {
 				setDataChangeStatus(null);
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword, _pin, _onlineState, _ngState]);
+				queryClient.invalidateQueries([
+					QUERY_KEY.danh_sach_bo_phat,
+					_page,
+					_pageSize,
+					_keyword,
+					_pin,
+					_onlineState,
+					_status,
+					_ngState,
+				]);
 			}
 		},
 	});
@@ -134,7 +143,16 @@ function MainDevice({}: PropsMainDevice) {
 		onSuccess(data) {
 			if (data) {
 				handleCloseImportExcel();
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword, _pin, _onlineState, _ngState]);
+				queryClient.invalidateQueries([
+					QUERY_KEY.danh_sach_bo_phat,
+					_page,
+					_pageSize,
+					_keyword,
+					_pin,
+					_onlineState,
+					_status,
+					_ngState,
+				]);
 			}
 		},
 	});
@@ -270,7 +288,17 @@ function MainDevice({}: PropsMainDevice) {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name='Trạng thái NG'
+								name='Trạng thái'
+								query='_status'
+								listFilter={[
+									{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
+									{id: STATUS_GENERAL.KHONG_SU_DUNG, name: 'Không sử dụng'},
+								]}
+							/>
+						</div>
+						<div className={styles.filter}>
+							<FilterCustom
+								name='Tình trạng'
 								query='_ngState'
 								listFilter={[
 									{id: STATE_DEVICE_NG.KHONG_NG, name: 'Bình thường'},
@@ -328,6 +356,34 @@ function MainDevice({}: PropsMainDevice) {
 										render: (data: IDevice) => <StateDevice status={data.state} />,
 									},
 									{
+										title: 'Tình trạng',
+										render: (data: IDevice) => (
+											<>
+												{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
+													<p style={{color: '#35C244', fontWeight: 600}}>Bình thường</p>
+												) : data.ngStatus == STATE_DEVICE_NG.BI_NG ? (
+													<p style={{color: '#E85A5A', fontWeight: 600}}>Not good</p>
+												) : (
+													'---'
+												)}
+											</>
+										),
+									},
+									{
+										title: 'Trạng thái',
+										render: (data: IDevice) => (
+											<>
+												{data?.status == STATUS_GENERAL.SU_DUNG ? (
+													<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
+													<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+												) : (
+													'---'
+												)}
+											</>
+										),
+									},
+									{
 										title: 'Online lần cuối',
 										render: (data: IDevice) => <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' />,
 									},
@@ -344,9 +400,9 @@ function MainDevice({}: PropsMainDevice) {
 												/>
 
 												<IconCustom
-													delete
-													icon={<Trash size='22' />}
-													tooltip='Xóa'
+													warn
+													icon={<Lock size='22' />}
+													tooltip='Khóa'
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
 												/>
@@ -359,7 +415,7 @@ function MainDevice({}: PropsMainDevice) {
 								currentPage={Number(_page) || 1}
 								total={listDevices?.data?.pagination?.totalCount}
 								pageSize={Number(_pageSize) || 20}
-								dependencies={[_pageSize, _keyword, _pin, _onlineState, _ngState]}
+								dependencies={[_pageSize, _keyword, _pin, _onlineState, _status, _ngState]}
 							/>
 						</DataWrapper>
 					</div>
@@ -368,11 +424,11 @@ function MainDevice({}: PropsMainDevice) {
 
 			{/* POPUP */}
 			<Dialog
-				danger
+				warn
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
-				title='Xóa bộ phát'
-				note='Bạn có chắc chắn muốn xóa bộ phát này?'
+				title='Thay đổi trạng thái'
+				note='Bạn có chắc chắn muốn thay đổi trạng thái bộ phát này?'
 				onSubmit={handleChangeStatusDevice}
 			/>
 			<Popup open={openCreate} onClose={() => setOpenCreate(false)}>
