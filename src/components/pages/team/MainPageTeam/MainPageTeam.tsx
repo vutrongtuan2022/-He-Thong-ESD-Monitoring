@@ -17,13 +17,14 @@ import {Data, TextalignJustifycenter, User} from 'iconsax-react';
 import Search from '~/components/common/Search';
 import FilterCustom from '~/components/common/FilterCustom';
 import {useQuery} from '@tanstack/react-query';
-import {QUERY_KEY} from '~/constants/config/enum';
+import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import categoryServices from '~/services/categoryServices';
 import {useRouter} from 'next/router';
 import clsx from 'clsx';
 import TableTeam from '../MainTableTeam';
 import TreeTeam from '../TreeTeam';
+import teamServices from '~/services/teamServices';
 
 function MainPageTeam({}: PropsMainPageTeam) {
 	const router = useRouter();
@@ -36,6 +37,16 @@ function MainPageTeam({}: PropsMainPageTeam) {
 				http: categoryServices.listUser({
 					keyword: '',
 				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
+	const sumTeams = useQuery([QUERY_KEY.thong_so_chung_team], {
+		queryFn: () =>
+			httpRequest({
+				http: teamServices.getSumTeam({}),
 			}),
 		select(data) {
 			return data;
@@ -106,15 +117,30 @@ function MainPageTeam({}: PropsMainPageTeam) {
 			<WrapperContainer>
 				<div className={styles.main}>
 					<GridColumn>
-						<ItemDashboard value={80} text='Tổng số team' icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />} />
-						<ItemDashboard value={80} text='Tổng nhân viên trong team' icon={<User size={30} color='#4DBFDD' />} />
-						<ItemDashboard value={80} text='Tổng thiết bị trong team' icon={<MdCast size={30} color='#4DBFDD' />} />
+						<ItemDashboard
+							isLoading={sumTeams.isLoading}
+							value={sumTeams?.data?.totalTeam}
+							text='Tổng số team'
+							icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />}
+						/>
+						<ItemDashboard
+							isLoading={sumTeams.isLoading}
+							value={sumTeams?.data?.totalUserTeam}
+							text='Tổng nhân viên trong team'
+							icon={<User size={30} color='#4DBFDD' />}
+						/>
+						<ItemDashboard
+							isLoading={sumTeams.isLoading}
+							value={sumTeams?.data?.totalDeviceTeam}
+							text='Tổng thiết bị trong team'
+							icon={<MdCast size={30} color='#4DBFDD' />}
+						/>
 					</GridColumn>
 				</div>
 				<div className={styles.head}>
 					<div className={styles.box_filter}>
 						<div className={styles.search}>
-							<Search keyName='_keyword' placeholder='Tìm kiếm theo số MAC, tên thiết bị' />
+							<Search keyName='_keyword' placeholder='Tìm kiếm theo tên hoặc mã' />
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
@@ -125,6 +151,16 @@ function MainPageTeam({}: PropsMainPageTeam) {
 									id: v?.uuid,
 									name: v?.name,
 								}))}
+							/>
+						</div>
+						<div className={styles.filter}>
+							<FilterCustom
+								name='Trạng thái'
+								query='_status'
+								listFilter={[
+									{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
+									{id: STATUS_GENERAL.KHONG_SU_DUNG, name: 'Không sử dụng'},
+								]}
 							/>
 						</div>
 					</div>

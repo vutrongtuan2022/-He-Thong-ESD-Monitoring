@@ -305,14 +305,13 @@ function ListUser({}: PropsListUser) {
 							},
 						]}
 					/>
-
-					<Pagination
-						currentPage={Number(_page) || 1}
-						total={listUser?.data?.pagination?.totalCount}
-						pageSize={Number(_pageSize) || 20}
-						dependencies={[_pageSize, _keyword, _status]}
-					/>
 				</DataWrapper>
+				<Pagination
+					currentPage={Number(_page) || 1}
+					total={listUser?.data?.pagination?.totalCount}
+					pageSize={Number(_pageSize) || 20}
+					dependencies={[_pageSize, _keyword, _status]}
+				/>
 				<Dialog
 					danger
 					open={!!dataChangeStatus}

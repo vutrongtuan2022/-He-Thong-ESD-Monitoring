@@ -12,7 +12,6 @@ function TableWorkingTimeOfTeam({}: PropsTableWorkingTimeOfTeam) {
 		<Fragment>
 			<div className={clsx('mt')}>
 				<div className={styles.parameter}>
-					
 					<div>
 						TỔNG SỐ TEAM: <span>04</span>
 					</div>
@@ -60,8 +59,8 @@ function TableWorkingTimeOfTeam({}: PropsTableWorkingTimeOfTeam) {
 							},
 						]}
 					/>
-					<Pagination currentPage={1} total={400} pageSize={20} dependencies={[]} />
 				</DataWrapper>
+				<Pagination currentPage={1} total={400} pageSize={20} dependencies={[]} />
 			</div>
 		</Fragment>
 	);

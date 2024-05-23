@@ -73,3 +73,24 @@ export function convertFileSize(fileSizeInKB: number) {
 		return (fileSizeInKB / 1073741824).toFixed(2) + ' tb';
 	}
 }
+
+export function formatTimeHistory(seconds: number) {
+	// Tính số giờ
+	const hours = Math.floor(seconds / 3600);
+	// Tính số phút còn lại sau khi trừ đi số giờ
+	const minutes = Math.floor((seconds % 3600) / 60);
+	// Tính số giây còn lại sau khi trừ đi số giờ và số phút
+	const remainingSeconds = seconds % 60;
+
+	// Tạo chuỗi kết quả
+	let result = '';
+	if (hours > 0) {
+		result += hours + ' giờ, ';
+	}
+	if (minutes > 0 || hours > 0) {
+		result += minutes + ' phút, ';
+	}
+	result += remainingSeconds + ' giây';
+
+	return result;
+}

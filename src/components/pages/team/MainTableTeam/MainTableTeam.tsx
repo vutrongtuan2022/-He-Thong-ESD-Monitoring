@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {ITeam, PropsMainTableTeam} from './interfaces';
 import styles from './MainTableTeam.module.scss';
@@ -6,29 +6,34 @@ import DataWrapper from '~/components/common/DataWrapper';
 import Noti from '~/components/common/DataWrapper/components/Noti';
 import Table from '~/components/common/Table';
 import Link from 'next/link';
-import {useQuery} from '@tanstack/react-query';
-import {QUERY_KEY} from '~/constants/config/enum';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import teamServices from '~/services/teamServices';
 import {useRouter} from 'next/router';
 import Pagination from '~/components/common/Pagination';
 import IconCustom from '~/components/common/IconCustom';
 import {LuPencil} from 'react-icons/lu';
-import {Trash} from 'iconsax-react';
+import {Lock} from 'iconsax-react';
+import Dialog from '~/components/common/Dialog';
+import Loading from '~/components/common/Loading';
 
 function MainTableTeam({}: PropsMainTableTeam) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _keyword, _leaderUuid} = router.query;
+	const {_page, _pageSize, _keyword, _leaderUuid, _status} = router.query;
 
-	const pageListTeams = useQuery([QUERY_KEY.danh_sach_team, _pageSize, _keyword, _leaderUuid], {
+	const [dataChangeStatus, setDataChangeStatus] = useState<ITeam | null>(null);
+
+	const pageListTeams = useQuery([QUERY_KEY.danh_sach_team, _page, _pageSize, _keyword, _leaderUuid, _status], {
 		queryFn: () =>
 			httpRequest({
 				http: teamServices.pageListTeam({
 					keyword: _keyword as string,
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
-					status: null,
+					status: _status ? Number(_status) : null,
 					leaderUuid: _leaderUuid ? (_leaderUuid as string) : null,
 				}),
 			}),
@@ -37,8 +42,34 @@ function MainTableTeam({}: PropsMainTableTeam) {
 		},
 	});
 
+	// Đổi trạng thái team
+	const fucnChangeStatusTeam = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Thay đổi trạng thái thành công!',
+				http: teamServices.changeStatusTeam({
+					uuid: dataChangeStatus?.uuid!,
+					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				setDataChangeStatus(null);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_team, _page, _pageSize, _keyword, _leaderUuid, _status]);
+			}
+		},
+	});
+
+	const handleChangeStatusTeam = async () => {
+		fucnChangeStatusTeam.mutate();
+	};
+
 	return (
 		<div className={styles.container}>
+			<Loading loading={fucnChangeStatusTeam.isLoading} />
 			<DataWrapper
 				data={pageListTeams?.data?.items}
 				loading={pageListTeams.isLoading}
@@ -77,7 +108,21 @@ function MainTableTeam({}: PropsMainTableTeam) {
 						},
 						{
 							title: 'Khu vực',
-							render: (data: ITeam) => <>{'---'}</>,
+							render: (data: ITeam) => <>{data.areaName || '---'}</>,
+						},
+						{
+							title: 'Trạng thái',
+							render: (data: ITeam) => (
+								<>
+									{data?.status == STATUS_GENERAL.SU_DUNG ? (
+										<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+									) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
+										<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+									) : (
+										'---'
+									)}
+								</>
+							),
 						},
 						{
 							title: 'Tác vụ',
@@ -92,24 +137,34 @@ function MainTableTeam({}: PropsMainTableTeam) {
 									/>
 
 									<IconCustom
-										delete
-										icon={<Trash size='22' />}
-										tooltip='Xóa'
+										warn
+										icon={<Lock size='22' />}
+										tooltip='Khóa'
 										color='#777E90'
-										// onClick={() => setDataChangeStatus(data)}
+										onClick={() => setDataChangeStatus(data)}
 									/>
 								</div>
 							),
 						},
 					]}
 				/>
-				<Pagination
-					currentPage={Number(_page) || 1}
-					pageSize={Number(_pageSize) || 20}
-					total={pageListTeams?.data?.pagination?.totalCount}
-					dependencies={[_pageSize, _keyword, _leaderUuid]}
-				/>
 			</DataWrapper>
+			<Pagination
+				currentPage={Number(_page) || 1}
+				pageSize={Number(_pageSize) || 20}
+				total={pageListTeams?.data?.pagination?.totalCount}
+				dependencies={[_pageSize, _keyword, _leaderUuid, _status]}
+			/>
+
+			{/* POPUP */}
+			<Dialog
+				warn
+				open={!!dataChangeStatus}
+				onClose={() => setDataChangeStatus(null)}
+				title='Thay đổi trạng thái'
+				note='Bạn có chắc chắn muốn thay đổi trạng thái cho team này?'
+				onSubmit={handleChangeStatusTeam}
+			/>
 		</div>
 	);
 }

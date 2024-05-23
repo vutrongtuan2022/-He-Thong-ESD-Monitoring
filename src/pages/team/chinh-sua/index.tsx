@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import {Fragment, ReactElement} from 'react';
 import BaseLayout from '~/components/layouts/BaseLayout';
-import MainPageUpdate from '~/components/pages/team/MainPageUpdate';
+import MainUpdateTeam from '~/components/pages/team/MainUpdateTeam';
 
 export default function Page() {
 	return (
@@ -12,7 +12,7 @@ export default function Page() {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<MainPageUpdate />
+			<MainUpdateTeam />
 		</Fragment>
 	);
 }

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-import {PropsMainPageDetailTeam} from './interfaces';
-import styles from './MainPageDetailTeam.module.scss';
+import {IDataDetailTeam, PropsMainDetailTeam} from './interfaces';
+import styles from './MainDetailTeam.module.scss';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
@@ -9,8 +9,8 @@ import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Link from 'next/link';
 import {IoArrowBackOutline} from 'react-icons/io5';
 import Button from '~/components/common/Button';
-import {useQuery} from '@tanstack/react-query';
-import {QUERY_KEY} from '~/constants/config/enum';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import teamServices from '~/services/teamServices';
 import {useRouter} from 'next/router';
@@ -20,27 +20,62 @@ import TableUser from './components/TableUser';
 import TableDevice from './components/TableDevice';
 import TableHistory from './components/TableHistory';
 import clsx from 'clsx';
+import Dialog from '~/components/common/Dialog';
+import Loading from '~/components/common/Loading';
 
-function MainPageDetailTeam({}: PropsMainPageDetailTeam) {
+function MainDetailTeam({}: PropsMainDetailTeam) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
 	const {_id, _table} = router.query;
 
-	const detailTeam = useQuery([QUERY_KEY.chi_tiet_team, _id], {
+	const [dataDetail, setDataDetail] = useState<IDataDetailTeam>();
+	const [openChangeStatus, setOpenChangeStatus] = useState<boolean>(false);
+
+	// GET DETAIL TEAM
+	useQuery([QUERY_KEY.chi_tiet_team, _id], {
 		queryFn: () =>
 			httpRequest({
 				http: teamServices.detailTeam({
 					uuid: _id as string,
 				}),
 			}),
-		select(data) {
-			return data;
+		onSuccess(data) {
+			if (data) {
+				setDataDetail(data);
+			}
 		},
 		enabled: !!_id,
 	});
 
+	// Đổi trạng thái team
+	const fucnChangeStatusTeam = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Thay đổi trạng thái thành công!',
+				http: teamServices.changeStatusTeam({
+					uuid: dataDetail?.uuid!,
+					status: dataDetail?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				setOpenChangeStatus(false);
+				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_team, _id]);
+			}
+		},
+	});
+
+	const handleChangeStatusTeam = async () => {
+		fucnChangeStatusTeam.mutate();
+	};
+
 	return (
 		<div className={styles.container}>
+			<Loading loading={fucnChangeStatusTeam.isLoading} />
 			<Breadcrumb
 				listUrls={[
 					{
@@ -72,11 +107,35 @@ function MainPageDetailTeam({}: PropsMainPageDetailTeam) {
 							<p>Thông tin team</p>
 						</Link>
 						<div className={styles.list_btn}>
-							<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold>
-								Xóa bỏ
-							</Button>
+							{dataDetail?.status == STATUS_GENERAL.SU_DUNG && (
+								<Button
+									className={styles.btn}
+									rounded_8
+									w_fit
+									p_6_16
+									danger_opacity
+									bold
+									onClick={() => setOpenChangeStatus(true)}
+								>
+									Khóa
+								</Button>
+							)}
 
-							<Button className={styles.btn} rounded_8 w_fit p_6_16 blue_light bold>
+							{dataDetail?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
+								<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setOpenChangeStatus(true)}>
+									Mở khóa
+								</Button>
+							)}
+
+							<Button
+								className={styles.btn}
+								rounded_8
+								w_fit
+								p_6_16
+								blue_light
+								bold
+								href={`/team/chinh-sua?_id=${dataDetail?.uuid}`}
+							>
 								Chỉnh sửa
 							</Button>
 						</div>
@@ -90,44 +149,51 @@ function MainPageDetailTeam({}: PropsMainPageDetailTeam) {
 							<tr>
 								<td>
 									<span style={{marginRight: 6}}>Mã team:</span>
-									{'1'}
+									{dataDetail?.code}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Người quản lý team: </span> {'---'}
+									<span style={{marginRight: 6}}>Người quản lý team: </span> {dataDetail?.leaderName || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Tên team: </span> {'Tên team: Team của Nguyễn Trọng Lý'}
+									<span style={{marginRight: 6}}>Tên team: </span> {dataDetail?.name}
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>ID người quản lý: </span>
-									{'---'}
+									{dataDetail?.leadCode || ''}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Số team phụ thuộc: </span>
-									{2}
+									<span style={{marginRight: 6}}>Khu vực quản lý: </span>
+									{dataDetail?.areaName || ''}
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>Thuộc team: </span>
-									{'Team sản xuất - Dương Minh nghĩa'}
+									{dataDetail?.parentName || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Số thành viên: </span> {5}
+									<span style={{marginRight: 6}}>Số thành viên: </span>
+									{dataDetail?.totalUser}
 								</td>
-								<td rowSpan={2} className={styles.description}>
+								<td rowSpan={3} className={styles.description}>
 									<span style={{marginRight: 6}}>Ghi chú:</span>
-									{'---'}
+									{dataDetail?.notes || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<span style={{marginRight: 6}}>Số thiết bị: </span>
-									{5}
+									{dataDetail?.totalDevices}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span style={{marginRight: 6}}>Số team phụ thuộc: </span>
+									{dataDetail?.totalUnderTeam}
 								</td>
 							</tr>
 						</table>
@@ -157,7 +223,7 @@ function MainPageDetailTeam({}: PropsMainPageDetailTeam) {
 							{
 								pathname: router.pathname,
 								query: 'lich-su',
-								title: 'Lịch sử bộ phát',
+								title: 'Lịch sử bộ phát NG',
 							},
 						]}
 					/>
@@ -169,8 +235,18 @@ function MainPageDetailTeam({}: PropsMainPageDetailTeam) {
 					</div>
 				</div>
 			</WrapperContainer>
+
+			{/* POPUP */}
+			<Dialog
+				warn
+				open={openChangeStatus}
+				onClose={() => setOpenChangeStatus(true)}
+				title='Thay đổi trạng thái'
+				note='Bạn có chắc chắn muốn thay đổi trạng thái cho team này?'
+				onSubmit={handleChangeStatusTeam}
+			/>
 		</div>
 	);
 }
 
-export default MainPageDetailTeam;
+export default MainDetailTeam;

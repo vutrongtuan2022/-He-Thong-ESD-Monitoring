@@ -12,6 +12,7 @@ import {QUERY_KEY} from '~/constants/config/enum';
 import {useQuery} from '@tanstack/react-query';
 import {useRouter} from 'next/router';
 import userServices from '~/services/userServices';
+import {IUser} from '~/components/pages/nhan-vien/ListUser/interfaces';
 
 function TableUser({}: PropsTableUser) {
 	const router = useRouter();
@@ -25,13 +26,10 @@ function TableUser({}: PropsTableUser) {
 					keyword: '',
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
-					status: null,
 					teamUuid: _id as string,
-					timeCreated: {
-						fromDate: null,
-						toDate: null,
-					},
-					username: '',
+					status: null,
+					username: null,
+					timeCreated: null,
 				}),
 			}),
 		select(data) {
@@ -52,31 +50,31 @@ function TableUser({}: PropsTableUser) {
 					column={[
 						{
 							title: 'STT',
-							render: (data: any, index: number) => <>{index + 1}</>,
+							render: (data: IUser, index: number) => <>{index + 1}</>,
 						},
 						{
 							title: 'Mã nhân viên',
-							render: (data: any) => (
-								<Link href={`/team/${data.uuid}`} className={styles.link}>
-									{data.name || '---'}
+							render: (data: IUser) => (
+								<Link href={`/nhan-vien/${data.uuid}`} className={styles.link}>
+									{data.code || '---'}
 								</Link>
 							),
 						},
 						{
 							title: 'Tên nhân viên',
-							render: (data: any) => <>{data.code || '---'}</>,
+							render: (data: IUser) => <>{data.fullname || '---'}</>,
 						},
 						{
 							title: 'Email',
-							render: (data: any) => <>{data.leaderName || '---'}</>,
+							render: (data: IUser) => <>{data.email || '---'}</>,
 						},
 						{
 							title: 'Số điện thoại',
-							render: (data: any) => <>{data.totalUser || 0}</>,
+							render: (data: IUser) => <>{data.phone || 0}</>,
 						},
 						{
 							title: 'Thuộc team',
-							render: (data: any) => <>{data.totalDevices || 0}</>,
+							render: (data: IUser) => <>{data.teamName || 0}</>,
 						},
 					]}
 				/>
@@ -84,7 +82,7 @@ function TableUser({}: PropsTableUser) {
 					currentPage={Number(_page) || 1}
 					pageSize={Number(_pageSize) || 20}
 					total={listUserTeams?.data?.pagination?.totalCount}
-					dependencies={[_pageSize]}
+					dependencies={[_id, _pageSize, _table]}
 				/>
 			</DataWrapper>
 		</div>
