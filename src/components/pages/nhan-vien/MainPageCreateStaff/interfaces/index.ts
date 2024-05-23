@@ -1,3 +1,5 @@
+import {STATUS_GENERAL} from '~/constants/config/enum';
+
 export interface PropsMainPageCreateStaff {}
 
 export interface IForm {
@@ -12,5 +14,5 @@ export interface IForm {
 	birthday: string;
 	avatar: string | null;
 	role: string;
-	status: string;
+	status: STATUS_GENERAL | null;
 }
