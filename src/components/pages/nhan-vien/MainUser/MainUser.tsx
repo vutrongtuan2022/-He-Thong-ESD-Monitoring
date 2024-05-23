@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import icons from '~/constants/images/icons';
-import {PropsMainPageStaff} from './interfaces';
-import styles from './MainPageStaff.module.scss';
+import {PropsMainUser} from './interfaces';
+import styles from './MainUser.module.scss';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Button from '~/components/common/Button';
 import {useRouter} from 'next/router';
@@ -9,8 +9,8 @@ import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
 import Image from 'next/image';
-import ListTransmitter from '../ListTransmitter';
-function MainPageStaff({}: PropsMainPageStaff) {
+import ListTransmitter from '../ListUser';
+function MainUser({}: PropsMainUser) {
 	const router = useRouter();
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
 	const handleToggle = (index: number) => {
@@ -109,4 +109,4 @@ function MainPageStaff({}: PropsMainPageStaff) {
 	);
 }
 
-export default MainPageStaff;
+export default MainUser;

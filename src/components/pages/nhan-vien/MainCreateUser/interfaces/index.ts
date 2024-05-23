@@ -1,6 +1,6 @@
 import {STATUS_GENERAL} from '~/constants/config/enum';
 
-export interface PropsMainPageCreateStaff {}
+export interface PropsMainCreateUser {}
 
 export interface IForm {
 	userName: string;

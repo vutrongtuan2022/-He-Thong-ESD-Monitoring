@@ -1,7 +1,7 @@
 import {STATUS_GENERAL} from '~/constants/config/enum';
-import {IUser} from '../../ListTransmitter/interfaces';
+import {IUser} from '../../ListUser/interfaces';
 
-export interface PropsMainPageUpdateStaff {
+export interface PropsMainUpdateUser {
 	dataUpdate?: IUser;
 }
 
