@@ -63,7 +63,7 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 				birthday: data.birthday || '',
 				avatar: data.avatar || '',
 				role: data.role || '',
-				status: data.status || '',
+				status: data.status,
 				code: data.code || '',
 			});
 			setDate(data.birthday);
@@ -136,6 +136,15 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 		if (!form.phone) {
 			return toastWarn({msg: 'Vui lòng nhập phone!'});
 		}
+		if (!form.teamUuid) {
+			return toastWarn({msg: 'Vui lòng nhập thuộc team!'});
+		}
+		if (!form.birthday) {
+			return toastWarn({msg: 'Vui lòng nhập ngày sinh!'});
+		}
+		if (!form.role) {
+			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
+		}
 
 		return upsertUser.mutate();
 	};
@@ -187,6 +196,7 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 											</span>
 										}
 										placeholder='Nhập mã nhân viên'
+										disabled
 									/>
 								</div>
 								<Input
@@ -202,16 +212,7 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 							</div>
 
 							<div className={clsx('mt', 'col_2')}>
-								<Input
-									name='address'
-									value={form.address || ''}
-									label={
-										<span>
-											Địa chỉ <span style={{color: 'red'}}>*</span>
-										</span>
-									}
-									placeholder='Nhập địa chỉ'
-								/>
+								<Input name='address' value={form.address || ''} label={<span>Địa chỉ</span>} placeholder='Nhập địa chỉ' />
 								<div className={clsx('col_2')}>
 									<DatePicker
 										icon={true}
@@ -272,7 +273,7 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 												</label>
 											</div>
 
-											<div className={styles.item_radio}>
+											{/* <div className={styles.item_radio}>
 												<input
 													id='other'
 													className={styles.input_radio}
@@ -290,7 +291,7 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 												<label className={styles.input_label} htmlFor='other'>
 													Khác
 												</label>
-											</div>
+											</div> */}
 										</div>
 									</div>
 								</div>
@@ -334,7 +335,11 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 												role: e.target.value,
 											}))
 										}
-										label={<span>Chức vụ</span>}
+										label={
+											<span>
+												Chức vụ <span style={{color: 'red'}}>*</span>
+											</span>
+										}
 									>
 										{listRoles?.data?.map((v: any) => (
 											<Option key={v?.uuid} title={v?.name} value={v?.name} />
@@ -352,10 +357,14 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 											teamUuid: e.target.value,
 										}))
 									}
-									label={<span>Thuộc team</span>}
+									label={
+										<span>
+											Thuộc team <span style={{color: 'red'}}>*</span>
+										</span>
+									}
 								>
 									{listTeams?.data?.map((v: any) => (
-										<Option key={v?.uuid} title={v?.name} value={v?.name} />
+										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 									))}
 								</Select>
 							</div>
