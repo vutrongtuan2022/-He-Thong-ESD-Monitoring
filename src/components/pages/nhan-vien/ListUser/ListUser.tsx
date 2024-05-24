@@ -13,7 +13,7 @@ import {LuCheck, LuPencil} from 'react-icons/lu';
 import Button from '~/components/common/Button';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Loading from '~/components/common/Loading';
-import {Trash} from 'iconsax-react';
+import {Trash, UserCirlceAdd} from 'iconsax-react';
 import {BsThreeDots} from 'react-icons/bs';
 import Link from 'next/link';
 import {AiOutlineUserAdd} from 'react-icons/ai';
@@ -277,7 +277,7 @@ function ListUser({}: PropsListUser) {
 									<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 										<IconCustom
 											create
-											icon={<AiOutlineUserAdd size='22' />}
+											icon={<UserCirlceAdd size='22' />}
 											tooltip='cấp account'
 											color='#777E90'
 											onClick={() => {

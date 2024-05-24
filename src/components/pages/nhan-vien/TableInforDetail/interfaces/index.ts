@@ -1,7 +1,7 @@
 export interface PropsTableInforDetail {}
 
 export interface IUserDetail {
-	uuid: string | null;
+	uuid: string;
 	userName: string | null;
 	fullname: string | null;
 	teamUuid: string | null;
@@ -12,7 +12,7 @@ export interface IUserDetail {
 	birthday: '2024-05-22';
 	avatar: string | null;
 	role: string | null;
-	status: 0;
+	status: number;
 	leadName: string | null;
 	code: string | null;
 	timeCreated: '2024-05-22T03:00:57.249Z';
