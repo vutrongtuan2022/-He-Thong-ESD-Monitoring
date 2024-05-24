@@ -8,6 +8,7 @@ import {BiSolidVector} from 'react-icons/bi';
 import {IoSettingsSharp, IoWifiSharp} from 'react-icons/io5';
 import {RxDashboard} from 'react-icons/rx';
 import icons from '../images/icons';
+import {GrMap} from 'react-icons/gr';
 
 export const MAXIMUM_FILE = 10; //MB
 
@@ -35,6 +36,7 @@ export enum PATH {
 	ThongKe = '/thong-ke',
 	PhanQuyen = '/phan-quyen',
 	CaiDat = '/cai-dat',
+	KhuVuc = '/khu-vuc',
 
 	ThemNhanvien = '/nhan-vien/them-moi',
 	ThemTeam = '/team/them-moi',
@@ -67,6 +69,10 @@ export const Menu: {
 			{title: 'Quản lý team', icon: RiGroupLine, path: PATH.Team},
 			{title: 'Quản lý nhân viên', icon: LuUserCircle2, path: PATH.NhanVien},
 		],
+	},
+	{
+		title: 'KHU VỰC',
+		group: [{title: 'Quản lý khu vực', icon: GrMap, path: PATH.KhuVuc}],
 	},
 	{
 		title: 'THỐNG KÊ',
