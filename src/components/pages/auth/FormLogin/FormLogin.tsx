@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 import {PropsFormLogin} from './interfaces';
 import styles from './FormLogin.module.scss';
@@ -13,18 +13,32 @@ import {useMutation} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import authServices from '~/services/authServices';
 import Loading from '~/components/common/Loading';
-import {store} from '~/redux/store';
+import {RootState, store} from '~/redux/store';
 import {toastWarn} from '~/common/funcs/toast';
-import {setStateLogin, setToken} from '~/redux/reducer/auth';
+import {setDataLoginStorage, setStateLogin, setToken} from '~/redux/reducer/auth';
 import {setInfoUser} from '~/redux/reducer/user';
 import icons from '~/constants/images/icons';
+import {useSelector} from 'react-redux';
+import {setRememberPassword} from '~/redux/reducer/site';
 
 function FormLogin({}: PropsFormLogin) {
 	const router = useRouter();
 
 	const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
+	const {isRememberPassword} = useSelector((state: RootState) => state.site);
+	const {dataLoginStorage} = useSelector((state: RootState) => state.auth);
+
 	const [form, setForm] = useState<{username: string; password: string}>({username: '', password: ''});
+
+	// useEffect(() => {
+	// 	if (isRememberPassword) {
+	// 		setForm({
+	// 			username: dataLoginStorage?.usernameStorage || '',
+	// 			password: dataLoginStorage?.passwordStorage || '',
+	// 		});
+	// 	}
+	// }, []);
 
 	const login = useMutation({
 		mutationFn: () =>
@@ -51,6 +65,17 @@ function FormLogin({}: PropsFormLogin) {
 		// if (regex.test(form?.password) == false) {
 		// 	return toastWarn({msg: 'Mật khẩu mới bao gồm tối thiểu 6 ký tự gồm chữ hoa, chữ thường và số.'});
 		// }
+
+		if (isRememberPassword) {
+			store.dispatch(
+				setDataLoginStorage({
+					usernameStorage: form.username,
+					passwordStorage: form.password,
+				})
+			);
+		} else {
+			store.dispatch(setDataLoginStorage(null));
+		}
 
 		return login.mutate();
 	};
@@ -114,7 +139,11 @@ function FormLogin({}: PropsFormLogin) {
 					/>
 
 					<div className={styles.rememberLogin}>
-						<SwitchButton />
+						<SwitchButton
+							name='isRememberPassword'
+							// value={isRememberPassword}
+							// onChange={() => store.dispatch(setRememberPassword(!isRememberPassword))}
+						/>
 						<p className={styles.des}>Ghi nhớ đăng nhập</p>
 					</div>
 

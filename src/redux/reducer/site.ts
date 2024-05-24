@@ -5,6 +5,7 @@ export interface SiteState {
 	isMobile: boolean;
 	ip: string;
 	fullMenu: boolean;
+	isRememberPassword: boolean;
 }
 
 const initialState: SiteState = {
@@ -12,6 +13,7 @@ const initialState: SiteState = {
 	isMobile: false,
 	ip: '',
 	fullMenu: true,
+	isRememberPassword: false,
 };
 
 export const siteSlice = createSlice({
@@ -30,9 +32,12 @@ export const siteSlice = createSlice({
 		setFullMenu: (state, action: PayloadAction<boolean>) => {
 			state.fullMenu = action.payload;
 		},
+		setRememberPassword: (state, action: PayloadAction<boolean>) => {
+			state.isRememberPassword = action.payload;
+		},
 	},
 });
 
-export const {setLoading, setIsMobile, setIp, setFullMenu} = siteSlice.actions;
+export const {setLoading, setIsMobile, setIp, setFullMenu, setRememberPassword} = siteSlice.actions;
 // Action creators are generated for each case reducer function
 export default siteSlice.reducer;

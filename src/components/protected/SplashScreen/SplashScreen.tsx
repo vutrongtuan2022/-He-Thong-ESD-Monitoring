@@ -10,11 +10,11 @@ import styles from './SplashScreen.module.scss';
 import {useSelector} from 'react-redux';
 import {getItemStorage, setItemStorage} from '~/common/funcs/localStorage';
 import {KEY_STORE} from '~/constants/config';
-import {setIp, setIsMobile, setLoading} from '~/redux/reducer/site';
+import {setIp, setIsMobile, setLoading, setRememberPassword} from '~/redux/reducer/site';
 
 import * as loading from '../../../../public/static/anim/loadingScreen.json';
 import axios from 'axios';
-import {setStateLogin, setToken} from '~/redux/reducer/auth';
+import {setDataLoginStorage, setStateLogin, setToken} from '~/redux/reducer/auth';
 import {setInfoUser} from '~/redux/reducer/user';
 
 const defaultOptions = {
@@ -27,9 +27,9 @@ const defaultOptions = {
 };
 
 function SplashScreen({}: PropsSplashScreen) {
-	const {token, isLogin} = useSelector((state: RootState) => state.auth);
+	const {token, isLogin, dataLoginStorage} = useSelector((state: RootState) => state.auth);
 	const {infoUser} = useSelector((state: RootState) => state.user);
-	const {loading} = useSelector((state: RootState) => state.site);
+	const {loading, isRememberPassword} = useSelector((state: RootState) => state.site);
 
 	useEffect(() => {
 		(async () => {
@@ -43,6 +43,8 @@ function SplashScreen({}: PropsSplashScreen) {
 				store.dispatch(setToken(state.token));
 				store.dispatch(setStateLogin(state.isLogin));
 				store.dispatch(setInfoUser(state.infoUser));
+				store.dispatch(setRememberPassword(state.isRememberPassword));
+				store.dispatch(setDataLoginStorage(state.dataLoginStorage));
 			}
 
 			store.dispatch(setLoading(false));
@@ -61,13 +63,15 @@ function SplashScreen({}: PropsSplashScreen) {
 				isLogin: isLogin,
 				token: token,
 				infoUser: infoUser,
+				isRememberPassword: isRememberPassword,
+				dataLoginStorage: dataLoginStorage,
 			});
 
 			setCookie(KEY_STORE, {
 				token: token,
 			});
 		}
-	}, [loading, isLogin, token, infoUser]);
+	}, [loading, isLogin, token, infoUser, isRememberPassword, dataLoginStorage]);
 
 	return (
 		<Fragment>

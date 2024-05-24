@@ -1,18 +1,15 @@
-import {STATUS_GENERAL} from '~/constants/config/enum';
+import {GENDER} from '~/constants/config/enum';
 
 export interface PropsMainCreateUser {}
 
 export interface IForm {
-	userName: string;
-	fullname: string;
-	teamUuid: string;
 	code: string;
-	gender: number;
+	fullname: string;
 	email: string;
 	phone: string;
-	address: string;
+	roleId: string;
 	birthday: string;
-	avatar: string | null;
-	role: string;
-	status: STATUS_GENERAL | null;
+	gender: GENDER;
+	teamUuid: string;
+	address: string;
 }

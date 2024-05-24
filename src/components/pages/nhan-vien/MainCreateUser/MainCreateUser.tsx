@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {IForm, PropsMainCreateUser} from './interfaces';
 import styles from './MainCreateUser.module.scss';
 import Button from '~/components/common/Button';
@@ -10,88 +10,32 @@ import Breadcrumb from '~/components/common/Breadcrumb';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import DatePicker from '~/components/common/DatePicker';
 import {GENDER, QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import userServices from '~/services/userServices';
 import {useRouter} from 'next/router';
 import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
 import moment from 'moment';
+import {isEmail, isPhoneNumber} from '~/common/funcs/validate';
+import Loading from '~/components/common/Loading';
 
 const MainCreateUser = ({}: PropsMainCreateUser) => {
-	const [date, setDate] = useState<string>('');
-	const [form, setForm] = useState<IForm>({
-		userName: '',
+	const router = useRouter();
+
+	const initForm = {
 		fullname: '',
 		teamUuid: '',
 		gender: GENDER.NAM,
 		email: '',
 		phone: '',
 		address: '',
-		birthday: '2024-05-22',
-		avatar: '',
-		role: '',
-		status: STATUS_GENERAL.SU_DUNG,
+		birthday: '',
 		code: '',
-	});
-	const router = useRouter();
-	const queryClient = useQueryClient();
-	const {_page, _pageSize, _keyword, _pin, _onlineState, _ngState, _status} = router.query;
-
-	const upsertUser = useMutation({
-		mutationFn: () =>
-			httpRequest({
-				showMessageFailed: true,
-				showMessageSuccess: true,
-				msgSuccess: 'Thêm mới nhân viên!',
-				http: userServices.upsertUser({
-					uuid: '',
-					fullname: form.fullname,
-					userName: form.userName,
-					email: form.email,
-					address: form.address,
-					avatar: '',
-					birthday: form.birthday,
-					phone: form.phone,
-					gender: form.gender,
-					role: form.role,
-					code: form.code,
-					status: STATUS_GENERAL.SU_DUNG,
-					teamUuid: form.teamUuid,
-				}),
-			}),
-		onSuccess(data) {
-			if (data) {
-				router.push(PATH.NhanVien);
-			}
-		},
-	});
-
-	const handleSubmit = async () => {
-		if (!form.code) {
-			return toastWarn({msg: 'Vui lòng nhập mã nhân viên!'});
-		}
-		if (!form.fullname) {
-			return toastWarn({msg: 'Vui lòng nhập tên nhân viên!'});
-		}
-		if (!form.email) {
-			return toastWarn({msg: 'Vui lòng nhập email!'});
-		}
-		if (!form.phone) {
-			return toastWarn({msg: 'Vui lòng nhập phone!'});
-		}
-		if (!form.teamUuid) {
-			return toastWarn({msg: 'Vui lòng nhập thuộc team!'});
-		}
-		if (!form.birthday) {
-			return toastWarn({msg: 'Vui lòng nhập ngày sinh!'});
-		}
-		if (!form.role) {
-			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
-		}
-
-		return upsertUser.mutate();
+		roleId: '',
 	};
+
+	const [form, setForm] = useState<IForm>(initForm);
 
 	const listTeams = useQuery([QUERY_KEY.dropdown_danh_sach_team], {
 		queryFn: () =>
@@ -108,7 +52,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 	const listRoles = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
 		queryFn: () =>
 			httpRequest({
-				http: categoryServices.listRole({
+				http: categoryServices.listPosition({
 					keyword: '',
 				}),
 			}),
@@ -117,8 +61,71 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 		},
 	});
 
+	const upsertUser = useMutation({
+		mutationFn: () =>
+			httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Thêm mới nhân viên thành công!',
+				http: userServices.upsertUser({
+					uuid: '',
+					userName: '',
+					avatar: '',
+					fullname: form.fullname,
+					email: form.email,
+					address: form.address,
+					birthday: moment(form.birthday).format('YYYY-MM-DD'),
+					phone: form.phone,
+					gender: form.gender,
+					role: form.roleId,
+					code: form.code,
+					teamUuid: form.teamUuid,
+					status: STATUS_GENERAL.SU_DUNG,
+				}),
+			}),
+		onSuccess(data) {
+			if (data) {
+				setForm(initForm);
+				router.replace(PATH.NhanVien, undefined, {
+					scroll: false,
+					shallow: false,
+				});
+			}
+		},
+	});
+
+	const handleSubmit = async () => {
+		if (!form.code) {
+			return toastWarn({msg: 'Vui lòng nhập mã nhân viên!'});
+		}
+		if (!form.fullname) {
+			return toastWarn({msg: 'Vui lòng nhập tên nhân viên!'});
+		}
+		if (!form.email) {
+			return toastWarn({msg: 'Vui lòng nhập email!'});
+		}
+		if (!form.phone) {
+			return toastWarn({msg: 'Vui lòng nhập số điện thoại!'});
+		}
+		if (!form.roleId) {
+			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
+		}
+		if (!form.birthday) {
+			return toastWarn({msg: 'Vui lòng nhập ngày sinh!'});
+		}
+		if (!isPhoneNumber(form.phone)) {
+			return toastWarn({msg: 'Số điện thoại không đúng định dạng!'});
+		}
+		if (!isEmail(form.email)) {
+			return toastWarn({msg: 'Email không đúng định dạng!'});
+		}
+
+		return upsertUser.mutate();
+	};
+
 	return (
-		<div>
+		<Fragment>
+			<Loading loading={upsertUser.isLoading} />
 			<Breadcrumb
 				listUrls={[
 					{
@@ -180,34 +187,76 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 
 							<div className={clsx('mt', 'col_2')}>
 								<Input
-									name='address'
-									value={form.address || ''}
+									name='email'
+									value={form.email || ''}
 									label={
 										<span>
-											Địa chỉ<span style={{color: 'red'}}>*</span>
+											Email <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Nhập địa chỉ'
+									placeholder='Nhập email'
 								/>
+								<div>
+									<Input
+										name='phone'
+										value={form.phone || ''}
+										label={
+											<span>
+												Số điện thoại <span style={{color: 'red'}}>*</span>
+											</span>
+										}
+										placeholder='Nhập số điện thoại'
+									/>
+								</div>
+							</div>
+
+							<div className={clsx('mt', 'col_2')}>
+								<div>
+									<Select
+										isSearch
+										name='role'
+										value={form.roleId || null}
+										placeholder='Lựa chọn'
+										onChange={(e) =>
+											setForm((prev) => ({
+												...prev,
+												roleId: e.target.value,
+											}))
+										}
+										label={
+											<span>
+												Chức vụ <span style={{color: 'red'}}>*</span>
+											</span>
+										}
+									>
+										{listRoles?.data?.map((v: any) => (
+											<Option key={v?.uuid} title={v?.name} value={v?.name} />
+										))}
+									</Select>
+								</div>
 								<div className={clsx('col_2')}>
 									<DatePicker
 										icon={true}
-										label={'Ngày sinh'}
+										label={
+											<span>
+												Ngày sinh <span style={{color: 'red'}}>*</span>
+											</span>
+										}
 										placeholder='Chọn ngày sinh'
-										value={date}
-										onSetValue={(newDate) => {
-											const formattedDate = moment(newDate).format('YYYY-MM-DD');
-											setDate(formattedDate);
+										value={form.birthday}
+										onSetValue={(date) =>
 											setForm((prevForm) => ({
 												...prevForm,
-												birthday: formattedDate,
-											}));
-										}}
+												birthday: date,
+											}))
+										}
 										name='birthday'
 										onClean={true}
 									/>
 									<div className={styles.gender}>
-										<label className={styles.title}>Giới tính</label>
+										<label className={styles.title}>
+											Giới tính <span style={{color: 'red'}}>*</span>
+										</label>
 										<div className={styles.group_radio}>
 											<div className={styles.item_radio}>
 												<input
@@ -248,76 +297,12 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 													Nữ
 												</label>
 											</div>
-
-											{/* <div className={styles.item_radio}>
-												<input
-													id='other'
-													className={styles.input_radio}
-													type='radio'
-													name='gender'
-													value={GENDER.KHAC}
-													checked={form.gender === GENDER.KHAC}
-													onChange={(e) =>
-														setForm((prev) => ({
-															...prev,
-															gender: GENDER.KHAC,
-														}))
-													}
-												/>
-												<label className={styles.input_label} htmlFor='other'>
-													Khác
-												</label>
-											</div> */}
 										</div>
 									</div>
 								</div>
 							</div>
 
 							<div className={clsx('mt', 'col_2')}>
-								<Input
-									name='email'
-									value={form.email || ''}
-									label={
-										<span>
-											Email <span style={{color: 'red'}}>*</span>
-										</span>
-									}
-									placeholder='Nhập email'
-								/>
-								<div>
-									<Input
-										name='phone'
-										value={form.phone || ''}
-										label={
-											<span>
-												Số diện thoại<span style={{color: 'red'}}>*</span>
-											</span>
-										}
-										placeholder='Nhập số điện thoại'
-									/>
-								</div>
-							</div>
-
-							<div className={clsx('mt', 'col_2')}>
-								<div>
-									<Select
-										isSearch
-										name='role'
-										value={form.role || null}
-										placeholder='Lựa chọn'
-										onChange={(e) =>
-											setForm((prev) => ({
-												...prev,
-												role: e.target.value,
-											}))
-										}
-										label={<span>Chức vụ</span>}
-									>
-										{listRoles?.data?.map((v: any) => (
-											<Option key={v?.uuid} title={v?.name} value={v?.name} />
-										))}
-									</Select>
-								</div>
 								<Select
 									isSearch
 									name='teamUuid'
@@ -335,12 +320,19 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 									))}
 								</Select>
+								<Input
+									type='text'
+									name='address'
+									value={form.address || ''}
+									label={<span>Địa chỉ</span>}
+									placeholder='Nhập địa chỉ'
+								/>
 							</div>
 						</Form>
 					</div>
 				</div>
 			</WrapperContainer>
-		</div>
+		</Fragment>
 	);
 };
 

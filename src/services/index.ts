@@ -3,6 +3,7 @@ import {delay} from '~/common/funcs/delay';
 import {getKeyCert} from '~/common/funcs/optionConvert';
 import {toastError, toastInfo, toastSuccess, toastWarn} from '~/common/funcs/toast';
 import {logout} from '~/redux/reducer/auth';
+import {setInfoUser} from '~/redux/reducer/user';
 import {store} from '~/redux/store';
 
 const axiosClient = axios.create({
@@ -77,6 +78,7 @@ export const httpRequest = async ({
 	} catch (err: any) {
 		if (err?.status === 401) {
 			store.dispatch(logout());
+			store.dispatch(setInfoUser(null));
 		} else if (typeof err == 'string') {
 			showMessageFailed && toastWarn({msg: err || 'Có lỗi đã xảy ra!'});
 			setLoading && setLoading(() => false);

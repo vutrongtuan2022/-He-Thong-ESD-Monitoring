@@ -13,6 +13,7 @@ import {logout} from '~/redux/reducer/auth';
 import {useMutation} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import authServices from '~/services/authServices';
+import {setInfoUser} from '~/redux/reducer/user';
 
 function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 	const router = useRouter();
@@ -38,6 +39,7 @@ function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 		onSuccess(data) {
 			if (data) {
 				store.dispatch(logout());
+				store.dispatch(setInfoUser(null));
 				router.push(PATH.Login);
 			}
 		},

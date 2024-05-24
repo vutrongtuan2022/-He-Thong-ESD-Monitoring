@@ -189,11 +189,11 @@ const UpdateAccount = ({}: PropsUpdateAccount) => {
 										value={form.phone || ''}
 										label={
 											<span>
-												<b>Số diện thoại </b>
+												<b>Số điện thoại </b>
 												<span style={{color: 'red'}}>*</span>
 											</span>
 										}
-										placeholder='Nhập số diện thoại'
+										placeholder='Nhập Số điện thoại'
 									/>
 								</div>
 							</div>

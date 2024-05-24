@@ -104,7 +104,7 @@ function TableInforDetail({}: PropsTableInforDetail) {
 						</Button>
 					</div>
 				</div>
-				<div className={clsx('mt')}>
+				<div className={clsx('mt', styles.table)}>
 					<table className={styles.containertable}>
 						<colgroup>
 							<col style={{width: '50%'}} />

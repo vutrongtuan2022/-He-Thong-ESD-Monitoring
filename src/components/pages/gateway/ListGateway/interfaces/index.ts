@@ -15,4 +15,5 @@ export interface IGateway {
 	timeLastOnline: string;
 	status: number;
 	factoryName: string;
+	totalDevice: number;
 }

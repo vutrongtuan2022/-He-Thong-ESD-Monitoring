@@ -1,6 +1,6 @@
 import axiosClient from '.';
 
-import {GENDER, STATUS_GENERAL, STATUS_USER} from '~/constants/config/enum';
+import {GENDER, STATUS_GENERAL} from '~/constants/config/enum';
 
 const userServices = {
 	upsertUser: (

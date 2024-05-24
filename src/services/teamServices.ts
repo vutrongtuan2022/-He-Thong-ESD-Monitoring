@@ -61,8 +61,7 @@ const teamServices = {
 	},
 	listTeamTree: (
 		data: {
-			uuid: string;
-			status: number;
+			uuid: string | null;
 		},
 		tokenAxios?: any
 	) => {

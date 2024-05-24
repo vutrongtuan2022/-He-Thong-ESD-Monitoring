@@ -177,7 +177,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 							},
 							{
 								title: 'SL bộ phát đang kết nối',
-								render: (data: IGateway) => <>{data.connection}</>,
+								render: (data: IGateway) => <>{data.totalDevice}</>,
 							},
 							{
 								title: 'Hoạt động',
