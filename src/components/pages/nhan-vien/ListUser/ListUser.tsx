@@ -33,7 +33,7 @@ function ListUser({}: PropsListUser) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const [file, setFile] = useState<any>(null);
-	const {_page, _pageSize, _status, _username, _keyword, _teamUuid} = router.query;
+	const {_page, _pageSize, _status, _username, _timeCreated, _keyword, _teamUuid} = router.query;
 	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
 	const [openDelete, setOpenDelete] = useState<boolean>(false);
@@ -95,26 +95,29 @@ function ListUser({}: PropsListUser) {
 	});
 
 	// Func export excel
-	// const exportExcel = useMutation({
-	// 	mutationFn: () => {
-	// 		return httpRequest({
-	// 			http: userServices.exportExcel({
-	// 				pageSize: Number(_pageSize) || 20,
-	// 				page: Number(_page) || 1,
-	// 				keyword: _keyword ? (_keyword as string) : '',
-	// 				status: STATUS_GENERAL.SU_DUNG,
-	// 				teamUuid: '',
-	// 				username: _username ? (_username as string) : '',
-	// 				timeCreated: _timeCreated ? Number(_timeCreated) : null,
-	// 			}),
-	// 		});
-	// 	},
-	// 	onSuccess(data) {
-	// 		if (data) {
-	// 			window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
-	// 		}
-	// 	},
-	// });
+	const exportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				http: userServices.exportExcel({
+					pageSize: Number(_pageSize) || 20,
+					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
+					status: STATUS_GENERAL.SU_DUNG,
+					teamUuid: '',
+					username: _username ? (_username as string) : '',
+					timeCreated: {
+						fromDate: _timeCreated ? new Date(Number(_timeCreated)).toISOString() : '',
+						toDate: _timeCreated ? new Date(Number(_timeCreated)).toISOString() : '',
+					},
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
+			}
+		},
+	});
 
 	// Func import excel
 	const fucnImportExcel = useMutation({
@@ -158,9 +161,9 @@ function ListUser({}: PropsListUser) {
 		return changeStatusDevice.mutate();
 	};
 
-	// const handleExportExcel = async () => {
-	// 	exportExcel.mutate();
-	// };
+	const handleExportExcel = async () => {
+		exportExcel.mutate();
+	};
 
 	const handleImportExcel = async () => {
 		fucnImportExcel.mutate();

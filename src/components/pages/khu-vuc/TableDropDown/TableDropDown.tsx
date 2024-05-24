@@ -14,12 +14,12 @@ function TableDropDown({data, listLable, keyChild, keyUuid}: PropsTableDropDown)
 			<div className={styles.head}>
 				{listLable.map((v, i) =>
 					i == 0 ? (
-						<div style={{width: `${100 / listLable.length}%`, display: 'flex'}}>
+						<div key={i} style={{width: `${100 / listLable.length}%`, display: 'flex'}}>
 							<div className={styles.arrow}></div>
 							<div className={styles.order}>STT</div>
 						</div>
 					) : (
-						<div style={{width: `${100 / listLable.length}%`}} key={i} className={styles.itemHead}>
+						<div key={i} style={{width: `${100 / listLable.length}%`}} className={styles.itemHead}>
 							{v?.title}
 						</div>
 					)

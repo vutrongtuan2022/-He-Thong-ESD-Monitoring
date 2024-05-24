@@ -35,12 +35,13 @@
 	margin-top: 20px;
 }
 
-.gennder {
+.gender {
 	.group_radio {
 		display: flex;
 		align-items: center;
 		gap: 24px;
 		margin-top: 8px;
+		flex-wrap: wrap;
 	}
 
 	.item_radio {

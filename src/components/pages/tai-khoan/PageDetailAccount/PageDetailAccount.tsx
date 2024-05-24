@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {PropsPageDetailUser} from './interfaces';
-import styles from './PageDetailUser.module.scss';
+import {PropsPageDetailAccount} from './interfaces';
+import styles from './PageDetailAccount.module.scss';
 import Link from 'next/link';
 import {IoArrowBackOutline} from 'react-icons/io5';
 
@@ -12,7 +12,7 @@ import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Avatar from '~/components/common/Avatar';
 import {CiLock} from 'react-icons/ci';
 
-const PageDetailUser = ({}: PropsPageDetailUser) => {
+const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 	return (
 		<div className={styles.containerPage}>
 			<Breadcrumb
@@ -23,7 +23,7 @@ const PageDetailUser = ({}: PropsPageDetailUser) => {
 					},
 					{
 						title: 'Quản lý tài khoản',
-						path: PATH.NguoiDung,
+						path: PATH.TaiKhoan,
 					},
 					{
 						title: 'Chi tiết tài khoản',
@@ -34,7 +34,7 @@ const PageDetailUser = ({}: PropsPageDetailUser) => {
 			<WrapperContainer>
 				<div className={styles.main_page}>
 					<div className={styles.header}>
-						<Link href={PATH.NguoiDung} className={styles.header_title}>
+						<Link href={PATH.TaiKhoan} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
 							<p>Vũ Văn A</p>
 						</Link>
@@ -121,4 +121,4 @@ const PageDetailUser = ({}: PropsPageDetailUser) => {
 	);
 };
 
-export default PageDetailUser;
+export default PageDetailAccount;

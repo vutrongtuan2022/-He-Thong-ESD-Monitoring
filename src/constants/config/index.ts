@@ -30,7 +30,7 @@ export enum PATH {
 	BoPhat = '/bo-phat',
 	CongTy = '/cong-ty',
 	Line = '/quan-ly-line',
-	NguoiDung = '/nguoi-dung',
+	TaiKhoan = '/tai-khoan',
 	Team = '/team',
 	NhanVien = '/nhan-vien',
 	ThongKe = '/thong-ke',
@@ -65,7 +65,7 @@ export const Menu: {
 	{
 		title: 'NHÂN SỰ',
 		group: [
-			{title: 'Quản lý tài khoản', icon: HiOutlineUser, path: PATH.NguoiDung},
+			{title: 'Quản lý tài khoản', icon: HiOutlineUser, path: PATH.TaiKhoan},
 			{title: 'Quản lý team', icon: RiGroupLine, path: PATH.Team},
 			{title: 'Quản lý nhân viên', icon: LuUserCircle2, path: PATH.NhanVien},
 		],

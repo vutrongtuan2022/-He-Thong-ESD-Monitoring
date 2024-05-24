@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import {Fragment, ReactElement} from 'react';
 import BaseLayout from '~/components/layouts/BaseLayout';
-import PageDetailUser from '~/components/pages/nguoi-dung/PageDetailUser';
+import PageDetailAccount from '~/components/pages/tai-khoan/PageDetailAccount';
 
 export default function Page() {
 	return (
@@ -13,7 +13,7 @@ export default function Page() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<PageDetailUser />
+			<PageDetailAccount />
 		</Fragment>
 	);
 }

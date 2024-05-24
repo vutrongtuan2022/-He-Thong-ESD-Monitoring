@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {PropsUpdatePageUser} from './interfaces';
-import styles from './UpdatePageUser.module.scss';
+import {PropsUpdateAccount} from './interfaces';
+import styles from './UpdateAccount.module.scss';
 import Button from '~/components/common/Button';
 import Form, {Input} from '~/components/common/Form';
 import clsx from 'clsx';
@@ -19,8 +19,7 @@ import DatePicker from '~/components/common/DatePicker';
 import AvatarChange from '~/components/common/AvatarChange';
 // import PopupPersonnel from '../PopupPersonnel';
 
-const UpdatePageUser = ({}: PropsUpdatePageUser) => {
-	// const [open, setOpen] = useState<boolean>(false);
+const UpdateAccount = ({}: PropsUpdateAccount) => {
 	const [date, setDate] = useState<string>('');
 	const [form, setForm] = useState<any>({
 		avatar: '',
@@ -44,7 +43,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 					},
 					{
 						title: 'Quản lý tài khoản',
-						path: PATH.NguoiDung,
+						path: PATH.TaiKhoan,
 					},
 					{
 						title: 'Chỉnh sửa tài khoản',
@@ -60,7 +59,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 							<p>Chỉnh sửa thông tin tài khoản</p>
 						</div>
 						<div className={styles.right}>
-							<Button href={PATH.NguoiDung} p_10_24 rounded_2 grey_outline>
+							<Button href={PATH.TaiKhoan} p_10_24 rounded_2 grey_outline>
 								Hủy bỏ
 							</Button>
 							<Button p_10_24 rounded_2 primary>
@@ -150,7 +149,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 											</div>
 											<div className={styles.item_radio}>
 												<input
-													id='female'
+													id='other'
 													className={styles.input_radio}
 													type='radio'
 													name='gender'
@@ -163,7 +162,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 														}))
 													}
 												/>
-												<label className={styles.input_lable} htmlFor='female'>
+												<label className={styles.input_lable} htmlFor='other'>
 													Khác
 												</label>
 											</div>
@@ -182,6 +181,7 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 										</span>
 									}
 									placeholder='Nhập email'
+									readOnly
 								/>
 								<div>
 									<Input
@@ -252,13 +252,14 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 										</span>
 									}
 									placeholder='Nhập tên tài khoản/email'
+									readOnly
 								/>
 								<div>
 									<Select
 										isSearch
 										name='manager'
 										value={form.manager || null}
-										placeholder='Lữa chọn'
+										placeholder='Lựa chọn'
 										onChange={(manager) =>
 											setForm((prev: any) => ({
 												...prev,
@@ -299,4 +300,4 @@ const UpdatePageUser = ({}: PropsUpdatePageUser) => {
 	);
 };
 
-export default UpdatePageUser;
+export default UpdateAccount;
