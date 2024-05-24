@@ -20,7 +20,6 @@ import moment from 'moment';
 
 const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 	const router = useRouter();
-	const queryClient = useQueryClient();
 
 	const {_id} = router.query;
 	const [date, setDate] = useState<string>('');

@@ -18,7 +18,7 @@ export interface IUser {
 	birthday: string | null;
 	avatar: string | null;
 	role: string | null;
-	timeCreated: string | null;
+	timeCreated: string;
 	userid: string | null;
 	leadName: string | null;
 }

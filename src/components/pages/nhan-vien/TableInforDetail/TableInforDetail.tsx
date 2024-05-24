@@ -16,11 +16,7 @@ import {QUERY_KEY} from '~/constants/config/enum';
 
 function TableInforDetail({}: PropsTableInforDetail) {
 	const router = useRouter();
-	const queryClient = useQueryClient();
-
 	const {_id} = router.query;
-
-	const {_page, _pageSize, _keyword} = router.query;
 	const [data, setData] = useState<IUserDetail>();
 
 	useQuery([QUERY_KEY.chi_tiet_nhan_vien, _id], {
