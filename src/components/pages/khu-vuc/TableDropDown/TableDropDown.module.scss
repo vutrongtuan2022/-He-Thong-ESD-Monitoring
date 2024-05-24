@@ -1,0 +1,55 @@
+.head {
+	display: flex;
+	padding: 12px 0;
+	background: var(--primary);
+	border-radius: 6px 6px 0 0;
+
+	.itemHead,
+	.order {
+		color: var(--light);
+		font-size: 15px;
+		font-weight: 600;
+		text-align: start;
+	}
+}
+
+.order,
+.arrow {
+	width: 50%;
+}
+
+.arrow {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	user-select: none;
+	transition: 0.3s;
+
+	&.active {
+		transform: rotate(-180deg);
+	}
+}
+
+// ITEM DROPDOW
+.itemDropDown {
+	display: flex;
+	padding: 12px 0;
+	border-bottom: 1px solid var(--border-color);
+	background-color: var(--bg-light);
+	transition: 0.3s;
+
+	&.isChild {
+		background: linear-gradient(0deg, rgba(45, 116, 255, 0.05) 0%, rgba(45, 116, 255, 0.05) 100%), #fff;
+	}
+
+	.item,
+	.order {
+		color: var(--neutrals-3);
+		font-size: 14px;
+		font-weight: 600;
+		text-align: start;
+		display: flex;
+		align-items: center;
+	}
+}

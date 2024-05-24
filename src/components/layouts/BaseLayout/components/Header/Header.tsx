@@ -20,7 +20,9 @@ import Image from 'next/image';
 
 function Header({title}: PropsHeader) {
 	const router = useRouter();
+
 	const {fullMenu} = useSelector((state: RootState) => state.site);
+	const {infoUser} = useSelector((state: RootState) => state.user);
 
 	const [openMenu, setOpenMenu] = useState<boolean>(false);
 	const [openNoti, setOpenNoti] = useState<boolean>(false);
@@ -103,7 +105,7 @@ function Header({title}: PropsHeader) {
 					render={(attrs: any) => <BoxMenuProfile onCLose={() => setOpenMenu(false)} />}
 				>
 					<div className={styles.info} onClick={() => setOpenMenu(!openMenu)}>
-						<p className={styles.name}>Đặng Bá Trường</p>
+						<p className={styles.name}>{infoUser?.fullname}</p>
 						<Avatar src={''} className={styles.avatar} />
 					</div>
 				</TippyHeadless>
