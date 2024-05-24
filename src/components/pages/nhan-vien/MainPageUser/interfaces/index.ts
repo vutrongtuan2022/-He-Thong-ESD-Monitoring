@@ -1,4 +1,4 @@
-export interface PropsMainUser {}
+export interface PropsMainPageUser {}
 
 export interface IUser {
 	uuid: string;

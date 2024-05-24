@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 
-import {PropsPopupCreate} from './interfaces';
-import styles from './PopupCreate.module.scss';
+import {PropsPopupCreateAccount} from './interfaces';
+import styles from './PopupCreateAccount.module.scss';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
 import Form, {Input} from '~/components/common/Form';
 import Select, {Option} from '~/components/common/Select';
 import AvatarChange from '~/components/common/AvatarChange';
 
-function PopupCreate({onClose}: PropsPopupCreate) {
+function PopupCreateAccount({onClose}: PropsPopupCreateAccount) {
 	const [keyword, setKeyword] = useState<string>('');
 	const [form, setForm] = useState<any>({code: '', name: '', description: ''});
 	const handleSubmit = () => {
@@ -26,27 +26,30 @@ function PopupCreate({onClose}: PropsPopupCreate) {
 				<Input type='text' placeholder='Nhập tên nhân viên' name='code' label={<span>Tên nhân viên</span>} />
 				<Input type='text' placeholder='Nhập tên tài khoản' name='name' label={<span>Tên tài khoản</span>} />
 
-				<Select
-					isSearch
-					name=''
-					placeholder='Lựa chọn'
-					value={form?.CCCD || null}
-					onChange={(e: any) =>
-						setForm((prev: any) => ({
-							...prev,
-							personnel: e.target.value,
-						}))
-					}
-					label={
-						<span>
-							Vai trò <span style={{color: 'red'}}>*</span>
-						</span>
-					}
-				>
-					<Option title='Nhân viên 1' value={1} />
-					<Option title='Nhân viên 2' value={2} />
-					<Option title='Nhân viên 3' value={3} />
-				</Select>
+				<div className={'mt'}>
+					<Select
+						isSearch
+						name=''
+						placeholder='Lựa chọn'
+						value={form?.CCCD || null}
+						onChange={(e: any) =>
+							setForm((prev: any) => ({
+								...prev,
+								personnel: e.target.value,
+							}))
+						}
+						label={
+							<span>
+								Vai trò <span style={{color: 'red'}}>*</span>
+							</span>
+						}
+					>
+						<Option title='Nhân viên 1' value={1} />
+						<Option title='Nhân viên 2' value={2} />
+						<Option title='Nhân viên 3' value={3} />
+					</Select>
+				</div>
+
 				{/* <div className={clsx('mt')}>
 					<TextArea placeholder='Nhập ghi chú' name='description' label={<span>Ghi chú</span>} blur />
 				</div> */}
@@ -72,4 +75,4 @@ function PopupCreate({onClose}: PropsPopupCreate) {
 	);
 }
 
-export default PopupCreate;
+export default PopupCreateAccount;

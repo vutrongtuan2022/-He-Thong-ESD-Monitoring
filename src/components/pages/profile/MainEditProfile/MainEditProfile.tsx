@@ -102,7 +102,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 										value={form.phone || ''}
 										label={
 											<span>
-												Số diện thoại<span style={{color: 'red'}}>*</span>
+												Số điện thoại<span style={{color: 'red'}}>*</span>
 											</span>
 										}
 										placeholder='Nhập số điện thoại'

@@ -1,22 +1,15 @@
-import {STATUS_GENERAL} from '~/constants/config/enum';
-import {IUser} from '../../ListUser/interfaces';
+import {GENDER} from '~/constants/config/enum';
 
-export interface PropsMainUpdateUser {
-	dataUpdate?: IUser;
-}
+export interface PropsMainUpdateUser {}
 
 export interface IFormUpdate {
-	uuid: string;
-	userName: string;
-	fullname: string;
-	teamUuid: string;
 	code: string;
-	gender: number;
+	fullname: string;
 	email: string;
 	phone: string;
-	address: string;
+	roleId: string;
 	birthday: string;
-	avatar: string;
-	role: string;
-	status: STATUS_GENERAL;
+	gender: GENDER;
+	teamUuid: string;
+	address: string;
 }

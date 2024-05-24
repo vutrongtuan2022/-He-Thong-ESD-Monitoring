@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {IFormUpdate, PropsMainUpdateUser} from './interfaces';
 import styles from './MainUpdateUser.module.scss';
 import Button from '~/components/common/Button';
@@ -17,15 +17,14 @@ import categoryServices from '~/services/categoryServices';
 import userServices from '~/services/userServices';
 import {toastWarn} from '~/common/funcs/toast';
 import moment from 'moment';
+import Loading from '~/components/common/Loading';
+import {isEmail, isPhoneNumber} from '~/common/funcs/validate';
 
-const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
+const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 	const router = useRouter();
-
 	const {_id} = router.query;
-	const [date, setDate] = useState<string>('');
-	const [form, setForm] = useState<IFormUpdate>({
-		uuid: '',
-		userName: '',
+
+	const initForm = {
 		fullname: '',
 		teamUuid: '',
 		gender: GENDER.NAM,
@@ -33,42 +32,34 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 		phone: '',
 		address: '',
 		birthday: '',
-		avatar: '',
-		role: '',
-		status: STATUS_GENERAL.SU_DUNG,
 		code: '',
-	});
+		roleId: '',
+	};
 
-	const {data, isSuccess} = useQuery([QUERY_KEY.chi_tiet_nhan_vien, _id], {
+	const [form, setForm] = useState<IFormUpdate>(initForm);
+
+	const detailUser = useQuery([QUERY_KEY.chi_tiet_nhan_vien, _id], {
 		queryFn: () =>
 			httpRequest({
 				http: userServices.userDetail({
 					uuid: _id as string,
 				}),
 			}),
+		onSuccess(data) {
+			setForm({
+				fullname: data?.fullname || '',
+				teamUuid: data?.teamUuid || '',
+				gender: data?.gender || '',
+				email: data?.email || '',
+				phone: data?.phone || '',
+				address: data?.address || '',
+				birthday: data?.birthday || '',
+				code: data?.code || '',
+				roleId: data?.roleId || '',
+			});
+		},
 		enabled: !!_id,
 	});
-
-	useEffect(() => {
-		if (data) {
-			setForm({
-				uuid: data.uuid,
-				userName: data.userName || '',
-				fullname: data.fullname || '',
-				teamUuid: data.teamUuid || '',
-				email: data.email || '',
-				phone: data.phone || '',
-				gender: data.gender,
-				address: data.address || '',
-				birthday: data.birthday || '',
-				avatar: data.avatar || '',
-				role: data.role || '',
-				status: data.status,
-				code: data.code || '',
-			});
-			setDate(data.birthday);
-		}
-	}, [data, isSuccess]);
 
 	const listTeams = useQuery([QUERY_KEY.dropdown_danh_sach_team], {
 		queryFn: () =>
@@ -85,7 +76,7 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 	const listRoles = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
 		queryFn: () =>
 			httpRequest({
-				http: categoryServices.listRole({
+				http: categoryServices.listPosition({
 					keyword: '',
 				}),
 			}),
@@ -99,31 +90,38 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Chỉnh sửa thành công!',
+				msgSuccess: 'Chỉnh sửa nhân viên thành công!',
 				http: userServices.upsertUser({
-					uuid: form.uuid,
+					uuid: _id as string,
 					fullname: form.fullname,
-					userName: form.userName,
 					email: form.email,
 					address: form.address,
-					avatar: '',
-					birthday: form.birthday,
+					birthday: moment(form.birthday).format('YYYY-MM-DD'),
 					phone: form.phone,
 					gender: form.gender,
-					role: form.role,
+					role: form.roleId,
 					code: form.code,
-					status: form.status as STATUS_GENERAL,
 					teamUuid: form.teamUuid,
+					userName: detailUser?.data?.userName,
+					avatar: detailUser?.data?.avatar,
+					status: detailUser?.data?.status,
 				}),
 			}),
 		onSuccess(data) {
 			if (data) {
-				router.push(PATH.NhanVien);
+				setForm(initForm);
+				router.replace(PATH.NhanVien, undefined, {
+					scroll: false,
+					shallow: false,
+				});
 			}
 		},
 	});
 
 	const handleSubmit = async () => {
+		if (!_id) {
+			return toastWarn({msg: 'Không tìm thấy nhân viên!'});
+		}
 		if (!form.code) {
 			return toastWarn({msg: 'Vui lòng nhập mã nhân viên!'});
 		}
@@ -134,23 +132,27 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 			return toastWarn({msg: 'Vui lòng nhập email!'});
 		}
 		if (!form.phone) {
-			return toastWarn({msg: 'Vui lòng nhập phone!'});
+			return toastWarn({msg: 'Vui lòng nhập số điện thoại!'});
 		}
-		if (!form.teamUuid) {
-			return toastWarn({msg: 'Vui lòng nhập thuộc team!'});
+		if (!form.roleId) {
+			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
 		}
 		if (!form.birthday) {
 			return toastWarn({msg: 'Vui lòng nhập ngày sinh!'});
 		}
-		if (!form.role) {
-			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
+		if (!isPhoneNumber(form.phone)) {
+			return toastWarn({msg: 'Số điện thoại không đúng định dạng!'});
+		}
+		if (!isEmail(form.email)) {
+			return toastWarn({msg: 'Email không đúng định dạng!'});
 		}
 
 		return upsertUser.mutate();
 	};
 
 	return (
-		<div>
+		<Fragment>
+			<Loading loading={upsertUser.isLoading} />
 			<Breadcrumb
 				listUrls={[
 					{
@@ -211,26 +213,77 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 							</div>
 
 							<div className={clsx('mt', 'col_2')}>
-								<Input name='address' value={form.address || ''} label={<span>Địa chỉ</span>} placeholder='Nhập địa chỉ' />
+								<Input
+									name='email'
+									value={form.email || ''}
+									label={
+										<span>
+											Email <span style={{color: 'red'}}>*</span>
+										</span>
+									}
+									placeholder='Nhập email'
+								/>
+								<div>
+									<Input
+										name='phone'
+										value={form.phone || ''}
+										label={
+											<span>
+												Số điện thoại <span style={{color: 'red'}}>*</span>
+											</span>
+										}
+										placeholder='Nhập số điện thoại'
+									/>
+								</div>
+							</div>
+
+							<div className={clsx('mt', 'col_2')}>
+								<div>
+									<Select
+										isSearch
+										name='role'
+										value={form.roleId || null}
+										placeholder='Lựa chọn'
+										onChange={(e) =>
+											setForm((prev) => ({
+												...prev,
+												roleId: e.target.value,
+											}))
+										}
+										label={
+											<span>
+												Chức vụ <span style={{color: 'red'}}>*</span>
+											</span>
+										}
+									>
+										{listRoles?.data?.map((v: any) => (
+											<Option key={v?.uuid} title={v?.name} value={v?.name} />
+										))}
+									</Select>
+								</div>
 								<div className={clsx('col_2')}>
 									<DatePicker
 										icon={true}
-										label={'Ngày sinh'}
+										label={
+											<span>
+												Ngày sinh <span style={{color: 'red'}}>*</span>
+											</span>
+										}
 										placeholder='Chọn ngày sinh'
-										value={date}
-										onSetValue={(newDate) => {
-											const formattedDate = moment(newDate).format('YYYY-MM-DD');
-											setDate(formattedDate);
+										value={form.birthday}
+										onSetValue={(date) =>
 											setForm((prevForm) => ({
 												...prevForm,
-												birthday: formattedDate,
-											}));
-										}}
+												birthday: date,
+											}))
+										}
 										name='birthday'
 										onClean={true}
 									/>
 									<div className={styles.gender}>
-										<label className={styles.title}>Giới tính</label>
+										<label className={styles.title}>
+											Giới tính <span style={{color: 'red'}}>*</span>
+										</label>
 										<div className={styles.group_radio}>
 											<div className={styles.item_radio}>
 												<input
@@ -271,80 +324,12 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 													Nữ
 												</label>
 											</div>
-
-											{/* <div className={styles.item_radio}>
-												<input
-													id='other'
-													className={styles.input_radio}
-													type='radio'
-													name='gender'
-													value={GENDER.KHAC}
-													checked={form.gender === GENDER.KHAC}
-													onChange={(e) =>
-														setForm((prev) => ({
-															...prev,
-															gender: GENDER.KHAC,
-														}))
-													}
-												/>
-												<label className={styles.input_label} htmlFor='other'>
-													Khác
-												</label>
-											</div> */}
 										</div>
 									</div>
 								</div>
 							</div>
 
 							<div className={clsx('mt', 'col_2')}>
-								<Input
-									name='email'
-									value={form.email || ''}
-									label={
-										<span>
-											Email <span style={{color: 'red'}}>*</span>
-										</span>
-									}
-									placeholder='Nhập email'
-								/>
-								<div>
-									<Input
-										name='phone'
-										value={form.phone || ''}
-										label={
-											<span>
-												Số diện thoại <span style={{color: 'red'}}>*</span>
-											</span>
-										}
-										placeholder='Nhập số điện thoại'
-									/>
-								</div>
-							</div>
-
-							<div className={clsx('mt', 'col_2')}>
-								<div>
-									<Select
-										isSearch
-										name='role'
-										value={form.role || ''}
-										placeholder='Lựa chọn'
-										onChange={(e) =>
-											setForm((prev) => ({
-												...prev,
-												role: e.target.value,
-											}))
-										}
-										label={
-											<span>
-												Chức vụ <span style={{color: 'red'}}>*</span>
-											</span>
-										}
-									>
-										{listRoles?.data?.map((v: any) => (
-											<Option key={v?.uuid} title={v?.name} value={v?.name} />
-										))}
-									</Select>
-								</div>
 								<Select
 									isSearch
 									name='teamUuid'
@@ -356,22 +341,25 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 											teamUuid: e.target.value,
 										}))
 									}
-									label={
-										<span>
-											Thuộc team <span style={{color: 'red'}}>*</span>
-										</span>
-									}
+									label={<span>Thuộc team</span>}
 								>
 									{listTeams?.data?.map((v: any) => (
 										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 									))}
 								</Select>
+								<Input
+									type='text'
+									name='address'
+									value={form.address || ''}
+									label={<span>Địa chỉ</span>}
+									placeholder='Nhập địa chỉ'
+								/>
 							</div>
 						</Form>
 					</div>
 				</div>
 			</WrapperContainer>
-		</div>
+		</Fragment>
 	);
 };
 

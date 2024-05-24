@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import icons from '~/constants/images/icons';
-import {IUser, PropsMainUser} from './interfaces';
-import styles from './MainUser.module.scss';
+import {IUser, PropsMainPageUser} from './interfaces';
+import styles from './MainPageUser.module.scss';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Button from '~/components/common/Button';
 import {useRouter} from 'next/router';
@@ -16,14 +16,13 @@ import {QUERY_KEY, STATUS_GENERAL, STATUS_USER} from '~/constants/config/enum';
 import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
 import Popup from '~/components/common/Popup';
-import PopupCreate from '../PopupCreate';
+import PopupCreate from '../PopupCreateAccount';
 import Dialog from '~/components/common/Dialog';
 import Pagination from '~/components/common/Pagination';
 import IconCustom from '~/components/common/IconCustom';
-import {Trash, UserCirlceAdd} from 'iconsax-react';
+import {UserCirlceAdd} from 'iconsax-react';
 import DataWrapper from '~/components/common/DataWrapper';
-import {AiOutlineUserAdd} from 'react-icons/ai';
-import {LuCheck, LuPencil} from 'react-icons/lu';
+import {LuPencil} from 'react-icons/lu';
 import clsx from 'clsx';
 import Table from '~/components/common/Table';
 import Noti from '~/components/common/DataWrapper/components/Noti';
@@ -35,14 +34,15 @@ import Moment from 'react-moment';
 import {Lock} from 'iconsax-react';
 import ImportExcel from '~/components/common/ImportExcel';
 
-function MainUser({}: PropsMainUser) {
+function MainPageUser({}: PropsMainPageUser) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
+
+	const {_page, _pageSize, _status, _username, importExcel, _keyword, _position} = router.query;
+
 	const [file, setFile] = useState<any>(null);
-	const {_page, _pageSize, _status, _username, importExcel, _keyword, _teamUuid} = router.query;
-	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
-	const [data, setData] = useState<any[]>([]);
+	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
 
 	const changeStatusUser = useMutation({
 		mutationFn: () => {
@@ -59,17 +59,17 @@ function MainUser({}: PropsMainUser) {
 		onSuccess(data) {
 			if (data) {
 				setDataChangeStatus(null);
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_nhan_vien, _page, _pageSize, _keyword, _status]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status]);
 			}
 		},
 	});
 
-	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status, _teamUuid], {
+	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status], {
 		queryFn: () =>
 			httpRequest({
 				http: userServices.listUser({
-					pageSize: Number(_pageSize) || 20,
 					page: Number(_page) || 1,
+					pageSize: Number(_pageSize) || 20,
 					keyword: _keyword ? (_keyword as string) : '',
 					username: _username ? (_username as string) : null,
 					status: _status ? (_status as string) : null,
@@ -82,10 +82,10 @@ function MainUser({}: PropsMainUser) {
 		},
 	});
 
-	const listUsers = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
+	const listPosition = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
 		queryFn: () =>
 			httpRequest({
-				http: categoryServices.listRole({
+				http: categoryServices.listPosition({
 					keyword: '',
 				}),
 			}),
@@ -101,10 +101,10 @@ function MainUser({}: PropsMainUser) {
 				http: userServices.exportExcel({
 					pageSize: Number(_pageSize) || 20,
 					page: Number(_page) || 1,
-					keyword: _keyword ? (_keyword as string) : '',
+					keyword: (_keyword as string) || '',
 					status: STATUS_GENERAL.SU_DUNG,
-					teamUuid: Array.isArray(_teamUuid) ? _teamUuid[0] : _teamUuid || null,
-					username: _username ? (_username as string) : '',
+					username: (_username as string) || '',
+					teamUuid: null,
 					timeCreated: null,
 				}),
 			});
@@ -155,6 +155,7 @@ function MainUser({}: PropsMainUser) {
 		if (!dataChangeStatus?.uuid) {
 			return toastWarn({msg: 'Không tìm thấy nhân viên!'});
 		}
+
 		return changeStatusUser.mutate();
 	};
 
@@ -248,13 +249,6 @@ function MainUser({}: PropsMainUser) {
 				<div className={styles.container}>
 					<div className={styles.control}>
 						<div className={styles.left}>
-							{data?.some((x) => x.isChecked !== false) && (
-								<div>
-									<Button className={styles.btn} rounded_8 w_fit icon={<LuCheck size={20} />}>
-										Xác nhận xử lý
-									</Button>
-								</div>
-							)}
 							<div style={{minWidth: 360}}>
 								<Search keyName='_keyword' placeholder='Tìm kiếm theo tên nhân viên, mã nhân viên' />
 							</div>
@@ -278,8 +272,8 @@ function MainUser({}: PropsMainUser) {
 								<FilterCustom
 									isSearch
 									name='Chức vụ'
-									query='_role'
-									listFilter={listUsers?.data?.map((v: any) => ({
+									query='_position'
+									listFilter={listPosition?.data?.map((v: any) => ({
 										id: v?.uuid,
 										name: v?.name,
 									}))}
@@ -314,7 +308,6 @@ function MainUser({}: PropsMainUser) {
 								data={listUser?.data?.items}
 								column={[
 									{
-										// checkBox: true,
 										title: 'STT',
 										render: (data: IUser, index: number) => <>{index + 1}</>,
 									},
@@ -348,11 +341,11 @@ function MainUser({}: PropsMainUser) {
 										render: (data: IUser) => (
 											<p
 												className={clsx(styles.status, {
-													[styles.haveaccount]: data.userName !== '',
-													[styles.noaccount]: data.userName === '',
+													[styles.haveaccount]: data.userName,
+													[styles.noaccount]: !data.userName,
 												})}
 											>
-												{data.userName !== '' ? 'Đã cấp' : 'Chưa cấp'}
+												{data.userName ? data.userName : 'Chưa cấp'}
 											</p>
 										),
 									},
@@ -379,7 +372,7 @@ function MainUser({}: PropsMainUser) {
 
 									{
 										title: 'Tác vụ',
-										render: (data: IUser, index: number) => (
+										render: (data: IUser) => (
 											<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 												<IconCustom
 													create
@@ -418,7 +411,7 @@ function MainUser({}: PropsMainUser) {
 							currentPage={Number(_page) || 1}
 							total={listUser?.data?.pagination?.totalCount}
 							pageSize={Number(_pageSize) || 20}
-							dependencies={[_pageSize, _keyword, _status]}
+							dependencies={[_username, _pageSize, _keyword, _status]}
 						/>
 
 						<Dialog
@@ -435,7 +428,7 @@ function MainUser({}: PropsMainUser) {
 					</Popup>
 					<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
 						<ImportExcel
-							name='file-device'
+							name='file-user'
 							file={file}
 							pathTemplate='/static/files/Mau_Import_Device.xlsx'
 							setFile={setFile}
@@ -449,4 +442,4 @@ function MainUser({}: PropsMainUser) {
 	);
 }
 
-export default MainUser;
+export default MainPageUser;

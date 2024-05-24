@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import {Fragment, ReactElement} from 'react';
 import BaseLayout from '~/components/layouts/BaseLayout';
-import MainPageUser from '~/components/pages/nhan-vien/MainUser';
+import MainPageUser from '~/components/pages/nhan-vien/MainPageUser';
 
 export default function Page() {
 	return (

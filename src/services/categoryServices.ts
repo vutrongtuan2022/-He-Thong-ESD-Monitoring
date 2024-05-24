@@ -41,7 +41,7 @@ const categoryServices = {
 			cancelToken: tokenAxios,
 		});
 	},
-	listRole: (
+	listPosition: (
 		data: {
 			keyword: string;
 		},

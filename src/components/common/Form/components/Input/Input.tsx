@@ -4,9 +4,10 @@ import {useContext, useEffect, useState} from 'react';
 
 import {FormContext} from '../../contexts';
 import clsx from 'clsx';
-import isEmail from '~/common/funcs/isEmail';
+
 import styles from './Input.module.scss';
 import {convertCoin, price} from '~/common/funcs/convertCoin';
+import {isEmail} from '~/common/funcs/validate';
 
 function Input({
 	label,

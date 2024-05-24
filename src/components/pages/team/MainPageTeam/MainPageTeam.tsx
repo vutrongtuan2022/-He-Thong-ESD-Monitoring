@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Image from 'next/image';
 
 import {PropsMainPageTeam} from './interfaces';
@@ -23,8 +23,8 @@ import categoryServices from '~/services/categoryServices';
 import {useRouter} from 'next/router';
 import clsx from 'clsx';
 import TableTeam from '../MainTableTeam';
-import TreeTeam from '../TreeTeam';
 import teamServices from '~/services/teamServices';
+import MainTreeTeam from '../MainTreeTeam';
 
 function MainPageTeam({}: PropsMainPageTeam) {
 	const router = useRouter();
@@ -52,6 +52,26 @@ function MainPageTeam({}: PropsMainPageTeam) {
 			return data;
 		},
 	});
+
+	useEffect(() => {
+		if (_view == 'tree') {
+			const {_page, _pageSize, _keyword, _leaderUuid, _status, ...rest} = router.query;
+
+			router.replace(
+				{
+					pathname: router.pathname,
+					query: {
+						...rest,
+					},
+				},
+				undefined,
+				{
+					scroll: false,
+					shallow: false,
+				}
+			);
+		}
+	}, [_view]);
 
 	return (
 		<div className={styles.container}>
@@ -138,32 +158,36 @@ function MainPageTeam({}: PropsMainPageTeam) {
 					</GridColumn>
 				</div>
 				<div className={styles.head}>
-					<div className={styles.box_filter}>
-						<div className={styles.search}>
-							<Search keyName='_keyword' placeholder='Tìm kiếm theo tên hoặc mã' />
+					{_view == 'tree' ? (
+						<h4 className={styles.title}>Sơ đồ team</h4>
+					) : (
+						<div className={styles.box_filter}>
+							<div className={styles.search}>
+								<Search keyName='_keyword' placeholder='Tìm kiếm theo tên hoặc mã' />
+							</div>
+							<div className={styles.filter}>
+								<FilterCustom
+									isSearch
+									name='Leader'
+									query='_leaderUuid'
+									listFilter={listUsers?.data?.map((v: any) => ({
+										id: v?.uuid,
+										name: v?.name,
+									}))}
+								/>
+							</div>
+							<div className={styles.filter}>
+								<FilterCustom
+									name='Trạng thái'
+									query='_status'
+									listFilter={[
+										{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
+										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: 'Không sử dụng'},
+									]}
+								/>
+							</div>
 						</div>
-						<div className={styles.filter}>
-							<FilterCustom
-								isSearch
-								name='Leader'
-								query='_leaderUuid'
-								listFilter={listUsers?.data?.map((v: any) => ({
-									id: v?.uuid,
-									name: v?.name,
-								}))}
-							/>
-						</div>
-						<div className={styles.filter}>
-							<FilterCustom
-								name='Trạng thái'
-								query='_status'
-								listFilter={[
-									{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
-									{id: STATUS_GENERAL.KHONG_SU_DUNG, name: 'Không sử dụng'},
-								]}
-							/>
-						</div>
-					</div>
+					)}
 					<div className={styles.control}>
 						<div
 							className={clsx(styles.item, {[styles.active]: !_view})}
@@ -215,7 +239,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 
 				<div className={styles.wrapper}>
 					{!_view && <TableTeam />}
-					{_view == 'tree' && <TreeTeam />}
+					{_view == 'tree' && <MainTreeTeam />}
 				</div>
 			</WrapperContainer>
 		</div>

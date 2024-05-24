@@ -6,6 +6,7 @@ export enum QUERY_KEY {
 	dropdown_danh_sach_device,
 	dropdown_danh_sach_chuc_vu,
 	danh_sach_team,
+	danh_sach_tree_team,
 	danh_sach_team_con,
 	chi_tiet_team,
 	danh_sach_bo_phat,

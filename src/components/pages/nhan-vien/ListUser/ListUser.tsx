@@ -17,7 +17,7 @@ import {Trash, UserCirlceAdd} from 'iconsax-react';
 import {BsThreeDots} from 'react-icons/bs';
 import Link from 'next/link';
 import {AiOutlineUserAdd} from 'react-icons/ai';
-import PopupCreate from '../PopupCreate';
+import PopupCreate from '../PopupCreateAccount';
 import Popup from '~/components/common/Popup';
 import Dialog from '~/components/common/Dialog';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
@@ -85,7 +85,7 @@ function ListUser({}: PropsListUser) {
 	const listUsers = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
 		queryFn: () =>
 			httpRequest({
-				http: categoryServices.listRole({
+				http: categoryServices.listPosition({
 					keyword: '',
 				}),
 			}),

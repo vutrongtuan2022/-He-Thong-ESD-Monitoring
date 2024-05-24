@@ -33,9 +33,7 @@ function MainDetailUser({}: PropsMainDetailUser) {
 				}
 			/>
 			<WrapperContainer>
-				<div>
-					<TableInfor />
-				</div>
+				<TableInfor />
 			</WrapperContainer>
 		</div>
 	);
