@@ -162,7 +162,7 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 						path: PATH.NhanVien,
 					},
 					{
-						title: 'Sửa người dùng',
+						title: 'Sửa người nhân viên',
 						path: '',
 					},
 				]}

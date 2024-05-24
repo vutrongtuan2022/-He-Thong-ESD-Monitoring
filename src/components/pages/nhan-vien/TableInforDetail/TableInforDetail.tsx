@@ -11,14 +11,37 @@ import {IoArrowBackOutline} from 'react-icons/io5';
 import clsx from 'clsx';
 import userServices from '~/services/userServices';
 import {PATH} from '~/constants/config';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {QUERY_KEY} from '~/constants/config/enum';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
+import Dialog from '~/components/common/Dialog';
+import {IUser} from '../ListUser/interfaces';
+import {toastWarn} from '~/common/funcs/toast';
 
 function TableInforDetail({}: PropsTableInforDetail) {
 	const router = useRouter();
 	const {_id} = router.query;
 	const [data, setData] = useState<IUserDetail>();
-
+	const [dataChangeStatus, setDataChangeStatus] = useState<IUserDetail | null>(null);
+	const queryClient = useQueryClient();
+	const changeStatusUser = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: 'Thay đổi trạng thái thành công!',
+				http: userServices.updateUserStatus({
+					uuid: dataChangeStatus?.uuid!,
+					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				setDataChangeStatus(null);
+				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_nhan_vien, _id]);
+			}
+		},
+	});
 	useQuery([QUERY_KEY.chi_tiet_nhan_vien, _id], {
 		queryFn: () =>
 			httpRequest({
@@ -31,6 +54,19 @@ function TableInforDetail({}: PropsTableInforDetail) {
 		},
 		enabled: !!_id,
 	});
+
+	const handleChangeStatusUser = async () => {
+		if (!dataChangeStatus?.uuid) {
+			return toastWarn({msg: 'Không tìm thấy nhân viên!'});
+		}
+		return changeStatusUser.mutate();
+	};
+
+	const handleLockButtonClick = () => {
+		if (!data) return;
+		setDataChangeStatus(data);
+	};
+
 	return (
 		<Fragment>
 			<div className={styles.container}>
@@ -47,9 +83,10 @@ function TableInforDetail({}: PropsTableInforDetail) {
 							p_6_16
 							danger_opacity
 							bold
-							icon={<Image alt='icon trash' src={icons.icon_trash} width={20} height={20} />}
+							icon={<Image alt='icon trash' src={icons.icon_lock} width={20} height={20} />}
+							onClick={handleLockButtonClick}
 						>
-							Xóa bỏ
+							Khóa
 						</Button>
 						<Button
 							className={styles.btn}
@@ -58,6 +95,9 @@ function TableInforDetail({}: PropsTableInforDetail) {
 							p_6_16
 							blue_light
 							bold
+							onClick={() => {
+								router.push(`/nhan-vien/chinh-sua?_id=${_id}`);
+							}}
 							icon={<Image alt='icon import' src={icons.icon_note} width={20} height={20} />}
 						>
 							Chỉnh sửa
@@ -102,7 +142,6 @@ function TableInforDetail({}: PropsTableInforDetail) {
 								<span style={{marginRight: 6}}>Tạo lúc: </span> {data?.timeCreated || '---'}
 							</td>
 						</tr>
-
 						{/* <tr>
 						<td>
 							<span style={{marginRight: 6}}>Số CCCD: </span>
@@ -113,6 +152,14 @@ function TableInforDetail({}: PropsTableInforDetail) {
 					</tr> */}
 					</table>
 				</div>
+				<Dialog
+					warn
+					open={!!dataChangeStatus}
+					onClose={() => setDataChangeStatus(null)}
+					title='Chuyển trạng thái'
+					note='Bạn có chắc chắn chuyển trạng thái cho nhân viên này?'
+					onSubmit={handleChangeStatusUser}
+				/>
 			</div>
 		</Fragment>
 	);

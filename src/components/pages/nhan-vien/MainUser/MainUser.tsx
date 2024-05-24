@@ -20,7 +20,7 @@ import PopupCreate from '../PopupCreate';
 import Dialog from '~/components/common/Dialog';
 import Pagination from '~/components/common/Pagination';
 import IconCustom from '~/components/common/IconCustom';
-import {Trash} from 'iconsax-react';
+import {Trash, UserCirlceAdd} from 'iconsax-react';
 import DataWrapper from '~/components/common/DataWrapper';
 import {AiOutlineUserAdd} from 'react-icons/ai';
 import {LuCheck, LuPencil} from 'react-icons/lu';
@@ -153,7 +153,7 @@ function MainUser({}: PropsMainUser) {
 
 	const handleChangeStatusDevice = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy thiết bị!'});
+			return toastWarn({msg: 'Không tìm thấy nhân viên!'});
 		}
 		return changeStatusUser.mutate();
 	};
@@ -307,7 +307,7 @@ function MainUser({}: PropsMainUser) {
 					<div className={styles.table}>
 						<DataWrapper
 							data={listUser?.data?.items}
-							noti={<Noti des='Hiện tại chưa có bộ phát nào ?' />}
+							noti={<Noti des='Hiện tại chưa có nhân viên nào ?' />}
 							loading={listUser?.isLoading}
 						>
 							<Table
@@ -383,8 +383,8 @@ function MainUser({}: PropsMainUser) {
 											<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 												<IconCustom
 													create
-													icon={<AiOutlineUserAdd size='22' />}
-													tooltip='cấp account'
+													icon={<UserCirlceAdd size='23' />}
+													tooltip='Thêm tài khoản'
 													color='#777E90'
 													onClick={() => {
 														setOpenCreate(true);
