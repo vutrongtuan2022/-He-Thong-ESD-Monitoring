@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import {Fragment, ReactElement} from 'react';
 import BaseLayout from '~/components/layouts/BaseLayout';
-import UpdatePageUser from '~/components/pages/nguoi-dung/UpdatePageUser';
-import MainPageCreateStaff from '~/components/pages/nhan-vien/MainCreateUser';
+import MainCreateUser from '~/components/pages/nhan-vien/MainCreateUser';
 
 export default function Page() {
 	return (
@@ -14,7 +13,7 @@ export default function Page() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<MainPageCreateStaff />
+			<MainCreateUser />
 		</Fragment>
 	);
 }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {IAccount, PropsMainPageUser} from './interfaces';
-import styles from './MainPageUser.module.scss';
+import {IAccount, PropsMainPageAccount} from './interfaces';
+import styles from './MainPageAccount.module.scss';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import {useRouter} from 'next/router';
 import Search from '~/components/common/Search';
@@ -25,7 +25,7 @@ import Dialog from '~/components/common/Dialog';
 import IconCustom from '~/components/common/IconCustom';
 import StateAccount from '../StateAccount';
 
-const MainPageUser = ({}: PropsMainPageUser) => {
+const MainPageAccount = ({}: PropsMainPageAccount) => {
 	const router = useRouter();
 	const {_page, _pageSize, _keyword, _manager, _dateFrom, _dateTo} = router.query;
 	const [openClock, setOpenClock] = useState<boolean>(false);
@@ -62,7 +62,7 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 					},
 					{
 						title: 'Quản lý tài khoản',
-						path: PATH.NguoiDung,
+						path: PATH.TaiKhoan,
 					},
 				]}
 				action={
@@ -121,7 +121,7 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 								{
 									title: 'Tên người dùng',
 									render: (data: any) => (
-										<Link href={`/nguoi-dung/{123}}`} className={styles.DetailUser}>
+										<Link href={`/tai-khoan/{123}}`} className={styles.DetailUser}>
 											jhagjdsyu
 										</Link>
 									),
@@ -167,7 +167,7 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 												tooltip='Chỉnh sửa'
 												color='#777E90'
 												onClick={() => {
-													router.push(`/nguoi-dung/chinh-sua?_id=${123}`);
+													router.push(`/tai-khoan/chinh-sua?_id=${123}`);
 												}}
 											/>
 										</div>
@@ -197,4 +197,4 @@ const MainPageUser = ({}: PropsMainPageUser) => {
 	);
 };
 
-export default MainPageUser;
+export default MainPageAccount;
