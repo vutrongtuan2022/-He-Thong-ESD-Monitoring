@@ -196,7 +196,6 @@ const MainUpdateUser = ({dataUpdate}: PropsMainUpdateUser) => {
 											</span>
 										}
 										placeholder='Nhập mã nhân viên'
-										disabled
 									/>
 								</div>
 								<Input
