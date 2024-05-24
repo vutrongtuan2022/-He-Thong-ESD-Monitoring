@@ -80,6 +80,15 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 		if (!form.phone) {
 			return toastWarn({msg: 'Vui lòng nhập phone!'});
 		}
+		if (!form.teamUuid) {
+			return toastWarn({msg: 'Vui lòng nhập thuộc team!'});
+		}
+		if (!form.birthday) {
+			return toastWarn({msg: 'Vui lòng nhập ngày sinh!'});
+		}
+		if (!form.role) {
+			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
+		}
 
 		return upsertUser.mutate();
 	};
@@ -240,7 +249,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 												</label>
 											</div>
 
-											<div className={styles.item_radio}>
+											{/* <div className={styles.item_radio}>
 												<input
 													id='other'
 													className={styles.input_radio}
@@ -258,7 +267,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 												<label className={styles.input_label} htmlFor='other'>
 													Khác
 												</label>
-											</div>
+											</div> */}
 										</div>
 									</div>
 								</div>

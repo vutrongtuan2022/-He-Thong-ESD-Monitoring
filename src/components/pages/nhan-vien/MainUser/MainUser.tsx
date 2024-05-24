@@ -32,12 +32,14 @@ import Search from '~/components/common/Search';
 import Link from 'next/link';
 import Loading from '~/components/common/Loading';
 import Moment from 'react-moment';
+import {Lock} from 'iconsax-react';
+import ImportExcel from '~/components/common/ImportExcel';
 
 function MainUser({}: PropsMainUser) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const [file, setFile] = useState<any>(null);
-	const {_page, _pageSize, _status, _username, _timeCreated, _keyword, _teamUuid} = router.query;
+	const {_page, _pageSize, _status, _username, importExcel, _keyword, _teamUuid} = router.query;
 	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
 	const [data, setData] = useState<any[]>([]);
@@ -130,7 +132,7 @@ function MainUser({}: PropsMainUser) {
 		onSuccess(data) {
 			if (data) {
 				handleCloseImportExcel();
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_bo_phat, _page, _pageSize, _keyword]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_nhan_vien, _page, _pageSize, _keyword]);
 			}
 		},
 	});
@@ -261,14 +263,14 @@ function MainUser({}: PropsMainUser) {
 									listFilter={[
 										{
 											id: STATUS_USER.HAVEACCOUNT,
-											name: 'Có tài khoản',
+											name: 'Đã cấp tài khoản',
 										},
 										{
 											id: STATUS_USER.NOACCOUNT,
-											name: 'Không có tài khoản',
+											name: 'Chưa cấp tài khoản',
 										},
 									]}
-									name='Trạng thái'
+									name='Tài khoản'
 									query='_username'
 								/>
 							</div>
@@ -281,6 +283,22 @@ function MainUser({}: PropsMainUser) {
 										id: v?.uuid,
 										name: v?.name,
 									}))}
+								/>
+							</div>
+							<div style={{minWidth: 240}}>
+								<FilterCustom
+									name='Trạng thái'
+									query='_status'
+									listFilter={[
+										{
+											id: STATUS_GENERAL.SU_DUNG,
+											name: 'Sử dụng',
+										},
+										{
+											id: STATUS_GENERAL.KHONG_SU_DUNG,
+											name: 'Không sử dụng',
+										},
+									]}
 								/>
 							</div>
 						</div>
@@ -340,6 +358,21 @@ function MainUser({}: PropsMainUser) {
 									},
 
 									{
+										title: 'Trạng thái',
+										render: (data: IUser) => (
+											<>
+												{data?.status == STATUS_GENERAL.SU_DUNG ? (
+													<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
+													<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+												) : (
+													'---'
+												)}
+											</>
+										),
+									},
+
+									{
 										title: 'Ngày tạo',
 										render: (data: IUser) => <Moment date={data.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 									},
@@ -369,9 +402,9 @@ function MainUser({}: PropsMainUser) {
 												/>
 
 												<IconCustom
-													delete
-													icon={<Trash size='22' />}
-													tooltip='Thay đổi trạng thái'
+													warn
+													icon={<Lock size='22' />}
+													tooltip='Khóa'
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
 												/>
@@ -387,17 +420,28 @@ function MainUser({}: PropsMainUser) {
 							pageSize={Number(_pageSize) || 20}
 							dependencies={[_pageSize, _keyword, _status]}
 						/>
+
 						<Dialog
-							danger
+							warn
 							open={!!dataChangeStatus}
 							onClose={() => setDataChangeStatus(null)}
-							title='Đổi trạng thái'
-							note='Bạn có chắc chắn muốn đổi trạng thái nhân viên này?'
+							title='Chuyển trạng thái'
+							note='Bạn có chắc chắn chuyển trạng thái cho nhân viên này?'
 							onSubmit={handleChangeStatusDevice}
 						/>
 					</div>
 					<Popup open={OpenCreate} onClose={() => setOpenCreate(false)}>
 						<PopupCreate onClose={() => setOpenCreate(false)} />
+					</Popup>
+					<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
+						<ImportExcel
+							name='file-device'
+							file={file}
+							pathTemplate='/static/files/Mau_Import_Device.xlsx'
+							setFile={setFile}
+							onClose={handleCloseImportExcel}
+							onSubmit={handleImportExcel}
+						/>
 					</Popup>
 				</div>
 			</WrapperContainer>
