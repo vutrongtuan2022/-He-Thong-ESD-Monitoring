@@ -12,7 +12,7 @@ import Image from 'next/image';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import userServices from '~/services/userServices';
-import {QUERY_KEY, STATUS_GENERAL, STATUS_USER} from '~/constants/config/enum';
+import {QUERY_KEY, STATUS_ACCOUNT, STATUS_GENERAL} from '~/constants/config/enum';
 import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
 import Popup from '~/components/common/Popup';
@@ -38,7 +38,7 @@ function MainPageUser({}: PropsMainPageUser) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _status, _username, importExcel, _keyword, _position} = router.query;
+	const {_page, _pageSize, _status, _isHaveAcc, _username, importExcel, _keyword, _position} = router.query;
 
 	const [file, setFile] = useState<any>(null);
 	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
@@ -59,12 +59,12 @@ function MainPageUser({}: PropsMainPageUser) {
 		onSuccess(data) {
 			if (data) {
 				setDataChangeStatus(null);
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status, _isHaveAcc]);
 			}
 		},
 	});
 
-	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status], {
+	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status, _isHaveAcc], {
 		queryFn: () =>
 			httpRequest({
 				http: userServices.listUser({
@@ -75,6 +75,7 @@ function MainPageUser({}: PropsMainPageUser) {
 					status: _status ? (_status as string) : null,
 					timeCreated: null,
 					teamUuid: '',
+					isHaveAcc: _isHaveAcc ? (_isHaveAcc as string) : null,
 				}),
 			}),
 		select(data) {
@@ -103,6 +104,7 @@ function MainPageUser({}: PropsMainPageUser) {
 					page: Number(_page) || 1,
 					keyword: (_keyword as string) || '',
 					status: STATUS_GENERAL.SU_DUNG,
+					isHaveAcc: STATUS_ACCOUNT.HAVEACCOUNT,
 					username: (_username as string) || '',
 					teamUuid: null,
 					timeCreated: null,
@@ -256,16 +258,16 @@ function MainPageUser({}: PropsMainPageUser) {
 								<FilterCustom
 									listFilter={[
 										{
-											id: STATUS_USER.HAVEACCOUNT,
+											id: STATUS_ACCOUNT.HAVEACCOUNT,
 											name: 'Đã cấp tài khoản',
 										},
 										{
-											id: STATUS_USER.NOACCOUNT,
+											id: STATUS_ACCOUNT.NOACCOUNT,
 											name: 'Chưa cấp tài khoản',
 										},
 									]}
 									name='Tài khoản'
-									query='_username'
+									query='_isHaveAcc'
 								/>
 							</div>
 							<div style={{minWidth: 240}}>

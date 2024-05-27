@@ -7,9 +7,9 @@ export interface IFormUpdate {
 	fullname: string;
 	email: string;
 	phone: string;
-	roleId: string;
+	regencyUuid: string;
 	birthday: string;
-	gender: GENDER;
+	gender: number;
 	teamUuid: string;
 	address: string;
 }

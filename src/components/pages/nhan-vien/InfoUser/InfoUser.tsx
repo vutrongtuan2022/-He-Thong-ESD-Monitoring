@@ -15,6 +15,7 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import Dialog from '~/components/common/Dialog';
 import {toastWarn} from '~/common/funcs/toast';
+import Moment from 'react-moment';
 
 function InfoUser({}: PropsInfoUser) {
 	const router = useRouter();
@@ -76,19 +77,17 @@ function InfoUser({}: PropsInfoUser) {
 					</Link>
 					<div className={styles.list_btn}>
 						<Button
-							className={styles.btn}
 							rounded_8
 							w_fit
 							p_6_16
-							danger_opacity
+							danger_opacity={data?.status === STATUS_GENERAL.SU_DUNG}
+							green_opacity={data?.status !== STATUS_GENERAL.SU_DUNG}
 							bold
-							icon={<Image alt='icon trash' src={icons.icon_lock} width={20} height={20} />}
 							onClick={handleLockButtonClick}
 						>
-							Khóa
+							{data?.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
 						</Button>
 						<Button
-							className={styles.btn}
 							rounded_8
 							w_fit
 							p_6_16
@@ -97,7 +96,6 @@ function InfoUser({}: PropsInfoUser) {
 							onClick={() => {
 								router.push(`/nhan-vien/chinh-sua?_id=${_id}`);
 							}}
-							icon={<Image alt='icon import' src={icons.icon_note} width={20} height={20} />}
 						>
 							Chỉnh sửa
 						</Button>
@@ -114,7 +112,7 @@ function InfoUser({}: PropsInfoUser) {
 								<span style={{marginRight: 6}}>Mã nhân viên: </span> {data?.code || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Chức vụ: </span> {data?.role || '---'}
+								<span style={{marginRight: 6}}>Chức vụ: </span> {data?.regency || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -122,7 +120,7 @@ function InfoUser({}: PropsInfoUser) {
 								<span style={{marginRight: 6}}>Họ và tên: </span> {data?.fullname || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Thuộc team: : </span> {data?.teamName ? `Team ${data?.teamName}` : '---'}
+								<span style={{marginRight: 6}}>Thuộc team: : </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -138,7 +136,8 @@ function InfoUser({}: PropsInfoUser) {
 								<span style={{marginRight: 6}}>Số điện thoại: </span> {data?.phone || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Tạo lúc: </span> {data?.timeCreated || '---'}
+								<span style={{marginRight: 6}}>Tạo lúc: </span>{' '}
+								<Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 							</td>
 						</tr>
 						{/* <tr>
