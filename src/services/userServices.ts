@@ -62,13 +62,12 @@ const userServices = {
 			page: number;
 			keyword: string;
 			teamUuid: string | null;
-			username: string;
 			timeCreated: {
 				fromDate: string;
 				toDate: string;
 			} | null;
-			status: number;
-			isHaveAcc: number;
+			status: string | null;
+			isHaveAcc: string | null;
 		},
 		tokenAxios?: any
 	) => {

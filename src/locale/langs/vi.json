@@ -3,11 +3,29 @@
 		"home": "Trang chủ"
 	},
 	"Overview": {
-		"text": "Báo cáo tổng quan",
-		"overview": "Tổng quan",
-		"totalDevice": "Tổng số bộ phát",
-		"totalDeviceOnline": "Số bộ phát đang hoạt động",
-		"totalDeviceNG": "Số bộ phát NG",
-		"longestNGTime": "Khoảng thời gian NG lâu nhất"
+		"tongQuan": "Tổng quan"
+	},
+	"User": {
+		"quanlynhanvien": "Quản lý nhân viên",
+
+		"danhsachnhanvien": "Danh sách nhân viên",
+		"themnhavien": "Thêm nhân viên",
+		"chitietnhanvien": "Chi tiết nhân viên",
+		"suanhanvien": "Sửa nhân viên",
+		"timkiem": "Tìm kiếm theo tên nhân viên, mã nhân viên",
+		"themmoi": "Thêm mới",
+		"STT": "STT",
+		"manhanvien": "Mã nhân viên",
+		"tennhanvien": "Tên nhân viên",
+		"chucvu": "Chức vụ",
+		"thuocteam": "Thuộc team",
+		"taikhoan": "Tài khoản",
+		"trangthai": "Trạng thái",
+		"ngaytao": "Ngày tạo",
+		"tacvu": "Tác vụ",
+		"dacaptaikhoan": "Đã cấp tài khoản",
+		"chuacaptaikhoan": "Chưa cấp tài khoản",
+		"dacap": "Đã cấp",
+		"chuacap": "Chưa cấp"
 	}
 }

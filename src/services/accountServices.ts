@@ -1,6 +1,10 @@
 import axiosClient from '.';
 
+<<<<<<< HEAD
 import {STATUS_GENERAL, } from '~/constants/config/enum';
+=======
+import {STATUS_GENERAL} from '~/constants/config/enum';
+>>>>>>> 5591e4e10f381f2331e786efa7d22afbf98e4ee3
 
 const accountServices = {
 	updateAccount: (
@@ -32,7 +36,7 @@ const accountServices = {
 	},
 
 	accountDetail: (data: {uuid: string}, tokenAxios?: any) => {
-		return axiosClient.post(`Account/account_detail`, data, {
+		return axiosClient.post(`/Account/account_detail`, data, {
 			cancelToken: tokenAxios,
 		});
 	},

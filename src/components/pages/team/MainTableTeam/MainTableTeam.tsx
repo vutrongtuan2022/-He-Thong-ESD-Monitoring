@@ -22,11 +22,11 @@ function MainTableTeam({}: PropsMainTableTeam) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _keyword, _leaderUuid, _status} = router.query;
+	const {_page, _pageSize, _keyword, _leaderUuid, _areaUuid, _status} = router.query;
 
 	const [dataChangeStatus, setDataChangeStatus] = useState<ITeam | null>(null);
 
-	const pageListTeams = useQuery([QUERY_KEY.danh_sach_team, _page, _pageSize, _keyword, _leaderUuid, _status], {
+	const pageListTeams = useQuery([QUERY_KEY.danh_sach_team, _page, _pageSize, _keyword, _leaderUuid, _areaUuid, _status], {
 		queryFn: () =>
 			httpRequest({
 				http: teamServices.pageListTeam({
@@ -35,6 +35,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 					pageSize: Number(_pageSize) || 20,
 					status: _status ? Number(_status) : null,
 					leaderUuid: _leaderUuid ? (_leaderUuid as string) : null,
+					areaUuid: _areaUuid ? (_areaUuid as string) : null,
 				}),
 			}),
 		select(data) {
@@ -58,7 +59,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 		onSuccess(data) {
 			if (data) {
 				setDataChangeStatus(null);
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_team, _page, _pageSize, _keyword, _leaderUuid, _status]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_team, _page, _pageSize, _keyword, _leaderUuid, _areaUuid, _status]);
 			}
 		},
 	});
@@ -83,16 +84,16 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							render: (data: ITeam, index: number) => <>{index + 1}</>,
 						},
 						{
+							title: 'Mã team',
+							render: (data: ITeam) => <>{data.code || '---'}</>,
+						},
+						{
 							title: 'Tên team',
 							render: (data: ITeam) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
 								</Link>
 							),
-						},
-						{
-							title: 'Mã team',
-							render: (data: ITeam) => <>{data.code || '---'}</>,
 						},
 						{
 							title: 'Người quản lý team',
