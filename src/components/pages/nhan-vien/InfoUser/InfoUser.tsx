@@ -16,13 +16,30 @@ import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import Dialog from '~/components/common/Dialog';
 import {toastWarn} from '~/common/funcs/toast';
 import Moment from 'react-moment';
+import Loading from '~/components/common/Loading';
 
 function InfoUser({}: PropsInfoUser) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
+
 	const {_id} = router.query;
+
 	const [data, setData] = useState<IUserDetail>();
 	const [dataChangeStatus, setDataChangeStatus] = useState<IUserDetail | null>(null);
-	const queryClient = useQueryClient();
+
+	useQuery([QUERY_KEY.chi_tiet_nhan_vien, _id], {
+		queryFn: () =>
+			httpRequest({
+				http: userServices.userDetail({
+					uuid: _id as string,
+				}),
+			}),
+		onSuccess(data) {
+			setData(data);
+		},
+		enabled: !!_id,
+	});
+
 	const changeStatusUser = useMutation({
 		mutationFn: () => {
 			return httpRequest({
@@ -42,18 +59,6 @@ function InfoUser({}: PropsInfoUser) {
 			}
 		},
 	});
-	useQuery([QUERY_KEY.chi_tiet_nhan_vien, _id], {
-		queryFn: () =>
-			httpRequest({
-				http: userServices.userDetail({
-					uuid: _id as string,
-				}),
-			}),
-		onSuccess(data) {
-			setData(data);
-		},
-		enabled: !!_id,
-	});
 
 	const handleChangeStatusUser = async () => {
 		if (!dataChangeStatus?.uuid) {
@@ -62,13 +67,9 @@ function InfoUser({}: PropsInfoUser) {
 		return changeStatusUser.mutate();
 	};
 
-	const handleLockButtonClick = () => {
-		if (!data) return;
-		setDataChangeStatus(data);
-	};
-
 	return (
 		<Fragment>
+			<Loading loading={changeStatusUser.isLoading} />
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<Link href={PATH.NhanVien} className={styles.header_title}>
@@ -76,17 +77,25 @@ function InfoUser({}: PropsInfoUser) {
 						<p>Chi tiết nhân viên</p>
 					</Link>
 					<div className={styles.list_btn}>
-						<Button
-							rounded_8
-							w_fit
-							p_6_16
-							danger_opacity={data?.status === STATUS_GENERAL.SU_DUNG}
-							green_opacity={data?.status !== STATUS_GENERAL.SU_DUNG}
-							bold
-							onClick={handleLockButtonClick}
-						>
-							{data?.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
-						</Button>
+						{data?.status == STATUS_GENERAL.SU_DUNG && (
+							<Button
+								className={styles.btn}
+								rounded_8
+								w_fit
+								p_6_16
+								danger_opacity
+								bold
+								onClick={() => setDataChangeStatus(data)}
+							>
+								Khóa
+							</Button>
+						)}
+
+						{data?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
+							<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setDataChangeStatus(data)}>
+								Mở khóa
+							</Button>
+						)}
 						<Button
 							rounded_8
 							w_fit
