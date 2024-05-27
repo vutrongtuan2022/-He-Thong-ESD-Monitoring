@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Image from 'next/image';
-import TippyHeadless from '@tippyjs/react/headless';
-import {Data, Map, PictureFrame, TextalignJustifycenter} from 'iconsax-react';
+import {Data, PictureFrame, TextalignJustifycenter} from 'iconsax-react';
 
 import {PropsMainFactoryArea} from './interfaces';
 import styles from './MainFactoryArea.module.scss';

@@ -6,7 +6,6 @@ import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
 import Form, {Input} from '~/components/common/Form';
 import TextArea from '~/components/common/Form/components/TextArea';
-import {useRouter} from 'next/router';
 import Select, {Option} from '~/components/common/Select';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import categoryServices from '~/services/categoryServices';
@@ -62,6 +61,7 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 				onClose();
 				queryClient.invalidateQueries([QUERY_KEY.danh_sach_khu_vuc]);
 				queryClient.invalidateQueries([QUERY_KEY.thong_so_chung_khu_vuc]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_tree_khu_vuc]);
 			}
 		},
 	});
@@ -122,11 +122,7 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 								uuidArea: e.target.value,
 							}))
 						}
-						label={
-							<span>
-								Thuộc khu vực <span style={{color: 'red'}}>*</span>
-							</span>
-						}
+						label={<span>Thuộc khu vực</span>}
 					>
 						{listAreas?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />

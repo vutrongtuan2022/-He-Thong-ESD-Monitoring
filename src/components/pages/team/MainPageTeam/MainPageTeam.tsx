@@ -43,6 +43,18 @@ function MainPageTeam({}: PropsMainPageTeam) {
 		},
 	});
 
+	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listArea({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
 	const sumTeams = useQuery([QUERY_KEY.thong_so_chung_team], {
 		queryFn: () =>
 			httpRequest({
@@ -55,7 +67,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 
 	useEffect(() => {
 		if (_view == 'tree') {
-			const {_page, _pageSize, _keyword, _leaderUuid, _status, ...rest} = router.query;
+			const {_page, _pageSize, _keyword, _leaderUuid, _areaUuid, _status, ...rest} = router.query;
 
 			router.replace(
 				{
@@ -171,6 +183,17 @@ function MainPageTeam({}: PropsMainPageTeam) {
 									name='Leader'
 									query='_leaderUuid'
 									listFilter={listUsers?.data?.map((v: any) => ({
+										id: v?.uuid,
+										name: v?.name,
+									}))}
+								/>
+							</div>
+							<div className={styles.filter}>
+								<FilterCustom
+									isSearch
+									name='Khu vực'
+									query='_areaUuid'
+									listFilter={listAreas?.data?.map((v: any) => ({
 										id: v?.uuid,
 										name: v?.name,
 									}))}

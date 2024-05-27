@@ -63,7 +63,7 @@ function MainDevice({}: PropsMainDevice) {
 					edS_Static: null,
 					gatewayUuid: '',
 					teamUuid: '',
-					factoryAreaUuid: '',
+					factoryAreaUuid: null,
 					timeLastOnline: null,
 				}),
 			}),

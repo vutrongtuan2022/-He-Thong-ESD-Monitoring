@@ -58,6 +58,28 @@ const areaServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	getTreeArea: (
+		data: {
+			uuid: string | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/FactoryArea/list_factory_tree`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	getChildArea: (
+		data: {
+			pageSize: number;
+			page: number;
+			uuid: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/FactoryArea/page_list_child_area`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default areaServices;

@@ -1,0 +1,140 @@
+$margin-container: 32px;
+
+.container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	& + & {
+		margin-top: $margin-container;
+	}
+
+	&.child {
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			height: 1px;
+			width: 32px;
+			bottom: 11px;
+			left: -32px;
+			background: #888888;
+		}
+	}
+}
+
+.add {
+	cursor: pointer;
+	user-select: none;
+	transition: 0.3s;
+
+	&:hover {
+		opacity: 0.8;
+	}
+
+	&:active {
+		transform: scale(0.9);
+	}
+
+	&.disable {
+		cursor: not-allowed;
+		pointer-events: none;
+		opacity: 0.5;
+	}
+}
+
+.icon {
+	cursor: pointer;
+	user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 0.3s;
+
+	&:hover {
+		opacity: 0.8;
+	}
+
+	&:active {
+		transform: scale(0.9);
+	}
+}
+
+.name {
+	user-select: none;
+	color: #353945;
+	font-size: 16px;
+	font-weight: 600;
+
+	&.active {
+		color: #2d74ff;
+	}
+}
+
+.dash {
+	background-color: #444444;
+	height: 2px;
+	width: 8px;
+}
+
+.totalTeam,
+.totalUser,
+.totalDevice {
+	color: #444444;
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.line {
+	width: 2px;
+	height: 12px;
+	background-color: #b1b5c3;
+}
+
+.teamList {
+	position: relative;
+	padding: $margin-container 0 0 0;
+	margin-bottom: $margin-container;
+	padding-left: 40px;
+
+	&::after {
+		content: '';
+		position: absolute;
+		width: 1px;
+		height: calc(100% - 12px);
+		left: 8px;
+		top: 0;
+		bottom: 0;
+		background: #888888;
+		z-index: 1;
+	}
+
+	&:last-child {
+		position: relative;
+
+		&::before {
+			content: '';
+			position: absolute;
+			width: 1px;
+			height: 100%;
+			left: -32px;
+			top: -11px;
+			bottom: 0;
+			background: #fff;
+			z-index: 10;
+		}
+	}
+}
+
+.loading {
+	width: fit-content;
+	height: fit-content;
+	animation: spinner 0.7s linear infinite;
+}
+
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
