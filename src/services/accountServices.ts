@@ -1,6 +1,6 @@
 import axiosClient from '.';
 
-import {STATUS_GENERAL, STATUS_USER} from '~/constants/config/enum';
+import {STATUS_GENERAL, } from '~/constants/config/enum';
 
 const accountServices = {
 	updateAccount: (
@@ -9,20 +9,6 @@ const accountServices = {
 			roleUuid: string | null;
 			userName: string;
 			status: STATUS_GENERAL;
-
-			// uuid: string | null;
-			// userName: string;
-			// fullname: string;
-			// teamUuid: string;
-			// gender: GENDER;
-			// email: string;
-			// phone: string;
-			// address: string;
-			// birthday: string;
-			// avatar: string;
-			// role: string;
-			// status: STATUS_GENERAL;
-			// code: string;
 		},
 		tokenAxios?: any
 	) => {
@@ -47,6 +33,11 @@ const accountServices = {
 
 	accountDetail: (data: {uuid: string}, tokenAxios?: any) => {
 		return axiosClient.post(`Account/account_detail`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	updateAccountStatus: (data: {uuid: string; status: number}, tokenAxios?: any) => {
+		return axiosClient.post(`/Account/account_user_status`, data, {
 			cancelToken: tokenAxios,
 		});
 	},
