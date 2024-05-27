@@ -6,7 +6,7 @@ import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
-import TableInfor from '../TableInforDetail';
+import InfoUser from '../InfoUser';
 
 function MainDetailUser({}: PropsMainDetailUser) {
 	return (
@@ -33,7 +33,7 @@ function MainDetailUser({}: PropsMainDetailUser) {
 				}
 			/>
 			<WrapperContainer>
-				<TableInfor />
+				<InfoUser />
 			</WrapperContainer>
 		</div>
 	);

@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {IUserDetail, PropsTableInforDetail} from './interfaces';
-import styles from './TableInforDetail.module.scss';
+import {IUserDetail, PropsInfoUser} from './interfaces';
+import styles from './InfoUser.module.scss';
 import {useRouter} from 'next/router';
 import Button from '~/components/common/Button';
 import Image from 'next/image';
@@ -14,10 +14,9 @@ import {PATH} from '~/constants/config';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import Dialog from '~/components/common/Dialog';
-import {IUser} from '../ListUser/interfaces';
 import {toastWarn} from '~/common/funcs/toast';
 
-function TableInforDetail({}: PropsTableInforDetail) {
+function InfoUser({}: PropsInfoUser) {
 	const router = useRouter();
 	const {_id} = router.query;
 	const [data, setData] = useState<IUserDetail>();
@@ -165,4 +164,4 @@ function TableInforDetail({}: PropsTableInforDetail) {
 	);
 }
 
-export default TableInforDetail;
+export default InfoUser;
