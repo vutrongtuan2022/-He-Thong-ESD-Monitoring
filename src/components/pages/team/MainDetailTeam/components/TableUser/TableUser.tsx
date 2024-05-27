@@ -12,7 +12,7 @@ import {QUERY_KEY} from '~/constants/config/enum';
 import {useQuery} from '@tanstack/react-query';
 import {useRouter} from 'next/router';
 import userServices from '~/services/userServices';
-import {IUser} from '~/components/pages/nhan-vien/ListUser/interfaces';
+import {IUser} from '~/components/pages/nhan-vien/MainPageUser/interfaces';
 
 function TableUser({}: PropsTableUser) {
 	const router = useRouter();

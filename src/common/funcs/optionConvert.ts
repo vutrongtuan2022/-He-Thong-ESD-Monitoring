@@ -94,3 +94,28 @@ export function formatTimeHistory(seconds: number) {
 
 	return result;
 }
+
+export function buildTree(data: any[]) {
+	// Tạo một đối tượng để lưu các phần tử theo uuid
+	let nodes: any = {};
+	data?.forEach((item) => {
+		nodes[item.uuid] = {...item, child: []};
+	});
+
+	// Tạo mảng kết quả chứa các phần tử gốc
+	let tree: any = [];
+
+	data?.forEach((item) => {
+		if (item.rootUuid === null) {
+			// Nếu là phần tử gốc thì thêm vào mảng tree
+			tree.push(nodes[item.uuid]);
+		} else {
+			// Nếu không thì thêm vào mảng child của phần tử cha
+			if (nodes[item.parentUuid]) {
+				nodes[item.parentUuid].child.push(nodes[item.uuid]);
+			}
+		}
+	});
+
+	return tree;
+}

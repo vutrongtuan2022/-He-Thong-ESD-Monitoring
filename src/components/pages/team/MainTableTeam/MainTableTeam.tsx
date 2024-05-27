@@ -83,16 +83,16 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							render: (data: ITeam, index: number) => <>{index + 1}</>,
 						},
 						{
+							title: 'Mã team',
+							render: (data: ITeam) => <>{data.code || '---'}</>,
+						},
+						{
 							title: 'Tên team',
 							render: (data: ITeam) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
 								</Link>
 							),
-						},
-						{
-							title: 'Mã team',
-							render: (data: ITeam) => <>{data.code || '---'}</>,
 						},
 						{
 							title: 'Người quản lý team',
