@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Lock} from 'iconsax-react';
+import {Lock1, Unlock} from 'iconsax-react';
 
 import {IArea, PropsTableArea} from './interfaces';
 import styles from './TableArea.module.scss';
@@ -162,8 +162,8 @@ function TableArea({}: PropsTableArea) {
 
 									<IconCustom
 										warn
-										icon={<Lock size='22' />}
-										tooltip='Khóa'
+										icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
+										tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
 										color='#777E90'
 										onClick={() => setDataChangeStatus(data)}
 									/>

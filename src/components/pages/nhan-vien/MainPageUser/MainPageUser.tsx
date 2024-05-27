@@ -31,7 +31,6 @@ import Search from '~/components/common/Search';
 import Link from 'next/link';
 import Loading from '~/components/common/Loading';
 import Moment from 'react-moment';
-import {Lock} from 'iconsax-react';
 import ImportExcel from '~/components/common/ImportExcel';
 import i18n from '~/locale/i18n';
 
@@ -395,7 +394,6 @@ function MainPageUser({}: PropsMainPageUser) {
 														router.push(`/nhan-vien/chinh-sua?_id=${data.uuid}`);
 													}}
 												/>
-
 												<IconCustom
 													warn
 													icon={

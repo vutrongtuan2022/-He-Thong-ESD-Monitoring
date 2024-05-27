@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {IFormUpdate, PropsMainUpdateUser} from './interfaces';
 import styles from './MainUpdateUser.module.scss';
 import Button from '~/components/common/Button';
@@ -9,9 +9,9 @@ import {PATH} from '~/constants/config';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import DatePicker from '~/components/common/DatePicker';
-import {GENDER, QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
+import {GENDER, QUERY_KEY} from '~/constants/config/enum';
 import {useRouter} from 'next/router';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import categoryServices from '~/services/categoryServices';
 import userServices from '~/services/userServices';
@@ -49,7 +49,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 			setForm({
 				fullname: data?.fullname || '',
 				teamUuid: data?.teamUuid || '',
-				gender: data?.gender === 1 ? GENDER.NU : GENDER.NAM, // 1 is female, 0 is male
+				gender: data?.gender == 1 ? GENDER.NU : GENDER.NAM,
 				email: data?.email || '',
 				phone: data?.phone || '',
 				address: data?.address || '',
