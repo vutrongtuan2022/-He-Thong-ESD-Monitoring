@@ -15,7 +15,7 @@ const userServices = {
 			address: string;
 			birthday: string;
 			avatar: string;
-			role: string;
+			regencyUuid: string;
 			status: STATUS_GENERAL;
 			code: string;
 		},
@@ -37,6 +37,7 @@ const userServices = {
 				toDate: string | null;
 			} | null;
 			status: string | null;
+			isHaveAcc: string | null;
 		},
 		tokenAxios?: any
 	) => {
@@ -67,6 +68,7 @@ const userServices = {
 				toDate: string;
 			} | null;
 			status: number;
+			isHaveAcc: number;
 		},
 		tokenAxios?: any
 	) => {

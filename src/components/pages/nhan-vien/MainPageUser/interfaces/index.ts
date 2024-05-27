@@ -19,4 +19,5 @@ export interface IUser {
 	timeCreated: string;
 	userid: string | null;
 	leadName: string | null;
+	_isHaveAcc: number;
 }

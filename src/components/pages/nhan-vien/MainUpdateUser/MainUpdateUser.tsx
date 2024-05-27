@@ -33,7 +33,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 		address: '',
 		birthday: '',
 		code: '',
-		roleId: '',
+		regencyUuid: '',
 	};
 
 	const [form, setForm] = useState<IFormUpdate>(initForm);
@@ -49,13 +49,13 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 			setForm({
 				fullname: data?.fullname || '',
 				teamUuid: data?.teamUuid || '',
-				gender: data?.gender || '',
+				gender: data?.gender === 1 ? GENDER.NU : GENDER.NAM, // 1 is female, 0 is male
 				email: data?.email || '',
 				phone: data?.phone || '',
 				address: data?.address || '',
 				birthday: data?.birthday || '',
 				code: data?.code || '',
-				roleId: data?.roleId || '',
+				regencyUuid: data?.regencyUuid || '',
 			});
 		},
 		enabled: !!_id,
@@ -99,7 +99,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 					birthday: moment(form.birthday).format('YYYY-MM-DD'),
 					phone: form.phone,
 					gender: form.gender,
-					role: form.roleId,
+					regencyUuid: form.regencyUuid,
 					code: form.code,
 					teamUuid: form.teamUuid,
 					userName: detailUser?.data?.userName,
@@ -134,7 +134,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 		if (!form.phone) {
 			return toastWarn({msg: 'Vui lòng nhập số điện thoại!'});
 		}
-		if (!form.roleId) {
+		if (!form.regencyUuid) {
 			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
 		}
 		if (!form.birthday) {
@@ -170,6 +170,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 				]}
 			/>
 			<WrapperContainer>
+				<Loading loading={upsertUser.isLoading} />
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<div className={styles.left}>
@@ -241,13 +242,13 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 								<div>
 									<Select
 										isSearch
-										name='role'
-										value={form.roleId || null}
+										name='regencyUuid'
+										value={form.regencyUuid || null}
 										placeholder='Lựa chọn'
 										onChange={(e) =>
 											setForm((prev) => ({
 												...prev,
-												roleId: e.target.value,
+												regencyUuid: e.target.value,
 											}))
 										}
 										label={
@@ -257,7 +258,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 										}
 									>
 										{listRoles?.data?.map((v: any) => (
-											<Option key={v?.uuid} title={v?.name} value={v?.name} />
+											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 										))}
 									</Select>
 								</div>

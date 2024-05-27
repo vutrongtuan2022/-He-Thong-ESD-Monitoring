@@ -32,7 +32,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 		address: '',
 		birthday: '',
 		code: '',
-		roleId: '',
+		regencyUuid: '',
 	};
 
 	const [form, setForm] = useState<IForm>(initForm);
@@ -77,7 +77,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 					birthday: moment(form.birthday).format('YYYY-MM-DD'),
 					phone: form.phone,
 					gender: form.gender,
-					role: form.roleId,
+					regencyUuid: form.regencyUuid,
 					code: form.code,
 					teamUuid: form.teamUuid,
 					status: STATUS_GENERAL.SU_DUNG,
@@ -107,7 +107,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 		if (!form.phone) {
 			return toastWarn({msg: 'Vui lòng nhập số điện thoại!'});
 		}
-		if (!form.roleId) {
+		if (!form.regencyUuid) {
 			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
 		}
 		if (!form.birthday) {
@@ -214,13 +214,13 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 								<div>
 									<Select
 										isSearch
-										name='role'
-										value={form.roleId || null}
+										name='regencyUuid'
+										value={form.regencyUuid || null}
 										placeholder='Lựa chọn'
 										onChange={(e) =>
 											setForm((prev) => ({
 												...prev,
-												roleId: e.target.value,
+												regencyUuid: e.target.value,
 											}))
 										}
 										label={
@@ -230,7 +230,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										}
 									>
 										{listRoles?.data?.map((v: any) => (
-											<Option key={v?.uuid} title={v?.name} value={v?.name} />
+											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 										))}
 									</Select>
 								</div>
