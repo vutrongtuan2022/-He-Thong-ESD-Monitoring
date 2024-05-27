@@ -9,8 +9,8 @@ import Select, {Option} from '~/components/common/Select';
 import AvatarChange from '~/components/common/AvatarChange';
 
 function PopupCreateAccount({onClose}: PropsPopupCreateAccount) {
-	const [keyword, setKeyword] = useState<string>('');
 	const [form, setForm] = useState<any>({code: '', name: '', description: ''});
+
 	const handleSubmit = () => {
 		console.log(form);
 	};
@@ -49,10 +49,6 @@ function PopupCreateAccount({onClose}: PropsPopupCreateAccount) {
 						<Option title='Nhân viên 3' value={3} />
 					</Select>
 				</div>
-
-				{/* <div className={clsx('mt')}>
-					<TextArea placeholder='Nhập ghi chú' name='description' label={<span>Ghi chú</span>} blur />
-				</div> */}
 
 				<div className={styles.btn}>
 					<div>

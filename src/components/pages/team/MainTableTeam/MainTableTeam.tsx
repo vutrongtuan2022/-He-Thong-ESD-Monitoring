@@ -14,7 +14,7 @@ import {useRouter} from 'next/router';
 import Pagination from '~/components/common/Pagination';
 import IconCustom from '~/components/common/IconCustom';
 import {LuPencil} from 'react-icons/lu';
-import {Lock} from 'iconsax-react';
+import {Lock1, Unlock} from 'iconsax-react';
 import Dialog from '~/components/common/Dialog';
 import Loading from '~/components/common/Loading';
 
@@ -136,11 +136,10 @@ function MainTableTeam({}: PropsMainTableTeam) {
 										color='#777E90'
 										href={`/team/chinh-sua?_id=${data.uuid}`}
 									/>
-
 									<IconCustom
 										warn
-										icon={<Lock size='22' />}
-										tooltip='Khóa'
+										icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
+										tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
 										color='#777E90'
 										onClick={() => setDataChangeStatus(data)}
 									/>

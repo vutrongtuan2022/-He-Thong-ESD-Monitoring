@@ -8,7 +8,7 @@ import Noti from '~/components/common/DataWrapper/components/Noti';
 import Table from '~/components/common/Table';
 import Pagination from '~/components/common/Pagination';
 import {useRouter} from 'next/router';
-import {Lock} from 'iconsax-react';
+import {Lock1, Unlock} from 'iconsax-react';
 import Link from 'next/link';
 import Dialog from '~/components/common/Dialog';
 import {QUERY_KEY, STATE_GATEWAY, STATUS_GENERAL} from '~/constants/config/enum';
@@ -215,8 +215,8 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 
 										<IconCustom
 											warn
-											icon={<Lock size='22' />}
-											tooltip='Khóa'
+											icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
+											tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
 											color='#777E90'
 											onClick={() => setDataChange(data)}
 										/>
