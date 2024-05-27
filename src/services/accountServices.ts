@@ -1,10 +1,6 @@
 import axiosClient from '.';
 
-<<<<<<< HEAD
-import {STATUS_GENERAL, } from '~/constants/config/enum';
-=======
 import {STATUS_GENERAL} from '~/constants/config/enum';
->>>>>>> 5591e4e10f381f2331e786efa7d22afbf98e4ee3
 
 const accountServices = {
 	updateAccount: (

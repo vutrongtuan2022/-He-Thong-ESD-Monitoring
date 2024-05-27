@@ -27,13 +27,10 @@ export enum QUERY_KEY {
 	chi_tiet_nhan_vien,
 	danh_sach_tai_khoan,
 	chinh_sua_nhan_vien,
-<<<<<<< HEAD
 	chi_tiet_tai_khoan,
-=======
 	danh_sach_khu_vuc,
 	danh_sach_khu_vuc_con,
 	chi_tiet_khu_vuc,
->>>>>>> 5591e4e10f381f2331e786efa7d22afbf98e4ee3
 }
 
 export enum TYPE_DATE {
@@ -89,12 +86,6 @@ export enum STATUS_ACCOUNT {
 	NOACCOUNT,
 	HAVEACCOUNT,
 }
-<<<<<<< HEAD
-// export enum STATUS_ONLINE_ACCOUNT {
-// 	HOAT_DONG,
-// 	DANG_KHOA,
-// }
-=======
 
 export enum TYPE_VALUE_TABLE_DROPDOWN {
 	'string',
@@ -102,4 +93,3 @@ export enum TYPE_VALUE_TABLE_DROPDOWN {
 	'number',
 	'status',
 }
->>>>>>> 5591e4e10f381f2331e786efa7d22afbf98e4ee3
