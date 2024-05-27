@@ -27,6 +27,7 @@ export enum QUERY_KEY {
 	chi_tiet_nhan_vien,
 	danh_sach_tai_khoan,
 	chinh_sua_nhan_vien,
+	chi_tiet_tai_khoan,
 	danh_sach_khu_vuc,
 	danh_sach_khu_vuc_con,
 	chi_tiet_khu_vuc,

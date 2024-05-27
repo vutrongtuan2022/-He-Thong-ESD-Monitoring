@@ -36,6 +36,11 @@ const accountServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	updateAccountStatus: (data: {uuid: string; status: number}, tokenAxios?: any) => {
+		return axiosClient.post(`/Account/account_user_status`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default accountServices;

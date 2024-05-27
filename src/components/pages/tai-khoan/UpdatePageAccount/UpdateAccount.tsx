@@ -6,14 +6,8 @@ import Form, {Input} from '~/components/common/Form';
 import clsx from 'clsx';
 import Select, {Option} from '~/components/common/Select';
 import {PATH} from '~/constants/config';
-import {BsThreeDots} from 'react-icons/bs';
 import Breadcrumb from '~/components/common/Breadcrumb';
-import Image from 'next/image';
-import icons from '~/constants/images/icons';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
-import Popup from '~/components/common/Popup';
-import {IoClose} from 'react-icons/io5';
-import {IoMdAddCircle} from 'react-icons/io';
 import {GENDER} from '~/constants/config/enum';
 import DatePicker from '~/components/common/DatePicker';
 import AvatarChange from '~/components/common/AvatarChange';
@@ -145,25 +139,6 @@ const UpdateAccount = ({}: PropsUpdateAccount) => {
 												/>
 												<label className={styles.input_lable} htmlFor='female'>
 													Nữ
-												</label>
-											</div>
-											<div className={styles.item_radio}>
-												<input
-													id='other'
-													className={styles.input_radio}
-													type='radio'
-													name='gender'
-													value={form.gender}
-													checked={form.gender == GENDER.KHAC}
-													onChange={(e) =>
-														setForm((prev: any) => ({
-															...prev,
-															gender: GENDER.KHAC,
-														}))
-													}
-												/>
-												<label className={styles.input_lable} htmlFor='other'>
-													Khác
 												</label>
 											</div>
 										</div>

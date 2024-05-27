@@ -2,20 +2,19 @@ export interface PropsMainPageAccount {}
 export interface IAccount {
 	uuid: string;
 	userUuid: string | null;
+	fullName: string| null;
+	regency: string| null;
+	gender: number;
 	userName: string | null;
 	roleUuid: string | null;
 	timeCreated: string;
 	status: number;
 	email: string | null;
+	phone: string;
+	address:string;
+	birthday: string;
+	avatar: string| null;
+	code: string| null,
 
-	// macNumber: string;
-	// name: string;
-	// gatewayUuid: string | null;
-	// teamUuid: string | null;
-	// battery: number;
-	// state: number | null;
-	// signalStatus: number | null;
-	// edsStatic: any;
-	// ngStatus: null;
-	// timeLastOnline: string;
+	
 }
