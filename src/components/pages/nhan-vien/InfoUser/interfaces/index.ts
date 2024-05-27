@@ -11,7 +11,8 @@ export interface IUserDetail {
 	address: string | null;
 	birthday: '2024-05-22';
 	avatar: string | null;
-	role: string | null;
+	regencyUuid: string | null;
+	regency: string | null;
 	status: number;
 	leadName: string | null;
 	code: string | null;

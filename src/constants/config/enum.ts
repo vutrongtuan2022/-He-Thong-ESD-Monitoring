@@ -74,9 +74,9 @@ export enum STATE_GATEWAY {
 	ONLINE,
 }
 
-export enum STATUS_USER {
-	HAVEACCOUNT = '1',
-	NOACCOUNT = '0',
+export enum STATUS_ACCOUNT {
+	NOACCOUNT,
+	HAVEACCOUNT,
 }
 // export enum STATE_ONLINE_ACCOUNT {
 // 	HOAT_DONG,

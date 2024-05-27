@@ -7,7 +7,7 @@ export interface IForm {
 	fullname: string;
 	email: string;
 	phone: string;
-	roleId: string;
+	regencyUuid: string;
 	birthday: string;
 	gender: GENDER;
 	teamUuid: string;
