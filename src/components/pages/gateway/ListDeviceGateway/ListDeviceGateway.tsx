@@ -55,7 +55,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 					battery: null,
 					edS_Static: null,
 					teamUuid: '',
-					factoryAreaUuid: '',
+					factoryAreaUuid: null,
 					timeLastOnline: null,
 				}),
 			}),

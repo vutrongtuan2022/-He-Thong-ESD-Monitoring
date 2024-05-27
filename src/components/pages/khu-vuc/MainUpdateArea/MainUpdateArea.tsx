@@ -83,8 +83,10 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 			if (data) {
 				setForm({name: '', code: '', uuidArea: '', address: '', note: ''});
 				onClose();
+				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_khu_vuc]);
 				queryClient.invalidateQueries([QUERY_KEY.danh_sach_khu_vuc]);
 				queryClient.invalidateQueries([QUERY_KEY.thong_so_chung_khu_vuc]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_tree_khu_vuc]);
 			}
 		},
 	});
@@ -144,11 +146,7 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 								uuidArea: e.target.value,
 							}))
 						}
-						label={
-							<span>
-								Thuộc khu vực <span style={{color: 'red'}}>*</span>
-							</span>
-						}
+						label={<span>Thuộc khu vực</span>}
 					>
 						{listAreas?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />

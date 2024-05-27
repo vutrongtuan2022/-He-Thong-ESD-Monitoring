@@ -198,7 +198,7 @@ function TableArea({}: PropsTableArea) {
 
 					router.replace(
 						{
-							pathname: PATH.KhuVuc,
+							pathname: router.pathname,
 							query: {
 								...rest,
 							},
@@ -217,7 +217,7 @@ function TableArea({}: PropsTableArea) {
 
 						router.replace(
 							{
-								pathname: PATH.KhuVuc,
+								pathname: router.pathname,
 								query: {
 									...rest,
 								},

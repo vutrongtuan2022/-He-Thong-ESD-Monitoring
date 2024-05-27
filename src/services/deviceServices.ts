@@ -60,7 +60,7 @@ const deviceServices = {
 				toDate: string;
 			} | null;
 			gatewayUuid?: string | null;
-			teamUuid?: string;
+			teamUuid?: string | null;
 			factoryAreaUuid?: string | null;
 		},
 		tokenAxios?: any

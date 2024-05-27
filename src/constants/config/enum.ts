@@ -7,7 +7,9 @@ export enum QUERY_KEY {
 	dropdown_danh_sach_chuc_vu,
 	danh_sach_team,
 	danh_sach_tree_team,
+	danh_sach_tree_khu_vuc,
 	danh_sach_team_con,
+	danh_sach_team_khu_vuc,
 	chi_tiet_team,
 	danh_sach_bo_phat,
 	chi_tiet_bo_phat,
@@ -17,6 +19,7 @@ export enum QUERY_KEY {
 	danh_sach_nhan_vien,
 	danh_sach_nhan_vien_team,
 	danh_sach_bo_phat_team,
+	danh_sach_bo_phat_khu_vuc,
 	danh_sach_lich_su_team,
 	thong_so_chung_team,
 	thong_so_chung_khu_vuc,
@@ -25,6 +28,7 @@ export enum QUERY_KEY {
 	danh_sach_tai_khoan,
 	chinh_sua_nhan_vien,
 	danh_sach_khu_vuc,
+	danh_sach_khu_vuc_con,
 	chi_tiet_khu_vuc,
 }
 

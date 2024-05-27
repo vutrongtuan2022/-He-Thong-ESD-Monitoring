@@ -30,6 +30,7 @@ function TableUser({}: PropsTableUser) {
 					status: null,
 					username: null,
 					timeCreated: null,
+					isHaveAcc: null,
 				}),
 			}),
 		select(data) {
