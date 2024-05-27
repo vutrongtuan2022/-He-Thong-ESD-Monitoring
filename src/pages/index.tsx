@@ -19,5 +19,5 @@ export default function Home() {
 }
 
 Home.getLayout = function (Page: ReactElement) {
-	return <BaseLayout title={i18n.t('Overview.text')}>{Page}</BaseLayout>;
+	return <BaseLayout title={i18n.t('Overview.tongQuan')}>{Page}</BaseLayout>;
 };
