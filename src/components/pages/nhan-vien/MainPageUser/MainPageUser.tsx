@@ -20,7 +20,7 @@ import PopupCreate from '../PopupCreateAccount';
 import Dialog from '~/components/common/Dialog';
 import Pagination from '~/components/common/Pagination';
 import IconCustom from '~/components/common/IconCustom';
-import {UserCirlceAdd} from 'iconsax-react';
+import {Lock1, Unlock, UserCirlceAdd} from 'iconsax-react';
 import DataWrapper from '~/components/common/DataWrapper';
 import {LuPencil} from 'react-icons/lu';
 import clsx from 'clsx';
@@ -33,6 +33,7 @@ import Loading from '~/components/common/Loading';
 import Moment from 'react-moment';
 import {Lock} from 'iconsax-react';
 import ImportExcel from '~/components/common/ImportExcel';
+import i18n from '~/locale/i18n';
 
 function MainPageUser({}: PropsMainPageUser) {
 	const router = useRouter();
@@ -103,9 +104,8 @@ function MainPageUser({}: PropsMainPageUser) {
 					pageSize: Number(_pageSize) || 20,
 					page: Number(_page) || 1,
 					keyword: (_keyword as string) || '',
-					status: STATUS_GENERAL.SU_DUNG,
-					isHaveAcc: STATUS_ACCOUNT.HAVEACCOUNT,
-					username: (_username as string) || '',
+					status: _status as string,
+					isHaveAcc: _isHaveAcc as string,
 					teamUuid: null,
 					timeCreated: null,
 				}),
@@ -174,7 +174,7 @@ function MainPageUser({}: PropsMainPageUser) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 					},
 					{
 						path: '',
@@ -398,8 +398,10 @@ function MainPageUser({}: PropsMainPageUser) {
 
 												<IconCustom
 													warn
-													icon={<Lock size='22' />}
-													tooltip='Khóa'
+													icon={
+														data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />
+													}
+													tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
 												/>
