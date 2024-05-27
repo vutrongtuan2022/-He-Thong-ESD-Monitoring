@@ -8,15 +8,14 @@ import {FaUserGroup} from 'react-icons/fa6';
 import {GiPerson} from 'react-icons/gi';
 import {FaChromecast, FaMinusCircle} from 'react-icons/fa';
 import Tippy from '@tippyjs/react';
-import {CgFileDocument} from 'react-icons/cg';
-import {MdModeEdit} from 'react-icons/md';
 import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEY} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import teamServices from '~/services/teamServices';
 import clsx from 'clsx';
-import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 import Link from 'next/link';
+import {Eye} from 'iconsax-react';
+import {LuPencil} from 'react-icons/lu';
 
 function TreeTeam({team, level}: PropsTreeTeam) {
 	const [open, setOpen] = useState<boolean>(false);
@@ -84,13 +83,13 @@ function TreeTeam({team, level}: PropsTreeTeam) {
 				<div className={styles.line}></div>
 				<Tippy content='Xem chi tiết'>
 					<Link href={`/team/${team.uuid}`} className={styles.icon}>
-						<CgFileDocument size={20} color='#777E90' />
+						<Eye size={20} color='#777E90' />
 					</Link>
 				</Tippy>
 				<div className={styles.line}></div>
 				<Tippy content='Chỉnh sửa'>
 					<Link href={`/team/chinh-sua?_id=${team.uuid}`} className={styles.icon}>
-						<MdModeEdit size={20} color='#777E90' />
+						<LuPencil size={20} color='#777E90' />
 					</Link>
 				</Tippy>
 			</div>

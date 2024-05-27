@@ -19,10 +19,13 @@ export enum QUERY_KEY {
 	danh_sach_bo_phat_team,
 	danh_sach_lich_su_team,
 	thong_so_chung_team,
+	thong_so_chung_khu_vuc,
 	trang_chu_tong_quan,
 	chi_tiet_nhan_vien,
 	danh_sach_tai_khoan,
 	chinh_sua_nhan_vien,
+	danh_sach_khu_vuc,
+	chi_tiet_khu_vuc,
 }
 
 export enum TYPE_DATE {
@@ -78,7 +81,10 @@ export enum STATUS_USER {
 	HAVEACCOUNT = '1',
 	NOACCOUNT = '0',
 }
-// export enum STATE_ONLINE_ACCOUNT {
-// 	HOAT_DONG,
-// 	DANG_KHOA,
-// }
+
+export enum TYPE_VALUE_TABLE_DROPDOWN {
+	'string',
+	'date',
+	'number',
+	'status',
+}

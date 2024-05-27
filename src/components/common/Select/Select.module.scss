@@ -54,12 +54,13 @@ $font-size: 16px;
 	border-radius: $border-radius;
 	cursor: pointer;
 	background-color: $bg;
-	font-weight: 500;
+	font-weight: 600;
 
 	.text {
 		margin: 0;
 
 		&.placeholder {
+			font-weight: 500;
 			color: $color-placeholder;
 		}
 	}
