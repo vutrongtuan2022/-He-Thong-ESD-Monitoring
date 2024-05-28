@@ -95,6 +95,9 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 	});
 
 	const handleSubmit = async () => {
+		const today = moment().startOf('day');
+		const selectedDate = moment(form.birthday).startOf('day');
+
 		if (!form.code) {
 			return toastWarn({msg: 'Vui lòng nhập mã nhân viên!'});
 		}
@@ -118,6 +121,9 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 		}
 		if (!isEmail(form.email)) {
 			return toastWarn({msg: 'Email không đúng định dạng!'});
+		}
+		if (selectedDate.isAfter(today)) {
+			return toastWarn({msg: 'Ngày sinh không hợp lệ!'});
 		}
 
 		return upsertUser.mutate();
