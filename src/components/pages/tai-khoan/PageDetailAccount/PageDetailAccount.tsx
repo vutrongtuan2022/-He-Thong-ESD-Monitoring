@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {IAccDetail, PropsPageDetailAccount} from './interfaces';
+import {IAccountDetail, PropsPageDetailAccount} from './interfaces';
 import styles from './PageDetailAccount.module.scss';
 import Link from 'next/link';
 import {IoArrowBackOutline} from 'react-icons/io5';
@@ -19,14 +19,33 @@ import {httpRequest} from '~/services';
 import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import Dialog from '~/components/common/Dialog';
 import Button from '~/components/common/Button';
+import Moment from 'react-moment';
+import Loading from '~/components/common/Loading';
 
 const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 	const router = useRouter();
-	const {_id} = router.query;
-	const [data, setData] = useState<IAccDetail>();
-	const [dataChangeStatus, setDataChangeStatus] = useState<IAccDetail | null>(null);
 	const queryClient = useQueryClient();
-	const changeStatusUser = useMutation({
+
+	const {_id} = router.query;
+
+	const [dataDetailAccount, setDataDetailAccount] = useState<IAccountDetail>();
+
+	const [dataChangeStatus, setDataChangeStatus] = useState<IAccountDetail | null>(null);
+
+	useQuery([QUERY_KEY.chi_tiet_tai_khoan, _id], {
+		queryFn: () =>
+			httpRequest({
+				http: accountServices.accountDetail({
+					uuid: _id as string,
+				}),
+			}),
+		onSuccess(data) {
+			setDataDetailAccount(data);
+		},
+		enabled: !!_id,
+	});
+
+	const changeStatusAccount = useMutation({
 		mutationFn: () => {
 			return httpRequest({
 				showMessageFailed: true,
@@ -45,30 +64,14 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 			}
 		},
 	});
-	useQuery([QUERY_KEY.chi_tiet_nhan_vien, _id], {
-		queryFn: () =>
-			httpRequest({
-				http: accountServices.accountDetail({
-					uuid: _id as string,
-				}),
-			}),
-		onSuccess(data) {
-			setData(data);
-		},
-		enabled: !!_id,
-	});
 
-	const handleChangeStatusUser = async () => {
+	const handleChangeStatusAccount = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy taif khoan!'});
+			return toastWarn({msg: 'Không tìm thấy tài khoản!'});
 		}
-		return changeStatusUser.mutate();
+		return changeStatusAccount.mutate();
 	};
 
-	const handleLockButtonClick = () => {
-		if (!data) return;
-		setDataChangeStatus(data);
-	};
 	return (
 		<div className={styles.containerPage}>
 			<Breadcrumb
@@ -88,119 +91,151 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 				]}
 			/>
 			<WrapperContainer>
-				<div className={styles.main_page}>
+				<Loading loading={changeStatusAccount.isLoading} />
+				<div className={styles.container}>
 					<div className={styles.header}>
 						<Link href={PATH.TaiKhoan} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
-							<p>Chi tiết nhân viên</p>
+							<p>Chi tiết tài khoản</p>
 						</Link>
-
 						<div className={styles.list_btn}>
+							{dataDetailAccount?.status == STATUS_GENERAL.SU_DUNG && (
+								<Button
+									className={styles.btn}
+									rounded_8
+									w_fit
+									p_6_16
+									danger_opacity
+									bold
+									onClick={() => setDataChangeStatus(dataDetailAccount)}
+								>
+									Khóa
+								</Button>
+							)}
+
+							{dataDetailAccount?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
+								<Button
+									className={styles.btn}
+									rounded_8
+									w_fit
+									p_6_16
+									green
+									bold
+									onClick={() => setDataChangeStatus(dataDetailAccount)}
+								>
+									Mở khóa
+								</Button>
+							)}
 							<Button
 								rounded_8
 								w_fit
 								p_6_16
-								danger_opacity={data?.status === STATUS_GENERAL.SU_DUNG}
-								green_opacity={data?.status !== STATUS_GENERAL.SU_DUNG}
+								blue_light
 								bold
-								onClick={handleLockButtonClick}
+								onClick={() => {
+									router.push(`/tai-khoan/chinh-sua?_id=${_id}`);
+								}}
 							>
-								{data?.status === STATUS_GENERAL.SU_DUNG ? 'Khóa lại' : 'Mở khóa'}
+								Chỉnh sửa
 							</Button>
-							<div className={styles.btn_HiDots}>
-								<HiDotsHorizontal color='#23262F' fontSize={20} fontWeight={1000} />
-							</div>
 						</div>
 					</div>
-					<Avatar src={''} className={styles.avatar} />
-					<div className={clsx('mt')}>
-						<table className={styles.container}>
+
+					<div className={clsx('mt', styles.table)}>
+						<div className={'mb'}>
+							<Avatar src={''} className={styles.avatar} />
+						</div>
+						<table className={styles.containertable}>
 							<colgroup>
 								<col style={{width: '50%'}} />
 								<col style={{width: '50%'}} />
 							</colgroup>
 							<tr>
 								<td>
-									<span>Mã nhân viên: </span>
-									{data?.code || '---'}
+									<span style={{marginRight: 6}}>Mã nhân viên: </span>
+									{dataDetailAccount?.code || '---'}
 								</td>
 								<td>
-									<span>Trạng thái: </span>
+									<span style={{marginRight: 6}}>
+										Trạng thái:{' '}
+										<span>
+											{dataDetailAccount?.status == STATUS_GENERAL.SU_DUNG ? (
+												<span style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</span>
+											) : dataDetailAccount?.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
+												<span style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</span>
+											) : (
+												'---'
+											)}
+										</span>
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span style={{marginRight: 6}}>Chức vụ: </span> <span>{dataDetailAccount?.regency || '---'}</span>
+								</td>
+								<td>
+									<span style={{marginRight: 6}}>Vai trò: </span>
+									{dataDetailAccount?.roleName || '---'}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span style={{marginRight: 6}}>Email: </span> <span>{dataDetailAccount?.email || '---'}</span>
+								</td>
+								<td>
+									<span style={{marginRight: 6}}>Thuộc team:</span> <span>{dataDetailAccount?.teamName || '---'}</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span style={{marginRight: 6}}>Số điện thoại: </span>
+									{dataDetailAccount?.phone || '---'}
+								</td>
+								<td>
+									<span style={{marginRight: 6}}>Người quản lý:</span>{' '}
+									<span>{dataDetailAccount?.teamLeader || '---'}</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span style={{marginRight: 6}}>Ngày sinh: </span>
 									<span>
-										{data?.status === STATUS_GENERAL.SU_DUNG ? (
-											<p style={{color: '#35C244', fontWeight: 600}}>Hoạt động</p>
-										) : data?.status === STATUS_GENERAL.KHONG_SU_DUNG ? (
-											<p style={{color: '#E85A5A', fontWeight: 600}}>Đang khóa</p>
+										<Moment date={dataDetailAccount?.birthday} format='DD/MM/YYYY' />
+									</span>
+								</td>
+								<td>
+									<span style={{marginRight: 6}}>Người tạo: </span>
+									<span>{dataDetailAccount?.userCreated || '---'}</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span style={{marginRight: 6}}>Địa chỉ: </span> <span>{dataDetailAccount?.address || '---'}</span>
+								</td>
+								<td>
+									<span style={{marginRight: 6}}>Cập nhật cuối: </span>
+									<span>
+										{dataDetailAccount?.timeCreated ? (
+											<Moment date={dataDetailAccount?.timeCreated} format='DD/MM/YYYY' />
 										) : (
 											'---'
 										)}
 									</span>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<span>Chức vụ: </span> <span style={{color: 'var(--primary)'}}>{data?.regency || '---'}</span>
-								</td>
-								<td>
-									<span>Vai trò: </span>
-									{data?.roleUuid || '---'}
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span>Email: </span> <span style={{color: 'var(--primary)'}}>{data?.email || '---'}</span>
-								</td>
-								<td>
-									<span>Thuộc team:</span> N/A
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span>Số điện thoại: </span>
-									{data?.phone || '---'}
-								</td>
-								<td>
-									<span>Người quản lý:</span> Nguyễn Dương
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span>Ngày sinh: </span>08/08/1992
-								</td>
-								<td>
-									<span>Người tạo: </span>
-									Minh Vũ
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span>Số căn cước: </span>1434234231
-								</td>
-								<td>
-									<span>Tạo lúc: </span>
-									{data?.birthday || '---'}
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span>Địa chỉ: </span>SN 34, 12Tân Mai, Hoàng Mai, Hà Nội, Việt Nam
-								</td>
-								<td>
-									<span>Cập nhật cuối: </span>
-									{data?.timeCreated || '---'}
-								</td>
-							</tr>
 						</table>
 					</div>
-					<Dialog
-						warn
-						open={!!dataChangeStatus}
-						onClose={() => setDataChangeStatus(null)}
-						title='Chuyển trạng thái'
-						note='Bạn có chắc chắn chuyển trạng thái cho nhân viên này?'
-						onSubmit={handleChangeStatusUser}
-					/>
 				</div>
+
+				<Dialog
+					warn
+					open={!!dataChangeStatus}
+					onClose={() => setDataChangeStatus(null)}
+					title='Chuyển trạng thái'
+					note='Bạn có chắc chắn chuyển trạng thái cho tài khoản này?'
+					onSubmit={handleChangeStatusAccount}
+				/>
 			</WrapperContainer>
 		</div>
 	);

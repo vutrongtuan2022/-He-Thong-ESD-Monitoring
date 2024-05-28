@@ -27,6 +27,7 @@ import vietnam from '../../../public/static/images/vietname.svg';
 import icon_en from '../../../public/static/images/icon_en.svg';
 import icon_table_empty from '../../../public/static/images/icon_table_empty.png';
 import icon_lock from '../../../public/static/images/Lock1-Linear-32px.svg';
+import placeholder from '../../../public/static/images/placeholder-img.jpeg';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -59,4 +60,5 @@ export default {
 	icon_en,
 	icon_table_empty,
 	icon_lock,
+	placeholder,
 };

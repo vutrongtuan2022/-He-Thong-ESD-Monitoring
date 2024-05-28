@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 
 import {PropsAvatarChange} from './interfaces';
 import styles from './AvatarChange.module.scss';
-import ImageFill from '../ImageFill';
 import icons from '~/constants/images/icons';
 import {MAXIMUM_FILE} from '~/constants/config';
 import {toastError, toastWarn} from '~/common/funcs/toast';
+import ImageFill from '../ImageFill';
 
 function AvatarChange({path, name}: PropsAvatarChange) {
 	const [imageBase64, setImageBase64] = useState<string>('');
@@ -45,7 +45,11 @@ function AvatarChange({path, name}: PropsAvatarChange) {
 
 	return (
 		<div className={styles.container}>
-			<ImageFill src={imageBase64 ? imageBase64 : process.env.NEXT_PUBLIC_IMAGE + path} alt='file base64' className={styles.image} />
+			<ImageFill
+				src={!!imageBase64 ? imageBase64 : process.env.NEXT_PUBLIC_IMAGE + path}
+				alt='file base64'
+				className={styles.image}
+			/>
 			<div className={styles.main_des}>
 				<p>Hình ảnh tải lên đạt kích thước tối thiểu 300pixel x 300pixel</p>
 				<span>Định dạng hỗ trợ: JPG, JPEG, PNG</span>

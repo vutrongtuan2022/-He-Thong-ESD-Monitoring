@@ -8,73 +8,59 @@ import FilterCustom from '~/components/common/FilterCustom';
 import {BsThreeDots} from 'react-icons/bs';
 import {PATH} from '~/constants/config';
 import Breadcrumb from '~/components/common/Breadcrumb';
-import clsx from 'clsx';
 import Table from '~/components/common/Table';
 import DataWrapper from '~/components/common/DataWrapper';
 import Pagination from '~/components/common/Pagination';
-import Status from '~/components/common/Status';
-import HeadlessTippy from '@tippyjs/react/headless';
 import {LuPencil} from 'react-icons/lu';
-import {Trash} from 'iconsax-react';
-import {Lock} from 'iconsax-react';
+import {Lock1, Unlock} from 'iconsax-react';
 import Button from '~/components/common/Button';
 import Image from 'next/image';
 import icons from '~/constants/images/icons';
 import Link from 'next/link';
 import Dialog from '~/components/common/Dialog';
 import IconCustom from '~/components/common/IconCustom';
-import StateAccount from '../StateAccount';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import accountServices from '~/services/accountServices';
-import {QUERY_KEY, STATUS_ACCOUNT, STATUS_GENERAL} from '~/constants/config/enum';
+import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
 import Noti from '~/components/common/DataWrapper/components/Noti';
+import ImageFill from '~/components/common/ImageFill';
+import Loading from '~/components/common/Loading';
 
 const MainPageAccount = ({}: PropsMainPageAccount) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
-	const {_page, _pageSize, _status, _isHaveAcc, _username, importExcel, _keyword, _position, _roleUuid} = router.query;
-	const [openClock, setOpenClock] = useState<IAccount | null>(null);
-	const changeStatusUser = useMutation({
+
+	const {_page, _pageSize, _status, _keyword, _roleUuid} = router.query;
+
+	const [dataChangeStatus, setDataChangeStatus] = useState<IAccount | null>(null);
+
+	const changeStatusAccount = useMutation({
 		mutationFn: () => {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
 				msgSuccess: 'Thay đổi trạng thái thành công!',
 				http: accountServices.updateAccountStatus({
-					uuid: openClock?.uuid!,
-					status: openClock?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
+					uuid: dataChangeStatus?.uuid!,
+					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
 				}),
 			});
 		},
 		onSuccess(data) {
 			if (data) {
-				setOpenClock(null);
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_tai_khoan, _page, _roleUuid, _username, _pageSize, _keyword, _status]);
+				setDataChangeStatus(null);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_tai_khoan, _page, _pageSize, _status, _keyword, _roleUuid]);
 			}
 		},
 	});
-	const listAccount = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status, _isHaveAcc], {
+
+	const listRoles = useQuery([QUERY_KEY.dropdown_danh_sach_role], {
 		queryFn: () =>
 			httpRequest({
-				http: accountServices.listAccount({
-					page: Number(_page) || 1,
-					pageSize: Number(_pageSize) || 20,
-					keyword: _keyword ? (_keyword as string) : '',
-					roleUuid: _username ? (_username as string) : '',
-					status: _status ? (_status as string) : null,
-				}),
-			}),
-		select(data) {
-			return data;
-		},
-	});
-	const listPosition = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
-		queryFn: () =>
-			httpRequest({
-				http: categoryServices.listPosition({
+				http: categoryServices.listRole({
 					keyword: '',
 				}),
 			}),
@@ -83,16 +69,32 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 		},
 	});
 
+	const listAccount = useQuery([QUERY_KEY.danh_sach_tai_khoan, _page, _pageSize, _status, _keyword, _roleUuid], {
+		queryFn: () =>
+			httpRequest({
+				http: accountServices.listAccount({
+					page: Number(_page) || 1,
+					pageSize: Number(_pageSize) || 20,
+					keyword: (_keyword as string) || '',
+					roleUuid: _roleUuid ? (_roleUuid as string) : null,
+					status: _status ? Number(_status) : null,
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
 	const handleChangeStatusDevice = async () => {
-		if (!openClock?.uuid) {
+		if (!dataChangeStatus?.uuid) {
 			return toastWarn({msg: 'Không tìm thấy tài khoản!'});
 		}
-
-		return changeStatusUser.mutate();
+		return changeStatusAccount.mutate();
 	};
 
 	return (
 		<div className={styles.container}>
+			<Loading loading={changeStatusAccount.isLoading} />
 			<Breadcrumb
 				listUrls={[
 					{
@@ -101,7 +103,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 					},
 					{
 						title: 'Quản lý tài khoản',
-						path: PATH.TaiKhoan,
+						path: '',
 					},
 				]}
 				action={
@@ -129,14 +131,14 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 				<div className={styles.container}>
 					<div className={styles.main_search}>
 						<div className={styles.search}>
-							<Search placeholder='Tìm kiếm theo mã người dùng, tên người dùng' keyName='_keyword' />
+							<Search placeholder='Tìm kiếm theo mã tài khoản và tên tài khoản' keyName='_keyword' />
 						</div>
 						<div style={{minWidth: 240}}>
 							<FilterCustom
 								isSearch
-								name='Chức vụ'
-								query='_position'
-								listFilter={listPosition?.data?.map((v: any) => ({
+								name='Vai trò'
+								query='_roleUuid'
+								listFilter={listRoles?.data?.map((v: any) => ({
 									id: v?.uuid,
 									name: v?.name,
 								}))}
@@ -144,17 +146,16 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								isSearch
 								name='Trạng thái'
 								query='_status'
 								listFilter={[
 									{
 										id: STATUS_GENERAL.SU_DUNG,
-										name: 'Hoạt động',
+										name: 'Sử dụng',
 									},
 									{
 										id: STATUS_GENERAL.KHONG_SU_DUNG,
-										name: 'Đang khóa',
+										name: 'Không sử dụng',
 									},
 								]}
 							/>
@@ -172,44 +173,49 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 							column={[
 								{
 									title: 'STT',
-									render: (data: IAccount, index: number) => <>{index + 1}</>,
+									render: (data: any, index: number) => <>{index + 1}</>,
 								},
 								{
 									title: 'Mã người dùng',
 									render: (data: IAccount) => (
-										<Link href={`/tai-khoan/${data.uuid}`} className={styles.DetailUser}>
-											{data.code || '---'}
+										<Link href={`/tai-khoan/${data?.uuid}`} className={styles.link}>
+											{data?.code || '---'}
 										</Link>
 									),
 								},
 								{
 									title: 'Tên người dùng',
-									render: (data: IAccount) => <p>{data.fullName}</p>,
+									render: (data: IAccount) => (
+										<div className={styles.info}>
+											<ImageFill src={''} alt='avatar' className={styles.image} />
+											<p>{data?.fullName || '---'}</p>
+										</div>
+									),
 								},
 								{
 									title: 'Email',
-									render: (data: IAccount) => <p>{data.email}</p>,
+									render: (data: IAccount) => <p>{data?.email || '---'}</p>,
 								},
 								{
 									title: 'Số điện thoại',
-									render: (data: IAccount) => <p>{data.phone}</p>,
+									render: (data: IAccount) => <p>{data?.phone || '---'}</p>,
 								},
 								{
 									title: 'Chức vụ',
-									render: (data: IAccount) => <p>{data.regency}</p>,
+									render: (data: IAccount) => <p>{data?.regency || '---'}</p>,
 								},
 								{
 									title: 'Vai trò',
-									render: (data: IAccount) => <>{data.roleUuid || '---'}</>,
+									render: (data: IAccount) => <>{data?.roleName || '---'}</>,
 								},
 								{
 									title: 'Trạng thái',
 									render: (data: IAccount) => (
 										<>
 											{data?.status == STATUS_GENERAL.SU_DUNG ? (
-												<p style={{color: '#35C244', fontWeight: 600}}>Hoạt động</p>
+												<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
 											) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-												<p style={{color: '#E85A5A', fontWeight: 600}}>Đang khóa</p>
+												<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
 											) : (
 												'---'
 											)}
@@ -221,20 +227,20 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									render: (data: IAccount) => (
 										<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 											<IconCustom
-												warn
-												icon={<Lock fontSize={20} fontWeight={600} />}
-												tooltip=' Khóa '
-												color='#777E90'
-												onClick={() => setOpenClock(data)}
-											/>
-											<IconCustom
 												edit
 												icon={<LuPencil fontSize={20} fontWeight={600} />}
 												tooltip='Chỉnh sửa'
 												color='#777E90'
 												onClick={() => {
-													router.push(`/tai-khoan/chinh-sua?_id=${data.uuid}`);
+													router.push(`/tai-khoan/chinh-sua?_id=${data?.uuid}`);
 												}}
+											/>
+											<IconCustom
+												warn
+												icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
+												tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
+												color='#777E90'
+												onClick={() => setDataChangeStatus(data)}
 											/>
 										</div>
 									),
@@ -246,14 +252,14 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						currentPage={Number(_page) || 1}
 						total={listAccount?.data?.pagination?.totalCount}
 						pageSize={Number(_pageSize) || 20}
-						dependencies={[_pageSize, _keyword, _username, _status]}
+						dependencies={[_pageSize, _status, _keyword, _roleUuid]}
 					/>
 					<Dialog
 						warn
-						open={!!openClock}
-						onClose={() => setOpenClock(null)}
-						title='Khóa Người Dùng'
-						note='Bạn có chắc chắn muốn khóa người dùng này?'
+						open={!!dataChangeStatus}
+						onClose={() => setDataChangeStatus(null)}
+						title='Khóa tài khoản'
+						note='Bạn có chắc chắn muốn khóa tài khoản này?'
 						onSubmit={handleChangeStatusDevice}
 					/>
 				</div>

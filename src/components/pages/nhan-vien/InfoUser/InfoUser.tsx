@@ -149,14 +149,6 @@ function InfoUser({}: PropsInfoUser) {
 								<Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 							</td>
 						</tr>
-						{/* <tr>
-						<td>
-							<span style={{marginRight: 6}}>Số CCCD: </span>
-						</td>
-						<td>
-							<span style={{marginRight: 6}}>Cập nhập lần cuối: </span>
-						</td>
-					</tr> */}
 					</table>
 				</div>
 				<Dialog

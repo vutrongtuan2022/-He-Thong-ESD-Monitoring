@@ -41,13 +41,23 @@ const categoryServices = {
 			cancelToken: tokenAxios,
 		});
 	},
-	listPosition: (
+	listRole: (
 		data: {
 			keyword: string;
 		},
 		tokenAxios?: any
 	) => {
 		return axiosClient.post(`/Category/category_role`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	listRegency: (
+		data: {
+			keyword: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Category/category_regency`, data, {
 			cancelToken: tokenAxios,
 		});
 	},

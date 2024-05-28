@@ -52,7 +52,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 	const listRoles = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
 		queryFn: () =>
 			httpRequest({
-				http: categoryServices.listPosition({
+				http: categoryServices.listRole({
 					keyword: '',
 				}),
 			}),

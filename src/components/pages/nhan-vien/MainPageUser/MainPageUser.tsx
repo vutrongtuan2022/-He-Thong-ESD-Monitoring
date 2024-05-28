@@ -41,7 +41,7 @@ function MainPageUser({}: PropsMainPageUser) {
 	const {_page, _pageSize, _status, _isHaveAcc, _username, importExcel, _keyword, _position} = router.query;
 
 	const [file, setFile] = useState<any>(null);
-	const [OpenCreate, setOpenCreate] = useState<boolean>(false);
+	const [openCreate, setOpenCreate] = useState<boolean>(false);
 	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
 
 	const changeStatusUser = useMutation({
@@ -83,10 +83,10 @@ function MainPageUser({}: PropsMainPageUser) {
 		},
 	});
 
-	const listPosition = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
+	const listRegencys = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
 		queryFn: () =>
 			httpRequest({
-				http: categoryServices.listPosition({
+				http: categoryServices.listRegency({
 					keyword: '',
 				}),
 			}),
@@ -274,7 +274,7 @@ function MainPageUser({}: PropsMainPageUser) {
 									isSearch
 									name='Chức vụ'
 									query='_position'
-									listFilter={listPosition?.data?.map((v: any) => ({
+									listFilter={listRegencys?.data?.map((v: any) => ({
 										id: v?.uuid,
 										name: v?.name,
 									}))}
@@ -425,7 +425,7 @@ function MainPageUser({}: PropsMainPageUser) {
 							onSubmit={handleChangeStatusDevice}
 						/>
 					</div>
-					<Popup open={OpenCreate} onClose={() => setOpenCreate(false)}>
+					<Popup open={openCreate} onClose={() => setOpenCreate(false)}>
 						<PopupCreate onClose={() => setOpenCreate(false)} />
 					</Popup>
 					<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
