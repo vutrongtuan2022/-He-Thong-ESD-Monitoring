@@ -1,7 +1,6 @@
 import {RootState, store} from '~/redux/store';
-import {useCallback, useContext} from 'react';
+import {useCallback} from 'react';
 
-import ImageFill from '~/components/common/ImageFill';
 import Link from 'next/link';
 import {Menu, PATH} from '~/constants/config';
 import {PropsMenuTab} from './interfaces';
@@ -11,6 +10,7 @@ import styles from './MenuTab.module.scss';
 import {useRouter} from 'next/router';
 import {useSelector} from 'react-redux';
 import {setFullMenu} from '~/redux/reducer/site';
+import ImageFill from '~/components/common/ImageFill';
 
 function MenuTab({}: PropsMenuTab) {
 	const router = useRouter();

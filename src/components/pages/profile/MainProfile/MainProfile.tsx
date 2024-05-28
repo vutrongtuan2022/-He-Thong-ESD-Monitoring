@@ -11,12 +11,12 @@ import Link from 'next/link';
 import {IoArrowBackOutline} from 'react-icons/io5';
 import Button from '~/components/common/Button';
 import icons from '~/constants/images/icons';
-import ImageFill from '~/components/common/ImageFill';
 import {FaCalendarCheck, FaMapMarkerAlt} from 'react-icons/fa';
 import {IoMdMail} from 'react-icons/io';
 import Form, {FormContext, Input} from '~/components/common/Form';
 import {ShieldSecurity} from 'iconsax-react';
 import clsx from 'clsx';
+import ImageFill from '~/components/common/ImageFill';
 
 function MainProfile({}: PropsMainProfile) {
 	const [form, setForm] = useState<any>({oldPass: '', newPass: ''});

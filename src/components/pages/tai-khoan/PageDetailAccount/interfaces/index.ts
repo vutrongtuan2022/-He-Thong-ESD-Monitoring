@@ -1,18 +1,23 @@
 export interface PropsPageDetailAccount {}
-export interface IAccDetail {
+export interface IAccountDetail {
 	uuid: string;
-	userUuid: string | null;
-	fullName: string | null;
-	regency: string | null;
+	userUuid: string;
+	fullName: string;
+	regency: string;
 	gender: number;
-	userName: string | null;
-	roleUuid: string | null;
-	timeCreated: string;
-	status: number;
-	email: string | null;
-	phone: string;
+	email: string;
+	phone: string | null;
 	address: string;
 	birthday: string;
 	avatar: string | null;
-	code: string | null;
+	userName: string;
+	code: string;
+	status: number;
+	roleUuid: string | null;
+	roleName: string | null;
+	teamUuid: string | null;
+	teamName: string | null;
+	teamLeader: string | null;
+	timeCreated: string;
+	userCreated: string | null;
 }

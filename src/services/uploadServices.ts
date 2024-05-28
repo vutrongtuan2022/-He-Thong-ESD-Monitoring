@@ -1,10 +1,14 @@
+import {TYPE_UPLOAD} from '~/constants/config/enum';
 import axiosClient from '.';
 
 const uploadServices = {
-	upload: (data: any, tokenAxios?: any) => {
-		return axiosClient.put('/Upload/upload-image', data, {
+	upload: (data: {FileData: any; Type: TYPE_UPLOAD}, tokenAxios?: any) => {
+		return axiosClient.put(`/Gateway/import_excel`, data, {
 			cancelToken: tokenAxios,
-			headers: {'Content-Type': 'multipart/form-data'},
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				Accept: 'text/plain',
+			},
 		});
 	},
 };

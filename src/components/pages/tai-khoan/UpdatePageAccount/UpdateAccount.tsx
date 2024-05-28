@@ -11,13 +11,12 @@ import WrapperContainer from '~/components/layouts/WrapperContainer';
 import {GENDER} from '~/constants/config/enum';
 import DatePicker from '~/components/common/DatePicker';
 import AvatarChange from '~/components/common/AvatarChange';
-// import PopupPersonnel from '../PopupPersonnel';
 
 const UpdateAccount = ({}: PropsUpdateAccount) => {
-	const [date, setDate] = useState<string>('');
 	const [form, setForm] = useState<any>({
 		avatar: '',
 		name: '',
+		date: '',
 		email: '',
 		phone: '',
 		position: '',
@@ -89,8 +88,13 @@ const UpdateAccount = ({}: PropsUpdateAccount) => {
 											</span>
 										}
 										placeholder='Chọn ngày sinh'
-										value={date}
-										onSetValue={setDate}
+										value={form.date}
+										onSetValue={(date) =>
+											setForm((prev: any) => ({
+												...prev,
+												date: date,
+											}))
+										}
 										name='dateOfBirth'
 										onClean={true}
 									/>

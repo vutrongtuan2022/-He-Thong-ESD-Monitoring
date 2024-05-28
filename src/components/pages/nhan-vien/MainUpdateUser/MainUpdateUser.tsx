@@ -73,10 +73,10 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 		},
 	});
 
-	const listRoles = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
+	const listRegencys = useQuery([QUERY_KEY.dropdown_danh_sach_chuc_vu], {
 		queryFn: () =>
 			httpRequest({
-				http: categoryServices.listPosition({
+				http: categoryServices.listRegency({
 					keyword: '',
 				}),
 			}),
@@ -257,7 +257,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 											</span>
 										}
 									>
-										{listRoles?.data?.map((v: any) => (
+										{listRegencys?.data?.map((v: any) => (
 											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
 										))}
 									</Select>

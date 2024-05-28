@@ -1,6 +1,6 @@
 'use client';
 
-import ImageWithFallback from '../ImageWithFallback/ImageWithFallback';
+import ImageWithFallback from '../Image/ImageWithFallback';
 import clsx from 'clsx';
 import styles from './ImageFill.module.scss';
 import {useStyleClass} from '~/common/hooks/usStyleClass';
@@ -10,7 +10,7 @@ function ImageFill({src, className, ...props}: {src: any; className?: string; [p
 	return (
 		<div className={styles.container}>
 			<div className={clsx(styles.main, className, styleClass)}>
-				<ImageWithFallback src={src} layout='fill' alt={props.alt || 'image eds admin'} {...props} />
+				<ImageWithFallback src={src} layout='fill' alt={props.alt || 'esd'} {...props} />
 			</div>
 		</div>
 	);

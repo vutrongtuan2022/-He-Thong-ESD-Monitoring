@@ -31,6 +31,7 @@ function TableUser({}: PropsTableUser) {
 					username: null,
 					timeCreated: null,
 					isHaveAcc: null,
+					regencyUuid: null,
 				}),
 			}),
 		select(data) {

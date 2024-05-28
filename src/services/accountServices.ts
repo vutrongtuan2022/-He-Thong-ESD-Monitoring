@@ -21,8 +21,8 @@ const accountServices = {
 			pageSize: number;
 			page: number;
 			keyword: string;
-			roleUuid: string;
-			status: string | null;
+			roleUuid: string | null;
+			status: number | null;
 		},
 		tokenAxios?: any
 	) => {
@@ -37,7 +37,7 @@ const accountServices = {
 		});
 	},
 	updateAccountStatus: (data: {uuid: string; status: number}, tokenAxios?: any) => {
-		return axiosClient.post(`/Account/account_user_status`, data, {
+		return axiosClient.post(`/Account/update_account_status`, data, {
 			cancelToken: tokenAxios,
 		});
 	},
