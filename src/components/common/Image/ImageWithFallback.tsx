@@ -1,3 +1,5 @@
+'use client';
+
 import React, {useEffect, useState} from 'react';
 
 import Image from 'next/legacy/image';
@@ -12,18 +14,11 @@ const ImageWithFallback = (props: any) => {
 		setImgSrc(src);
 	}, [src]);
 
-	function checkSrc(srcStr: string) {
-		if (!`${srcStr}`?.startsWith('blob') && !`${srcStr}`?.startsWith('/') && typeof srcStr == 'string' && !srcStr.startsWith('http')) {
-			srcStr = process.env.NEXT_PUBLIC_IMAGE + srcStr;
-		}
-		return srcStr || icons.placeholder;
-	}
-
 	return (
 		<Image
 			className={styles.image}
 			{...rest}
-			src={checkSrc(imgSrc)}
+			src={imgSrc}
 			onError={() => {
 				setImgSrc(fallbackSrc || icons.placeholder);
 			}}

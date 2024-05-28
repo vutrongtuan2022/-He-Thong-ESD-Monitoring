@@ -1,3 +1,5 @@
+'use client';
+
 import ImageWithFallback from '../Image/ImageWithFallback';
 import clsx from 'clsx';
 import styles from './ImageFill.module.scss';

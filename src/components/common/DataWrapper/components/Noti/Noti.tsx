@@ -1,8 +1,8 @@
-import ImageFill from '~/components/common/ImageFill';
 import {PropsNoti} from './interfaces';
 import styles from './Noti.module.scss';
 import icons from '~/constants/images/icons';
 import Button from '~/components/common/Button';
+import ImageFill from '~/components/common/ImageFill';
 
 function Noti({
 	disableButton,

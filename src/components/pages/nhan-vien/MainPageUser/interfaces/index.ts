@@ -15,9 +15,10 @@ export interface IUser {
 	address: string | null;
 	birthday: string | null;
 	avatar: string | null;
-	role: string | null;
+	regency: string | null;
 	timeCreated: string;
 	userid: string | null;
 	leadName: string | null;
 	_isHaveAcc: number;
+	regencyUuid: string | null;
 }

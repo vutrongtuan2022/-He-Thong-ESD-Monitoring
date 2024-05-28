@@ -38,7 +38,7 @@ function MainPageUser({}: PropsMainPageUser) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _status, _isHaveAcc, _username, importExcel, _keyword, _position} = router.query;
+	const {_page, _pageSize, _status, _isHaveAcc, _username, importExcel, _keyword, _regency} = router.query;
 
 	const [file, setFile] = useState<any>(null);
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
@@ -64,7 +64,7 @@ function MainPageUser({}: PropsMainPageUser) {
 		},
 	});
 
-	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _keyword, _status, _isHaveAcc], {
+	const listUser = useQuery([QUERY_KEY.danh_sach_nhan_vien, _page, _username, _pageSize, _regency, _keyword, _status, _isHaveAcc], {
 		queryFn: () =>
 			httpRequest({
 				http: userServices.listUser({
@@ -76,6 +76,7 @@ function MainPageUser({}: PropsMainPageUser) {
 					timeCreated: null,
 					teamUuid: '',
 					isHaveAcc: _isHaveAcc ? (_isHaveAcc as string) : null,
+					regencyUuid: _regency ? (_regency as string) : null,
 				}),
 			}),
 		select(data) {
@@ -255,6 +256,8 @@ function MainPageUser({}: PropsMainPageUser) {
 							</div>
 							<div style={{minWidth: 240}}>
 								<FilterCustom
+									name='Tài khoản'
+									query='_isHaveAcc'
 									listFilter={[
 										{
 											id: STATUS_ACCOUNT.HAVEACCOUNT,
@@ -265,15 +268,13 @@ function MainPageUser({}: PropsMainPageUser) {
 											name: 'Chưa cấp tài khoản',
 										},
 									]}
-									name='Tài khoản'
-									query='_isHaveAcc'
 								/>
 							</div>
 							<div style={{minWidth: 240}}>
 								<FilterCustom
 									isSearch
 									name='Chức vụ'
-									query='_position'
+									query='_regency'
 									listFilter={listRegencys?.data?.map((v: any) => ({
 										id: v?.uuid,
 										name: v?.name,
@@ -327,7 +328,7 @@ function MainPageUser({}: PropsMainPageUser) {
 									},
 									{
 										title: 'Chức vụ',
-										render: (data: IUser) => <p>{data.role || '---'}</p>,
+										render: (data: IUser) => <p>{data.regency || '---'}</p>,
 									},
 									{
 										title: 'Thuộc team',

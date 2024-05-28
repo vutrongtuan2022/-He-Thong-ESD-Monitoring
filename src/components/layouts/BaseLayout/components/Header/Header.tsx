@@ -3,7 +3,6 @@ import TippyHeadless from '@tippyjs/react/headless';
 
 import styles from './Header.module.scss';
 import {useMemo, useState} from 'react';
-import ImageFill from '~/components/common/ImageFill';
 import clsx from 'clsx';
 import icons from '~/constants/images/icons';
 import Avatar from '~/components/common/Avatar';
@@ -17,6 +16,7 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {RiArrowDownSFill} from 'react-icons/ri';
 import Image from 'next/image';
+import ImageFill from '~/components/common/ImageFill';
 
 function Header({title}: PropsHeader) {
 	const router = useRouter();

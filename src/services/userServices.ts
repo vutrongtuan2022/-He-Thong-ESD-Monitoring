@@ -32,12 +32,14 @@ const userServices = {
 			keyword: string;
 			teamUuid: string;
 			username: string | null;
+
 			timeCreated: {
 				fromDate: string | null;
 				toDate: string | null;
 			} | null;
 			status: string | null;
 			isHaveAcc: string | null;
+			regencyUuid: string | null;
 		},
 		tokenAxios?: any
 	) => {
