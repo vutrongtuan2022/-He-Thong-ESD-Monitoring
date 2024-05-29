@@ -19,6 +19,7 @@ import {toastWarn} from '~/common/funcs/toast';
 import moment from 'moment';
 import Loading from '~/components/common/Loading';
 import {isEmail, isPhoneNumber} from '~/common/funcs/validate';
+import i18n from '~/locale/i18n';
 
 const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 	const router = useRouter();
@@ -90,7 +91,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Chỉnh sửa nhân viên thành công!',
+				msgSuccess: i18n.t('User.chinhsuanhanvienthanhcong'),
 				http: userServices.upsertUser({
 					uuid: _id as string,
 					fullname: form.fullname,
@@ -123,34 +124,34 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 		const selectedDate = moment(form.birthday).startOf('day');
 
 		if (!_id) {
-			return toastWarn({msg: 'Không tìm thấy nhân viên!'});
+			return toastWarn({msg: i18n.t('User.khongtimthaynhanviennao')});
 		}
 		if (!form.code) {
-			return toastWarn({msg: 'Vui lòng nhập mã nhân viên!'});
+			return toastWarn({msg: i18n.t('User.vuilongnhapmanhanvien')});
 		}
 		if (!form.fullname) {
-			return toastWarn({msg: 'Vui lòng nhập tên nhân viên!'});
+			return toastWarn({msg: i18n.t('User.vuilongnhaphovaten')});
 		}
 		if (!form.email) {
-			return toastWarn({msg: 'Vui lòng nhập email!'});
+			return toastWarn({msg: i18n.t('User.vuilongnhapemail')});
 		}
 		if (!form.phone) {
-			return toastWarn({msg: 'Vui lòng nhập số điện thoại!'});
+			return toastWarn({msg: i18n.t('User.vuilongnhapsodienthoai')});
 		}
 		if (!form.regencyUuid) {
-			return toastWarn({msg: 'Vui lòng nhập chức vụ!'});
+			return toastWarn({msg: i18n.t('User.vuilongchonchucvu')});
 		}
 		if (!form.birthday) {
-			return toastWarn({msg: 'Vui lòng nhập ngày sinh!'});
+			return toastWarn({msg: i18n.t('User.vuilongchonngaysinh')});
 		}
 		if (!isPhoneNumber(form.phone)) {
-			return toastWarn({msg: 'Số điện thoại không đúng định dạng!'});
+			return toastWarn({msg: i18n.t('User.sodienthoaikhongdungdinhdang')});
 		}
 		if (!isEmail(form.email)) {
-			return toastWarn({msg: 'Email không đúng định dạng!'});
+			return toastWarn({msg: i18n.t('User.emailkhongdungdinhdang')});
 		}
 		if (selectedDate.isAfter(today)) {
-			return toastWarn({msg: 'Ngày sinh không hợp lệ!'});
+			return toastWarn({msg: i18n.t('User.ngaysinhkhonghople')});
 		}
 
 		return upsertUser.mutate();
@@ -162,15 +163,15 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Quản lý nhân viên',
+						title: i18n.t('User.quanlynhanvien'),
 						path: PATH.NhanVien,
 					},
 					{
-						title: 'Sửa người nhân viên',
+						title: i18n.t('User.chinhsuanhanvien'),
 						path: '',
 					},
 				]}
@@ -180,15 +181,15 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<div className={styles.left}>
-							<h4>Chỉnh sửa nhân viên</h4>
-							<p>Điền đầy đủ các thông tin nhân viên</p>
+							<h4>{i18n.t('User.chinhsuanhanvien')}</h4>
+							<p>{i18n.t('User.diendayduthongtinnhanvien')}</p>
 						</div>
 						<div className={styles.right}>
 							<Button href={PATH.NhanVien} p_10_24 rounded_2 grey_outline>
-								Hủy bỏ
+								{i18n.t('User.huybo')}
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								Lưu lại
+								{i18n.t('User.luulai')}
 							</Button>
 						</div>
 					</div>
@@ -201,10 +202,10 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 										value={form.code || ''}
 										label={
 											<span>
-												Mã nhân viên <span style={{color: 'red'}}>*</span>
+												{i18n.t('User.manhanvien')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
-										placeholder='Nhập mã nhân viên'
+										placeholder={i18n.t('User.nhapmanhanvien')}
 									/>
 								</div>
 								<Input
@@ -212,10 +213,10 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 									value={form.fullname || ''}
 									label={
 										<span>
-											Họ và tên <span style={{color: 'red'}}>*</span>
+											{i18n.t('User.hovaten')} <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Nhập họ và tên'
+									placeholder={i18n.t('User.nhaphovaten')}
 								/>
 							</div>
 
@@ -228,7 +229,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 											Email <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Nhập email'
+									placeholder={i18n.t('User.nhapemail')}
 								/>
 								<div>
 									<Input
@@ -236,10 +237,10 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 										value={form.phone || ''}
 										label={
 											<span>
-												Số điện thoại <span style={{color: 'red'}}>*</span>
+												{i18n.t('User.sodienthoai')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
-										placeholder='Nhập số điện thoại'
+										placeholder={i18n.t('User.nhapsodienthoai')}
 									/>
 								</div>
 							</div>
@@ -250,7 +251,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 										isSearch
 										name='regencyUuid'
 										value={form.regencyUuid || null}
-										placeholder='Lựa chọn'
+										placeholder={i18n.t('User.luachon')}
 										onChange={(e) =>
 											setForm((prev) => ({
 												...prev,
@@ -259,7 +260,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 										}
 										label={
 											<span>
-												Chức vụ <span style={{color: 'red'}}>*</span>
+												{i18n.t('User.chucvu')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
 									>
@@ -273,10 +274,10 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 										icon={true}
 										label={
 											<span>
-												Ngày sinh <span style={{color: 'red'}}>*</span>
+												{i18n.t('User.ngaysinh')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
-										placeholder='Chọn ngày sinh'
+										placeholder={i18n.t('User.chonngaysinh')}
 										value={form.birthday}
 										onSetValue={(date) =>
 											setForm((prevForm) => ({
@@ -289,7 +290,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 									/>
 									<div className={styles.gender}>
 										<label className={styles.title}>
-											Giới tính <span style={{color: 'red'}}>*</span>
+											{i18n.t('User.gioitinh')} <span style={{color: 'red'}}>*</span>
 										</label>
 										<div className={styles.group_radio}>
 											<div className={styles.item_radio}>
@@ -308,7 +309,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 													}
 												/>
 												<label className={styles.input_label} htmlFor='male'>
-													Nam
+													{i18n.t('User.nam')}
 												</label>
 											</div>
 
@@ -328,7 +329,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 													}
 												/>
 												<label className={styles.input_label} htmlFor='female'>
-													Nữ
+													{i18n.t('User.nu')}
 												</label>
 											</div>
 										</div>
@@ -341,14 +342,14 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 									isSearch
 									name='teamUuid'
 									value={form.teamUuid || null}
-									placeholder='Lựa chọn'
+									placeholder={i18n.t('User.luachon')}
 									onChange={(e) =>
 										setForm((prev) => ({
 											...prev,
 											teamUuid: e.target.value,
 										}))
 									}
-									label={<span>Thuộc team</span>}
+									label={<span>{i18n.t('User.thuocteam')}</span>}
 								>
 									{listTeams?.data?.map((v: any) => (
 										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -358,8 +359,8 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 									type='text'
 									name='address'
 									value={form.address || ''}
-									label={<span>Địa chỉ</span>}
-									placeholder='Nhập địa chỉ'
+									label={<span>{i18n.t('User.diachi')}</span>}
+									placeholder={i18n.t('User.nhapdiachi')}
 								/>
 							</div>
 						</Form>

@@ -17,6 +17,7 @@ import Dialog from '~/components/common/Dialog';
 import {toastWarn} from '~/common/funcs/toast';
 import Moment from 'react-moment';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 function InfoUser({}: PropsInfoUser) {
 	const router = useRouter();
@@ -45,7 +46,7 @@ function InfoUser({}: PropsInfoUser) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('User.thaydoitrangthaithanhcong'),
 				http: userServices.updateUserStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -62,7 +63,7 @@ function InfoUser({}: PropsInfoUser) {
 
 	const handleChangeStatusUser = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy nhân viên!'});
+			return toastWarn({msg: i18n.t('User.khongtimthaynhanviennao')});
 		}
 		return changeStatusUser.mutate();
 	};
@@ -74,7 +75,7 @@ function InfoUser({}: PropsInfoUser) {
 				<div className={styles.header}>
 					<Link href={PATH.NhanVien} className={styles.header_title}>
 						<IoArrowBackOutline fontSize={20} fontWeight={600} />
-						<p>Chi tiết nhân viên</p>
+						<p>{i18n.t('User.chitietnhanvien')}</p>
 					</Link>
 					<div className={styles.list_btn}>
 						{data?.status == STATUS_GENERAL.SU_DUNG && (
@@ -87,13 +88,13 @@ function InfoUser({}: PropsInfoUser) {
 								bold
 								onClick={() => setDataChangeStatus(data)}
 							>
-								Khóa
+								{i18n.t('User.khoa')}
 							</Button>
 						)}
 
 						{data?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
 							<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setDataChangeStatus(data)}>
-								Mở khóa
+								{i18n.t('User.mokhoa')}
 							</Button>
 						)}
 						<Button
@@ -106,7 +107,7 @@ function InfoUser({}: PropsInfoUser) {
 								router.push(`/nhan-vien/chinh-sua?_id=${_id}`);
 							}}
 						>
-							Chỉnh sửa
+							{i18n.t('User.chinhsua')}
 						</Button>
 					</div>
 				</div>
@@ -118,18 +119,18 @@ function InfoUser({}: PropsInfoUser) {
 						</colgroup>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Mã nhân viên: </span> {data?.code || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.manhanvien')}: </span> {data?.code || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Chức vụ: </span> {data?.regency || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.chucvu')}: </span> {data?.regency || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Họ và tên: </span> {data?.fullname || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.hovaten')}: </span> {data?.fullname || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Thuộc team: : </span> {data?.teamName || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.thuocteam')} : </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -142,10 +143,10 @@ function InfoUser({}: PropsInfoUser) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Số điện thoại: </span> {data?.phone || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.sodienthoai')}: </span> {data?.phone || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Tạo lúc: </span>{' '}
+								<span style={{marginRight: 6}}>{i18n.t('User.taoluc')}: </span>{' '}
 								<Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 							</td>
 						</tr>
@@ -155,8 +156,8 @@ function InfoUser({}: PropsInfoUser) {
 					warn
 					open={!!dataChangeStatus}
 					onClose={() => setDataChangeStatus(null)}
-					title='Chuyển trạng thái'
-					note='Bạn có chắc chắn chuyển trạng thái cho nhân viên này?'
+					title={i18n.t('User.chuyentrangthai')}
+					note={i18n.t('User.bancochacmuonchuyentrangthai')}
 					onSubmit={handleChangeStatusUser}
 				/>
 			</div>
