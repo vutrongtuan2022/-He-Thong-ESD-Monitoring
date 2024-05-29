@@ -10,11 +10,15 @@ export interface IAccount {
 	phone: string | null;
 	address: string | null;
 	birthday: string | null;
-	avatar: string | null;
+	image: string | null;
 	userName: string | null;
 	roleUuid: string | null;
 	roleName: string | null;
 	code: string;
 	timeCreated: string;
 	status: number;
+	teamName: string | null;
+	leaderUuid: string | null;
+	teamLeader: string | null;
+	createdBy: string | null;
 }

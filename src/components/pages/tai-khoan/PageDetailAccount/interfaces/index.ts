@@ -9,7 +9,7 @@ export interface IAccountDetail {
 	phone: string | null;
 	address: string;
 	birthday: string;
-	avatar: string | null;
+	image: string | null;
 	userName: string;
 	code: string;
 	status: number;
@@ -20,4 +20,6 @@ export interface IAccountDetail {
 	teamLeader: string | null;
 	timeCreated: string;
 	userCreated: string | null;
+	leaderUuid: string | null;
+	createdBy: string | null;
 }

@@ -78,13 +78,13 @@ export const Menu: {
 		title: 'THỐNG KÊ',
 		group: [{title: 'Báo cáo', icon: TbClipboardText, path: PATH.ThongKe}],
 	},
-	{
-		title: 'HỆ THỐNG',
-		group: [
-			{title: 'Phân quyền', icon: BiSolidVector, path: PATH.PhanQuyen},
-			{title: 'Cài đặt', icon: IoSettingsSharp, path: PATH.CaiDat},
-		],
-	},
+	// {
+	// 	title: 'HỆ THỐNG',
+	// 	group: [
+	// 		{title: 'Phân quyền', icon: BiSolidVector, path: PATH.PhanQuyen},
+	// 		{title: 'Cài đặt', icon: IoSettingsSharp, path: PATH.CaiDat},
+	// 	],
+	// },
 ];
 
 export const KEY_STORE = 'ADMIN-ESD';

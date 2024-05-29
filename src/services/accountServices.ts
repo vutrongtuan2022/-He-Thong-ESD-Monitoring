@@ -1,21 +1,6 @@
 import axiosClient from '.';
 
-import {STATUS_GENERAL} from '~/constants/config/enum';
-
 const accountServices = {
-	updateAccount: (
-		data: {
-			uuid: string | null;
-			roleUuid: string | null;
-			userName: string;
-			status: STATUS_GENERAL;
-		},
-		tokenAxios?: any
-	) => {
-		return axiosClient.post(`/Account/upsert_account`, data, {
-			cancelToken: tokenAxios,
-		});
-	},
 	listAccount: (
 		data: {
 			pageSize: number;
@@ -40,8 +25,19 @@ const accountServices = {
 			cancelToken: tokenAxios,
 		});
 	},
-	registerAccount: (data: {uuid: string; userUuid: string; roleUuid: string; status: number; imagesUuid: string}, tokenAxios?: any) => {
+	registerAccount: (data: {userUuid: string; roleUuid: string; status: number; imagesUuid: string}, tokenAxios?: any) => {
 		return axiosClient.post(`/Account/register`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	updateAccount: (
+		data: {
+			uuid: string;
+			roleUuid: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Account/update_account`, data, {
 			cancelToken: tokenAxios,
 		});
 	},

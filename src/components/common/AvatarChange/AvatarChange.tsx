@@ -9,7 +9,7 @@ import {MAXIMUM_FILE} from '~/constants/config';
 import {toastError, toastWarn} from '~/common/funcs/toast';
 import ImageFill from '../ImageFill';
 
-function AvatarChange({path, name}: PropsAvatarChange) {
+function AvatarChange({path, name, onSetFile}: PropsAvatarChange) {
 	const [imageBase64, setImageBase64] = useState<string>('');
 
 	const handleSelectImg = (e: any) => {
@@ -34,6 +34,7 @@ function AvatarChange({path, name}: PropsAvatarChange) {
 				URL.revokeObjectURL(prev);
 				return imageUrl;
 			});
+			onSetFile && onSetFile(file);
 		}
 	};
 
@@ -48,7 +49,7 @@ function AvatarChange({path, name}: PropsAvatarChange) {
 	return (
 		<div className={styles.container}>
 			<ImageFill
-				src={!!imageBase64 ? imageBase64 : process.env.NEXT_PUBLIC_IMAGE + path}
+				src={!!imageBase64 ? imageBase64 : `${process.env.NEXT_PUBLIC_AVATAR}/${path}`}
 				alt='file base64'
 				className={styles.image}
 			/>
