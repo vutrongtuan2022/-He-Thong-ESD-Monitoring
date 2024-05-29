@@ -21,6 +21,7 @@ import Dialog from '~/components/common/Dialog';
 import Button from '~/components/common/Button';
 import Moment from 'react-moment';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 	const router = useRouter();
@@ -50,7 +51,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('Account.msgSuccess'),
 				http: accountServices.updateAccountStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -67,7 +68,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 
 	const handleChangeStatusAccount = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy tài khoản!'});
+			return toastWarn({msg:  i18n.t('Account.msg')});;
 		}
 		return changeStatusAccount.mutate();
 	};
@@ -77,15 +78,15 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Quản lý tài khoản',
+						title: i18n.t('Account.quanlytaikhoan'),
 						path: PATH.TaiKhoan,
 					},
 					{
-						title: 'Chi tiết tài khoản',
+						title:  i18n.t('Account.chitiettaikhoan'),
 						path: '',
 					},
 				]}
@@ -96,7 +97,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 					<div className={styles.header}>
 						<Link href={PATH.TaiKhoan} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
-							<p>Chi tiết tài khoản</p>
+							<p>{i18n.t('Account.chitiettaikhoan')}</p>
 						</Link>
 						<div className={styles.list_btn}>
 							{dataDetailAccount?.status == STATUS_GENERAL.SU_DUNG && (
@@ -109,7 +110,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									bold
 									onClick={() => setDataChangeStatus(dataDetailAccount)}
 								>
-									Khóa
+									{i18n.t('Account.khoa')}
 								</Button>
 							)}
 
@@ -123,7 +124,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									bold
 									onClick={() => setDataChangeStatus(dataDetailAccount)}
 								>
-									Mở khóa
+									{i18n.t('Account.mokhoa')}
 								</Button>
 							)}
 							<Button
@@ -136,7 +137,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									router.push(`/tai-khoan/chinh-sua?_id=${_id}`);
 								}}
 							>
-								Chỉnh sửa
+								{i18n.t('Account.chinhsua')}
 							</Button>
 						</div>
 					</div>
@@ -152,17 +153,17 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 							</colgroup>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Mã nhân viên: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.manhanvien')}</span>
 									{dataDetailAccount?.code || '---'}
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>
-										Trạng thái:{' '}
+										{i18n.t('Account.trangthai')}i:{' '}
 										<span>
 											{dataDetailAccount?.status == STATUS_GENERAL.SU_DUNG ? (
-												<span style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</span>
+												<span style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.dangsudung')}</span>
 											) : dataDetailAccount?.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-												<span style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</span>
+												<span style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Account.khongsudung')}</span>
 											) : (
 												'---'
 											)}
@@ -172,10 +173,10 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Chức vụ: </span> <span>{dataDetailAccount?.regency || '---'}</span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.chucvu')}: </span> <span>{dataDetailAccount?.regency || '---'}</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Vai trò: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.vaitro')}: </span>
 									{dataDetailAccount?.roleName || '---'}
 								</td>
 							</tr>
@@ -184,37 +185,37 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									<span style={{marginRight: 6}}>Email: </span> <span>{dataDetailAccount?.email || '---'}</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Thuộc team:</span> <span>{dataDetailAccount?.teamName || '---'}</span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.team')}:</span> <span>{dataDetailAccount?.teamName || '---'}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Số điện thoại: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.sodienthoai')}: </span>
 									{dataDetailAccount?.phone || '---'}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Người quản lý:</span>{' '}
+									<span style={{marginRight: 6}}>{i18n.t('Account.nguoiquanly')}:</span>{' '}
 									<span>{dataDetailAccount?.teamLeader || '---'}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Ngày sinh: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.ngaysinh')}: </span>
 									<span>
 										<Moment date={dataDetailAccount?.birthday} format='DD/MM/YYYY' />
 									</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Người tạo: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.nguoitao')}: </span>
 									<span>{dataDetailAccount?.createdBy || '---'}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Địa chỉ: </span> <span>{dataDetailAccount?.address || '---'}</span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.diachi')}: </span> <span>{dataDetailAccount?.address || '---'}</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Cập nhật cuối: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.capnhat')}: </span>
 									<span>
 										{dataDetailAccount?.timeCreated ? (
 											<Moment date={dataDetailAccount?.timeCreated} format='DD/MM/YYYY' />
@@ -232,8 +233,8 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 					warn
 					open={!!dataChangeStatus}
 					onClose={() => setDataChangeStatus(null)}
-					title='Chuyển trạng thái'
-					note='Bạn có chắc chắn chuyển trạng thái cho tài khoản này?'
+					title={i18n.t('Account.chuyen')}
+					note={i18n.t('Account.chuyentrangthai')}
 					onSubmit={handleChangeStatusAccount}
 				/>
 			</WrapperContainer>
