@@ -40,7 +40,7 @@ const teamServices = {
 			page: number;
 			keyword: string;
 			status: number | null;
-			leaderUuid: string | null;
+			leaderUuid: string[] | null;
 			areaUuid?: string | null;
 		},
 		tokenAxios?: any

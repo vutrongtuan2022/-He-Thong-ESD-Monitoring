@@ -177,7 +177,6 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 				]}
 			/>
 			<WrapperContainer>
-				<Loading loading={upsertUser.isLoading} />
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<div className={styles.left}>
