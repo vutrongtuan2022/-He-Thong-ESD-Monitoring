@@ -30,7 +30,6 @@ const accountServices = {
 			cancelToken: tokenAxios,
 		});
 	},
-
 	accountDetail: (data: {uuid: string}, tokenAxios?: any) => {
 		return axiosClient.post(`/Account/account_detail`, data, {
 			cancelToken: tokenAxios,
@@ -38,6 +37,11 @@ const accountServices = {
 	},
 	updateAccountStatus: (data: {uuid: string; status: number}, tokenAxios?: any) => {
 		return axiosClient.post(`/Account/update_account_status`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	registerAccount: (data: {uuid: string; userUuid: string; roleUuid: string; status: number; imagesUuid: string}, tokenAxios?: any) => {
+		return axiosClient.post(`/Account/register`, data, {
 			cancelToken: tokenAxios,
 		});
 	},

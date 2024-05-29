@@ -26,8 +26,8 @@ import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
 import Noti from '~/components/common/DataWrapper/components/Noti';
-import ImageFill from '~/components/common/ImageFill';
 import Loading from '~/components/common/Loading';
+import ImageFill from '~/components/common/ImageFill';
 
 const MainPageAccount = ({}: PropsMainPageAccount) => {
 	const router = useRouter();

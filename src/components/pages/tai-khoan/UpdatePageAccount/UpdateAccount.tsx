@@ -160,7 +160,7 @@ const UpdateAccount = ({}: PropsUpdateAccount) => {
 										</span>
 									}
 									placeholder='Nhập email'
-									readOnly
+									readOnly={true}
 								/>
 								<div>
 									<Input

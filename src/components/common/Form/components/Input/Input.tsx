@@ -251,6 +251,7 @@ function Input({
 					[styles.iconGroup]: props.icon,
 					[styles.focus]: isFocus,
 					[styles.done]: showDone && data.isDone,
+					[styles.readOnly]: readOnly,
 				})}
 			>
 				{props.icon && <div className={styles.icon}>{props.icon}</div>}

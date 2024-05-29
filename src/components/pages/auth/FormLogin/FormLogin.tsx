@@ -31,14 +31,19 @@ function FormLogin({}: PropsFormLogin) {
 
 	const [form, setForm] = useState<{username: string; password: string}>({username: '', password: ''});
 
-	// useEffect(() => {
-	// 	if (isRememberPassword) {
-	// 		setForm({
-	// 			username: dataLoginStorage?.usernameStorage || '',
-	// 			password: dataLoginStorage?.passwordStorage || '',
-	// 		});
-	// 	}
-	// }, []);
+	useEffect(() => {
+		if (isRememberPassword) {
+			setForm({
+				username: dataLoginStorage?.usernameStorage || '',
+				password: dataLoginStorage?.passwordStorage || '',
+			});
+		} else {
+			setForm({
+				username: '',
+				password: '',
+			});
+		}
+	}, []);
 
 	const login = useMutation({
 		mutationFn: () =>
@@ -57,6 +62,12 @@ function FormLogin({}: PropsFormLogin) {
 				store.dispatch(setInfoUser(data));
 				store.dispatch(setStateLogin(true));
 				router.replace(PATH.Home, undefined, {scroll: false});
+				store.dispatch(
+					setDataLoginStorage({
+						usernameStorage: form.username,
+						passwordStorage: form.password,
+					})
+				);
 			}
 		},
 	});
@@ -86,7 +97,7 @@ function FormLogin({}: PropsFormLogin) {
 			<div className={styles.header}>
 				<Image src={icons.logo} className={styles.logo_icon} alt='Logo' />
 				<h4 className={styles.title}>ĐĂNG NHẬP TÀI KHOẢN</h4>
-				<p className={styles.text}>Chào mừng bạn đến với hệ thống EDS monitoring . Đăng nhập để bắt đầu sử dụng</p>
+				<p className={styles.text}>Chào mừng bạn đến với hệ thống ESD monitoring . Đăng nhập để bắt đầu sử dụng</p>
 			</div>
 
 			<div className={styles.form}>
@@ -124,27 +135,30 @@ function FormLogin({}: PropsFormLogin) {
 								<span>
 									Mật khẩu <span style={{color: 'red'}}>*</span>
 								</span>
-								<Link
-									href={PATH.ForgotPassword}
-									style={{
-										color: '#2367ED',
-										fontSize: '14px',
-										textDecoration: 'underline',
-									}}
-								>
-									Quên mật khẩu?
-								</Link>
 							</div>
 						}
 					/>
 
 					<div className={styles.rememberLogin}>
-						<SwitchButton
-							name='isRememberPassword'
-							// value={isRememberPassword}
-							// onChange={() => store.dispatch(setRememberPassword(!isRememberPassword))}
-						/>
-						<p className={styles.des}>Ghi nhớ đăng nhập</p>
+						<div style={{display: 'flex', alignItems: 'center', gap: 10}}>
+							<SwitchButton
+								name='isRememberPassword'
+								value={isRememberPassword}
+								onChange={() => store.dispatch(setRememberPassword(!isRememberPassword))}
+							/>
+							<p className={styles.des}>Ghi nhớ đăng nhập</p>
+						</div>
+
+						<Link
+							href={PATH.ForgotPassword}
+							style={{
+								color: '#2367ED',
+								fontSize: '14px',
+								textDecoration: 'underline',
+							}}
+						>
+							Quên mật khẩu?
+						</Link>
 					</div>
 
 					<div className={styles.btn}>
