@@ -15,6 +15,7 @@ import categoryServices from '~/services/categoryServices';
 import Loading from '~/components/common/Loading';
 import {toastWarn} from '~/common/funcs/toast';
 import uploadServices from '~/services/uploadServices';
+import i18n from '~/locale/i18n';
 
 function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 	const queryClient = useQueryClient();
@@ -101,8 +102,8 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={loading || funcCreateAccount.isLoading} />
-			<h4>Chỉnh sửa tài khoản</h4>
-			<p className={styles.p}>Điền đẩy đủ các thông tin cần thiết</p>
+			<h4>{i18n.t('Account.chinhsuataikhoan')}</h4>
+			<p className={styles.p}>{i18n.t('Account.dienthongtin')}</p>
 			<Form form={form} setForm={setForm}>
 				<div className={'mb'}>
 					{/* <AvatarChange path={form?.avatar} name='avatar' onSetFile={(file: any) => setFile(file)} /> */}
@@ -110,24 +111,24 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 				<Input
 					readOnly
 					type='text'
-					placeholder='Nhập tên nhân viên'
+					placeholder={i18n.t('Account.nhaptennhanvien')}
 					name='fullName'
 					value={form.fullName}
 					label={
 						<span>
-							Tên nhân viên <span style={{color: 'red'}}>*</span>
+							{i18n.t('User.tennhanvien')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
 				<Input
 					readOnly
 					type='text'
-					placeholder='Nhập tên tài khoản'
+					placeholder={i18n.t('Account.nhaptentaikhoan')}
 					name='userName'
 					value={form.userName}
 					label={
 						<span>
-							Tên tài khoản <span style={{color: 'red'}}>*</span>
+							{i18n.t('Account.tentaikhoan')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -137,7 +138,7 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 						isSearch
 						name='roleUuid'
 						value={form.roleUuid || null}
-						placeholder='Lựa chọn'
+						placeholder={i18n.t('Account.luachon')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
@@ -146,7 +147,7 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 						}
 						label={
 							<span>
-								Vai trò <span style={{color: 'red'}}>*</span>
+								{i18n.t('Account.vaitro')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					>
@@ -159,12 +160,12 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							Hủy bỏ
+						{i18n.t('Account.huybo')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							Cập nhật
+						{i18n.t('Account.capnhat')}
 						</Button>
 					</div>
 				</div>
