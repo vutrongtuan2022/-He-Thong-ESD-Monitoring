@@ -22,6 +22,8 @@ import Button from '~/components/common/Button';
 import Moment from 'react-moment';
 import Loading from '~/components/common/Loading';
 import i18n from '~/locale/i18n';
+import Popup from '~/components/common/Popup';
+import UpdateAccount from '../UpdateAccount';
 
 const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 	const router = useRouter();
@@ -30,8 +32,8 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 	const {_id} = router.query;
 
 	const [dataDetailAccount, setDataDetailAccount] = useState<IAccountDetail>();
-
 	const [dataChangeStatus, setDataChangeStatus] = useState<IAccountDetail | null>(null);
+	const [openUpdate, setOpenUpdate] = useState<boolean>(false);
 
 	useQuery([QUERY_KEY.chi_tiet_tai_khoan, _id], {
 		queryFn: () =>
@@ -68,7 +70,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 
 	const handleChangeStatusAccount = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg:  i18n.t('Account.msg')});;
+			return toastWarn({msg: i18n.t('Account.msg')});
 		}
 		return changeStatusAccount.mutate();
 	};
@@ -86,7 +88,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 						path: PATH.TaiKhoan,
 					},
 					{
-						title:  i18n.t('Account.chitiettaikhoan'),
+						title: i18n.t('Account.chitiettaikhoan'),
 						path: '',
 					},
 				]}
@@ -127,16 +129,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									{i18n.t('Account.mokhoa')}
 								</Button>
 							)}
-							<Button
-								rounded_8
-								w_fit
-								p_6_16
-								blue_light
-								bold
-								onClick={() => {
-									router.push(`/tai-khoan/chinh-sua?_id=${_id}`);
-								}}
-							>
+							<Button rounded_8 w_fit p_6_16 blue_light bold onClick={() => setOpenUpdate(true)}>
 								{i18n.t('Account.chinhsua')}
 							</Button>
 						</div>
@@ -173,7 +166,8 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.chucvu')}: </span> <span>{dataDetailAccount?.regency || '---'}</span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.chucvu')}: </span>{' '}
+									<span>{dataDetailAccount?.regency || '---'}</span>
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>{i18n.t('Account.vaitro')}: </span>
@@ -185,7 +179,8 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									<span style={{marginRight: 6}}>Email: </span> <span>{dataDetailAccount?.email || '---'}</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.team')}:</span> <span>{dataDetailAccount?.teamName || '---'}</span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.team')}:</span>{' '}
+									<span>{dataDetailAccount?.teamName || '---'}</span>
 								</td>
 							</tr>
 							<tr>
@@ -212,7 +207,8 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.diachi')}: </span> <span>{dataDetailAccount?.address || '---'}</span>
+									<span style={{marginRight: 6}}>{i18n.t('Account.diachi')}: </span>{' '}
+									<span>{dataDetailAccount?.address || '---'}</span>
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>{i18n.t('Account.capnhat')}: </span>
@@ -237,6 +233,10 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 					note={i18n.t('Account.chuyentrangthai')}
 					onSubmit={handleChangeStatusAccount}
 				/>
+
+				<Popup open={openUpdate} onClose={() => setOpenUpdate(false)}>
+					<UpdateAccount dataUpdateAccount={dataDetailAccount as any} onClose={() => setOpenUpdate(false)} />
+				</Popup>
 			</WrapperContainer>
 		</div>
 	);
