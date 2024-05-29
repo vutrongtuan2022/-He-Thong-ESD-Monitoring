@@ -33,6 +33,7 @@ import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import ImportExcel from '~/components/common/ImportExcel';
 import Noti from '~/components/common/DataWrapper/components/Noti';
+import i18n from '~/locale/i18n';
 
 function MainDevice({}: PropsMainDevice) {
 	const router = useRouter();
@@ -78,7 +79,7 @@ function MainDevice({}: PropsMainDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('Device.msgSuccess'),
 				http: deviceServices.updateDeviceStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -133,7 +134,7 @@ function MainDevice({}: PropsMainDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Import file thành công!',
+				msgSuccess: i18n.t('Device.importfilethanhcong'),
 				http: deviceServices.importExcel({
 					FileData: file,
 					Type: 1,
@@ -173,7 +174,7 @@ function MainDevice({}: PropsMainDevice) {
 
 	const handleChangeStatusDevice = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy bộ phát!'});
+			return toastWarn({msg:i18n.t('Device.msg') });
 		}
 
 		return changeStatusDevice.mutate();
@@ -193,11 +194,11 @@ function MainDevice({}: PropsMainDevice) {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Quản lý bộ phát',
+						title: i18n.t('Device.quanlybophat'),
 						path: '',
 					},
 				]}
@@ -257,7 +258,7 @@ function MainDevice({}: PropsMainDevice) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								onClick={() => setOpenCreate(true)}
 							>
-								Thêm mới
+								{i18n.t('Device.themmoi')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
@@ -270,15 +271,15 @@ function MainDevice({}: PropsMainDevice) {
 				<div className={styles.main}>
 					<div className={styles.main_search}>
 						<div className={styles.search}>
-							<Search keyName='_keyword' placeholder='Tìm kiếm theo số MAC, tên thiết bị' />
+							<Search keyName='_keyword' placeholder={i18n.t('Device.timkiem')} />
 						</div>
 						<div className={styles.filter}>
-							<Search isNumber keyName='_pin' placeholder='Tìm kiếm phần trăm pin' />
+							<Search isNumber keyName='_pin' placeholder={i18n.t('Device.timkiempin')} />
 						</div>
 
 						<div className={styles.filter}>
 							<FilterCustom
-								name='Hoạt động'
+								name={i18n.t('Device.hoatdong')}
 								query='_onlineState'
 								listFilter={[
 									{id: STATE_ONLINE_DEVICE.ONLINE, name: 'Online'},
@@ -288,7 +289,7 @@ function MainDevice({}: PropsMainDevice) {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name='Trạng thái'
+								name={i18n.t('Device.trangthai')}
 								query='_status'
 								listFilter={[
 									{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
@@ -298,11 +299,11 @@ function MainDevice({}: PropsMainDevice) {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name='Tình trạng'
+								name={i18n.t('Device.tinhtrang')}
 								query='_ngState'
 								listFilter={[
-									{id: STATE_DEVICE_NG.KHONG_NG, name: 'Bình thường'},
-									{id: STATE_DEVICE_NG.BI_NG, name: 'Not good'},
+									{id: STATE_DEVICE_NG.KHONG_NG, name: i18n.t('Device.binhthuong')},
+									{id: STATE_DEVICE_NG.BI_NG, name: i18n.t('Device.bing')},
 								]}
 							/>
 						</div>
@@ -313,9 +314,9 @@ function MainDevice({}: PropsMainDevice) {
 							loading={listDevices.isLoading}
 							noti={
 								<Noti
-									title='Bộ phát trống'
-									des='Danh sách bộ phát trống!'
-									titleButton='Thêm mới bộ phát'
+									title={i18n.t('Device.bophattrong')}
+									des={i18n.t('Device.danhsachbophattrong')}
+									titleButton={i18n.t('Device.themmoibophat')}
 									onClick={() => setOpenCreate(true)}
 								/>
 							}
