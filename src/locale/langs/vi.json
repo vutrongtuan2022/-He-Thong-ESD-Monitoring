@@ -1,6 +1,10 @@
 {
     "Common": {
-        "home": "Trang chủ"
+        "home": "Trang chủ",
+        "tatca": "Tất cả",
+        "timkiem": "Tìm kiếm ...",
+        "xacnhan": "Xác nhận",
+        "huybo": "Hủy bỏ"
     },
     "Overview": {
         "tongQuan": "Tổng quan"
@@ -57,6 +61,7 @@
         "themmoi": "Thêm mới",
         "STT": "STT",
         "manhanvien": "Mã nhân viên",
+        "nhapmanhanvien": "Nhập mã nhân viên",
         "tennhanvien": "Tên nhân viên",
         "chucvu": "Chức vụ",
         "thuocteam": "Thuộc team",
@@ -67,6 +72,55 @@
         "dacaptaikhoan": "Đã cấp tài khoản",
         "chuacaptaikhoan": "Chưa cấp tài khoản",
         "dacap": "Đã cấp",
-        "chuacap": "Chưa cấp"
+        "chuacap": "Chưa cấp",
+        "chinhsua": "Chỉnh sửa",
+        "khoa": "Khóa",
+        "mokhoa": "Mở khóa",
+        "sudung": "Sử dụng",
+        "dangsudung": "Đang sử dụng",
+        "khongsudung": "Không sử dụng",
+        "importfilethanhcong": "Import file thành công!",
+        "thaydoitrangthaithanhcong": "Thay đổi trạng thái thành công!",
+        "khongtimthaynhanvien": "Không tìm thấy nhân viên nào!",
+        "timkiemtheotennhanvienmanhanvien": "Tìm kiếm theo tên nhân viên, mã nhân viên",
+        "hientaichuaconhanviennao": "Hiện tại chưa có nhân viên nào ?",
+        "themtaikhoan": "Thêm tài khoản",
+        "chuyentrangthai": "Chuyển trạng thái",
+        "bancochacmuonchuyentrangthai": "Bạn có chắc muốn chuyển trạng thái cho nhân viên này ?",
+        "themmoinhanvien": "Thêm mới nhân viên",
+        "themmoinhanvienthanhcong": "Thêm mới nhân viên thành công!",
+        "vuilongnhapmanhanvien": "Vui lòng nhập mã nhân viên!",
+        "vuilongnhaphovaten": "Vui lòng nhập tên nhân viên!",
+        "vuilongnhapemail": "Vui lòng nhập email!",
+        "vuilongnhapsodienthoai": "Vui lòng nhập số điện thoại!",
+        "cuilongchonchucvu": "Vui lòng chọn chức vụ!",
+        "vuilongchonngaysinh": "Vui lòng nhập ngày sinh!",
+        "sodienthoaikhongdungdinhdang": "Số điện thoại không đúng định dạng!",
+        "emailkhongdungdinhdang": "Email không đúng định dạng!",
+        "ngaysinhkhonghople": "Ngày sinh không hợp lệ!",
+        "themnhanvien": "Thêm nhân viên",
+        "diendayduthongtinnhanvien": "Điền đầy đủ thông tin nhân viên",
+        "huybo": "Hủy bỏ",
+        "luulai": "Lưu lại",
+        "hovaten": "Họ và tên",
+        "nhaphovaten": "Nhập họ và tên",
+        "nhapemail": "Nhập email",
+        "sodienthoai": "Số điện thoại",
+        "nhapsodienthoai": "Nhập số điện thoại",
+        "ngaysinh": "Ngày sinh",
+        "chonngaysinh": "Chọn ngày sinh",
+        "gioitinh": "Giới tính",
+        "nam": "Nam",
+        "nu": "Nữ",
+        "luachon": "Lựa chọn",
+        "diachi": "Địa chỉ",
+        "nhapdiachi": "Nhập địa chỉ",
+        "chinhsuanhanvien": "Chỉnh sửa nhân viên",
+        "chinhsuanhanvienthanhcong": "Chỉnh sửa nhân viên thành công!",
+        "khongtimthaynhanviennao": "Không tìm thấy nhân viên nào!",
+        "taoluc": "Tạo lúc"
+    },
+    "Team": {
+        "quanlyteam": "Quản lý team"
     }
 }

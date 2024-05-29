@@ -7,6 +7,7 @@ import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import InfoUser from '../InfoUser';
+import i18n from '~/locale/i18n';
 
 function MainDetailUser({}: PropsMainDetailUser) {
 	return (
@@ -14,15 +15,15 @@ function MainDetailUser({}: PropsMainDetailUser) {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Danh sách nhân viên',
+						title: i18n.t('User.quanlynhanvien'),
 						path: PATH.NhanVien,
 					},
 					{
-						title: 'Chi tiết nhân viên',
+						title: i18n.t('User.chitietnhanvien'),
 						path: '',
 					},
 				]}
