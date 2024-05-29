@@ -30,6 +30,7 @@ import Loading from '~/components/common/Loading';
 import ImageFill from '~/components/common/ImageFill';
 import Popup from '~/components/common/Popup';
 import UpdateAccount from '../UpdateAccount';
+import i18n from '~/locale/i18n';
 
 const MainPageAccount = ({}: PropsMainPageAccount) => {
 	const router = useRouter();
@@ -45,7 +46,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('Account.msgSuccess'),
 				http: accountServices.updateAccountStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -90,7 +91,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 
 	const handleChangeStatusDevice = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy tài khoản!'});
+			return toastWarn({msg: i18n.t('Account.msg')});
 		}
 		return changeStatusAccount.mutate();
 	};
@@ -101,11 +102,11 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Quản lý tài khoản',
+						title: i18n.t('Account.quanlytaikhoan'),
 						path: '',
 					},
 				]}
@@ -134,12 +135,12 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 				<div className={styles.container}>
 					<div className={styles.main_search}>
 						<div className={styles.search}>
-							<Search placeholder='Tìm kiếm theo mã tài khoản và tên tài khoản' keyName='_keyword' />
+							<Search placeholder={i18n.t('Account.timkiem')} keyName='_keyword' />
 						</div>
 						<div style={{minWidth: 240}}>
 							<FilterCustom
 								isSearch
-								name='Vai trò'
+								name={i18n.t('Account.vaitro')}
 								query='_roleUuid'
 								listFilter={listRoles?.data?.map((v: any) => ({
 									id: v?.uuid,
@@ -149,16 +150,16 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name='Trạng thái'
+								name={i18n.t('Account.trangthai')}
 								query='_status'
 								listFilter={[
 									{
 										id: STATUS_GENERAL.SU_DUNG,
-										name: 'Sử dụng',
+										name: i18n.t('Account.sudung'),
 									},
 									{
 										id: STATUS_GENERAL.KHONG_SU_DUNG,
-										name: 'Không sử dụng',
+										name: i18n.t('Account.khongsudung'),
 									},
 								]}
 							/>
@@ -168,26 +169,26 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 				<div className={styles.table}>
 					<DataWrapper
 						data={listAccount?.data?.items}
-						noti={<Noti des='Hiện tại chưa có tài khoản nào ?' />}
+						noti={<Noti des={i18n.t('Account.hientai')} />}
 						loading={listAccount?.isLoading}
 					>
 						<Table
 							data={listAccount?.data?.items}
 							column={[
 								{
-									title: 'STT',
+									title: i18n.t('Account.STT'),
 									render: (data: any, index: number) => <>{index + 1}</>,
 								},
 								{
-									title: 'Mã nhân viên',
+									title: i18n.t('Account.manhanvien'),
 									render: (data: IAccount) => (
-										<Link href={`/nhan-vien/${data?.uuid}`} className={styles.link}>
+										<Link href={`/nhan-vien/${data?.userUuid}`} className={styles.link}>
 											{data?.code || '---'}
 										</Link>
 									),
 								},
 								{
-									title: 'Tên nhân viên',
+									title: i18n.t('Account.tennhanvien'),
 									render: (data: IAccount) => (
 										<div className={styles.info}>
 											<ImageFill
@@ -204,25 +205,25 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									render: (data: IAccount) => <p>{data?.email || '---'}</p>,
 								},
 								{
-									title: 'Số điện thoại',
+									title: i18n.t('Account.sodienthoai'),
 									render: (data: IAccount) => <p>{data?.phone || '---'}</p>,
 								},
 								{
-									title: 'Chức vụ',
+									title: i18n.t('Account.chucvu'),
 									render: (data: IAccount) => <p>{data?.regency || '---'}</p>,
 								},
 								{
-									title: 'Vai trò',
+									title: i18n.t('Account.vaitro'),
 									render: (data: IAccount) => <>{data?.roleName || '---'}</>,
 								},
 								{
-									title: 'Trạng thái',
+									title: i18n.t('Account.trangthai'),
 									render: (data: IAccount) => (
 										<>
 											{data?.status == STATUS_GENERAL.SU_DUNG ? (
-												<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+												<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.dangsudung')}</p>
 											) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-												<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+												<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Account.khongsudung')}</p>
 											) : (
 												'---'
 											)}
@@ -236,21 +237,25 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 											<IconCustom
 												create
 												icon={<Eye fontSize={20} fontWeight={600} />}
-												tooltip='Xem chi tiết'
+												tooltip={i18n.t('Account.chitiet')}
 												color='#777E90'
 												href={`/tai-khoan/${data?.uuid}`}
 											/>
 											<IconCustom
 												edit
 												icon={<LuPencil fontSize={20} fontWeight={600} />}
-												tooltip='Chỉnh sửa'
+												tooltip={i18n.t('Account.chinhsua')}
 												color='#777E90'
 												onClick={() => setDataUpdateAccount(data)}
 											/>
 											<IconCustom
 												warn
 												icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
-												tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
+												tooltip={
+													data.status === STATUS_GENERAL.SU_DUNG
+														? i18n.t('Account.khoa')
+														: i18n.t('Account.mokhoa')
+												}
 												color='#777E90'
 												onClick={() => setDataChangeStatus(data)}
 											/>
@@ -270,8 +275,8 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						warn
 						open={!!dataChangeStatus}
 						onClose={() => setDataChangeStatus(null)}
-						title='Khóa tài khoản'
-						note='Bạn có chắc chắn muốn khóa tài khoản này?'
+						title={i18n.t('Account.khoataikhoa')}
+						note={i18n.t('Account.bancochac')}
 						onSubmit={handleChangeStatusDevice}
 					/>
 				</div>
