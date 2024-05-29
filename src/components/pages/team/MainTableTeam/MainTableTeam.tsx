@@ -17,6 +17,7 @@ import {LuPencil} from 'react-icons/lu';
 import {Lock1, Unlock} from 'iconsax-react';
 import Dialog from '~/components/common/Dialog';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 function MainTableTeam({}: PropsMainTableTeam) {
 	const router = useRouter();
@@ -49,7 +50,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('Common.thaydoitrangthaithanhcong'),
 				http: teamServices.changeStatusTeam({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -74,21 +75,21 @@ function MainTableTeam({}: PropsMainTableTeam) {
 			<DataWrapper
 				data={pageListTeams?.data?.items}
 				loading={pageListTeams.isLoading}
-				noti={<Noti title='Team trống' des='Danh sách team trống!' />}
+				noti={<Noti title={i18n.t('Team.teamtrong')} des={i18n.t('Team.danhsachteamtrong')} />}
 			>
 				<Table
 					data={pageListTeams?.data?.items}
 					column={[
 						{
-							title: 'STT',
+							title: i18n.t('Common.STT'),
 							render: (data: ITeam, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: 'Mã team',
+							title: i18n.t('Common.mateam'),
 							render: (data: ITeam) => <>{data.code || '---'}</>,
 						},
 						{
-							title: 'Tên team',
+							title: i18n.t('Common.tenteam'),
 							render: (data: ITeam) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
@@ -96,29 +97,29 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							),
 						},
 						{
-							title: 'Người quản lý team',
+							title: i18n.t('Common.nguoiquanlyteam'),
 							render: (data: ITeam) => <>{data.leaderName || '---'}</>,
 						},
 						{
-							title: 'Số thành viên',
+							title: i18n.t('Common.sothanhvien'),
 							render: (data: ITeam) => <>{data.totalUser || 0}</>,
 						},
 						{
-							title: 'Số thiết bị',
+							title: i18n.t('Common.sothietbi'),
 							render: (data: ITeam) => <>{data.totalDevices || 0}</>,
 						},
 						{
-							title: 'Khu vực',
+							title: i18n.t('Common.khuvuc'),
 							render: (data: ITeam) => <>{data.areaName || '---'}</>,
 						},
 						{
-							title: 'Trạng thái',
+							title: i18n.t('Common.trangthai'),
 							render: (data: ITeam) => (
 								<>
 									{data?.status == STATUS_GENERAL.SU_DUNG ? (
-										<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+										<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.dangsudung')}</p>
 									) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-										<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+										<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.khongsudung')}</p>
 									) : (
 										'---'
 									)}
@@ -126,20 +127,20 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							),
 						},
 						{
-							title: 'Tác vụ',
+							title: i18n.t('Common.tacvu'),
 							render: (data: ITeam) => (
 								<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 									<IconCustom
 										edit
 										icon={<LuPencil fontSize={20} fontWeight={600} />}
-										tooltip='Chỉnh sửa'
+										tooltip={i18n.t('Common.chinhsua')}
 										color='#777E90'
 										href={`/team/chinh-sua?_id=${data.uuid}`}
 									/>
 									<IconCustom
 										warn
 										icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
-										tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
+										tooltip={data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('Common.khoa') : i18n.t('Common.mokhoa')}
 										color='#777E90'
 										onClick={() => setDataChangeStatus(data)}
 									/>
@@ -161,8 +162,8 @@ function MainTableTeam({}: PropsMainTableTeam) {
 				warn
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
-				title='Thay đổi trạng thái'
-				note='Bạn có chắc chắn muốn thay đổi trạng thái cho team này?'
+				title={i18n.t('Common.thaydoitrangthai')}
+				note={i18n.t('Team.bancochacmuonchuyentrangthai')}
 				onSubmit={handleChangeStatusTeam}
 			/>
 		</div>
