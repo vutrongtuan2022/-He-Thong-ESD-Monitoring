@@ -25,6 +25,7 @@ import clsx from 'clsx';
 import TableTeam from '../MainTableTeam';
 import teamServices from '~/services/teamServices';
 import MainTreeTeam from '../MainTreeTeam';
+import i18n from '~/locale/i18n';
 
 function MainPageTeam({}: PropsMainPageTeam) {
 	const router = useRouter();
@@ -91,11 +92,11 @@ function MainPageTeam({}: PropsMainPageTeam) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 					},
 					{
 						path: '',
-						title: 'Danh sách team',
+						title: i18n.t('Team.danhsachteam'),
 					},
 				]}
 				action={
@@ -137,7 +138,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								href={PATH.ThemTeam}
 							>
-								Thêm mới
+								{i18n.t('Team.themmoi')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>

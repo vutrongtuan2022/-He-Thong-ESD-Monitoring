@@ -76,9 +76,19 @@
 		"chinhsuanhanvien": "Chỉnh sửa nhân viên",
 		"chinhsuanhanvienthanhcong": "Chỉnh sửa nhân viên thành công!",
 		"khongtimthaynhanviennao": "Không tìm thấy nhân viên nào!",
-		"taoluc": "Tạo lúc"
+		"taoluc": "Tạo lúc",
+		"captaikhoanthanhcong": "Cấp tài khoản thành công!",
+		"vuilongchonanh": "Vui lòng chọn ảnh!",
+		"vuilongchonvaitrotaikhoan": "Vui lòng chọn vai trò tài khoản!",
+		"captaikhoan": "Cấp tài khoản",
+		"dienayduthongtincanthiet": "Điền đầy đủ thông tin cần thiết",
+		"nhaptentaikhoan": "Nhập tên tài khoản",
+		"tentaikhoan": "Tên tài khoản",
+		"vaitro": "Vai trò"
 	},
 	"Team": {
-		"quanlyteam": "Quản lý team"
+		"quanlyteam": "Quản lý team",
+		"danhsachteam": "Danh sách team",
+		"themmoi": "Thêm mới"
 	}
 }

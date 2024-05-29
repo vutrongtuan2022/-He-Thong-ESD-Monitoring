@@ -2,13 +2,14 @@ import Head from 'next/head';
 import {Fragment, ReactElement} from 'react';
 import BaseLayout from '~/components/layouts/BaseLayout';
 import MainPageTeam from '~/components/pages/team/MainPageTeam';
+import i18n from '~/locale/i18n';
 
 export default function Page() {
 	return (
 		<Fragment>
 			<Head>
-				<title>Quản lý team</title>
-				<meta name='description' content='Quản lý team' />
+				<title>{i18n.t('Team.quanlyteam')}</title>
+				<meta name='description' content={i18n.t('Team.quanlyteam')} />
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
@@ -18,5 +19,5 @@ export default function Page() {
 }
 
 Page.getLayout = function (Page: ReactElement) {
-	return <BaseLayout title='Quản lý team'>{Page}</BaseLayout>;
+	return <BaseLayout title={i18n.t('Team.quanlyteam')}>{Page}</BaseLayout>;
 };

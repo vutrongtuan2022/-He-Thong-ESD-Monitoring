@@ -15,6 +15,7 @@ import categoryServices from '~/services/categoryServices';
 import Loading from '~/components/common/Loading';
 import {toastWarn} from '~/common/funcs/toast';
 import uploadServices from '~/services/uploadServices';
+import i18n from '~/locale/i18n';
 
 function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountFromUser) {
 	const queryClient = useQueryClient();
@@ -56,7 +57,7 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Cấp tài khoản thành công!',
+				msgSuccess: i18n.t('User.captaikhoanthanhcong'),
 				http: accountServices.registerAccount({
 					userUuid: form?.userUuid,
 					roleUuid: form?.roleUuid,
@@ -74,13 +75,13 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 
 	const handleSubmit = async () => {
 		if (!file) {
-			return toastWarn({msg: 'Vui lòng chọn ảnh!'});
+			return toastWarn({msg: i18n.t('User.vuilongchonanh')});
 		}
 		if (!form?.userUuid) {
-			return toastWarn({msg: 'Không tìm thấy người dùng!'});
+			return toastWarn({msg: i18n.t('User.khongtimthaynhanviennao')});
 		}
 		if (!form?.roleUuid) {
-			return toastWarn({msg: 'Vui lòng chọn vai trò cho tài khoản!'});
+			return toastWarn({msg: i18n.t('User.vuilongchonvaitrotaikhoan')});
 		}
 
 		const resImage = await httpRequest({
@@ -99,8 +100,8 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 	return (
 		<div className={styles.container}>
 			<Loading loading={loading || funcCreateAccount.isLoading} />
-			<h4>Cấp tài khoản </h4>
-			<p className={styles.p}>Điền đẩy đủ các thông tin cần thiết</p>
+			<h4>{i18n.t('User.captaikhoan')} </h4>
+			<p className={styles.p}>{i18n.t('User.dienayduthongtincanthiet')}</p>
 			<Form form={form} setForm={setForm}>
 				<div className={'mb'}>
 					<AvatarChange path={form?.avatar} name='avatar' onSetFile={(file: any) => setFile(file)} />
@@ -108,24 +109,24 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 				<Input
 					readOnly
 					type='text'
-					placeholder='Nhập tên nhân viên'
+					placeholder={i18n.t('User.nhapmanhanvien')}
 					name='fullName'
 					value={form.fullName}
 					label={
 						<span>
-							Tên nhân viên <span style={{color: 'red'}}>*</span>
+							{i18n.t('User.tennhanvien')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
 				<Input
 					readOnly
 					type='text'
-					placeholder='Nhập tên tài khoản'
+					placeholder={i18n.t('User.nhaptentaikhoan')}
 					name='userName'
 					value={form.userName}
 					label={
 						<span>
-							Tên tài khoản <span style={{color: 'red'}}>*</span>
+							{i18n.t('User.tentaikhoan')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -135,7 +136,7 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 						isSearch
 						name='roleUuid'
 						value={form.roleUuid || null}
-						placeholder='Lựa chọn'
+						placeholder={i18n.t('User.luachon')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
@@ -144,7 +145,7 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 						}
 						label={
 							<span>
-								Vai trò <span style={{color: 'red'}}>*</span>
+								{i18n.t('User.vaitro')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					>
@@ -157,12 +158,12 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							Hủy bỏ
+							{i18n.t('Common.huybo')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							Xác nhận
+							{i18n.t('Common.xacnhan')}
 						</Button>
 					</div>
 				</div>
