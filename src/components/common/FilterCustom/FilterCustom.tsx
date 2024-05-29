@@ -7,6 +7,7 @@ import {useRouter} from 'next/router';
 import {useState} from 'react';
 import {removeVietnameseTones} from '~/common/funcs/optionConvert';
 import {IoMdArrowDropdown} from 'react-icons/io';
+import i18n from '~/locale/i18n';
 
 function FilterCustom({listFilter, name, query, isSearch, disabled = false}: PropsFilterCustom) {
 	const router = useRouter();
@@ -17,7 +18,7 @@ function FilterCustom({listFilter, name, query, isSearch, disabled = false}: Pro
 
 	function getNameMethod(arr: {id: number | string; name: string}[], id: number | string) {
 		const item = arr?.find((v) => v.id == id) || null;
-		return item?.name || 'Tất cả';
+		return item?.name || i18n.t('Common.tatca');
 	}
 
 	return (
@@ -31,7 +32,7 @@ function FilterCustom({listFilter, name, query, isSearch, disabled = false}: Pro
 				<div className={styles.mainOption}>
 					{isSearch ? (
 						<input
-							placeholder='Tìm kiếm...'
+							placeholder={i18n.t('Common.timkiem')}
 							className={styles.inputSearch}
 							value={keyword}
 							onChange={(e) => setKeyword(e.target.value)}
@@ -57,7 +58,7 @@ function FilterCustom({listFilter, name, query, isSearch, disabled = false}: Pro
 								);
 							}}
 						>
-							<p>{'Tất cả'}</p>
+							<p>{i18n.t('Common.tatca')}</p>
 							{!queryStr && (
 								<div className={styles.icon_check}>
 									<BiCheck fontSize={18} color='#5755FF' fontWeight={600} />

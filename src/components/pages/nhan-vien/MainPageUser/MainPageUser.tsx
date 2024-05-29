@@ -49,7 +49,7 @@ function MainPageUser({}: PropsMainPageUser) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('User.thaydoitrangthaithanhcong'),
 				http: userServices.updateUserStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -124,7 +124,7 @@ function MainPageUser({}: PropsMainPageUser) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Import file thành công!',
+				msgSuccess: i18n.t('User.importfilethanhcong'),
 				http: userServices.importExcel({
 					FileData: file,
 					Type: 1,
@@ -155,7 +155,7 @@ function MainPageUser({}: PropsMainPageUser) {
 
 	const handleChangeStatusDevice = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy nhân viên!'});
+			return toastWarn({msg: i18n.t('User.khongtimthaynhanvien')});
 		}
 
 		return changeStatusUser.mutate();
@@ -252,20 +252,20 @@ function MainPageUser({}: PropsMainPageUser) {
 					<div className={styles.control}>
 						<div className={styles.left}>
 							<div style={{minWidth: 360}}>
-								<Search keyName='_keyword' placeholder='Tìm kiếm theo tên nhân viên, mã nhân viên' />
+								<Search keyName='_keyword' placeholder={i18n.t('User.timkiemtheotennhanvienmanhanvien')} />
 							</div>
 							<div style={{minWidth: 240}}>
 								<FilterCustom
-									name='Tài khoản'
+									name={i18n.t('User.taikhoan')}
 									query='_isHaveAcc'
 									listFilter={[
 										{
 											id: STATUS_ACCOUNT.HAVEACCOUNT,
-											name: 'Đã cấp tài khoản',
+											name: i18n.t('User.dacaptaikhoan'),
 										},
 										{
 											id: STATUS_ACCOUNT.NOACCOUNT,
-											name: 'Chưa cấp tài khoản',
+											name: i18n.t('User.chuacaptaikhoan'),
 										},
 									]}
 								/>
@@ -273,7 +273,7 @@ function MainPageUser({}: PropsMainPageUser) {
 							<div style={{minWidth: 240}}>
 								<FilterCustom
 									isSearch
-									name='Chức vụ'
+									name={i18n.t('User.chucvu')}
 									query='_regency'
 									listFilter={listRegencys?.data?.map((v: any) => ({
 										id: v?.uuid,
@@ -283,16 +283,16 @@ function MainPageUser({}: PropsMainPageUser) {
 							</div>
 							<div style={{minWidth: 240}}>
 								<FilterCustom
-									name='Trạng thái'
+									name={i18n.t('User.trangthai')}
 									query='_status'
 									listFilter={[
 										{
 											id: STATUS_GENERAL.SU_DUNG,
-											name: 'Sử dụng',
+											name: i18n.t('User.sudung'),
 										},
 										{
 											id: STATUS_GENERAL.KHONG_SU_DUNG,
-											name: 'Không sử dụng',
+											name: i18n.t('User.khongsudung'),
 										},
 									]}
 								/>
@@ -303,19 +303,19 @@ function MainPageUser({}: PropsMainPageUser) {
 					<div className={styles.table}>
 						<DataWrapper
 							data={listUser?.data?.items}
-							noti={<Noti des='Hiện tại chưa có nhân viên nào ?' />}
+							noti={<Noti des={i18n.t('User.hientaichuaconhanviennao')} />}
 							loading={listUser?.isLoading}
 						>
 							<Table
 								data={listUser?.data?.items}
 								column={[
 									{
-										title: 'STT',
+										title: i18n.t('User.STT'),
 										render: (data: IUser, index: number) => <>{index + 1}</>,
 									},
 
 									{
-										title: 'Mã nhân viên',
+										title: i18n.t('User.manhanvien'),
 										render: (data: IUser) => (
 											<Link href={`/nhan-vien/${data.uuid}`} className={styles.link}>
 												{data.code || '---'}
@@ -323,15 +323,15 @@ function MainPageUser({}: PropsMainPageUser) {
 										),
 									},
 									{
-										title: 'Tên nhân viên',
+										title: i18n.t('User.tennhanvien'),
 										render: (data: IUser) => <p>{data.fullname}</p>,
 									},
 									{
-										title: 'Chức vụ',
+										title: i18n.t('User.chucvu'),
 										render: (data: IUser) => <p>{data.regency || '---'}</p>,
 									},
 									{
-										title: 'Thuộc team',
+										title: i18n.t('User.thuocteam'),
 										render: (data: IUser) => <p>{data.teamName || '---'}</p>,
 									},
 									{
@@ -339,7 +339,7 @@ function MainPageUser({}: PropsMainPageUser) {
 										render: (data: IUser) => <>{data.leadName || '---'}</>,
 									},
 									{
-										title: 'Tài khoản',
+										title: i18n.t('User.taikhoan'),
 										render: (data: IUser) => (
 											<p
 												className={clsx(styles.status, {
@@ -347,19 +347,19 @@ function MainPageUser({}: PropsMainPageUser) {
 													[styles.noaccount]: !data.userName,
 												})}
 											>
-												{data.userName ? data.userName : 'Chưa cấp'}
+												{data.userName ? data.userName : i18n.t('User.chuacap')}
 											</p>
 										),
 									},
 
 									{
-										title: 'Trạng thái',
+										title: i18n.t('User.trangthai'),
 										render: (data: IUser) => (
 											<>
 												{data?.status == STATUS_GENERAL.SU_DUNG ? (
-													<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('User.dangsudung')}</p>
 												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('User.khongsudung')}</p>
 												) : (
 													'---'
 												)}
@@ -368,32 +368,37 @@ function MainPageUser({}: PropsMainPageUser) {
 									},
 
 									{
-										title: 'Ngày tạo',
+										title: i18n.t('User.ngaytao'),
 										render: (data: IUser) => <Moment date={data.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 									},
 
 									{
-										title: 'Tác vụ',
+										title: i18n.t('User.tacvu'),
 										render: (data: IUser) => (
 											<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 												{!data?.userName ? (
 													<IconCustom
 														create
 														icon={<UserCirlceAdd size='23' />}
-														tooltip='Thêm tài khoản'
+														tooltip={i18n.t('User.themtaikhoan')}
 														color='#777E90'
 														onClick={() => {
 															setDataCreateAccount(data);
 														}}
 													/>
 												) : (
-													<IconCustom create icon={<TickCircle size='23' />} tooltip='Đã cấp' color='#35c244' />
+													<IconCustom
+														create
+														icon={<TickCircle size='23' />}
+														tooltip={i18n.t('User.dacap')}
+														color='#35c244'
+													/>
 												)}
 
 												<IconCustom
 													edit
 													icon={<LuPencil fontSize={20} fontWeight={600} />}
-													tooltip='Chỉnh sửa'
+													tooltip={i18n.t('User.chinhsua')}
 													color='#777E90'
 													onClick={() => {
 														router.push(`/nhan-vien/chinh-sua?_id=${data.uuid}`);
@@ -404,7 +409,9 @@ function MainPageUser({}: PropsMainPageUser) {
 													icon={
 														data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />
 													}
-													tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
+													tooltip={
+														data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('User.khoa') : i18n.t('User.mokhoa')
+													}
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
 												/>
@@ -425,8 +432,8 @@ function MainPageUser({}: PropsMainPageUser) {
 							warn
 							open={!!dataChangeStatus}
 							onClose={() => setDataChangeStatus(null)}
-							title='Chuyển trạng thái'
-							note='Bạn có chắc chắn chuyển trạng thái cho nhân viên này?'
+							title={i18n.t('User.chuyentrangthai')}
+							note={i18n.t('User.bancochacmuonchuyentrangthai')}
 							onSubmit={handleChangeStatusDevice}
 						/>
 					</div>
