@@ -8,7 +8,7 @@ export default function Page() {
 		<Fragment>
 			<Head>
 				<title>Quản lý nhân viên</title>
-				<meta name='description' content='Quản lý gateway' />
+				<meta name='description' content='Quản lý nhân viên' />
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>

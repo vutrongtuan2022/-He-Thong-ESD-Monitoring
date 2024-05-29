@@ -30,6 +30,11 @@ const dashboardServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	dashboardChart: (data: {}, tokenAxios?: any) => {
+		return axiosClient.post(`/Dashboard/dashboard_chart`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default dashboardServices;

@@ -1,6 +1,6 @@
 import {IUser} from '../../MainPageUser/interfaces';
 
-export interface PropsPopupCreateAccount {
+export interface PropsCreateAccountFromUser {
 	onClose: () => void;
 	dataCreateAccount: IUser | null;
 }

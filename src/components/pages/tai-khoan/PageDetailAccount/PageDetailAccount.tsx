@@ -143,7 +143,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 
 					<div className={clsx('mt', styles.table)}>
 						<div className={'mb'}>
-							<Avatar src={''} className={styles.avatar} />
+							<Avatar src={`${process.env.NEXT_PUBLIC_AVATAR}/${dataDetailAccount?.image}`} className={styles.avatar} />
 						</div>
 						<table className={styles.containertable}>
 							<colgroup>
@@ -206,7 +206,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>Người tạo: </span>
-									<span>{dataDetailAccount?.userCreated || '---'}</span>
+									<span>{dataDetailAccount?.createdBy || '---'}</span>
 								</td>
 							</tr>
 							<tr>

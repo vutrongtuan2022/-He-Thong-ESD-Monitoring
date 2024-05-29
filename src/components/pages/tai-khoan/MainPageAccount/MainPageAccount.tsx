@@ -12,7 +12,7 @@ import Table from '~/components/common/Table';
 import DataWrapper from '~/components/common/DataWrapper';
 import Pagination from '~/components/common/Pagination';
 import {LuPencil} from 'react-icons/lu';
-import {Lock1, Unlock} from 'iconsax-react';
+import {Eye, Lock1, Unlock} from 'iconsax-react';
 import Button from '~/components/common/Button';
 import Image from 'next/image';
 import icons from '~/constants/images/icons';
@@ -28,6 +28,8 @@ import {toastWarn} from '~/common/funcs/toast';
 import Noti from '~/components/common/DataWrapper/components/Noti';
 import Loading from '~/components/common/Loading';
 import ImageFill from '~/components/common/ImageFill';
+import Popup from '~/components/common/Popup';
+import UpdateAccount from '../UpdateAccount';
 
 const MainPageAccount = ({}: PropsMainPageAccount) => {
 	const router = useRouter();
@@ -36,6 +38,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 	const {_page, _pageSize, _status, _keyword, _roleUuid} = router.query;
 
 	const [dataChangeStatus, setDataChangeStatus] = useState<IAccount | null>(null);
+	const [dataUpdateAccount, setDataUpdateAccount] = useState<IAccount | null>(null);
 
 	const changeStatusAccount = useMutation({
 		mutationFn: () => {
@@ -176,18 +179,22 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									render: (data: any, index: number) => <>{index + 1}</>,
 								},
 								{
-									title: 'Mã người dùng',
+									title: 'Mã nhân viên',
 									render: (data: IAccount) => (
-										<Link href={`/tai-khoan/${data?.uuid}`} className={styles.link}>
+										<Link href={`/nhan-vien/${data?.uuid}`} className={styles.link}>
 											{data?.code || '---'}
 										</Link>
 									),
 								},
 								{
-									title: 'Tên người dùng',
+									title: 'Tên nhân viên',
 									render: (data: IAccount) => (
 										<div className={styles.info}>
-											<ImageFill src={''} alt='avatar' className={styles.image} />
+											<ImageFill
+												src={`${process.env.NEXT_PUBLIC_AVATAR}/${data?.image}`}
+												alt='avatar'
+												className={styles.image}
+											/>
 											<p>{data?.fullName || '---'}</p>
 										</div>
 									),
@@ -227,13 +234,18 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									render: (data: IAccount) => (
 										<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 											<IconCustom
+												create
+												icon={<Eye fontSize={20} fontWeight={600} />}
+												tooltip='Xem chi tiết'
+												color='#777E90'
+												href={`/tai-khoan/${data?.uuid}`}
+											/>
+											<IconCustom
 												edit
 												icon={<LuPencil fontSize={20} fontWeight={600} />}
 												tooltip='Chỉnh sửa'
 												color='#777E90'
-												onClick={() => {
-													router.push(`/tai-khoan/chinh-sua?_id=${data?.uuid}`);
-												}}
+												onClick={() => setDataUpdateAccount(data)}
 											/>
 											<IconCustom
 												warn
@@ -264,6 +276,10 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 					/>
 				</div>
 			</WrapperContainer>
+
+			<Popup open={!!dataUpdateAccount} onClose={() => setDataUpdateAccount(null)}>
+				<UpdateAccount dataUpdateAccount={dataUpdateAccount} onClose={() => setDataUpdateAccount(null)} />
+			</Popup>
 		</div>
 	);
 };

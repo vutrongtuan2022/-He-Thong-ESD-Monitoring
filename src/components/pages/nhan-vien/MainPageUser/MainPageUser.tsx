@@ -16,11 +16,11 @@ import {QUERY_KEY, STATUS_ACCOUNT, STATUS_GENERAL} from '~/constants/config/enum
 import categoryServices from '~/services/categoryServices';
 import {toastWarn} from '~/common/funcs/toast';
 import Popup from '~/components/common/Popup';
-import PopupCreate from '../PopupCreateAccount';
+import CreateAccountFromUser from '../CreateAccountFromUser';
 import Dialog from '~/components/common/Dialog';
 import Pagination from '~/components/common/Pagination';
 import IconCustom from '~/components/common/IconCustom';
-import {Lock1, Unlock, UserCirlceAdd} from 'iconsax-react';
+import {Lock1, TickCircle, Unlock, UserCirlceAdd} from 'iconsax-react';
 import DataWrapper from '~/components/common/DataWrapper';
 import {LuPencil} from 'react-icons/lu';
 import clsx from 'clsx';
@@ -178,7 +178,7 @@ function MainPageUser({}: PropsMainPageUser) {
 					},
 					{
 						path: '',
-						title: 'Danh sách nhân viên',
+						title: i18n.t('User.danhsachnhanvien'),
 					},
 				]}
 				action={
@@ -376,15 +376,19 @@ function MainPageUser({}: PropsMainPageUser) {
 										title: 'Tác vụ',
 										render: (data: IUser) => (
 											<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
-												<IconCustom
-													create
-													icon={<UserCirlceAdd size='23' />}
-													tooltip='Thêm tài khoản'
-													color='#777E90'
-													onClick={() => {
-														setDataCreateAccount(data);
-													}}
-												/>
+												{!data?.userName ? (
+													<IconCustom
+														create
+														icon={<UserCirlceAdd size='23' />}
+														tooltip='Thêm tài khoản'
+														color='#777E90'
+														onClick={() => {
+															setDataCreateAccount(data);
+														}}
+													/>
+												) : (
+													<IconCustom create icon={<TickCircle size='23' />} tooltip='Đã cấp' color='#35c244' />
+												)}
 
 												<IconCustom
 													edit
@@ -427,7 +431,7 @@ function MainPageUser({}: PropsMainPageUser) {
 						/>
 					</div>
 					<Popup open={!!dataCreateAccount} onClose={() => setDataCreateAccount(null)}>
-						<PopupCreate dataCreateAccount={dataCreateAccount} onClose={() => setDataCreateAccount(null)} />
+						<CreateAccountFromUser dataCreateAccount={dataCreateAccount} onClose={() => setDataCreateAccount(null)} />
 					</Popup>
 					<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
 						<ImportExcel
