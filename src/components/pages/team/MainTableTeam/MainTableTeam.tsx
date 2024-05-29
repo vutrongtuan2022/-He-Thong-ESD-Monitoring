@@ -34,7 +34,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					status: _status ? Number(_status) : null,
-					leaderUuid: _leaderUuid ? (_leaderUuid as string) : null,
+					leaderUuid: _leaderUuid ? [_leaderUuid as string] : null,
 					areaUuid: _areaUuid ? (_areaUuid as string) : null,
 				}),
 			}),

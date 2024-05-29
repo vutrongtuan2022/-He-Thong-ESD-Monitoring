@@ -159,7 +159,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									},
 									{
 										id: STATUS_GENERAL.KHONG_SU_DUNG,
-										name:  i18n.t('Account.khongsudung'),
+										name: i18n.t('Account.khongsudung'),
 									},
 								]}
 							/>
@@ -182,7 +182,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 								{
 									title: i18n.t('Account.manhanvien'),
 									render: (data: IAccount) => (
-										<Link href={`/nhan-vien/${data?.uuid}`} className={styles.link}>
+										<Link href={`/nhan-vien/${data?.userUuid}`} className={styles.link}>
 											{data?.code || '---'}
 										</Link>
 									),
@@ -251,7 +251,11 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 											<IconCustom
 												warn
 												icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
-												tooltip={data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('Account.khoa') : i18n.t('Account.mokhoa')}
+												tooltip={
+													data.status === STATUS_GENERAL.SU_DUNG
+														? i18n.t('Account.khoa')
+														: i18n.t('Account.mokhoa')
+												}
 												color='#777E90'
 												onClick={() => setDataChangeStatus(data)}
 											/>
