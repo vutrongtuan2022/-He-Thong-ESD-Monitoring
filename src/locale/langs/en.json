@@ -1,8 +1,50 @@
 {
-	"Common": {
-		"home": "Home"
-	},
-	"Overview": {
-		"tongQuan": "Overview report"
-	}
+    "Common": {
+        "home": "Home"
+    },
+    "Overview": {
+        "tongQuan": "Overview report"
+    },
+    "Account": {
+        "tatca": "All",
+        "quanlytaikhoan": "Account management",
+        "msgSuccess": "Status change successful!",
+        "msg": "Account not found",
+        "timkiem": "Search by account code and account name",
+        "sudung": "Use",
+        "hientai": "Don't have an account yet?",
+        "STT": "STT",
+        "manhanvien": "User ID",
+        "tennhanvien": "Username",
+        "sodienthoai": "Phone",
+        "chucvu": "Position",
+        "vaitro": "Role",
+        "trangthai": "Status",
+        "tacvu": "Action",
+        "dangsudung": "Using",
+        "khongsudung": "Do not use",
+        "chitiet": "Detail",
+        "chinhsua": "Edit",
+        "khoa": "Lock up",
+        "mokhoa": "Un lock",
+        "khoataikhoa": "Lock account",
+        "bancochac": "Are you sure you want to block this account?",
+        "chitiettaikhoan": "Account details",
+        "team": "Team",
+        "nguoiquanly": "Manager",
+        "ngaysinh": "Birth day",
+        "nguoitao": "Creator",
+        "diachi": "Address",
+        "capnhatcuoi": "Last updated",
+        "chuyen": "Switch state",
+        "chuyentrangthai": "Are you sure to change the status for this account?",
+        "dienthongtin": "Điền đẩy đủ các thông tin cần thiết",
+        "nhaptennhanvien": "Nhập tên nhân viên",
+        "tentaikhoan": "Tên tài khoản",
+        "nhaptentaikhoan": "Nhập tên tài khoản",
+        "luachon": "Lựa chọn",
+        "huybo": "Hủy bỏ",
+        "capnhat": "Cập nhật"
+
+    }
 }
