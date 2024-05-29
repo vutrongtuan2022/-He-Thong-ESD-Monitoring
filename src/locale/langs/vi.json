@@ -1,4 +1,7 @@
 {
+	"Overview": {
+		"tongQuan": "Tổng quan"
+	},
 	"Common": {
 		"home": "Trang chủ",
 		"tatca": "Tất cả",
@@ -34,9 +37,6 @@
 		"dangsudung": "Đang sử dụng",
 		"khongsudung": "Không sử dụng",
 		"thaydoitrangthai": "Thay đổi trạng thái"
-	},
-	"Overview": {
-		"tongQuan": "Tổng quan"
 	},
 	"Account": {
 		"tatca": "Tất cả",
