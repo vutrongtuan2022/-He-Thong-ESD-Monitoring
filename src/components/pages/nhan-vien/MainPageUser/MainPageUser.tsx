@@ -41,8 +41,8 @@ function MainPageUser({}: PropsMainPageUser) {
 	const {_page, _pageSize, _status, _isHaveAcc, _username, importExcel, _keyword, _regency} = router.query;
 
 	const [file, setFile] = useState<any>(null);
-	const [openCreate, setOpenCreate] = useState<boolean>(false);
 	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
+	const [dataCreateAccount, setDataCreateAccount] = useState<IUser | null>(null);
 
 	const changeStatusUser = useMutation({
 		mutationFn: () => {
@@ -382,7 +382,7 @@ function MainPageUser({}: PropsMainPageUser) {
 													tooltip='Thêm tài khoản'
 													color='#777E90'
 													onClick={() => {
-														setOpenCreate(true);
+														setDataCreateAccount(data);
 													}}
 												/>
 
@@ -426,8 +426,8 @@ function MainPageUser({}: PropsMainPageUser) {
 							onSubmit={handleChangeStatusDevice}
 						/>
 					</div>
-					<Popup open={openCreate} onClose={() => setOpenCreate(false)}>
-						<PopupCreate onClose={() => setOpenCreate(false)} />
+					<Popup open={!!dataCreateAccount} onClose={() => setDataCreateAccount(null)}>
+						<PopupCreate dataCreateAccount={dataCreateAccount} onClose={() => setDataCreateAccount(null)} />
 					</Popup>
 					<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
 						<ImportExcel

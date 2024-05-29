@@ -8,8 +8,13 @@ import Form, {Input} from '~/components/common/Form';
 import Select, {Option} from '~/components/common/Select';
 import AvatarChange from '~/components/common/AvatarChange';
 
-function PopupCreateAccount({onClose}: PropsPopupCreateAccount) {
-	const [form, setForm] = useState<any>({code: '', name: '', description: ''});
+function PopupCreateAccount({dataCreateAccount, onClose}: PropsPopupCreateAccount) {
+	const [form, setForm] = useState<{
+		avatar: string;
+		fullName: string;
+		userName: string;
+		roleUuid: string;
+	}>({avatar: '', fullName: '', userName: '', roleUuid: ''});
 
 	const handleSubmit = () => {
 		console.log(form);
@@ -17,25 +22,45 @@ function PopupCreateAccount({onClose}: PropsPopupCreateAccount) {
 
 	return (
 		<div className={styles.container}>
-			<h4>Thêm Tài khoản</h4>
+			<h4>Cấp tài khoản </h4>
 			<p className={styles.p}>Điền đẩy đủ các thông tin cần thiết</p>
 			<Form form={form} setForm={setForm}>
 				<div className={'mb'}>
 					<AvatarChange path={form?.avatar} name='avatar' />
 				</div>
-				<Input type='text' placeholder='Nhập tên nhân viên' name='code' label={<span>Tên nhân viên</span>} />
-				<Input type='text' placeholder='Nhập tên tài khoản' name='name' label={<span>Tên tài khoản</span>} />
+				<Input
+					type='text'
+					placeholder='Nhập tên nhân viên'
+					name='fullName'
+					value={form.fullName}
+					label={
+						<span>
+							Tên nhân viên <span style={{color: 'red'}}>*</span>
+						</span>
+					}
+				/>
+				<Input
+					type='text'
+					placeholder='Nhập tên tài khoản'
+					name='userName'
+					value={form.userName}
+					label={
+						<span>
+							Tên tài khoản <span style={{color: 'red'}}>*</span>
+						</span>
+					}
+				/>
 
 				<div className={'mt'}>
 					<Select
 						isSearch
 						name=''
 						placeholder='Lựa chọn'
-						value={form?.CCCD || null}
+						value={form?.roleUuid || null}
 						onChange={(e: any) =>
 							setForm((prev: any) => ({
 								...prev,
-								personnel: e.target.value,
+								roleUuid: e.target.value,
 							}))
 						}
 						label={

@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
-		"start": "next start",
+		"start": "next start -p 9610",
 		"lint": "next lint"
 	},
 	"dependencies": {
@@ -24,7 +24,7 @@
 		"iconsax-react": "^0.0.8",
 		"md5": "^2.3.0",
 		"moment": "^2.30.1",
-		"next": "14.1.4",
+		"next": "13.5.2",
 		"nprogress": "^0.2.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",

@@ -11,12 +11,12 @@ import ItemDashboard from '../ItemDashboard';
 import {MdCast} from 'react-icons/md';
 import {FaRegHourglassHalf} from 'react-icons/fa6';
 import MainChart from '../MainChart';
-import ListTransmitter from '../ListTransmitter';
 import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEY} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import dashboardServices from '~/services/dashboardServices';
 import {formatTimeHistory} from '~/common/funcs/optionConvert';
+import ListDeviceNG from '../ListDeviceNG';
 
 function MainDashboard({}: PropsMainDashboard) {
 	const dashboardOverview = useQuery([QUERY_KEY.trang_chu_tong_quan], {
@@ -81,7 +81,7 @@ function MainDashboard({}: PropsMainDashboard) {
 					<MainChart />
 				</div>
 				<div className='mt'>
-					<ListTransmitter />
+					<ListDeviceNG />
 				</div>
 			</WrapperContainer>
 		</div>

@@ -31,3 +31,21 @@
 	width: fit-content;
 	height: 40px;
 }
+
+.link {
+	font-weight: 700;
+	color: var(--primary);
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.pending {
+	color: #ff6838;
+	font-size: 15px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
