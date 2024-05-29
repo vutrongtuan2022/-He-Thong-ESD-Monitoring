@@ -158,7 +158,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>
-										{i18n.t('Account.trangthai')}i:{' '}
+										{i18n.t('Account.trangthai')}:{' '}
 										<span>
 											{dataDetailAccount?.status == STATUS_GENERAL.SU_DUNG ? (
 												<span style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.dangsudung')}</span>
