@@ -25,6 +25,7 @@ import clsx from 'clsx';
 import TableTeam from '../MainTableTeam';
 import teamServices from '~/services/teamServices';
 import MainTreeTeam from '../MainTreeTeam';
+import i18n from '~/locale/i18n';
 
 function MainPageTeam({}: PropsMainPageTeam) {
 	const router = useRouter();
@@ -91,11 +92,11 @@ function MainPageTeam({}: PropsMainPageTeam) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 					},
 					{
 						path: '',
-						title: 'Danh sách team',
+						title: i18n.t('Team.danhsachteam'),
 					},
 				]}
 				action={
@@ -137,7 +138,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								href={PATH.ThemTeam}
 							>
-								Thêm mới
+								{i18n.t('Team.themmoi')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
@@ -152,26 +153,26 @@ function MainPageTeam({}: PropsMainPageTeam) {
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalTeam}
-							text='Tổng số team'
+							text={i18n.t('Team.tongsoteam')}
 							icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />}
 						/>
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalUserTeam}
-							text='Tổng nhân viên trong team'
+							text={i18n.t('Team.tongsonhanvientrongteam')}
 							icon={<User size={30} color='#4DBFDD' />}
 						/>
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalDeviceTeam}
-							text='Tổng thiết bị trong team'
+							text={i18n.t('Team.tongsothietbitrongteam')}
 							icon={<MdCast size={30} color='#4DBFDD' />}
 						/>
 					</GridColumn>
 				</div>
 				<div className={styles.head}>
 					{_view == 'tree' ? (
-						<h4 className={styles.title}>Sơ đồ team</h4>
+						<h4 className={styles.title}>{i18n.t('Team.sodoteam')}</h4>
 					) : (
 						<div className={styles.box_filter}>
 							<div className={styles.search}>
@@ -191,7 +192,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 							<div className={styles.filter}>
 								<FilterCustom
 									isSearch
-									name='Khu vực'
+									name={i18n.t('Common.khuvuc')}
 									query='_areaUuid'
 									listFilter={listAreas?.data?.map((v: any) => ({
 										id: v?.uuid,
@@ -201,7 +202,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 							</div>
 							<div className={styles.filter}>
 								<FilterCustom
-									name='Trạng thái'
+									name={i18n.t('Common.trangthai')}
 									query='_status'
 									listFilter={[
 										{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},

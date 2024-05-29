@@ -8,6 +8,7 @@ import icons from '~/constants/images/icons';
 import {MAXIMUM_FILE} from '~/constants/config';
 import {toastError, toastWarn} from '~/common/funcs/toast';
 import ImageFill from '../ImageFill';
+import i18n from '~/locale/i18n';
 
 function AvatarChange({path, name, onSetFile}: PropsAvatarChange) {
 	const [imageBase64, setImageBase64] = useState<string>('');
@@ -20,11 +21,11 @@ function AvatarChange({path, name, onSetFile}: PropsAvatarChange) {
 			const maxSize = MAXIMUM_FILE; //MB
 
 			if (size / 1000000 > maxSize) {
-				toastError({msg: `Kích thước tối đa của ảnh là ${maxSize} mb`});
+				toastError({msg: `${i18n.t('Common.kichthuoctoidacuaanh')} ${maxSize} mb`});
 				return;
 			} else if (type !== 'image/jpeg' && type !== 'image/jpg' && type !== 'image/png') {
 				toastWarn({
-					msg: `Định dạng tệp không chính xác, đuôi tệp chấp nhận .jpg, .jpeg, .png`,
+					msg: i18n.t('Common.dinhdangkhongchixac'),
 				});
 				return;
 			}
@@ -54,12 +55,12 @@ function AvatarChange({path, name, onSetFile}: PropsAvatarChange) {
 				className={styles.image}
 			/>
 			<div className={styles.main_des}>
-				<p>Hình ảnh tải lên đạt kích thước tối thiểu 300pixel x 300pixel</p>
-				<span>Định dạng hỗ trợ: JPG, JPEG, PNG</span>
+				<p>{i18n.t('Common.hinhanhtailendatkichthuoctoida')}</p>
+				<span>{i18n.t('Common.dinhdanghotro')}</span>
 				<label className={styles.input}>
 					<input hidden type='file' name={name} onChange={handleSelectImg} onClick={(e: any) => (e.target.value = null)} />
 					<ImageFill src={icons.iconUpload} className={styles.upload} />
-					<h5>Chọn ảnh</h5>
+					<h5>{i18n.t('Common.chonanh')}</h5>
 				</label>
 			</div>
 		</div>

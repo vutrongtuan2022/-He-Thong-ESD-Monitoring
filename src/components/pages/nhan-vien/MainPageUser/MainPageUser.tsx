@@ -444,7 +444,7 @@ function MainPageUser({}: PropsMainPageUser) {
 						<ImportExcel
 							name='file-user'
 							file={file}
-							pathTemplate='/static/files/Mau_Import_Device.xlsx'
+							pathTemplate='/static/files/Mau_Import_User.xlsx'
 							setFile={setFile}
 							onClose={handleCloseImportExcel}
 							onSubmit={handleImportExcel}
