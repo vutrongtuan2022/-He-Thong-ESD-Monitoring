@@ -16,6 +16,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import {Eye} from 'iconsax-react';
 import {LuPencil} from 'react-icons/lu';
+import i18n from '~/locale/i18n';
 
 function TreeTeam({team, level}: PropsTreeTeam) {
 	const [open, setOpen] = useState<boolean>(false);
@@ -60,34 +61,34 @@ function TreeTeam({team, level}: PropsTreeTeam) {
 					{team?.name} - {team.leaderName}
 				</p>
 				<div className={styles.dash}></div>
-				<Tippy content='Số team con'>
+				<Tippy content={i18n.t('Team.soteamcon')}>
 					<div className={styles.icon}>
 						<FaUserGroup size={19} color='#EB2E2E' />
 					</div>
 				</Tippy>
 				<p className={styles.totalTeam}>{team?.totalSubTeams}</p>
 				<div className={styles.dash}></div>
-				<Tippy content='Số thành viên'>
+				<Tippy content={i18n.t('Team.sothanhvien')}>
 					<div className={styles.icon}>
 						<GiPerson size={22} color='#4DBFDD' />
 					</div>
 				</Tippy>
 				<p className={styles.totalUser}>{team?.totalUsers}</p>
 				<div className={styles.dash}></div>
-				<Tippy content='Số thiết bị'>
+				<Tippy content={i18n.t('Team.sothietbi')}>
 					<div className={styles.icon}>
 						<FaChromecast size={18} color='#4DBFDD' />
 					</div>
 				</Tippy>
 				<p className={styles.totalDevice}>{team?.totalDevices}</p>
 				<div className={styles.line}></div>
-				<Tippy content='Xem chi tiết'>
+				<Tippy content={i18n.t('Team.xemchitiet')}>
 					<Link href={`/team/${team.uuid}`} className={styles.icon}>
 						<Eye size={20} color='#777E90' />
 					</Link>
 				</Tippy>
 				<div className={styles.line}></div>
-				<Tippy content='Chỉnh sửa'>
+				<Tippy content={i18n.t('Common.chinhsua')}>
 					<Link href={`/team/chinh-sua?_id=${team.uuid}`} className={styles.icon}>
 						<LuPencil size={20} color='#777E90' />
 					</Link>

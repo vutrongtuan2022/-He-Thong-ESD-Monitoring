@@ -85,7 +85,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 						title: 'Trang chủ',
 					},
 					{
-						path: PATH.KhuVuc,
+						path: PATH.Khuvuc,
 						title: 'Danh sách khu vực',
 					},
 					{
@@ -104,7 +104,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 			<WrapperContainer>
 				<div className={styles.main}>
 					<div className={styles.header}>
-						<Link href={PATH.KhuVuc} className={styles.header_title}>
+						<Link href={PATH.Khuvuc} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
 							<p>Thông tin khu vực</p>
 						</Link>

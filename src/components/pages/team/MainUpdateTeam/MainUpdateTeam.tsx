@@ -20,6 +20,7 @@ import Loading from '~/components/common/Loading';
 import {toastWarn} from '~/common/funcs/toast';
 import {useRouter} from 'next/router';
 import {IDataDetailTeam} from '../MainDetailTeam/interfaces';
+import i18n from '~/locale/i18n';
 
 interface IFrom {
 	name: string;
@@ -112,7 +113,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Chỉnh sửa team thành công!',
+				msgSuccess: i18n.t('Team.chinhsuateamthanhcong'),
 				http: teamServices.upsertTeam({
 					uuid: _id as string,
 					name: form.name,
@@ -146,19 +147,19 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 	// SUBMIT
 	const handleSubmit = async () => {
 		if (!_id) {
-			return toastWarn({msg: 'Không tìm thấy team!'});
+			return toastWarn({msg: i18n.t('Team.Khongtimthayteam')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: 'Vui lòng nhập tên team!'});
+			return toastWarn({msg: i18n.t('Team.vuilongnhapteam')});
 		}
 		if (!form.code) {
-			return toastWarn({msg: 'Vui lòng nhập mã team!'});
+			return toastWarn({msg: i18n.t('Team.vuilongnhapMateam')});
 		}
 		if (!form.leaderUuid) {
-			return toastWarn({msg: 'Vui lòng chọn người quản lý!'});
+			return toastWarn({msg: i18n.t('Team.vuilongchonnguoiquanly')});
 		}
 		if (!form.areaUuid) {
-			return toastWarn({msg: 'Vui lòng nhập khu vực quản lý!'});
+			return toastWarn({msg: i18n.t('Team.vuilongnhapKhuvucquanly')});
 		}
 
 		return upsertTeam.mutate();
@@ -170,15 +171,15 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 					},
 					{
 						path: PATH.Team,
-						title: 'Danh sách team',
+						title: i18n.t('Team.danhsachteam'),
 					},
 					{
 						path: '',
-						title: 'Chỉnh sửa team',
+						title: i18n.t('Team.Chinhsuateam'),
 					},
 				]}
 				action={
@@ -193,15 +194,15 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<div className={styles.left}>
-							<h4>Chỉnh sửa team</h4>
-							<p>Điền đầy đủ các thông tin team</p>
+							<h4>{i18n.t('Team.Chinhsuateam')}</h4>
+							<p>{i18n.t('Team.Diendayduthongtinteam')}</p>
 						</div>
 						<div className={styles.right}>
 							<Button href={PATH.Team} p_10_24 rounded_2 grey_outline>
-								Hủy bỏ
+								{i18n.t('Common.Huybo')}
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								Cập nhật
+								{i18n.t('Common.Capnhat')}
 							</Button>
 						</div>
 					</div>
@@ -214,10 +215,10 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 								type='text'
 								label={
 									<span>
-										Tên team <span style={{color: 'red'}}>*</span>
+										{i18n.t('Common.Tenteam')} <span style={{color: 'red'}}>*</span>
 									</span>
 								}
-								placeholder='Nhập tên team'
+								placeholder={i18n.t('Team.NhapTenteam')}
 							/>
 
 							<div className={clsx('mt', 'col_2')}>
@@ -227,15 +228,15 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 									type='text'
 									label={
 										<span>
-											Mã team <span style={{color: 'red'}}>*</span>
+											{i18n.t('Common.Mateam')} <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Nhập mã team'
+									placeholder={i18n.t('Team.NhapMateam')}
 								/>
 								<Select
 									isSearch
 									name='leaderUuid'
-									placeholder='Người quản lý'
+									placeholder={i18n.t('Team.Nguoiquanly')}
 									value={form?.leaderUuid || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
@@ -245,7 +246,8 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 									}
 									label={
 										<span>
-											Người quản lý<span style={{color: 'red'}}>*</span>
+											{i18n.t('Team.Nguoiquanly')}
+											<span style={{color: 'red'}}>*</span>
 										</span>
 									}
 								>
@@ -260,7 +262,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 									<Select
 										isSearch
 										name='parentUuid'
-										placeholder='Team cấp trên'
+										placeholder={i18n.t('Team.Tencaptren')}
 										value={form?.parentUuid || null}
 										onChange={(e: any) =>
 											setForm((prev: any) => ({
@@ -268,7 +270,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 												parentUuid: e.target.value,
 											}))
 										}
-										label={<span>Team cấp trên</span>}
+										label={<span>{i18n.t('Team.Tencaptren')}</span>}
 									>
 										{listTeams.data?.map((v: any) => (
 											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -278,7 +280,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 								<Select
 									isSearch
 									name='areaUuid'
-									placeholder='Chọn khu vực quản lý'
+									placeholder={i18n.t('Team.ChonKhuvucquanly')}
 									value={form?.areaUuid || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
@@ -288,7 +290,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 									}
 									label={
 										<span>
-											Khu vực <span style={{color: 'red'}}>*</span>
+											{i18n.t('Common.Khuvuc')} <span style={{color: 'red'}}>*</span>
 										</span>
 									}
 								>
@@ -298,7 +300,12 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 								</Select>
 							</div>
 							<div className={clsx('mt')}>
-								<TextArea name='note' value={form.note} placeholder='Nhập mô tả' label={<span>Mô tả</span>} />
+								<TextArea
+									name='note'
+									value={form.note}
+									placeholder={i18n.t('Common.Nhapmota')}
+									label={<span>{i18n.t('Common.Mota')} </span>}
+								/>
 							</div>
 						</Form>
 					</div>

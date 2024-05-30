@@ -119,7 +119,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 								onClick={() =>
 									router.replace(
 										{
-											pathname: PATH.KhuVuc,
+											pathname: PATH.Khuvuc,
 											query: {
 												...router.query,
 												_open: 'create',
@@ -260,7 +260,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 
 					router.replace(
 						{
-							pathname: PATH.KhuVuc,
+							pathname: PATH.Khuvuc,
 							query: {
 								...rest,
 							},
@@ -279,7 +279,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 
 						router.replace(
 							{
-								pathname: PATH.KhuVuc,
+								pathname: PATH.Khuvuc,
 								query: {
 									...rest,
 								},

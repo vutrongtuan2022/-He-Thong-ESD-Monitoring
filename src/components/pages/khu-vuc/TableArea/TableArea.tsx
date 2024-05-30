@@ -144,7 +144,7 @@ function TableArea({}: PropsTableArea) {
 										onClick={() =>
 											router.replace(
 												{
-													pathname: PATH.KhuVuc,
+													pathname: PATH.Khuvuc,
 													query: {
 														...router.query,
 														_open: 'update',
