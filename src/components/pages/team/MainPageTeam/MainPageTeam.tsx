@@ -176,7 +176,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 					) : (
 						<div className={styles.box_filter}>
 							<div className={styles.search}>
-								<Search keyName='_keyword' placeholder='Tìm kiếm theo tên hoặc mã' />
+								<Search keyName='_keyword' placeholder={i18n.t('Team.timkiemtheotenma')} />
 							</div>
 							<div className={styles.filter}>
 								<FilterCustom
@@ -192,7 +192,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 							<div className={styles.filter}>
 								<FilterCustom
 									isSearch
-									name={i18n.t('Common.khuvuc')}
+									name={i18n.t('Common.Khuvuc')}
 									query='_areaUuid'
 									listFilter={listAreas?.data?.map((v: any) => ({
 										id: v?.uuid,
@@ -205,8 +205,8 @@ function MainPageTeam({}: PropsMainPageTeam) {
 									name={i18n.t('Common.trangthai')}
 									query='_status'
 									listFilter={[
-										{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
-										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: 'Không sử dụng'},
+										{id: STATUS_GENERAL.SU_DUNG, name: i18n.t('Common.sudung')},
+										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: i18n.t('Common.khongsudung')},
 									]}
 								/>
 							</div>

@@ -36,7 +36,7 @@ export enum PATH {
 	ThongKe = '/thong-ke',
 	PhanQuyen = '/phan-quyen',
 	CaiDat = '/cai-dat',
-	KhuVuc = '/khu-vuc',
+	Khuvuc = '/khu-vuc',
 
 	ThemNhanvien = '/nhan-vien/them-moi',
 	ThemTeam = '/team/them-moi',
@@ -72,7 +72,7 @@ export const Menu: {
 	},
 	{
 		title: 'KHU VỰC',
-		group: [{title: 'Quản lý khu vực', icon: GrMap, path: PATH.KhuVuc}],
+		group: [{title: 'Quản lý khu vực', icon: GrMap, path: PATH.Khuvuc}],
 	},
 	{
 		title: 'THỐNG KÊ',

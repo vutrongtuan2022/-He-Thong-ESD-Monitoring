@@ -164,7 +164,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 								{i18n.t('User.huybo')}
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								{i18n.t('User.luulai')}
+								{i18n.t('User.Luulai')}
 							</Button>
 						</div>
 					</div>

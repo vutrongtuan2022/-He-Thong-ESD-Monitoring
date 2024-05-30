@@ -7,6 +7,7 @@ import {MdArrowDropDown} from 'react-icons/md';
 import TippyHeadless from '@tippyjs/react/headless';
 import {useRouter} from 'next/router';
 import {IoChevronBackOutline, IoChevronForwardOutline} from 'react-icons/io5';
+import i18n from '~/locale/i18n';
 
 function Pagination({total, pageSize, currentPage, onSetPage, onSetpageSize, dependencies = []}: PropsPagination) {
 	const router = useRouter();
@@ -181,7 +182,7 @@ function Pagination({total, pageSize, currentPage, onSetPage, onSetpageSize, dep
 			{total > 0 && (
 				<div className={styles.container}>
 					<div className={styles.left}>
-						<p className={styles.text}>Hiển thị </p>
+						<p className={styles.text}>{i18n.t('Common.hienthi')}</p>
 						<TippyHeadless
 							maxWidth={'100%'}
 							interactive
@@ -217,7 +218,7 @@ function Pagination({total, pageSize, currentPage, onSetPage, onSetpageSize, dep
 							</div>
 						</TippyHeadless>
 						<p className={styles.text}>
-							trên tổng <span style={{fontWeight: '600'}}>{total}</span> kết quả
+							{i18n.t('Common.trentong')} <span style={{fontWeight: '600'}}>{total}</span> {i18n.t('Common.ketqua')}
 						</p>
 					</div>
 					<div className={styles.pages}>

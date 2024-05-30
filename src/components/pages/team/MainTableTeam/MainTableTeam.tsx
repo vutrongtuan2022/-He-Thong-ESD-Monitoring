@@ -85,11 +85,11 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							render: (data: ITeam, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: i18n.t('Common.mateam'),
+							title: i18n.t('Common.Mateam'),
 							render: (data: ITeam) => <>{data.code || '---'}</>,
 						},
 						{
-							title: i18n.t('Common.tenteam'),
+							title: i18n.t('Common.Tenteam'),
 							render: (data: ITeam) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
@@ -109,7 +109,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							render: (data: ITeam) => <>{data.totalDevices || 0}</>,
 						},
 						{
-							title: i18n.t('Common.khuvuc'),
+							title: i18n.t('Common.Khuvuc'),
 							render: (data: ITeam) => <>{data.areaName || '---'}</>,
 						},
 						{
