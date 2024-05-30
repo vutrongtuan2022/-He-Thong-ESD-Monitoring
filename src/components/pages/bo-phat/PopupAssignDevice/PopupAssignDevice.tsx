@@ -14,6 +14,7 @@ import TextArea from '~/components/common/Form/components/TextArea';
 import deviceServices from '~/services/deviceServices';
 import {useRouter} from 'next/router';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 	const router = useRouter();
@@ -44,7 +45,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Mở quyền sử dụng thành công!',
+				msgSuccess: i18n.t('Device.moquyensudungthanhcong'),
 				http: deviceServices.updateTeamUsing({
 					uuid: _id as string,
 					teamUuid: form.teamUuid,
@@ -66,7 +67,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>Gắn quyền sử dụng</h4>
+			<h4>{i18n.t('Device.ganquyensudung')}</h4>
 			<Loading loading={assignTeamUsing.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<div className='mt'>
@@ -83,7 +84,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 						}
 						label={
 							<span>
-								Thuộc team <span style={{color: 'red'}}>*</span>
+								{i18n.t('Common.thuocteam')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					>
@@ -93,18 +94,18 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 					</Select>
 				</div>
 				<div className='mt'>
-					<TextArea name='note' value={form.note} label='Ghi chú' placeholder='Nhập ghi chú' />
+					<TextArea name='note' value={form.note} label={i18n.t('Device.luachon')} placeholder={i18n.t('Device.Nhapghichu')} />
 				</div>
 			</Form>
 			<div className={styles.btn}>
 				<div>
 					<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-						Hủy bỏ
+					{i18n.t('Common.huybo')}
 					</Button>
 				</div>
 				<div>
 					<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-						Xác nhận
+					{i18n.t('Common.xacnhan')}
 					</Button>
 				</div>
 			</div>
