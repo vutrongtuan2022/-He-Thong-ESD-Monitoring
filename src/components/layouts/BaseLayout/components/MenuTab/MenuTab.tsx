@@ -11,6 +11,7 @@ import {useRouter} from 'next/router';
 import {useSelector} from 'react-redux';
 import {setFullMenu} from '~/redux/reducer/site';
 import ImageFill from '~/components/common/ImageFill';
+import AvicLogo from '../AvicLogo';
 
 function MenuTab({}: PropsMenuTab) {
 	const router = useRouter();
@@ -68,6 +69,7 @@ function MenuTab({}: PropsMenuTab) {
 					</div>
 				))}
 			</div>
+			<AvicLogo />
 		</div>
 	);
 }

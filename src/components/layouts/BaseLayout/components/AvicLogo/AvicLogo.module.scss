@@ -1,0 +1,49 @@
+.container {
+	padding: 20px;
+}
+
+.main {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.image_avi {
+	width: 58px;
+	height: 36px;
+}
+
+.main_farame {
+	position: relative;
+	width: fit-content;
+	height: fit-content;
+}
+
+.image_c {
+	width: 36px;
+	height: 36px;
+}
+
+.box {
+	position: absolute;
+	width: fit-content;
+	height: fit-content;
+	top: 50%;
+	left: 55%;
+	transform: translate(-50%, -50%);
+}
+
+.image_rotate {
+	width: 14px;
+	height: 14px;
+	animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
