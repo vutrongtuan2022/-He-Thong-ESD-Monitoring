@@ -28,6 +28,10 @@ import icon_en from '../../../public/static/images/icon_en.svg';
 import icon_table_empty from '../../../public/static/images/icon_table_empty.png';
 import icon_lock from '../../../public/static/images/Lock1-Linear-32px.svg';
 import placeholder from '../../../public/static/images/placeholder-img.jpeg';
+import avic_logo from '../../../public/static/images/avic_logo.png';
+import avic_c_logo from '../../../public/static/images/avic_c_logo.png';
+import avic_avi_logo from '../../../public/static/images/avic_avi_logo.png';
+import rotate_avic from '../../../public/static/images/rotate_avic.png';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -61,4 +65,8 @@ export default {
 	icon_table_empty,
 	icon_lock,
 	placeholder,
+	avic_logo,
+	avic_c_logo,
+	avic_avi_logo,
+	rotate_avic,
 };
