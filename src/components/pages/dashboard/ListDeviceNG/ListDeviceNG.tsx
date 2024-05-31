@@ -25,6 +25,7 @@ import {RootState} from '~/redux/store';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import {RiLoader2Line} from 'react-icons/ri';
+import i18n from '~/locale/i18n';
 
 function ListDeviceNG({}: PropsListDeviceNG) {
 	const router = useRouter();
@@ -67,7 +68,7 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Xử lý thành công!',
+				msgSuccess: i18n.t('Overview.Successfully'),
 				http: dashboardServices.checkDeviceNG({
 					uuid: infoUser?.uuid!,
 					deviceUuid: dataSubmit?.map((v) => v.deviceUuid),
@@ -103,11 +104,11 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 
 	const handleSubmit = () => {
 		if (!infoUser?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy người dùng!'});
+			return toastWarn({msg: i18n.t('Overview.UserNotFound')});
 		}
 
 		if (dataSubmit?.length == 0) {
-			return toastWarn({msg: 'Vui lòng chọn thiết bị để xử lý!'});
+			return toastWarn({msg: i18n.t('Overview.PleaseSelectTheProcessing')});
 		}
 
 		return fucnCheckDeviceNG.mutate();
@@ -117,7 +118,8 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 		<div className={styles.container}>
 			<Loading loading={fucnCheckDeviceNG.isLoading || exportExcel.isLoading} />
 
-			<h4>Danh sách bộ phát NG ({total})</h4>
+			<h4>
+				{i18n.t('Overview.ListOfNGTransmitters')}({total})</h4>
 			<div className={styles.control}>
 				<div className={styles.left}>
 					{data?.some((x) => x.isChecked !== false) && (
@@ -129,12 +131,12 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 								icon={<LuCheck size={20} />}
 								onClick={() => setDataSubmit(data?.filter((v) => v.isChecked !== false))}
 							>
-								Xác nhận xử lý
+								{i18n.t('Overview.ConfirmProcessing')}
 							</Button>
 						</div>
 					)}
 					<div style={{minWidth: 360}}>
-						<Search keyName='_keyword' placeholder='Tìm kiếm theo ID bộ phát' />
+						<Search keyName='_keyword' placeholder={i18n.t('Overview.SearchTransmitterID')} />
 					</div>
 				</div>
 				<div>
@@ -153,22 +155,22 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 				</div>
 			</div>
 			<div className={styles.table}>
-				<DataWrapper data={data} loading={loading} noti={<Noti disableButton={false} des='Hiện tại chưa có bộ phát nào ?' />}>
+				<DataWrapper data={data} loading={loading} noti={<Noti disableButton={false} des={i18n.t('Overview.CurrentlyNoTransmitters')} />}>
 					<Table
 						data={data}
 						onSetData={setData}
 						column={[
 							{
 								checkBox: true,
-								title: 'STT',
+								title: i18n.t('Overview.STT'),
 								render: (data: IDeviceDashboard, index: number) => <>{index + 1}</>,
 							},
 							{
-								title: 'Tên team',
+								title:i18n.t('Overview.TeamName'),
 								render: (data: IDeviceDashboard) => <>{data?.teamName || '---'}</>,
 							},
 							{
-								title: 'Mã team',
+								title: i18n.t('Overview.TeamCode'),
 								render: (data: IDeviceDashboard) => (
 									<Link
 										href={`/team/${data.teamUuid}`}
@@ -182,7 +184,7 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 								),
 							},
 							{
-								title: 'ID bộ phát',
+								title: i18n.t('Overview.IDTransmitter'),
 								render: (data: IDeviceDashboard) => (
 									<Link
 										href={`/bo-phat/${data.deviceUuid}`}
@@ -196,11 +198,11 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 								),
 							},
 							{
-								title: 'Giá trị tĩnh điện',
+								title: i18n.t('Overview.PermanentValue'),
 								render: (data: IDeviceDashboard) => <>{data?.edsStatic || '---'}</>,
 							},
 							{
-								title: 'Thời gian phát hiện',
+								title: i18n.t('Overview.TimeDetection'),
 								render: (data: IDeviceDashboard) => (
 									<>
 										<Moment date={data.timeNgStart} format='HH:mm, DD/MM/YYYY' />
@@ -208,11 +210,11 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 								),
 							},
 							{
-								title: 'Thời gian NG',
+								title: i18n.t('Overview.TimeNG'),
 								render: (data: IDeviceDashboard) => <>{formatTimeHistory(data.totalNgMinutes)}</>,
 							},
 							{
-								title: 'Tác vụ',
+								title: i18n.t('Overview.Action'),
 								render: (data: IDeviceDashboard) => (
 									<>
 										{!data?.qaUserUuid ? (
@@ -225,14 +227,13 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 													icon={<LuCheck size={14} />}
 													onClick={() => setDataSubmit([data])}
 												>
-													Xác nhận xử lý
+													{i18n.t('Overview.ConfirmProcessing')}
 												</Button>
 											</div>
 										) : (
 											<div className={styles.pending}>
 												<RiLoader2Line size={20} />
-												<p>Đang xử lý</p>
-											</div>
+												<p>{i18n.t('Overview.Processing')}</p>											</div>
 										)}
 									</>
 								),
@@ -250,8 +251,8 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 				<Dialog
 					open={dataSubmit?.length > 0}
 					onClose={() => setDataSubmit([])}
-					title='Xác nhận xử lý'
-					note='Bạn có chắc chắn xử lý cho các thiết bị này không?'
+					title={i18n.t('Overview.ConfirmProcessing')}
+					note={i18n.t('Overview.AreYouSureProcessTheseDevices')}
 					onSubmit={handleSubmit}
 				/>
 			</div>

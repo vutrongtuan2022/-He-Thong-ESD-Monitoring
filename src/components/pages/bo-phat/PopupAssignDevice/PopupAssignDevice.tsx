@@ -45,7 +45,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.moquyensudungthanhcong'),
+				msgSuccess: i18n.t('Device.UsageRightsGrantedSuccessfully'),
 				http: deviceServices.updateTeamUsing({
 					uuid: _id as string,
 					teamUuid: form.teamUuid,
@@ -67,7 +67,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>{i18n.t('Device.ganquyensudung')}</h4>
+			<h4>{i18n.t('Device.AssignUsageRights')}</h4>
 			<Loading loading={assignTeamUsing.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<div className='mt'>
@@ -75,7 +75,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
-						placeholder='Lựa chọn'
+						placeholder={i18n.t('Device.Options')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
@@ -94,7 +94,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 					</Select>
 				</div>
 				<div className='mt'>
-					<TextArea name='note' value={form.note} label={i18n.t('Device.luachon')} placeholder={i18n.t('Device.Nhapghichu')} />
+					<TextArea name='note' value={form.note} label={i18n.t('Device.Options')} placeholder={i18n.t('Device.Nhapghichu')} />
 				</div>
 			</Form>
 			<div className={styles.btn}>
