@@ -377,9 +377,9 @@ function MainDevice({}: PropsMainDevice) {
 										render: (data: IDevice) => (
 											<>
 												{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
-													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Device.dangsudung')}</p>
+													<p style={{color: '#35C244', fontWeight: 600}}>Bình thường</p>
 												) : data.ngStatus == STATE_DEVICE_NG.BI_NG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.bing')}</p>
+													<p style={{color: '#E85A5A', fontWeight: 600}}>Not good</p>
 												) : (
 													'---'
 												)}
