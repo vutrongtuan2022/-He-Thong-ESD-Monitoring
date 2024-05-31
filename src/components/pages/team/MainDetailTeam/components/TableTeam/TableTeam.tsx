@@ -13,6 +13,7 @@ import Noti from '~/components/common/DataWrapper/components/Noti';
 import Pagination from '~/components/common/Pagination';
 import Table from '~/components/common/Table';
 import Link from 'next/link';
+import i18n from '~/locale/i18n';
 
 function TableTeam({}: PropsTableTeam) {
 	const router = useRouter();
@@ -39,17 +40,17 @@ function TableTeam({}: PropsTableTeam) {
 			<DataWrapper
 				data={listTeamChild?.data?.items}
 				loading={listTeamChild.isLoading}
-				noti={<Noti title='Team trống' des='Danh sách team trống!' disableButton />}
+				noti={<Noti title={i18n.t('Team.Teamtrong')} des={i18n.t('Team.Danhsachteamtrong')} disableButton />}
 			>
 				<Table
 					data={listTeamChild?.data?.items}
 					column={[
 						{
-							title: 'STT',
+							title: i18n.t('Common.STT'),
 							render: (data: ITeamChild, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: 'Tên team',
+							title: i18n.t('Common.Tenteam'),
 							render: (data: ITeamChild) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
@@ -57,19 +58,19 @@ function TableTeam({}: PropsTableTeam) {
 							),
 						},
 						{
-							title: 'Mã team',
+							title: i18n.t('Common.Mateam'),
 							render: (data: ITeamChild) => <>{data.code || '---'}</>,
 						},
 						{
-							title: 'Người quản lý',
+							title: i18n.t('Common.NguoiQuanlyteam'),
 							render: (data: ITeamChild) => <>{data.leaderName || '---'}</>,
 						},
 						{
-							title: 'Số thành viên',
+							title: i18n.t('Common.Sothanhvien'),
 							render: (data: ITeamChild) => <>{data.totalUser || 0}</>,
 						},
 						{
-							title: 'Số thiết bị',
+							title: i18n.t('Common.Sothietbi'),
 							render: (data: ITeamChild) => <>{data.totalDevices || 0}</>,
 						},
 					]}

@@ -91,13 +91,13 @@ function HistoryDevice({}: PropsHistoryDevice) {
 				<DataWrapper
 					data={listHistoryDevices?.data?.items}
 					loading={listHistoryDevices.isLoading}
-					noti={<Noti disableButton title={i18n.t('Device.danhsachgtrong')} des={i18n.t('Device.danhsachbophattrong')} />}
+					noti={<Noti disableButton title={i18n.t('Device.danhsachgtrong')} des={i18n.t('Device.Danhsachbophattrong')} />}
 				>
 					<Table
 						data={listHistoryDevices?.data?.items}
 						column={[
 							{
-								title: i18n.t("Common.STT"),
+								title: i18n.t('Common.STT'),
 								render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 							},
 							{
@@ -109,7 +109,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 								render: (data: IDeviceNGHistory) => <>{formatTimeHistory(data.totalNgMinutes || 0)}</>,
 							},
 							{
-								title: i18n.t('Device.giatritinhdien'),
+								title: i18n.t('Device.Giatritinhdien'),
 								render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
 							},
 							{

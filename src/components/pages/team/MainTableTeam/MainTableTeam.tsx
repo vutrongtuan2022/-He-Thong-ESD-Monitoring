@@ -97,7 +97,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							),
 						},
 						{
-							title: i18n.t('Common.nguoiQuanlyteam'),
+							title: i18n.t('Common.NguoiQuanlyteam'),
 							render: (data: ITeam) => <>{data.leaderName || '---'}</>,
 						},
 						{
@@ -162,7 +162,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 				warn
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
-				title={i18n.t('Common.thaydoiTrangthai')}
+				title={i18n.t('Common.ThaydoiTrangthai')}
 				note={i18n.t('Team.BancochacmuonchuyenTrangthai')}
 				onSubmit={handleChangeStatusTeam}
 			/>
