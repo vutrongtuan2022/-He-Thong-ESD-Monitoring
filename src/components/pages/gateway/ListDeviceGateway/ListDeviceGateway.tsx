@@ -12,7 +12,7 @@ import Button from '~/components/common/Button';
 import Image from 'next/image';
 import icons from '~/constants/images/icons';
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {QUERY_KEY} from '~/constants/config/enum';
+import {QUERY_KEY, STATE_DEVICE_NG} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import categoryServices from '~/services/categoryServices';
 import deviceServices from '~/services/deviceServices';
@@ -167,7 +167,17 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 							},
 							{
 								title: i18n.t('Common.Tinhtrang'),
-								render: (data: IDevice) => <StateDevice status={data.state} />,
+								render: (data: IDevice) => (
+									<>
+										{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
+											<p style={{color: '#35C244', fontWeight: 600}}>Bình thường</p>
+										) : data.ngStatus == STATE_DEVICE_NG.BI_NG ? (
+											<p style={{color: '#E85A5A', fontWeight: 600}}>Not good</p>
+										) : (
+											'---'
+										)}
+									</>
+								),
 							},
 						]}
 					/>

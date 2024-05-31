@@ -184,7 +184,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 							},
 							{
 								title: i18n.t('Common.Slbophatdangketnoi'),
-								render: (data: IGateway) => <>{data.totalDevice}</>,
+								render: (data: IGateway) => <>{data.connection}</>,
 							},
 							{
 								title: i18n.t('Common.Hoatdong'),
