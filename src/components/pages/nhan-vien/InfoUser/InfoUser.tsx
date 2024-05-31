@@ -46,7 +46,7 @@ function InfoUser({}: PropsInfoUser) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: userServices.updateUserStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -63,7 +63,7 @@ function InfoUser({}: PropsInfoUser) {
 
 	const handleChangeStatusUser = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: i18n.t('User.Khongtimthaynhanviennao')});
+			return toastWarn({msg: i18n.t('User.Nousernotfound')});
 		}
 		return changeStatusUser.mutate();
 	};
@@ -75,7 +75,7 @@ function InfoUser({}: PropsInfoUser) {
 				<div className={styles.header}>
 					<Link href={PATH.NhanVien} className={styles.header_title}>
 						<IoArrowBackOutline fontSize={20} fontWeight={600} />
-						<p>{i18n.t('User.Chitietnhanvien')}</p>
+						<p>{i18n.t('User.Detailuser')}</p>
 					</Link>
 					<div className={styles.list_btn}>
 						{data?.status == STATUS_GENERAL.SU_DUNG && (
@@ -88,13 +88,13 @@ function InfoUser({}: PropsInfoUser) {
 								bold
 								onClick={() => setDataChangeStatus(data)}
 							>
-								{i18n.t('Common.Khoa')}
+								{i18n.t('Common.Lock')}
 							</Button>
 						)}
 
 						{data?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
 							<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setDataChangeStatus(data)}>
-								{i18n.t('Common.Mokhoa')}
+								{i18n.t('Common.Unlock')}
 							</Button>
 						)}
 						<Button
@@ -107,7 +107,7 @@ function InfoUser({}: PropsInfoUser) {
 								router.push(`/nhan-vien/chinh-sua?_id=${_id}`);
 							}}
 						>
-							{i18n.t('Common.Chinhsua')}
+							{i18n.t('Common.Edit')}
 						</Button>
 					</div>
 				</div>
@@ -119,18 +119,18 @@ function InfoUser({}: PropsInfoUser) {
 						</colgroup>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Manhanvien')}: </span> {data?.code || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.IDuser')}: </span> {data?.code || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Chucvu')}: </span> {data?.regency || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.Regency')}: </span> {data?.regency || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Hovaten')}: </span> {data?.fullname || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.Fullname')}: </span> {data?.fullname || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Thuocteam')} : </span> {data?.teamName || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.Belongtotheteam')} : </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -143,10 +143,10 @@ function InfoUser({}: PropsInfoUser) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Sodienthoai')}: </span> {data?.phone || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('User.Phonenumber')}: </span> {data?.phone || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Taoluc')}: </span>{' '}
+								<span style={{marginRight: 6}}>{i18n.t('User.Createat')}: </span>{' '}
 								<Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 							</td>
 						</tr>
@@ -156,8 +156,8 @@ function InfoUser({}: PropsInfoUser) {
 					warn
 					open={!!dataChangeStatus}
 					onClose={() => setDataChangeStatus(null)}
-					title={i18n.t('Common.ChuyenTrangthai')}
-					note={i18n.t('User.BancochacmuonchuyenTrangthainhanviennay')}
+					title={i18n.t('Common.Changestatus')}
+					note={i18n.t('User.AreYouWantToChangeStatus')}
 					onSubmit={handleChangeStatusUser}
 				/>
 			</div>
