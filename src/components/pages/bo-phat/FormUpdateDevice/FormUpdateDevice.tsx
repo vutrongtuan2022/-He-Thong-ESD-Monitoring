@@ -14,6 +14,7 @@ import {httpRequest} from '~/services';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import categoryServices from '~/services/categoryServices';
 import {useRouter} from 'next/router';
+import i18n from '~/locale/i18n';
 
 function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 	const router = useRouter();
@@ -60,7 +61,7 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Chỉnh sửa bộ phát thành công!',
+				msgSuccess: i18n.t('Device.chinhsuabophatthanhcong'),
 				http: deviceServices.upsertDevice({
 					uuid: form.uuid,
 					name: form.name,
@@ -95,13 +96,13 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 
 	const handleSubmit = async () => {
 		if (!form.uuid) {
-			return toastWarn({msg: 'Không tìm thấy thiết bị!'});
+			return toastWarn({msg: i18n.t('Device.khongtimthaythietbi')});
 		}
 		if (!form.macNumber) {
-			return toastWarn({msg: 'Vui lòng nhập số MAC thiết bị!'});
+			return toastWarn({msg: i18n.t('Device.VuilongnhapsoMac')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: 'Vui lòng nhập tên thiết bị!'});
+			return toastWarn({msg: i18n.t('Device.VuilongnhapTenthietbi')});
 		}
 
 		return upsertDevice.mutate();
@@ -109,16 +110,16 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>Chỉnh sửa bộ phát</h4>
+			<h4>{i18n.t('Device.chinhsuabophat')}</h4>
 			<Loading loading={upsertDevice.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
 					label={
 						<span>
-							Số MAC thiết bị <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.somacthietbi')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder='Nhập số mac cho thiết bị'
+					placeholder={i18n.t('Device.nhapsomacthietbi')}
 					name='macNumber'
 					value={form.macNumber}
 					type='text'
@@ -126,10 +127,10 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 				<Input
 					label={
 						<span>
-							Tên thiết bị <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.tenthietbi')}  <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder='Nhập tên mới cho thiết bị'
+					placeholder={i18n.t('Device.Nhaptenmoichothietbi')} 
 					name='name'
 					value={form.name}
 					type='text'
@@ -139,14 +140,14 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
-						placeholder='Lựa chọn'
+						placeholder={i18n.t('Device.luachon')} 
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
 								teamUuid: e.target.value,
 							}))
 						}
-						label={<span>Thuộc team</span>}
+						label={<span>{i18n.t('Common.thuocteam')} </span>}
 					>
 						{listTeams?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -157,12 +158,12 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							Hủy bỏ
+						{i18n.t('Common.Huybo')} 
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							Cập nhật
+						{i18n.t('Common.Capnhat')} 
 						</Button>
 					</div>
 				</div>

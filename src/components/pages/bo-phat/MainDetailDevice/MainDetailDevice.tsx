@@ -8,6 +8,7 @@ import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import InfoTransmitter from '../InfoDevice';
 import HistoryTransmitter from '../HistoryDevice';
+import i18n from '~/locale/i18n';
 
 function MainDetailDevice({}: PropsMainDetailDevice) {
 	return (
@@ -15,15 +16,15 @@ function MainDetailDevice({}: PropsMainDetailDevice) {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Quản lý bộ phát',
+						title: i18n.t('Device.quanlybophat'),
 						path: PATH.BoPhat,
 					},
 					{
-						title: 'Chi tiết bộ phát',
+						title: i18n.t('Device.chitietbophat'),
 						path: '',
 					},
 				]}

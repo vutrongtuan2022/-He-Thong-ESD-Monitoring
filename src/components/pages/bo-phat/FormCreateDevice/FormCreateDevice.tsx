@@ -14,6 +14,7 @@ import deviceServices from '~/services/deviceServices';
 import {useRouter} from 'next/router';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 	const router = useRouter();
@@ -46,7 +47,7 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thêm mới bộ phát thành công!',
+				msgSuccess:i18n.t('Device.ThemmoibophatThanhcong') ,
 				http: deviceServices.upsertDevice({
 					uuid: '',
 					name: form.name,
@@ -80,10 +81,10 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 
 	const handleSubmit = async () => {
 		if (!form.macNumber) {
-			return toastWarn({msg: 'Vui lòng nhập số MAC thiết bị!'});
+			return toastWarn({msg:i18n.t('Device.VuilongnhapsoMac') });
 		}
 		if (!form.name) {
-			return toastWarn({msg: 'Vui lòng nhập tên thiết bị!'});
+			return toastWarn({msg:i18n.t('Device.VuilongnhapTenthietbi') });
 		}
 
 		return upsertDevice.mutate();
@@ -91,16 +92,16 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>Thêm mới bộ phát</h4>
+			<h4>{i18n.t('Device.themmoibophat')} </h4>
 			<Loading loading={upsertDevice.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
 					label={
 						<span>
-							Số MAC thiết bị <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.somacthietbi')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder='Nhập số mac cho thiết bị'
+					placeholder={i18n.t('Device.nhapsomacthietbi')}
 					name='macNumber'
 					value={form.macNumber}
 					type='text'
@@ -108,10 +109,10 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 				<Input
 					label={
 						<span>
-							Tên thiết bị <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.tenthietbi')}  <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder='Nhập tên mới cho thiết bị'
+					placeholder={i18n.t('Device.Nhaptenmoichothietbi')} 
 					name='name'
 					value={form.name}
 					type='text'
@@ -121,14 +122,14 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
-						placeholder='Lựa chọn'
+						placeholder={i18n.t('Device.luachon')} 
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
 								teamUuid: e.target.value,
 							}))
 						}
-						label={<span>Thuộc team</span>}
+						label={<span>{i18n.t('Common.thuocteam')} </span>}
 					>
 						{listTeams?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -139,12 +140,12 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							Hủy bỏ
+						{i18n.t('Common.Huybo')} 
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							Xác nhận
+						{i18n.t('Common.xacnhan')} 
 						</Button>
 					</div>
 				</div>
