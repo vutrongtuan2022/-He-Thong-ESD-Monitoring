@@ -4,7 +4,7 @@ import styles from './PopupCreateGateway.module.scss';
 import clsx from 'clsx';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
-import Form, {Input} from '~/components/common/Form';
+import Form, {FormContext, Input} from '~/components/common/Form';
 import TextArea from '~/components/common/Form/components/TextArea';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
@@ -61,10 +61,13 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 
 	const handleSubmit = async () => {
 		if (!form.code) {
-			return toastWarn({msg: i18n.t('Gateway.Vuilongnhapcodegateway')});
+			return toastWarn({msg: i18n.t('Gateway.VuilongnhapIDgateway')});
 		}
 		if (!form.name) {
 			return toastWarn({msg: i18n.t('Gateway.Vuilongnhaptengateway')});
+		}
+		if (form?.description?.length > 255) {
+			return toastWarn({msg: i18n.t('Common.MaxLengthNote')});
 		}
 
 		return upsertGateway.mutate();
@@ -74,14 +77,17 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 		<div className={styles.container}>
 			<h4>Thêm mới gateway</h4>
 			<Loading loading={upsertGateway.isLoading} />
-			<Form form={form} setForm={setForm}>
+			<Form form={form} setForm={setForm} onSubmit={handleSubmit}>
 				<Input
 					type='text'
-					placeholder={i18n.t('Gateway.Nhapcodegateway')}
+					placeholder={i18n.t('Gateway.NhapIDgateway')}
 					name='code'
+					isRequired
+					min={5}
+					max={50}
 					label={
 						<span>
-							{i18n.t('Gateway.Codegateway')} <span style={{color: 'red'}}>*</span>{' '}
+							{i18n.t('Gateway.IDgateway')} <span style={{color: 'red'}}>*</span>{' '}
 						</span>
 					}
 				/>
@@ -89,6 +95,9 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 					type='text'
 					placeholder={i18n.t('Gateway.Nhaptengateway')}
 					name='name'
+					isRequired
+					min={5}
+					max={50}
 					label={
 						<span>
 							{i18n.t('Gateway.Tengateway')} <span style={{color: 'red'}}>*</span>{' '}
@@ -110,11 +119,15 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 							{i18n.t('Common.Huybo')}
 						</Button>
 					</div>
-					<div>
-						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							{i18n.t('Common.Xacnhan')}
-						</Button>
-					</div>
+					<FormContext.Consumer>
+						{({isDone}) => (
+							<div>
+								<Button disable={!isDone} p_10_24 rounded_6 primary>
+									{i18n.t('Common.Xacnhan')}
+								</Button>
+							</div>
+						)}
+					</FormContext.Consumer>
 				</div>
 
 				<div className={styles.close} onClick={onClose}>

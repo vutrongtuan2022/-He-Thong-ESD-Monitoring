@@ -25,6 +25,7 @@ interface IDataExcelGetway {
 	code: string;
 	name: string;
 	factoryArea: string;
+	notes: string;
 }
 
 function MainGateway({}: PropsMainGateway) {
@@ -102,6 +103,7 @@ function MainGateway({}: PropsMainGateway) {
 			code: v['Code'],
 			name: v['Name'],
 			factoryArea: v['FactoryArea'],
+			notes: v['Notes'],
 		}));
 
 		// Check require code, name

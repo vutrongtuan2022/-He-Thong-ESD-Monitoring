@@ -75,10 +75,13 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 
 	const handleSubmit = async () => {
 		if (!form.code) {
-			return toastWarn({msg: i18n.t('Gateway.Vuilongnhapcodegateway')});
+			return toastWarn({msg: i18n.t('Gateway.VuilongnhapIDgateway')});
 		}
 		if (!form.name) {
 			return toastWarn({msg: i18n.t('Gateway.Vuilongnhaptengateway')});
+		}
+		if (form?.description?.length > 255) {
+			return toastWarn({msg: i18n.t('Common.MaxLengthNote')});
 		}
 
 		return upsertGateway.mutate();
@@ -90,12 +93,16 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 			<Loading loading={upsertGateway.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
+					readOnly
 					type='text'
-					placeholder={i18n.t('Gateway.Nhapcodegateway')}
+					placeholder={i18n.t('Gateway.NhapIDgateway')}
 					name='code'
+					isRequired
+					min={5}
+					max={50}
 					label={
 						<span>
-							{i18n.t('Gateway.Codegateway')} <span style={{color: 'red'}}>*</span>{' '}
+							{i18n.t('Gateway.IDgateway')} <span style={{color: 'red'}}>*</span>{' '}
 						</span>
 					}
 				/>
@@ -103,6 +110,9 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 					type='text'
 					placeholder={i18n.t('Gateway.Nhaptengateway')}
 					name='name'
+					isRequired
+					min={5}
+					max={50}
 					label={
 						<span>
 							{i18n.t('Gateway.Tengateway')} <span style={{color: 'red'}}>*</span>{' '}

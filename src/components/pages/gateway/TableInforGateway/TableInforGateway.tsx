@@ -96,17 +96,19 @@ function TableInforGateway({}: PropsTableInforGateway) {
 					</colgroup>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.Codethietbi')}: </span>
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.IDgateway')}: </span>
 							{data?.code}
 						</td>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Common.Trangthai')}: </span>{' '}
-							{data?.state == STATE_GATEWAY.ONLINE ? 'Online' : 'Offline'}
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.StatusGateway')}: </span>
+							<span style={{color: data?.state == STATE_GATEWAY.ONLINE ? '#2CAE39' : '#EB2E2E'}}>
+								{data?.state == STATE_GATEWAY.ONLINE ? 'Online' : 'Offline'}
+							</span>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.Tengateway')}: </span> {data?.name}
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.NameGateway')}: </span> {data?.name}
 						</td>
 						<td>
 							<span style={{marginRight: '4px'}}>{i18n.t('Common.Onlinelancuoi')}: </span>{' '}
@@ -115,7 +117,20 @@ function TableInforGateway({}: PropsTableInforGateway) {
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Common.Slthietbiphatdangketnoi')}:</span> {data?.connection}
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.StatusGatewayUsed')}: </span>
+							<span style={{color: data?.status == STATUS_GENERAL.SU_DUNG ? '#2CAE39' : '#EB2E2E'}}>
+								{data?.status == STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Dangsudung') : i18n.t('Common.Khongsudung')}
+							</span>
+						</td>
+						<td>
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.AreaManageGateway')}: </span>{' '}
+							<span>{data?.factoryName || '---'}</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span style={{marginRight: '4px'}}>{i18n.t('Common.Slthietbiphatdangketnoi')}:</span>{' '}
+							<span style={{color: '#3772FF'}}>{data?.connection}</span>
 						</td>
 						<td rowSpan={4} className={styles.description}>
 							<span style={{marginRight: '4px'}}>{i18n.t('Common.Ghichu')}:</span>
@@ -125,7 +140,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 					<tr>
 						<td>
 							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.Ipdangketnoi')}: </span>
-							{data?.ipConnect || '---'}
+							<span style={{color: '#3772FF'}}>{data?.ipConnect || '---'}</span>
 						</td>
 					</tr>
 				</table>
