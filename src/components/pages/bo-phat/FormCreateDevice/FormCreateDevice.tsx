@@ -47,7 +47,7 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess:i18n.t('Device.ThemmoibophatThanhcong') ,
+				msgSuccess: i18n.t('Device.ThemmoibophatThanhcong'),
 				http: deviceServices.upsertDevice({
 					uuid: '',
 					name: form.name,
@@ -81,10 +81,10 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 
 	const handleSubmit = async () => {
 		if (!form.macNumber) {
-			return toastWarn({msg:i18n.t('Device.VuilongnhapsoMac') });
+			return toastWarn({msg: i18n.t('Device.VuilongnhapsoMac')});
 		}
 		if (!form.name) {
-			return toastWarn({msg:i18n.t('Device.VuilongnhapTenthietbi') });
+			return toastWarn({msg: i18n.t('Device.VuilongnhapTenthietbi')});
 		}
 
 		return upsertDevice.mutate();
@@ -92,7 +92,7 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>{i18n.t('Device.themmoibophat')} </h4>
+			<h4>{i18n.t('Device.Themmoibophat')} </h4>
 			<Loading loading={upsertDevice.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
@@ -109,10 +109,10 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 				<Input
 					label={
 						<span>
-							{i18n.t('Device.tenthietbi')}  <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.tenthietbi')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder={i18n.t('Device.Nhaptenmoichothietbi')} 
+					placeholder={i18n.t('Device.Nhaptenmoichothietbi')}
 					name='name'
 					value={form.name}
 					type='text'
@@ -122,7 +122,7 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
-						placeholder={i18n.t('Device.luachon')} 
+						placeholder={i18n.t('Device.luachon')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
@@ -140,12 +140,12 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-						{i18n.t('Common.Huybo')} 
+							{i18n.t('Common.Huybo')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-						{i18n.t('Common.xacnhan')} 
+							{i18n.t('Common.xacnhan')}
 						</Button>
 					</div>
 				</div>

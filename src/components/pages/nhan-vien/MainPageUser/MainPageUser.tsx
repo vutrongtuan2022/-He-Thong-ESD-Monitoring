@@ -178,7 +178,7 @@ function MainPageUser({}: PropsMainPageUser) {
 					},
 					{
 						path: '',
-						title: i18n.t('User.danhsachnhanvien'),
+						title: i18n.t('User.Danhsachnhanvien'),
 					},
 				]}
 				action={
@@ -353,7 +353,7 @@ function MainPageUser({}: PropsMainPageUser) {
 									},
 
 									{
-										title: i18n.t('User.Trangthai'),
+										title: i18n.t('Common.Trangthai'),
 										render: (data: IUser) => (
 											<>
 												{data?.status == STATUS_GENERAL.SU_DUNG ? (

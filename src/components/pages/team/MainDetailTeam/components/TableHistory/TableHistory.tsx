@@ -16,6 +16,7 @@ import Link from 'next/link';
 import styles from './TableHistory.module.scss';
 import Moment from 'react-moment';
 import {formatTimeHistory} from '~/common/funcs/optionConvert';
+import i18n from '~/locale/i18n';
 
 function TableHistory({}: PropsTableHistory) {
 	const router = useRouter();
@@ -44,17 +45,17 @@ function TableHistory({}: PropsTableHistory) {
 			<DataWrapper
 				data={listHistoryTeams?.data?.items}
 				loading={listHistoryTeams.isLoading}
-				noti={<Noti title='Lịch sử trống' des='Danh sách lịch sử trống!' disableButton />}
+				noti={<Noti title={i18n.t('Common.Lichsutrong')} des={i18n.t('Common.Danhsachlichsutrong')} disableButton />}
 			>
 				<Table
 					data={listHistoryTeams?.data?.items}
 					column={[
 						{
-							title: 'STT',
+							title: i18n.t('Common.STT'),
 							render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: 'Số MAC',
+							title: i18n.t('Common.SoMAC'),
 							render: (data: IDeviceNGHistory) => (
 								<Link href={`/bo-phat/${data.deviceUuid}`} className={styles.link}>
 									{data.macNumber || '---'}
@@ -62,19 +63,19 @@ function TableHistory({}: PropsTableHistory) {
 							),
 						},
 						{
-							title: 'Tên thiết bị',
+							title: i18n.t('Common.Tenthietbi'),
 							render: (data: IDeviceNGHistory) => <>{data.deviceName || '---'}</>,
 						},
 						{
-							title: 'Giá trị tĩnh điện',
+							title: i18n.t('Device.Giatritinhdien'),
 							render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
 						},
 						{
-							title: 'Thời gian phát hiện NG',
+							title: i18n.t('Device.ThoigianphathienNG'),
 							render: (data: IDeviceNGHistory) => <Moment date={data.timeNgStart} format='HH:mm, DD/MM/YYYY' />,
 						},
 						{
-							title: 'Khoảng thời gian NG',
+							title: i18n.t('Device.KhoangthoigianNG'),
 							render: (data: IDeviceNGHistory) => <>{formatTimeHistory(data.totalNgMinutes || 0)}</>,
 						},
 					]}

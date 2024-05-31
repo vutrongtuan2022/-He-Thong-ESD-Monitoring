@@ -22,6 +22,7 @@ import TableHistory from './components/TableHistory';
 import clsx from 'clsx';
 import Dialog from '~/components/common/Dialog';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 function MainDetailTeam({}: PropsMainDetailTeam) {
 	const router = useRouter();
@@ -54,7 +55,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
 				http: teamServices.changeStatusTeam({
 					uuid: dataDetail?.uuid!,
 					status: dataDetail?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -80,15 +81,15 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 					},
 					{
 						path: PATH.Team,
-						title: 'Danh sách team',
+						title: i18n.t('Team.Danhsachteam'),
 					},
 					{
 						path: '',
-						title: 'Chi tiết team',
+						title: i18n.t('Team.Chitietteam'),
 					},
 				]}
 				action={
@@ -104,7 +105,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 					<div className={styles.header}>
 						<Link href={PATH.Team} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
-							<p>Thông tin team</p>
+							<p>{i18n.t('Team.Thongtinteams')}</p>
 						</Link>
 						<div className={styles.list_btn}>
 							{dataDetail?.status == STATUS_GENERAL.SU_DUNG && (
@@ -117,13 +118,13 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 									bold
 									onClick={() => setOpenChangeStatus(true)}
 								>
-									Khóa
+									{i18n.t('Common.Khoa')}
 								</Button>
 							)}
 
 							{dataDetail?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
 								<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setOpenChangeStatus(true)}>
-									Mở khóa
+									{i18n.t('Common.Mokhoa')}
 								</Button>
 							)}
 
@@ -136,7 +137,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 								bold
 								href={`/team/chinh-sua?_id=${dataDetail?.uuid}`}
 							>
-								Chỉnh sửa
+								{i18n.t('Common.Chinhsua')}
 							</Button>
 						</div>
 					</div>
@@ -148,51 +149,52 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							</colgroup>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Mã team:</span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Mateam')}:</span>
 									{dataDetail?.code}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Người quản lý team: </span> {dataDetail?.leaderName || '---'}
+									<span style={{marginRight: 6}}>{i18n.t('Common.NguoiQuanlyteam')}: </span>
+									{dataDetail?.leaderName || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Tên team: </span> {dataDetail?.name}
+									<span style={{marginRight: 6}}>{i18n.t('Common.Tenteam')}: </span> {dataDetail?.name}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>ID người quản lý: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.Idnguoiquanly')}: </span>
 									{dataDetail?.leadCode || ''}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Khu vực quản lý: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.Khuvucquanly')}: </span>
 									{dataDetail?.areaName || ''}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Thuộc team: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.Khuvucquanly')}: </span>
 									{dataDetail?.parentName || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Số thành viên: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Sothanhvien')}: </span>
 									{dataDetail?.totalUser}
 								</td>
 								<td rowSpan={3} className={styles.description}>
-									<span style={{marginRight: 6}}>Ghi chú:</span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Ghichu')}:</span>
 									{dataDetail?.notes || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Số thiết bị: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Sothietbi')}: </span>
 									{dataDetail?.totalDevices}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Số team phụ thuộc: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.Soteamphuthuoc')}: </span>
 									{dataDetail?.totalUnderTeam}
 								</td>
 							</tr>
@@ -208,22 +210,22 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							{
 								pathname: router.pathname,
 								query: null,
-								title: 'Danh sách team phụ thuộc',
+								title: i18n.t('Team.Danhsachteamphuthuoc'),
 							},
 							{
 								pathname: router.pathname,
 								query: 'nhan-vien',
-								title: 'Danh sách nhân viên',
+								title: i18n.t('User.Danhsachnhanvien'),
 							},
 							{
 								pathname: router.pathname,
 								query: 'bo-phat',
-								title: 'Danh sách bộ phát',
+								title: i18n.t('Device.Danhsachbophat'),
 							},
 							{
 								pathname: router.pathname,
 								query: 'lich-su',
-								title: 'Lịch sử bộ phát NG',
+								title: i18n.t('Device.LichsubophatNG'),
 							},
 						]}
 					/>
@@ -240,9 +242,9 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 			<Dialog
 				warn
 				open={openChangeStatus}
-				onClose={() => setOpenChangeStatus(true)}
-				title='Thay đổi trạng thái'
-				note='Bạn có chắc chắn muốn thay đổi trạng thái cho team này?'
+				onClose={() => setOpenChangeStatus(false)}
+				title={i18n.t('Common.ThaydoiTrangthai')}
+				note={i18n.t('Team.BancochacmuonchuyenTrangthai')}
 				onSubmit={handleChangeStatusTeam}
 			/>
 		</div>

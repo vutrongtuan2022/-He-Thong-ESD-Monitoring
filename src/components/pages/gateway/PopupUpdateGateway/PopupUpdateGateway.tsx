@@ -86,7 +86,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 
 	return (
 		<div className={styles.container}>
-			<h4>Chỉnh sửa gateway</h4>
+			<h4>{i18n.t('Gateway.Chinhsuagateway')}</h4>
 			<Loading loading={upsertGateway.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input

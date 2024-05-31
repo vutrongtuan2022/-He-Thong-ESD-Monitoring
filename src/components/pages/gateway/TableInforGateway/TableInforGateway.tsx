@@ -19,6 +19,7 @@ import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import Popup from '~/components/common/Popup';
 import PopupUpdateGateway from '../PopupUpdateGateway';
+import i18n from '~/locale/i18n';
 
 function TableInforGateway({}: PropsTableInforGateway) {
 	const router = useRouter();
@@ -48,7 +49,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
 				http: gatewayServices.updateStatusGateway({
 					uuid: data?.uuid!,
 					status: data?.status == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -64,7 +65,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 
 	const handleChangeStatusGateway = async () => {
 		if (!data?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy gateway!'});
+			return toastWarn({msg: i18n.t('Gateway.Khongtimthaygateway')});
 		}
 
 		return funcChangeStatusGateway.mutate();
@@ -76,14 +77,14 @@ function TableInforGateway({}: PropsTableInforGateway) {
 			<div className={styles.header}>
 				<Link href={PATH.Gateway} className={styles.header_title}>
 					<IoArrowBackOutline fontSize={20} fontWeight={600} />
-					<p>Thông tin gateway</p>
+					<p>{i18n.t('Gateway.Thongtingateway')}</p>
 				</Link>
 				<div className={styles.list_btn}>
 					<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold onClick={() => setOpenDelete(true)}>
-						Khóa
+						{i18n.t('Common.Khoa')}
 					</Button>
 					<Button className={styles.btn} rounded_8 w_fit p_6_16 blue_light bold onClick={() => setDataUpdate(data)}>
-						Chỉnh sửa
+						{i18n.t('Common.Chinhsua')}
 					</Button>
 				</div>
 			</div>
@@ -95,35 +96,35 @@ function TableInforGateway({}: PropsTableInforGateway) {
 					</colgroup>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>Code thiết bị: </span>
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.Codethietbi')}: </span>
 							{data?.code}
 						</td>
 						<td>
-							<span style={{marginRight: '4px'}}>Trạng thái: </span>{' '}
+							<span style={{marginRight: '4px'}}>{i18n.t('Common.Trangthai')}: </span>{' '}
 							{data?.state == STATE_GATEWAY.ONLINE ? 'Online' : 'Offline'}
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>Tên gateway: </span> {data?.name}
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.Tengateway')}: </span> {data?.name}
 						</td>
 						<td>
-							<span style={{marginRight: '4px'}}>Online lần cuối: </span>{' '}
+							<span style={{marginRight: '4px'}}>{i18n.t('Common.Onlinelancuoi')}: </span>{' '}
 							{data?.timeLastOnline ? <Moment date={data?.timeLastOnline} format='DD:mm, DD/MM/YYYY' /> : '---'}
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>Số thiết bị phát đang kết nối:</span> {data?.connection}
+							<span style={{marginRight: '4px'}}>{i18n.t('Common.Slthietbiphatdangketnoi')}:</span> {data?.connection}
 						</td>
 						<td rowSpan={4} className={styles.description}>
-							<span style={{marginRight: '4px'}}>Ghi chú:</span>
+							<span style={{marginRight: '4px'}}>{i18n.t('Common.Ghichu')}:</span>
 							{data?.notes || '---'}
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>IP đang kết nối: </span>
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.Ipdangketnoi')}: </span>
 							{data?.ipConnect || '---'}
 						</td>
 					</tr>
@@ -133,8 +134,8 @@ function TableInforGateway({}: PropsTableInforGateway) {
 				warn
 				open={openDelete}
 				onClose={() => setOpenDelete(false)}
-				title='Chuyển trạng thái'
-				note='Bạn có chắc chắn chuyển trạng thái cho gateway này?'
+				title={i18n.t('Common.ChuyenTrangthai')}
+				note={i18n.t('Gateway.BancochacmuonchuyenTrangthaichogatewaynay')}
 				onSubmit={handleChangeStatusGateway}
 			/>
 

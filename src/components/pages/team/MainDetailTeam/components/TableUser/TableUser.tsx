@@ -13,6 +13,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useRouter} from 'next/router';
 import userServices from '~/services/userServices';
 import {IUser} from '~/components/pages/nhan-vien/MainPageUser/interfaces';
+import i18n from '~/locale/i18n';
 
 function TableUser({}: PropsTableUser) {
 	const router = useRouter();
@@ -45,17 +46,17 @@ function TableUser({}: PropsTableUser) {
 			<DataWrapper
 				data={listUserTeams?.data?.items}
 				loading={listUserTeams.isLoading}
-				noti={<Noti title='Nhân viên trống' des='Danh sách nhân viên trống!' disableButton />}
+				noti={<Noti title={i18n.t('User.Nhanvientrong')} des={i18n.t('User.Danhsachnhanvientrong')} disableButton />}
 			>
 				<Table
 					data={listUserTeams?.data?.items}
 					column={[
 						{
-							title: 'STT',
+							title: i18n.t('Common.STT'),
 							render: (data: IUser, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: 'Mã nhân viên',
+							title: i18n.t('Common.Manhanvien'),
 							render: (data: IUser) => (
 								<Link href={`/nhan-vien/${data.uuid}`} className={styles.link}>
 									{data.code || '---'}
@@ -63,7 +64,7 @@ function TableUser({}: PropsTableUser) {
 							),
 						},
 						{
-							title: 'Tên nhân viên',
+							title: i18n.t('Common.Tennhanvien'),
 							render: (data: IUser) => <>{data.fullname || '---'}</>,
 						},
 						{
@@ -71,11 +72,11 @@ function TableUser({}: PropsTableUser) {
 							render: (data: IUser) => <>{data.email || '---'}</>,
 						},
 						{
-							title: 'Số điện thoại',
+							title: i18n.t('Common.Sodienthoai'),
 							render: (data: IUser) => <>{data.phone || 0}</>,
 						},
 						{
-							title: 'Thuộc team',
+							title: i18n.t('Common.Thuocteam'),
 							render: (data: IUser) => <>{data.teamName || 0}</>,
 						},
 					]}
