@@ -9,6 +9,7 @@ import {ShieldSecurity} from 'iconsax-react';
 import Popup from '~/components/common/Popup';
 import {useRouter} from 'next/router';
 import FormSusses from '../FormSusses';
+import i18n from '~/locale/i18n';
 
 function FormPassword({}: PropsFormPassword) {
 	const router = useRouter();
@@ -34,13 +35,13 @@ function FormPassword({}: PropsFormPassword) {
 					type='password'
 					name='password'
 					value={context?.form?.password}
-					placeholder='Nhập mật khẩu mới'
+					placeholder={i18n.t('ForgotPass.Nhapmatkhaumoi')}
 					onClean
 					isRequired
 					icon={<ShieldSecurity size='20' variant='Bold' />}
 					label={
 						<span>
-							Mật khẩu mới <span style={{color: 'red'}}>*</span>
+							{i18n.t('ForgotPass.Matkhaumoi')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -50,13 +51,13 @@ function FormPassword({}: PropsFormPassword) {
 					name='rePassword'
 					value={context?.form?.rePassword}
 					valueConfirm={context?.form?.password}
-					placeholder='Nhập lại mật khẩu'
+					placeholder={i18n.t('ForgotPass.Nhaplaimatkhau')}
 					onClean
 					isRequired
 					icon={<ShieldSecurity size='20' variant='Bold' />}
 					label={
 						<span>
-							Xác nhận mật khẩu mới <span style={{color: 'red'}}>*</span>
+							{i18n.t('ForgotPass.Xacnhanmatkhaumoi')}<span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -65,7 +66,7 @@ function FormPassword({}: PropsFormPassword) {
 					<FormContext.Consumer>
 						{({isDone}) => (
 							<Button primary bold rounded_8 disable={!isDone}>
-								Lưu mật khẩu
+								{i18n.t('ForgotPass.Luumatkhau')}
 							</Button>
 						)}
 					</FormContext.Consumer>

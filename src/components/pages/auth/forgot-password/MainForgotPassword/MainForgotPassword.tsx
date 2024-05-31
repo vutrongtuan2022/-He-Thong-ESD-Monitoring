@@ -5,6 +5,7 @@ import styles from './MainForgotPassword.module.scss';
 import {ContextForgotPassword} from '../context';
 import FormEmail from '../FormEmail';
 import FormPassword from '../FormPassword';
+import i18n from '~/locale/i18n';
 
 function MainForgotPassword({}: PropsMainForgotPassword) {
 	const [type, setType] = useState<number>(0);
@@ -20,12 +21,12 @@ function MainForgotPassword({}: PropsMainForgotPassword) {
 		des: string;
 	}[] = [
 		{
-			title: 'Quên mật khẩu?',
-			des: 'Nhập địa chỉ email liên kết với tài khoản của bạn để lấy lại mật khẩu!',
+			title: i18n.t('ForgotPass.Quenmatkhau'),
+			des: i18n.t('ForgotPass.NhapdiachiEmaillienketvoitaikhoancuaban'),
 		},
 		{
-			title: 'Thiết lập mật khẩu',
-			des: 'Mật khẩu mới bao gồm tối thiểu 6 ký tự gồm chữ hoa, chữ thường và số.',
+			title: i18n.t('ForgotPass.Thietlapmatkhau'),
+			des: i18n.t('ForgotPass.Matkhaumoibaogomchuhoachuthuongvaso'),
 		},
 	];
 
