@@ -15,6 +15,7 @@ import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import Popup from '~/components/common/Popup';
 import PopupAssignDevice from '../PopupAssignDevice';
+import i18n from '~/locale/i18n';
 
 function InfoDevice({}: PropsInfoDevice) {
 	const router = useRouter();
@@ -45,7 +46,7 @@ function InfoDevice({}: PropsInfoDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Hủy quyền sử dụng thành công!',
+				msgSuccess: i18n.t('Device.huyquyensudungthanhcong'),
 				http: deviceServices.updateTeamUsing({
 					uuid: data?.uuid!,
 					teamUuid: null,
@@ -63,7 +64,7 @@ function InfoDevice({}: PropsInfoDevice) {
 
 	const handleCancel = async () => {
 		if (!data?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy thiết bị!'});
+			return toastWarn({msg: i18n.t('Device.khongtimthaythietbi')});
 		}
 
 		return cancelTeamUsing.mutate();
@@ -76,16 +77,16 @@ function InfoDevice({}: PropsInfoDevice) {
 				<div className={styles.header}>
 					<Link href={PATH.BoPhat} className={styles.header_title}>
 						<IoArrowBackOutline fontSize={20} fontWeight={600} />
-						<p>Thông tin bộ phát</p>
+						<p>{i18n.t('Device.thongtinbophat')}</p>
 					</Link>
 					<div className={styles.list_btn}>
 						{data?.teamUuid ? (
 							<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold onClick={() => setOpenCancel(true)}>
-								Hủy quyền sử dụng
+								{i18n.t('Device.huyquyensudung')}
 							</Button>
 						) : (
 							<Button className={styles.btn} rounded_8 w_fit p_6_16 blue_light bold onClick={() => setOpenAssign(true)}>
-								Mở quyền sử dụng
+								{i18n.t('Device.moquyensudung')}
 							</Button>
 						)}
 					</div>
@@ -98,60 +99,60 @@ function InfoDevice({}: PropsInfoDevice) {
 						</colgroup>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Số MAC thiết bị: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.somacthietbi')} </span>
 								{data?.macNumber}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Thuộc team: </span> {data?.teamName || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.thuocteam') }: </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Tên thiết bị: </span> {data?.name}
+								<span style={{marginRight: 6}}>{i18n.t('Device.tenthietbi')} : </span> {data?.name}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Mã team: </span> {data?.codeTeam || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Mateam')}: </span> {data?.codeTeam || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Giá trị tĩnh điện hiện tại:</span> {data?.edsStatic || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Device.giatritinhdienhientai')}:</span> {data?.edsStatic || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>Leader team: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.leaderteam')}: </span>
 								{data?.teamLeaderName || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Phần trăm pin: </span> {data?.battery}%
+								<span style={{marginRight: 6}}>{i18n.t('Device.phantrampin')}: </span> {data?.battery}%
 							</td>
 							<td rowSpan={5} className={styles.description}>
-								<span style={{marginRight: 6}}>Ghi chú:</span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.ghichu')}:</span>
 								{data?.notes || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Gateway đang kết nối: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.Gatewaydangketnoi')}: </span>
 								{data?.gatewayName || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Trạng thái sóng: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.trangthaisong')}: </span>
 								{data?.signalStatus == SIGNAL_STATUS_DEVICE.MANH
-									? 'Mạnh'
+									? i18n.t('Device.manh')
 									: data?.signalStatus == SIGNAL_STATUS_DEVICE.TRUNG_BINH
-									? 'Trung bình'
+									? i18n.t('Device.trungbinh')
 									: data?.signalStatus == SIGNAL_STATUS_DEVICE.YEU
-									? 'Yếu'
+									? i18n.t('Device.yeu')
 									: '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Trạng thái hoạt động: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.trangthaihoatdong')}: </span>
 								{data?.state == STATE_ONLINE_DEVICE.ONLINE
 									? 'Onine'
 									: data?.state == STATE_ONLINE_DEVICE.OFFLINE
@@ -161,9 +162,9 @@ function InfoDevice({}: PropsInfoDevice) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>Tình trạng: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.tinhtrang')}: </span>
 								{data?.ngStatus && data?.ngStatus == STATE_DEVICE_NG.KHONG_NG
-									? 'Bình thường'
+									? i18n.t('Device.binhthuong')
 									: data?.ngStatus && data?.ngStatus == STATE_DEVICE_NG.BI_NG
 									? 'NG'
 									: '---'}
@@ -178,8 +179,8 @@ function InfoDevice({}: PropsInfoDevice) {
 				danger
 				open={openCancel}
 				onClose={() => setOpenCancel(false)}
-				title='Hủy quyền sử dụng'
-				note='Bạn có chắc chắn muốn hủy quyền sử dụng cho gateway này?'
+				title={i18n.t('Device.huyquyensudung')}
+				note={i18n.t('Device.huyquyensudunggateway')}
 				onSubmit={handleCancel}
 			/>
 

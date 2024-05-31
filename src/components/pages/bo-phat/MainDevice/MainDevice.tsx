@@ -341,11 +341,11 @@ function MainDevice({}: PropsMainDevice) {
 								data={listDevices?.data?.items}
 								column={[
 									{
-										title: 'STT',
+										title: i18n.t('Device.STT'),
 										render: (data: IDevice, index: number) => <>{index + 1}</>,
 									},
 									{
-										title: 'Số MAC',
+										title: i18n.t('Device.somac'),
 										render: (data: IDevice) => (
 											<Link href={`/bo-phat/${data.uuid}`} className={styles.link}>
 												{data.macNumber}
@@ -353,33 +353,33 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: 'Tên thiết bị',
+										title: i18n.t('Device.tenthietbi'),
 										render: (data: IDevice) => <>{data.name}</>,
 									},
 									{
-										title: 'Thuộc team',
+										title: i18n.t('Device.thuocteam'),
 										render: (data: IDevice) => <>{data.teamName || '---'}</>,
 									},
 									{
-										title: 'Leader team',
+										title: i18n.t('Device.leaderteam'),
 										render: (data: IDevice) => <>{data.teamLeaderName || '---'}</>,
 									},
 									{
-										title: 'Phần trăm pin',
+										title: i18n.t('Device.phantrampin'),
 										render: (data: IDevice) => <>{data.battery}%</>,
 									},
 									{
-										title: 'Hoạt động',
+										title: i18n.t('Device.hoatdong'),
 										render: (data: IDevice) => <StateDevice status={data.state} />,
 									},
 									{
-										title: 'Tình trạng',
+										title: i18n.t('Device.tinhtrang'),
 										render: (data: IDevice) => (
 											<>
 												{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
-													<p style={{color: '#35C244', fontWeight: 600}}>Bình thường</p>
+													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Device.dangsudung')}</p>
 												) : data.ngStatus == STATE_DEVICE_NG.BI_NG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>Not good</p>
+													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.bing')}</p>
 												) : (
 													'---'
 												)}
@@ -387,13 +387,13 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: 'Trạng thái',
+										title: i18n.t('Device.trangthai'),
 										render: (data: IDevice) => (
 											<>
 												{data?.status == STATUS_GENERAL.SU_DUNG ? (
-													<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Device.dangsudung')}</p>
 												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.khongsudung')}</p>
 												) : (
 													'---'
 												)}
@@ -401,18 +401,18 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: 'Online lần cuối',
+										title: i18n.t('Device.onlinecuoi'),
 										render: (data: IDevice) =>
 											data.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---',
 									},
 									{
-										title: 'Tác vụ',
+										title: i18n.t('Common.tacvu'),
 										render: (data: IDevice) => (
 											<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 												<IconCustom
 													edit
 													icon={<LuPencil fontSize={20} fontWeight={600} />}
-													tooltip='Chỉnh sửa'
+													tooltip={i18n.t('Device.chinhsua')}
 													color='#777E90'
 													onClick={() => setDataUpdate(data)}
 												/>
@@ -422,7 +422,11 @@ function MainDevice({}: PropsMainDevice) {
 													icon={
 														data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />
 													}
-													tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
+													tooltip={
+														data.status === STATUS_GENERAL.SU_DUNG
+															? i18n.t('Device.khoa')
+															: i18n.t('Device.mokhoa')
+													}
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
 												/>
@@ -447,8 +451,8 @@ function MainDevice({}: PropsMainDevice) {
 				warn
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
-				title='Thay đổi trạng thái'
-				note='Bạn có chắc chắn muốn thay đổi trạng thái bộ phát này?'
+				title={i18n.t('Device.thaydoitrangthai')}
+				note={i18n.t('Device.bancochac')}
 				onSubmit={handleChangeStatusDevice}
 			/>
 			<Popup open={openCreate} onClose={() => setOpenCreate(false)}>

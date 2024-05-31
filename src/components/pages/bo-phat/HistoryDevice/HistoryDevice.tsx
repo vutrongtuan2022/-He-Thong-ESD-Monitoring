@@ -20,6 +20,7 @@ import {useRouter} from 'next/router';
 import ngHistoryServices from '~/services/ngHistoryServices';
 import Noti from '~/components/common/DataWrapper/components/Noti';
 import {formatTimeHistory} from '~/common/funcs/optionConvert';
+import i18n from '~/locale/i18n';
 
 function HistoryDevice({}: PropsHistoryDevice) {
 	const router = useRouter();
@@ -57,7 +58,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>Lịch sử bộ phát NG</h4>
+			<h4>{i18n.t('Device.LichsubophatNG')}</h4>
 			<div className={styles.flex}>
 				<div className={styles.main_search}>
 					<div className={styles.filter}>
@@ -90,33 +91,33 @@ function HistoryDevice({}: PropsHistoryDevice) {
 				<DataWrapper
 					data={listHistoryDevices?.data?.items}
 					loading={listHistoryDevices.isLoading}
-					noti={<Noti disableButton title='Danh sách trống!' des='Danh sách lịch sử NG của thiết bị trống!' />}
+					noti={<Noti disableButton title={i18n.t('Device.danhsachgtrong')} des={i18n.t('Device.danhsachbophattrong')} />}
 				>
 					<Table
 						data={listHistoryDevices?.data?.items}
 						column={[
 							{
-								title: 'STT',
+								title: i18n.t("Common.STT"),
 								render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 							},
 							{
-								title: 'Thời gian phát hiện NG',
+								title: i18n.t('Device.ThoigianphathienNG'),
 								render: (data: IDeviceNGHistory) => <Moment date={data.timeNgStart} format='HH:mm, DD/MM/YYYY' />,
 							},
 							{
-								title: 'Khoảng thời gian NG',
+								title: i18n.t('Device.KhoangthoigianNG'),
 								render: (data: IDeviceNGHistory) => <>{formatTimeHistory(data.totalNgMinutes || 0)}</>,
 							},
 							{
-								title: 'Giá trị tĩnh điện',
+								title: i18n.t('Device.giatritinhdien'),
 								render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
 							},
 							{
-								title: 'Thuộc team',
+								title: i18n.t('Common.thuocteam'),
 								render: (data: IDeviceNGHistory) => <>{data.teamName}</>,
 							},
 							{
-								title: 'Mã team',
+								title: i18n.t('Common.Mateam'),
 								render: (data: IDeviceNGHistory) => <>{data.teamCode}</>,
 							},
 						]}
