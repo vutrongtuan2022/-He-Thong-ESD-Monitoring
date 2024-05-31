@@ -113,7 +113,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							render: (data: ITeam) => <>{data.areaName || '---'}</>,
 						},
 						{
-							title: i18n.t('Common.Trangthai'),
+							title: i18n.t('Common.Status'),
 							render: (data: ITeam) => (
 								<>
 									{data?.status == STATUS_GENERAL.SU_DUNG ? (

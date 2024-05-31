@@ -219,7 +219,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								href={PATH.ThemTeam}
 							>
-								{i18n.t('Common.Themmoi')}
+								{i18n.t('Common.Addnew')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
@@ -283,10 +283,10 @@ function MainPageTeam({}: PropsMainPageTeam) {
 							</div>
 							<div className={styles.filter}>
 								<FilterCustom
-									name={i18n.t('Common.Trangthai')}
+									name={i18n.t('Common.Status')}
 									query='_status'
 									listFilter={[
-										{id: STATUS_GENERAL.SU_DUNG, name: i18n.t('Common.sudung')},
+										{id: STATUS_GENERAL.SU_DUNG, name: i18n.t('Common.Use')},
 										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: i18n.t('Common.khongsudung')},
 									]}
 								/>

@@ -103,7 +103,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					<div style={{minWidth: 240}}>
 						<FilterCustom
 							isSearch
-							name={i18n.t('Common.Chucvu')}
+							name={i18n.t('Common.Regency')}
 							query='_factoryAreaUuid'
 							listFilter={listAreas?.data?.map((v: any) => ({
 								id: v?.uuid,
@@ -129,12 +129,12 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
-							name={i18n.t('Common.Trangthai')}
+							name={i18n.t('Common.Status')}
 							query='_status'
 							listFilter={[
 								{
 									id: STATUS_GENERAL.SU_DUNG,
-									name: i18n.t('Common.Sudung'),
+									name: i18n.t('Common.Use'),
 								},
 								{
 									id: STATUS_GENERAL.KHONG_SU_DUNG,
@@ -191,7 +191,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								render: (data: IGateway) => <StateGateway state={data.state} />,
 							},
 							{
-								title: i18n.t('Common.Trangthai'),
+								title: i18n.t('Common.Status'),
 								render: (data: IGateway) => (
 									<>
 										{data?.status == STATUS_GENERAL.SU_DUNG ? (

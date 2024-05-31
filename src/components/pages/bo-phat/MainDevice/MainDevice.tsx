@@ -387,7 +387,7 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: i18n.t('Common.Trangthai'),
+										title: i18n.t('Common.Status'),
 										render: (data: IDevice) => (
 											<>
 												{data?.status == STATUS_GENERAL.SU_DUNG ? (
