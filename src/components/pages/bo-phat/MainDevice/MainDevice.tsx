@@ -204,7 +204,7 @@ function MainDevice({}: PropsMainDevice) {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('Device.quanlybophat'),
+						title: i18n.t('Device.TransmitterManagement'),
 						path: '',
 					},
 				]}
@@ -264,7 +264,7 @@ function MainDevice({}: PropsMainDevice) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								onClick={() => setOpenCreate(true)}
 							>
-								{i18n.t('Device.themmoi')}
+								{i18n.t('Device.AddNew')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
@@ -277,7 +277,7 @@ function MainDevice({}: PropsMainDevice) {
 				<div className={styles.main}>
 					<div className={styles.main_search}>
 						<div className={styles.search}>
-							<Search keyName='_keyword' placeholder={i18n.t('Device.timkiem')} />
+							<Search keyName='_keyword' placeholder={i18n.t('Device.SearchByMacAddressDeviceName')} />
 						</div>
 
 						<div className={styles.filter}>
@@ -295,7 +295,7 @@ function MainDevice({}: PropsMainDevice) {
 
 						<div className={styles.filter}>
 							<FilterCustom
-								name={i18n.t('Device.hoatdong')}
+								name={i18n.t('Device.Active')}
 								query='_onlineState'
 								listFilter={[
 									{id: STATE_ONLINE_DEVICE.ONLINE, name: 'Online'},
@@ -305,7 +305,7 @@ function MainDevice({}: PropsMainDevice) {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name={i18n.t('Device.Trangthai')}
+								name={i18n.t('Device.Status')}
 								query='_status'
 								listFilter={[
 									{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
@@ -315,11 +315,11 @@ function MainDevice({}: PropsMainDevice) {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name={i18n.t('Device.tinhtrang')}
+								name={i18n.t('Device.Condition')}
 								query='_ngState'
 								listFilter={[
-									{id: STATE_DEVICE_NG.KHONG_NG, name: i18n.t('Device.binhthuong')},
-									{id: STATE_DEVICE_NG.BI_NG, name: i18n.t('Device.bing')},
+									{id: STATE_DEVICE_NG.KHONG_NG, name: i18n.t('Device.Normal')},
+									{id: STATE_DEVICE_NG.BI_NG, name: i18n.t('Device.NotGood')},
 								]}
 							/>
 						</div>
@@ -330,9 +330,9 @@ function MainDevice({}: PropsMainDevice) {
 							loading={listDevices.isLoading}
 							noti={
 								<Noti
-									title={i18n.t('Device.bophattrong')}
-									des={i18n.t('Device.Danhsachbophattrong')}
-									titleButton={i18n.t('Device.Themmoibophat')}
+									title={i18n.t('Device.EmptyTransmitter')}
+									des={i18n.t('Device.EmptyTransmitterList')}
+									titleButton={i18n.t('Device.AddNewTransmitter')}
 									onClick={() => setOpenCreate(true)}
 								/>
 							}
@@ -353,7 +353,7 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: i18n.t('Device.tenthietbi'),
+										title: i18n.t('Device.DeviceName'),
 										render: (data: IDevice) => <>{data.name}</>,
 									},
 									{
@@ -361,11 +361,11 @@ function MainDevice({}: PropsMainDevice) {
 										render: (data: IDevice) => <>{data.teamName || '---'}</>,
 									},
 									{
-										title: i18n.t('Device.leaderteam'),
+										title: i18n.t('Device.TeamLeader'),
 										render: (data: IDevice) => <>{data.teamLeaderName || '---'}</>,
 									},
 									{
-										title: i18n.t('Device.Phantrampin'),
+										title: i18n.t('Device.BatteryPercentage'),
 										render: (data: IDevice) => <>{data.battery}%</>,
 									},
 									{
@@ -377,9 +377,9 @@ function MainDevice({}: PropsMainDevice) {
 										render: (data: IDevice) => (
 											<>
 												{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
-													<p style={{color: '#35C244', fontWeight: 600}}>Bình thường</p>
+													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Device.InUse')}</p>
 												) : data.ngStatus == STATE_DEVICE_NG.BI_NG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>Not good</p>
+													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.NotGood')}</p>
 												) : (
 													'---'
 												)}
@@ -412,7 +412,7 @@ function MainDevice({}: PropsMainDevice) {
 												<IconCustom
 													edit
 													icon={<LuPencil fontSize={20} fontWeight={600} />}
-													tooltip={i18n.t('Device.chinhsua')}
+													tooltip={i18n.t('Device.Edit')}
 													color='#777E90'
 													onClick={() => setDataUpdate(data)}
 												/>
@@ -452,7 +452,7 @@ function MainDevice({}: PropsMainDevice) {
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
 				title={i18n.t('Common.ThaydoiTrangthai')}
-				note={i18n.t('Device.BancochacmuonchuyenTrangthaibophatnay')}
+				note={i18n.t('Device.AreYouSureYouWantToChangeTheStatusOfThisTransmitter')}
 				onSubmit={handleChangeStatusDevice}
 			/>
 			<Popup open={openCreate} onClose={() => setOpenCreate(false)}>

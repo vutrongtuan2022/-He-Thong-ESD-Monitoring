@@ -20,11 +20,11 @@ function MainDetailDevice({}: PropsMainDetailDevice) {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('Device.quanlybophat'),
+						title: i18n.t('Device.TransmitterManagement'),
 						path: PATH.BoPhat,
 					},
 					{
-						title: i18n.t('Device.chitietbophat'),
+						title: i18n.t('Device.TransmitterDetails'),
 						path: '',
 					},
 				]}
