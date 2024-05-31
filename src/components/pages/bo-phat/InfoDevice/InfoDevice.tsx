@@ -116,7 +116,7 @@ function InfoDevice({}: PropsInfoDevice) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.giatritinhdienhientai')}:</span> {data?.edsStatic || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Device.Giatritinhdienhientai')}:</span> {data?.edsStatic || '---'}
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('Device.leaderteam')}: </span>
@@ -125,10 +125,10 @@ function InfoDevice({}: PropsInfoDevice) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.phantrampin')}: </span> {data?.battery}%
+								<span style={{marginRight: 6}}>{i18n.t('Device.Phantrampin')}: </span> {data?.battery}%
 							</td>
 							<td rowSpan={5} className={styles.description}>
-								<span style={{marginRight: 6}}>{i18n.t('Device.ghichu')}:</span>
+								<span style={{marginRight: 6}}>{i18n.t('Common.Ghichu')}:</span>
 								{data?.notes || '---'}
 							</td>
 						</tr>
@@ -180,7 +180,7 @@ function InfoDevice({}: PropsInfoDevice) {
 				open={openCancel}
 				onClose={() => setOpenCancel(false)}
 				title={i18n.t('Device.huyquyensudung')}
-				note={i18n.t('Device.huyquyensudunggateway')}
+				note={i18n.t('Device.huyquyensudungbophat')}
 				onSubmit={handleCancel}
 			/>
 

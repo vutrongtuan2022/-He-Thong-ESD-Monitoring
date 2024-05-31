@@ -331,8 +331,8 @@ function MainDevice({}: PropsMainDevice) {
 							noti={
 								<Noti
 									title={i18n.t('Device.bophattrong')}
-									des={i18n.t('Device.danhsachbophattrong')}
-									titleButton={i18n.t('Device.themmoibophat')}
+									des={i18n.t('Device.Danhsachbophattrong')}
+									titleButton={i18n.t('Device.Themmoibophat')}
 									onClick={() => setOpenCreate(true)}
 								/>
 							}
@@ -341,11 +341,11 @@ function MainDevice({}: PropsMainDevice) {
 								data={listDevices?.data?.items}
 								column={[
 									{
-										title: i18n.t('Device.STT'),
+										title: i18n.t('Common.STT'),
 										render: (data: IDevice, index: number) => <>{index + 1}</>,
 									},
 									{
-										title: i18n.t('Device.somac'),
+										title: i18n.t('Common.SoMAC'),
 										render: (data: IDevice) => (
 											<Link href={`/bo-phat/${data.uuid}`} className={styles.link}>
 												{data.macNumber}
@@ -357,7 +357,7 @@ function MainDevice({}: PropsMainDevice) {
 										render: (data: IDevice) => <>{data.name}</>,
 									},
 									{
-										title: i18n.t('Device.thuocteam'),
+										title: i18n.t('Common.Thuocteam'),
 										render: (data: IDevice) => <>{data.teamName || '---'}</>,
 									},
 									{
@@ -365,15 +365,15 @@ function MainDevice({}: PropsMainDevice) {
 										render: (data: IDevice) => <>{data.teamLeaderName || '---'}</>,
 									},
 									{
-										title: i18n.t('Device.phantrampin'),
+										title: i18n.t('Device.Phantrampin'),
 										render: (data: IDevice) => <>{data.battery}%</>,
 									},
 									{
-										title: i18n.t('Device.hoatdong'),
+										title: i18n.t('Common.Hoatdong'),
 										render: (data: IDevice) => <StateDevice status={data.state} />,
 									},
 									{
-										title: i18n.t('Device.tinhtrang'),
+										title: i18n.t('Common.Tinhtrang'),
 										render: (data: IDevice) => (
 											<>
 												{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
@@ -387,13 +387,13 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: i18n.t('Device.trangthai'),
+										title: i18n.t('Common.Trangthai'),
 										render: (data: IDevice) => (
 											<>
 												{data?.status == STATUS_GENERAL.SU_DUNG ? (
-													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Device.dangsudung')}</p>
+													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Dangsudung')}</p>
 												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.khongsudung')}</p>
+													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Khongsudung')}</p>
 												) : (
 													'---'
 												)}
@@ -401,12 +401,12 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: i18n.t('Device.onlinecuoi'),
+										title: i18n.t('Common.Onlinelancuoi'),
 										render: (data: IDevice) =>
 											data.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---',
 									},
 									{
-										title: i18n.t('Common.tacvu'),
+										title: i18n.t('Common.Tacvu'),
 										render: (data: IDevice) => (
 											<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 												<IconCustom
@@ -424,8 +424,8 @@ function MainDevice({}: PropsMainDevice) {
 													}
 													tooltip={
 														data.status === STATUS_GENERAL.SU_DUNG
-															? i18n.t('Device.khoa')
-															: i18n.t('Device.mokhoa')
+															? i18n.t('Common.Khoa')
+															: i18n.t('Common.Mokhoa')
 													}
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
@@ -451,8 +451,8 @@ function MainDevice({}: PropsMainDevice) {
 				warn
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
-				title={i18n.t('Device.thaydoitrangthai')}
-				note={i18n.t('Device.bancochac')}
+				title={i18n.t('Common.ThaydoiTrangthai')}
+				note={i18n.t('Device.BancochacmuonchuyenTrangthaibophatnay')}
 				onSubmit={handleChangeStatusDevice}
 			/>
 			<Popup open={openCreate} onClose={() => setOpenCreate(false)}>
