@@ -82,6 +82,25 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 		},
 	});
 
+	// Func export excel
+	const exportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				http: dashboardServices.exportExcel({
+					pageSize: Number(_pageSize) || 20,
+					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
+					teamNames: null,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
+			}
+		},
+	});
+
 	const handleSubmit = () => {
 		if (!infoUser?.uuid) {
 			return toastWarn({msg: 'Không tìm thấy người dùng!'});
@@ -96,9 +115,9 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 
 	return (
 		<div className={styles.container}>
-			<Loading loading={fucnCheckDeviceNG.isLoading} />
+			<Loading loading={fucnCheckDeviceNG.isLoading || exportExcel.isLoading} />
 
-			<h4>Danh sách bộ phát NG (05)</h4>
+			<h4>Danh sách bộ phát NG ({total})</h4>
 			<div className={styles.control}>
 				<div className={styles.left}>
 					{data?.some((x) => x.isChecked !== false) && (
@@ -127,6 +146,7 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 						green
 						bold
 						icon={<Image alt='icon export' src={icons.export_excel} width={20} height={20} />}
+						onClick={exportExcel.mutate}
 					>
 						Export excel
 					</Button>

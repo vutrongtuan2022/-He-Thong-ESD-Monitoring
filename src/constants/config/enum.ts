@@ -90,6 +90,13 @@ export enum STATUS_ACCOUNT {
 	HAVEACCOUNT,
 }
 
+export enum TYPE_BATTERY {
+	'> 80%' = 1,
+	'50% - 80%' = 2,
+	'20% - 50%' = 3,
+	'< 20%' = 4,
+}
+
 export enum TYPE_VALUE_TABLE_DROPDOWN {
 	'string',
 	'date',

@@ -206,7 +206,8 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 							},
 							{
 								title: i18n.t('Common.Onlinelancuoi'),
-								render: (data: IGateway) => <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' />,
+								render: (data: IGateway) =>
+									data.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---',
 							},
 							{
 								title: i18n.t('Common.Tacvu'),

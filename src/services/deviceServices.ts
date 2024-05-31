@@ -48,8 +48,8 @@ const deviceServices = {
 			onlineState: number | null;
 			ngState: number | null;
 			battery: {
-				fromDouble: number;
-				toDouble: number;
+				fromDouble: number | null;
+				toDouble: number | null;
 			} | null;
 			edS_Static?: {
 				fromDouble: number;
@@ -88,20 +88,20 @@ const deviceServices = {
 			onlineState: number | null;
 			ngState: number | null;
 			battery: {
-				fromDouble: number;
-				toDouble: number;
-			};
+				fromDouble: number | null;
+				toDouble: number | null;
+			} | null;
 			edS_Static?: {
 				fromDouble: number;
 				toDouble: number;
-			};
+			} | null;
 			timeLastOnline?: {
 				fromDate: string;
 				toDate: string;
-			};
-			gatewayUuid?: string;
-			teamUuid?: string;
-			factoryAreaUuid?: string;
+			} | null;
+			gatewayUuid?: string | null;
+			teamUuid?: string | null;
+			factoryAreaUuid?: string | null;
 		},
 		tokenAxios?: any
 	) => {

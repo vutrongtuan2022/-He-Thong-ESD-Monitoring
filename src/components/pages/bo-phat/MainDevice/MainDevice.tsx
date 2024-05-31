@@ -24,7 +24,7 @@ import Popup from '~/components/common/Popup';
 import FormCreateTransmitter from '../FormCreateDevice';
 import FormUpdateTransmitter from '../FormUpdateDevice';
 import Link from 'next/link';
-import {QUERY_KEY, STATE_DEVICE_NG, STATE_ONLINE_DEVICE, STATUS_GENERAL} from '~/constants/config/enum';
+import {QUERY_KEY, STATE_DEVICE_NG, STATE_ONLINE_DEVICE, STATUS_GENERAL, TYPE_BATTERY} from '~/constants/config/enum';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import deviceServices from '~/services/deviceServices';
@@ -34,6 +34,7 @@ import Loading from '~/components/common/Loading';
 import ImportExcel from '~/components/common/ImportExcel';
 import Noti from '~/components/common/DataWrapper/components/Noti';
 import i18n from '~/locale/i18n';
+import {getBatteryCapacity} from '~/common/funcs/optionConvert';
 
 function MainDevice({}: PropsMainDevice) {
 	const router = useRouter();
@@ -58,12 +59,12 @@ function MainDevice({}: PropsMainDevice) {
 					ngState: _ngState ? Number(_ngState) : null,
 					status: _status ? Number(_status) : null,
 					battery: {
-						toDouble: _pin && Number(_pin) < 100 ? Number(_pin) : 100,
-						fromDouble: 0,
+						toDouble: getBatteryCapacity(Number(_pin)).toDouble,
+						fromDouble: getBatteryCapacity(Number(_pin)).fromDouble,
 					},
 					edS_Static: null,
-					gatewayUuid: '',
-					teamUuid: '',
+					gatewayUuid: null,
+					teamUuid: null,
 					factoryAreaUuid: null,
 					timeLastOnline: null,
 				}),
@@ -113,11 +114,16 @@ function MainDevice({}: PropsMainDevice) {
 					keyword: _keyword ? (_keyword as string) : '',
 					onlineState: _onlineState ? Number(_onlineState) : null,
 					ngState: _ngState ? Number(_ngState) : null,
-					status: STATUS_GENERAL.SU_DUNG,
+					status: _status ? Number(_status) : null,
 					battery: {
-						toDouble: _pin && Number(_pin) < 100 ? Number(_pin) : 100,
-						fromDouble: 0,
+						toDouble: getBatteryCapacity(Number(_pin)).toDouble,
+						fromDouble: getBatteryCapacity(Number(_pin)).fromDouble,
 					},
+					edS_Static: null,
+					gatewayUuid: null,
+					teamUuid: null,
+					factoryAreaUuid: null,
+					timeLastOnline: null,
 				}),
 			});
 		},
@@ -273,8 +279,18 @@ function MainDevice({}: PropsMainDevice) {
 						<div className={styles.search}>
 							<Search keyName='_keyword' placeholder={i18n.t('Device.timkiem')} />
 						</div>
+
 						<div className={styles.filter}>
-							<Search isNumber keyName='_pin' placeholder={i18n.t('Device.timkiempin')} />
+							<FilterCustom
+								name='Pin'
+								query='_pin'
+								listFilter={[
+									{id: TYPE_BATTERY['> 80%'], name: 'Trên 80%'},
+									{id: TYPE_BATTERY['50% - 80%'], name: '50% - 80%'},
+									{id: TYPE_BATTERY['20% - 50%'], name: '20% - 50%'},
+									{id: TYPE_BATTERY['< 20%'], name: 'Dưới 20%'},
+								]}
+							/>
 						</div>
 
 						<div className={styles.filter}>
@@ -386,7 +402,8 @@ function MainDevice({}: PropsMainDevice) {
 									},
 									{
 										title: i18n.t('Device.onlinecuoi'),
-										render: (data: IDevice) => <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' />,
+										render: (data: IDevice) =>
+											data.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---',
 									},
 									{
 										title: i18n.t('Common.tacvu'),
@@ -405,7 +422,11 @@ function MainDevice({}: PropsMainDevice) {
 													icon={
 														data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />
 													}
-													tooltip={data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('Device.khoa') : i18n.t('Device.mokhoa')}
+													tooltip={
+														data.status === STATUS_GENERAL.SU_DUNG
+															? i18n.t('Device.khoa')
+															: i18n.t('Device.mokhoa')
+													}
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
 												/>

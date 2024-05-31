@@ -14,11 +14,18 @@ import ListGateway from '../ListGateway';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import gatewayServices from '~/services/gatewayServices';
-import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
+import {QUERY_KEY} from '~/constants/config/enum';
 import {useRouter} from 'next/router';
 import Loading from '~/components/common/Loading';
 import ImportExcel from '~/components/common/ImportExcel';
+import {toastWarn} from '~/common/funcs/toast';
 import i18n from '~/locale/i18n';
+
+interface IDataExcelGetway {
+	code: string;
+	name: string;
+	factoryArea: string;
+}
 
 function MainGateway({}: PropsMainGateway) {
 	const router = useRouter();
@@ -27,6 +34,7 @@ function MainGateway({}: PropsMainGateway) {
 	const {importExcel, _page, _pageSize, _keyword, _state, _status, _factoryAreaUuid} = router.query;
 
 	const [file, setFile] = useState<any>(null);
+	const [dataExcel, setDataExcel] = useState<any[]>([]);
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
 
 	// Func export excel
@@ -90,7 +98,33 @@ function MainGateway({}: PropsMainGateway) {
 	};
 
 	const handleImportExcel = async () => {
-		fucnImportExcel.mutate();
+		const dataConvert: IDataExcelGetway[] = dataExcel?.map((v: any) => ({
+			code: v['Code'],
+			name: v['Name'],
+			factoryArea: v['FactoryArea'],
+		}));
+
+		// Check require code, name
+		const isValid = dataConvert.every((item) => item.code && item.name);
+
+		if (!isValid) {
+			return toastWarn({msg: 'Dữ liệu đầu vào không hợp lệ!'});
+		}
+
+		// Check trùng code
+		for (let index = 0; index < dataConvert.length; index++) {
+			// Kiểm tra code null
+			if (!dataConvert[index]?.code || !dataConvert[index + 1]?.code) {
+				return toastWarn({msg: 'Dữ liệu đầu vào không hợp lệ!'});
+			}
+
+			// Kiểm tra trùng code
+			if (dataConvert[index]?.code == dataConvert[index + 1]?.code) {
+				return toastWarn({msg: 'Dữ liệu đầu vào không hợp lệ!'});
+			}
+		}
+
+		return fucnImportExcel.mutate();
 	};
 
 	return (
@@ -182,12 +216,13 @@ function MainGateway({}: PropsMainGateway) {
 			</Popup>
 			<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
 				<ImportExcel
-					name='file-device'
+					name='file-gateway'
 					file={file}
 					pathTemplate='/static/files/Mau_Import_Gateway.xlsx'
 					setFile={setFile}
 					onClose={handleCloseImportExcel}
 					onSubmit={handleImportExcel}
+					setDataReadFile={setDataExcel}
 				/>
 			</Popup>
 		</div>

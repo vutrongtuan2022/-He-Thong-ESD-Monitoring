@@ -75,6 +75,30 @@ const teamServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	exportExcel: (
+		data: {
+			pageSize: number;
+			page: number;
+			keyword: string;
+			status: number | null;
+			leaderUuid: string[] | null;
+			areaUuid?: string | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Team/export_excel`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	importExcel: (data: {FileData: any; Type: any}, tokenAxios?: any) => {
+		return axiosClient.put(`/Team/import_excel`, data, {
+			cancelToken: tokenAxios,
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				Accept: 'text/plain',
+			},
+		});
+	},
 };
 
 export default teamServices;

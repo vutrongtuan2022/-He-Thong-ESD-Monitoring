@@ -33,12 +33,11 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 	useEffect(() => {
 		if (dataUpdate) {
 			setForm({
-				uuid: dataUpdate.uuid,
-				macNumber: dataUpdate.macNumber,
-				name: dataUpdate.name,
+				uuid: dataUpdate.uuid || '',
+				macNumber: dataUpdate.macNumber || '',
+				name: dataUpdate.name || '',
 				teamUuid: dataUpdate.teamUuid || '',
 			});
-			console.log(dataUpdate);
 		}
 	}, [dataUpdate]);
 
@@ -127,10 +126,10 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 				<Input
 					label={
 						<span>
-							{i18n.t('Device.tenthietbi')}  <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.tenthietbi')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder={i18n.t('Device.Nhaptenmoichothietbi')} 
+					placeholder={i18n.t('Device.Nhaptenmoichothietbi')}
 					name='name'
 					value={form.name}
 					type='text'
@@ -140,7 +139,7 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
-						placeholder={i18n.t('Device.luachon')} 
+						placeholder={i18n.t('Device.luachon')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
@@ -158,12 +157,12 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-						{i18n.t('Common.Huybo')} 
+							{i18n.t('Common.Huybo')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-						{i18n.t('Common.Capnhat')} 
+							{i18n.t('Common.Capnhat')}
 						</Button>
 					</div>
 				</div>

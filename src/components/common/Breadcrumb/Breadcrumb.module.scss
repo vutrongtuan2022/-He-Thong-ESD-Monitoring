@@ -74,7 +74,7 @@
 	.container {
 		left: calc($width-tab-hidden);
 		right: 0;
-		width: 100%;
+		width: calc(100vw - $width-tab-hidden);
 	}
 }
 

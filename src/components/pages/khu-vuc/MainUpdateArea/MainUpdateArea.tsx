@@ -52,8 +52,8 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 			}),
 		onSuccess(data) {
 			setForm({
-				name: data?.name,
-				code: data?.code,
+				name: data?.name || '',
+				code: data?.code || '',
 				uuidArea: data?.parentUuid || '',
 				address: data?.address || '',
 				note: data?.notes || '',

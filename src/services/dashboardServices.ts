@@ -35,6 +35,19 @@ const dashboardServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	exportExcel: (
+		data: {
+			pageSize: number;
+			page: number;
+			keyword: string;
+			teamNames: string[] | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Dashboard/export_excel`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default dashboardServices;

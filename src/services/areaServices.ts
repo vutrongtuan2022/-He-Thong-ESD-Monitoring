@@ -80,6 +80,29 @@ const areaServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	exportExcel: (
+		data: {
+			pageSize: number;
+			page: number;
+			keyword: string;
+			parentUuid: string | null;
+			status: number | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/FactoryArea/export_excel`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	importExcel: (data: {FileData: any; Type: any}, tokenAxios?: any) => {
+		return axiosClient.put(`/FactoryArea/import_excel`, data, {
+			cancelToken: tokenAxios,
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				Accept: 'text/plain',
+			},
+		});
+	},
 };
 
 export default areaServices;
