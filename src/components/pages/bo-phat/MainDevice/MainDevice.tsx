@@ -174,7 +174,7 @@ function MainDevice({}: PropsMainDevice) {
 
 	const handleChangeStatusDevice = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg:i18n.t('Device.msg') });
+			return toastWarn({msg: i18n.t('Device.msg')});
 		}
 
 		return changeStatusDevice.mutate();
@@ -289,7 +289,7 @@ function MainDevice({}: PropsMainDevice) {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name={i18n.t('Device.trangthai')}
+								name={i18n.t('Device.Trangthai')}
 								query='_status'
 								listFilter={[
 									{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},

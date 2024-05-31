@@ -7,7 +7,7 @@ import styles from './Dialog.module.scss';
 import {useStyleClass} from '~/common/hooks/usStyleClass';
 import i18n from '~/locale/i18n';
 
-function Dialog({titleSubmit = i18n.t('Common.xacnhan'), titleCancel = i18n.t('Common.huybo'), Icon, className, ...props}: PropsDialog) {
+function Dialog({titleSubmit = i18n.t('Common.Xacnhan'), titleCancel = i18n.t('Common.huybo'), Icon, className, ...props}: PropsDialog) {
 	const styleClass = useStyleClass(props, styles);
 
 	return (

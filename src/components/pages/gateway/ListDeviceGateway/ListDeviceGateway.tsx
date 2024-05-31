@@ -21,6 +21,7 @@ import StateDevice from '../../bo-phat/StateDevice';
 import Link from 'next/link';
 import gatewayServices from '~/services/gatewayServices';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 function ListDeviceGateway({}: PropsListDeviceGateway) {
 	const router = useRouter();
@@ -90,11 +91,11 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={exportGatewayDeviceExcel.isLoading} />
-			<h4>Danh sách bộ phát đang kết nối</h4>
+			<h4>{i18n.t('Gateway.Danhsachbophatdangketnoi')}</h4>
 			<div className={styles.control}>
 				<div className={styles.left}>
 					<div style={{minWidth: 360}}>
-						<Search keyName='_keyword' placeholder='Tìm kiếm theo tên gateway, ID' />
+						<Search keyName='_keyword' placeholder={i18n.t('Gateway.Timkiemthemgatewayid')} />
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
@@ -127,17 +128,19 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 				<DataWrapper
 					data={listDevices?.data?.items}
 					loading={listDevices?.isLoading}
-					noti={<Noti disableButton title='Danh sách trống!' des='Danh sách bộ phát của gateway trống!' />}
+					noti={
+						<Noti disableButton title={i18n.t('Common.Danhsachtrong')} des={i18n.t('Gateway.Danhsachbophatcuagatewaytrong')} />
+					}
 				>
 					<Table
 						data={listDevices?.data?.items}
 						column={[
 							{
-								title: 'STT',
+								title: i18n.t('Common.STT'),
 								render: (data: IDevice, index: number) => <>{index + 1}</>,
 							},
 							{
-								title: 'Số MAC',
+								title: i18n.t('Common.SoMAC'),
 								render: (data: IDevice) => (
 									<Link href={`/bo-phat/${data.uuid}`} className={styles.link}>
 										{data.macNumber}
@@ -145,15 +148,15 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 								),
 							},
 							{
-								title: 'Tên bộ phát',
+								title: i18n.t('Common.Tenbophat'),
 								render: (data: IDevice) => <p>{data.name}</p>,
 							},
 							{
-								title: 'Team sử dụng',
+								title: i18n.t('Common.Teamsudung'),
 								render: (data: IDevice) => <p>{data.teamName || '---'}</p>,
 							},
 							{
-								title: 'Mã team',
+								title: i18n.t('Common.Mateam'),
 								render: (data: IDevice) => <p>{data.codeTeam || '---'}</p>,
 							},
 							{
@@ -161,7 +164,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 								render: (data: IDevice) => <>{data.teamLeaderName || '---'}</>,
 							},
 							{
-								title: 'Tình trạng',
+								title: i18n.t('Common.Tinhtrang'),
 								render: (data: IDevice) => <StateDevice status={data.state} />,
 							},
 						]}

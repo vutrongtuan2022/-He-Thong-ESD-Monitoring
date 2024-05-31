@@ -150,16 +150,16 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name={i18n.t('Account.trangthai')}
+								name={i18n.t('Account.Trangthai')}
 								query='_status'
 								listFilter={[
 									{
 										id: STATUS_GENERAL.SU_DUNG,
-										name: i18n.t('Account.sudung'),
+										name: i18n.t('Account.Sudung'),
 									},
 									{
 										id: STATUS_GENERAL.KHONG_SU_DUNG,
-										name: i18n.t('Account.khongsudung'),
+										name: i18n.t('Account.Khongsudung'),
 									},
 								]}
 							/>
@@ -217,13 +217,13 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									render: (data: IAccount) => <>{data?.roleName || '---'}</>,
 								},
 								{
-									title: i18n.t('Account.trangthai'),
+									title: i18n.t('Account.Trangthai'),
 									render: (data: IAccount) => (
 										<>
 											{data?.status == STATUS_GENERAL.SU_DUNG ? (
-												<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.dangsudung')}</p>
+												<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.Dangsudung')}</p>
 											) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-												<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Account.khongsudung')}</p>
+												<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Account.Khongsudung')}</p>
 											) : (
 												'---'
 											)}
@@ -244,7 +244,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 											<IconCustom
 												edit
 												icon={<LuPencil fontSize={20} fontWeight={600} />}
-												tooltip={i18n.t('Account.chinhsua')}
+												tooltip={i18n.t('Account.Chinhsua')}
 												color='#777E90'
 												onClick={() => setDataUpdateAccount(data)}
 											/>
