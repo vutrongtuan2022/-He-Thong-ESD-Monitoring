@@ -84,10 +84,11 @@
 		"Tentaikhoan": "Account name",
 		"Nhaptentaikhoan": "Enter account name",
 		"Taoluc": "Created at",
-		"Vaitro": "Role"
+		"Vaitro": "Role",
+		"MaxLengthNote": "Description maximum 255 characters!"
 	},
 	"Gateway": {
-		"Codethietbi": "Device code",
+		"IDDevice": "ID device",
 		"Danhsachgateway": "Gateway list",
 		"Khongtimthaygateway": "No gateway found!",
 		"Timkiemthemgatewayid": "Search by gateway name, ID",
