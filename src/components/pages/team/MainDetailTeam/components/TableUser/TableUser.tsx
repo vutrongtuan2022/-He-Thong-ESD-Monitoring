@@ -46,7 +46,7 @@ function TableUser({}: PropsTableUser) {
 			<DataWrapper
 				data={listUserTeams?.data?.items}
 				loading={listUserTeams.isLoading}
-				noti={<Noti title={i18n.t('User.Nhanvientrong')} des={i18n.t('User.Danhsachnhanvientrong')} disableButton />}
+				noti={<Noti title={i18n.t('User.Nhanvientrong')} des={i18n.t('User.Listusertrong')} disableButton />}
 			>
 				<Table
 					data={listUserTeams?.data?.items}

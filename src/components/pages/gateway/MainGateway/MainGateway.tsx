@@ -200,7 +200,7 @@ function MainGateway({}: PropsMainGateway) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								onClick={() => setOpenCreate(true)}
 							>
-								{i18n.t('Common.Themmoi')}
+								{i18n.t('Common.Addnew')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
