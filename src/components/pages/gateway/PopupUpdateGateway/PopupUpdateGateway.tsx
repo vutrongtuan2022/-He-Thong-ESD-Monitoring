@@ -30,10 +30,10 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 	useEffect(() => {
 		if (dataUpdate) {
 			setForm({
-				uuid: dataUpdate.uuid,
-				code: dataUpdate.code,
-				name: dataUpdate.name,
-				description: dataUpdate.notes,
+				uuid: dataUpdate.uuid || '',
+				code: dataUpdate.code || '',
+				name: dataUpdate.name || '',
+				description: dataUpdate.notes || '',
 			});
 		}
 	}, [dataUpdate]);

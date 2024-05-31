@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 import {Data, PictureFrame, TextalignJustifycenter} from 'iconsax-react';
 
@@ -25,14 +25,19 @@ import TableArea from '../TableArea';
 import MainTreeArea from '../MainTreeArea';
 import {GrMap} from 'react-icons/gr';
 import {FaChromecast, FaUser} from 'react-icons/fa';
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import areaServices from '~/services/areaServices';
+import i18n from '~/locale/i18n';
+import ImportExcel from '~/components/common/ImportExcel';
 
 function MainFactoryArea({}: PropsMainFactoryArea) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
-	const {_open, _view} = router.query;
+	const {_open, _view, _page, _pageSize, _keyword, _status, importExcel} = router.query;
+
+	const [file, setFile] = useState<any>(null);
 
 	const sumAreas = useQuery([QUERY_KEY.thong_so_chung_khu_vuc], {
 		queryFn: () =>
@@ -64,9 +69,65 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 		}
 	}, [_view]);
 
+	// Func export excel
+	const exportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				http: areaServices.exportExcel({
+					keyword: _keyword as string,
+					page: Number(_page) || 1,
+					pageSize: Number(_pageSize) || 20,
+					status: _status ? Number(_status) : null,
+					parentUuid: null,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
+			}
+		},
+	});
+
+	// Func import excel
+	const fucnImportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: i18n.t('Device.importfilethanhcong'),
+				http: areaServices.importExcel({
+					FileData: file,
+					Type: 1,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				handleCloseImportExcel();
+				queryClient.invalidateQueries([QUERY_KEY.thong_so_chung_khu_vuc]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_khu_vuc, _page, _pageSize, _keyword, _status]);
+			}
+		},
+	});
+
+	// Close popup import excel
+	const handleCloseImportExcel = () => {
+		const {importExcel, ...rest} = router.query;
+
+		setFile(null);
+		router.replace(
+			{
+				query: rest,
+			},
+			undefined,
+			{scroll: false}
+		);
+	};
+
 	return (
 		<div className={styles.container}>
-			<Loading loading={false} />
+			<Loading loading={exportExcel.isLoading || fucnImportExcel.isLoading} />
 			<Breadcrumb
 				listUrls={[
 					{
@@ -89,6 +150,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 								green
 								bold
 								icon={<Image alt='icon export' src={icons.export_excel} width={20} height={20} />}
+								onClick={exportExcel.mutate}
 							>
 								Export excel
 							</Button>
@@ -102,6 +164,22 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 								blue_light
 								bold
 								icon={<Image alt='icon import' src={icons.import_excel} width={20} height={20} />}
+								onClick={() =>
+									router.replace(
+										{
+											pathname: router.pathname,
+											query: {
+												...router.query,
+												importExcel: 'open',
+											},
+										},
+										undefined,
+										{
+											scroll: false,
+											shallow: false,
+										}
+									)
+								}
 							>
 								Import excel
 							</Button>
@@ -291,6 +369,17 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 							}
 						);
 					}}
+				/>
+			</Popup>
+
+			<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
+				<ImportExcel
+					name='file-factory-area'
+					file={file}
+					pathTemplate='/static/files/Mau_Import_FactoryArea.xlsx'
+					setFile={setFile}
+					onClose={handleCloseImportExcel}
+					onSubmit={fucnImportExcel.mutate}
 				/>
 			</Popup>
 		</div>

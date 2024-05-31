@@ -58,12 +58,12 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 			if (data) {
 				setDataDetail(data);
 				setForm({
-					name: data.name,
-					code: data.code,
-					leaderUuid: data.leaderUuid,
-					areaUuid: data.areaUuid,
-					note: data.notes,
-					parentUuid: data?.parentUuid,
+					name: data.name || '',
+					code: data.code || '',
+					leaderUuid: data.leaderUuid || '',
+					areaUuid: data.areaUuid || '',
+					note: data.notes || '',
+					parentUuid: data?.parentUuid || '',
 				});
 			}
 		},

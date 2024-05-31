@@ -32,9 +32,9 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 	useEffect(() => {
 		if (dataUpdate) {
 			setForm({
-				uuid: dataUpdate.uuid,
-				macNumber: dataUpdate.macNumber,
-				name: dataUpdate.name,
+				uuid: dataUpdate.uuid || '',
+				macNumber: dataUpdate.macNumber || '',
+				name: dataUpdate.name || '',
 				teamUuid: dataUpdate.teamUuid || '',
 			});
 			console.log(dataUpdate);

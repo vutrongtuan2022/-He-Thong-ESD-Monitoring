@@ -54,7 +54,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 					ngState: null,
 					battery: null,
 					edS_Static: null,
-					teamUuid: '',
+					teamUuid: _team ? (_team as string) : null,
 					factoryAreaUuid: null,
 					timeLastOnline: null,
 				}),

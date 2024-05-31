@@ -199,7 +199,8 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 							},
 							{
 								title: 'Online lần cuối',
-								render: (data: IGateway) => <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' />,
+								render: (data: IGateway) =>
+									data.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---',
 							},
 							{
 								title: 'Tác vụ',

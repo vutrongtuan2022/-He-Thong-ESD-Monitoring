@@ -1,5 +1,6 @@
 import moment from 'moment';
 import md5 from 'md5';
+import {TYPE_BATTERY} from '~/constants/config/enum';
 
 export function obfuscateEmail(email: string) {
 	// Tách phần trước @ và phần tên miền
@@ -118,4 +119,39 @@ export function buildTree(data: any[]) {
 	});
 
 	return tree;
+}
+
+export function getBatteryCapacity(battery: number | null): {toDouble: number | null; fromDouble: number | null} {
+	if (battery == TYPE_BATTERY['> 80%']) {
+		return {
+			fromDouble: 80,
+			toDouble: 100,
+		};
+	}
+
+	if (battery == TYPE_BATTERY['50% - 80%']) {
+		return {
+			fromDouble: 50,
+			toDouble: 80,
+		};
+	}
+
+	if (battery == TYPE_BATTERY['20% - 50%']) {
+		return {
+			fromDouble: 20,
+			toDouble: 50,
+		};
+	}
+
+	if (battery == TYPE_BATTERY['< 20%']) {
+		return {
+			fromDouble: 20,
+			toDouble: 0,
+		};
+	}
+
+	return {
+		toDouble: null,
+		fromDouble: null,
+	};
 }

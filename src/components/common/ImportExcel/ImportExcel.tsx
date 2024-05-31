@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import * as XLSX from 'xlsx';
 import Image from 'next/image';
 import React, {Fragment, useState} from 'react';
 
@@ -9,9 +10,9 @@ import styles from './ImportExcel.module.scss';
 import {PropsImportExcel} from './interfaces';
 import {convertFileSize} from '~/common/funcs/optionConvert';
 import background from '~/constants/images/background';
-import {toastError} from '~/common/funcs/toast';
+import {toastError, toastWarn} from '~/common/funcs/toast';
 
-function ImportExcel({name, file, pathTemplate, setFile, onClose, onSubmit}: PropsImportExcel) {
+function ImportExcel({name, file, pathTemplate, setDataReadFile, setFile, onClose, onSubmit}: PropsImportExcel) {
 	const [dragging, setDragging] = useState<boolean>(false);
 
 	const handleDragEnter = (e: any) => {
@@ -39,7 +40,18 @@ function ImportExcel({name, file, pathTemplate, setFile, onClose, onSubmit}: Pro
 		try {
 			const reader = new FileReader();
 			reader.onload = (evt: any) => {
-				setFile(file);
+				const bstr = evt.target.result;
+				const wb = XLSX.read(bstr, {type: 'binary'});
+				const wsname = wb.SheetNames[0];
+				const ws = wb.Sheets[wsname];
+				const data: any[] = XLSX.utils.sheet_to_json(ws);
+
+				if (data.length > 0) {
+					setDataReadFile && setDataReadFile(data);
+					setFile(file);
+				} else {
+					return toastWarn({msg: 'Không có dữ liệu trong file đầu vào'});
+				}
 			};
 			reader.readAsBinaryString(file);
 		} catch (err) {
