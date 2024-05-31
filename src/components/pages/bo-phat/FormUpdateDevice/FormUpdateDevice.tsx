@@ -60,7 +60,7 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.chinhsuabophatthanhcong'),
+				msgSuccess: i18n.t('Device.TransmitterEditedSuccessfully'),
 				http: deviceServices.upsertDevice({
 					uuid: form.uuid,
 					name: form.name,
@@ -95,13 +95,13 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 
 	const handleSubmit = async () => {
 		if (!form.uuid) {
-			return toastWarn({msg: i18n.t('Device.khongtimthaythietbi')});
+			return toastWarn({msg: i18n.t('Device.DeviceNotFound')});
 		}
 		if (!form.macNumber) {
-			return toastWarn({msg: i18n.t('Device.VuilongnhapsoMac')});
+			return toastWarn({msg: i18n.t('Device.PleaseEnterDeviceMacAddress')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: i18n.t('Device.VuilongnhapTenthietbi')});
+			return toastWarn({msg: i18n.t('Device.PleaseEnterDeviceName')});
 		}
 
 		return upsertDevice.mutate();
@@ -109,16 +109,16 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>{i18n.t('Device.chinhsuabophat')}</h4>
+			<h4>{i18n.t('Device.EditTransmitter')}</h4>
 			<Loading loading={upsertDevice.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
 					label={
 						<span>
-							{i18n.t('Device.somacthietbi')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.DeviceMacAddress')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder={i18n.t('Device.nhapsomacthietbi')}
+					placeholder={i18n.t('Device.EnterDeviceMacAddress')}
 					name='macNumber'
 					value={form.macNumber}
 					type='text'
@@ -126,10 +126,10 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 				<Input
 					label={
 						<span>
-							{i18n.t('Device.tenthietbi')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.DeviceName')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder={i18n.t('Device.Nhaptenmoichothietbi')}
+					placeholder={i18n.t('Device.EnterNewDeviceName')}
 					name='name'
 					value={form.name}
 					type='text'
@@ -139,7 +139,7 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
-						placeholder={i18n.t('Device.luachon')}
+						placeholder={i18n.t('Device.Options')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
