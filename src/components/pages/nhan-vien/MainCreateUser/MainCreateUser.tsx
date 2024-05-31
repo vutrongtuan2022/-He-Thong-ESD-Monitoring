@@ -67,7 +67,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('User.Themmoinhanvienthanhcong'),
+				msgSuccess: i18n.t('User.Addnewusersuccessfully'),
 				http: userServices.upsertUser({
 					uuid: '',
 					userName: '',
@@ -100,34 +100,34 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 		const selectedDate = moment(form.birthday).startOf('day');
 
 		if (!form.code) {
-			return toastWarn({msg: i18n.t('User.Vuilongnhapmanhanvien')});
+			return toastWarn({msg: i18n.t('User.Pleaseenteruserid')});
 		}
 		if (!form.code) {
-			return toastWarn({msg: i18n.t('User.Vuilongnhapmanhanvien')});
+			return toastWarn({msg: i18n.t('User.Pleaseenteruserid')});
 		}
 		if (!form.fullname) {
 			return toastWarn({msg: i18n.t('User.Vuilongnhaphovaten')});
 		}
 		if (!form.email) {
-			return toastWarn({msg: i18n.t('User.Vuilongnhapemail')});
+			return toastWarn({msg: i18n.t('User.Pleaseenteremail')});
 		}
 		if (!form.phone) {
-			return toastWarn({msg: i18n.t('User.Vuilongnhapsodienthoai')});
+			return toastWarn({msg: i18n.t('User.Pleaseenterthephonenumber')});
 		}
 		if (!form.regencyUuid) {
-			return toastWarn({msg: i18n.t('User.Vuilongchonchucvu')});
+			return toastWarn({msg: i18n.t('User.Pleaseselectaregency')});
 		}
 		if (!form.birthday) {
-			return toastWarn({msg: i18n.t('User.Vuilongchonngaysinh')});
+			return toastWarn({msg: i18n.t('User.Pleaseselectdateofbirth')});
 		}
 		if (!isPhoneNumber(form.phone)) {
-			return toastWarn({msg: i18n.t('User.Sodienthoaikhongdungdinhdang')});
+			return toastWarn({msg: i18n.t('User.Thephonenumberisnotinthecorrectformat')});
 		}
 		if (!isEmail(form.email)) {
-			return toastWarn({msg: i18n.t('User.Emailkhongdungdinhdang')});
+			return toastWarn({msg: i18n.t('User.Emailinvalidate')});
 		}
 		if (selectedDate.isAfter(today)) {
-			return toastWarn({msg: i18n.t('User.Ngaysinhkhonghople')});
+			return toastWarn({msg: i18n.t('User.Invaliddateofbirth')});
 		}
 
 		return upsertUser.mutate();
@@ -143,11 +143,11 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('User.Quanlynhanvien'),
+						title: i18n.t('User.Usermanager'),
 						path: PATH.NhanVien,
 					},
 					{
-						title: i18n.t('User.Themnhanvien'),
+						title: i18n.t('User.Adduser'),
 						path: '',
 					},
 				]}
@@ -156,15 +156,15 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<div className={styles.left}>
-							<h4>{i18n.t('User.Themnhavien')}</h4>
-							<p>{i18n.t('User.Diendayduthongtinnhanvien')}</p>
+							<h4>{i18n.t('User.Adduser')}</h4>
+							<p>{i18n.t('User.Fillinuserinformationcompletely')}</p>
 						</div>
 						<div className={styles.right}>
 							<Button href={PATH.NhanVien} p_10_24 rounded_2 grey_outline>
-								{i18n.t('Common.Huybo')}
+								{i18n.t('Common.Cancel')}
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								{i18n.t('Common.Luulai')}
+								{i18n.t('Common.Save')}
 							</Button>
 						</div>
 					</div>
@@ -177,10 +177,10 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										value={form.code || ''}
 										label={
 											<span>
-												{i18n.t('Common.Manhanvien')} <span style={{color: 'red'}}>*</span>
+												{i18n.t('User.IDuser')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
-										placeholder={i18n.t('Common.Nhapmanhanvien')}
+										placeholder={i18n.t('User.Enteriduser')}
 									/>
 								</div>
 								<Input
@@ -188,10 +188,10 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 									value={form.fullname || ''}
 									label={
 										<span>
-											{i18n.t('Common.Hovaten')} <span style={{color: 'red'}}>*</span>
+											{i18n.t('User.Fullname')} <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder={i18n.t('Common.Nhaphovaten')}
+									placeholder={i18n.t('User.Enterfullname')}
 								/>
 							</div>
 
@@ -204,7 +204,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 											Email <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder={i18n.t('Common.Nhapemail')}
+									placeholder={i18n.t('User.Enteremail')}
 								/>
 								<div>
 									<Input
@@ -212,10 +212,10 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										value={form.phone || ''}
 										label={
 											<span>
-												{i18n.t('Common.Sodienthoai')} <span style={{color: 'red'}}>*</span>
+												{i18n.t('User.Phonenumber')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
-										placeholder={i18n.t('Common.Nhapsodienthoai')}
+										placeholder={i18n.t('User.Enterphonenumber')}
 									/>
 								</div>
 							</div>
@@ -226,7 +226,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										isSearch
 										name='regencyUuid'
 										value={form.regencyUuid || null}
-										placeholder={i18n.t('Common.Luachon')}
+										placeholder={i18n.t('Common.Select')}
 										onChange={(e) =>
 											setForm((prev) => ({
 												...prev,
@@ -235,7 +235,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										}
 										label={
 											<span>
-												{i18n.t('Common.Chucvu')} <span style={{color: 'red'}}>*</span>
+												{i18n.t('User.Regency')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
 									>
@@ -249,10 +249,10 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										icon={true}
 										label={
 											<span>
-												{i18n.t('Common.Ngaysinh')} <span style={{color: 'red'}}>*</span>
+												{i18n.t('User.Dateofbirth')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
-										placeholder={i18n.t('Common.Chonngaysinh')}
+										placeholder={i18n.t('User.Selectdateofbirth')}
 										value={form.birthday}
 										onSetValue={(date) =>
 											setForm((prevForm) => ({
@@ -265,7 +265,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 									/>
 									<div className={styles.gender}>
 										<label className={styles.title}>
-											{i18n.t('Common.Gioitinh')} <span style={{color: 'red'}}>*</span>
+											{i18n.t('Common.Gender')} <span style={{color: 'red'}}>*</span>
 										</label>
 										<div className={styles.group_radio}>
 											<div className={styles.item_radio}>
@@ -284,7 +284,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 													}
 												/>
 												<label className={styles.input_label} htmlFor='male'>
-													{i18n.t('Common.Nam')}
+													{i18n.t('Common.Male')}
 												</label>
 											</div>
 
@@ -304,7 +304,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 													}
 												/>
 												<label className={styles.input_label} htmlFor='female'>
-													{i18n.t('Common.Nu')}
+													{i18n.t('Common.Female')}
 												</label>
 											</div>
 										</div>
@@ -317,14 +317,14 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 									isSearch
 									name='teamUuid'
 									value={form.teamUuid || null}
-									placeholder={i18n.t('User.luachon')}
+									placeholder={i18n.t('Common.Select')}
 									onChange={(e) =>
 										setForm((prev) => ({
 											...prev,
 											teamUuid: e.target.value,
 										}))
 									}
-									label={<span>{i18n.t('Common.Thuocteam')}</span>}
+									label={<span>{i18n.t('User.Belongtotheteam')}</span>}
 								>
 									{listTeams?.data?.map((v: any) => (
 										<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -334,8 +334,8 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 									type='text'
 									name='address'
 									value={form.address || ''}
-									label={<span>{i18n.t('Common.Diachi')}</span>}
-									placeholder={i18n.t('Common.Nhapdiachi')}
+									label={<span>{i18n.t('Common.Address')}</span>}
+									placeholder={i18n.t('Common.Enteraddress')}
 								/>
 							</div>
 						</Form>

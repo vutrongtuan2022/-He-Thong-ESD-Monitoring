@@ -215,7 +215,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							{
 								pathname: router.pathname,
 								query: 'nhan-vien',
-								title: i18n.t('User.Danhsachnhanvien'),
+								title: i18n.t('User.Listuser'),
 							},
 							{
 								pathname: router.pathname,

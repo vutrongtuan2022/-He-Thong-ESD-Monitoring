@@ -178,7 +178,7 @@ function MainPageUser({}: PropsMainPageUser) {
 					},
 					{
 						path: '',
-						title: i18n.t('User.Danhsachnhanvien'),
+						title: i18n.t('User.Listuser'),
 					},
 				]}
 				action={
@@ -237,7 +237,7 @@ function MainPageUser({}: PropsMainPageUser) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								href={PATH.ThemNhanvien}
 							>
-								{i18n.t('Common.Themmoi')}
+								{i18n.t('Common.Addnew')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
@@ -252,20 +252,20 @@ function MainPageUser({}: PropsMainPageUser) {
 					<div className={styles.control}>
 						<div className={styles.left}>
 							<div style={{minWidth: 360}}>
-								<Search keyName='_keyword' placeholder={i18n.t('User.Timkiemtheotennhanvienmanhanvien')} />
+								<Search keyName='_keyword' placeholder={i18n.t('User.Searchbyusernameid')} />
 							</div>
 							<div style={{minWidth: 240}}>
 								<FilterCustom
-									name={i18n.t('Common.Taikhoan')}
+									name={i18n.t('Common.Account')}
 									query='_isHaveAcc'
 									listFilter={[
 										{
 											id: STATUS_ACCOUNT.HAVEACCOUNT,
-											name: i18n.t('Common.Dacaptaikhoan'),
+											name: i18n.t('Common.Accountcreated'),
 										},
 										{
 											id: STATUS_ACCOUNT.NOACCOUNT,
-											name: i18n.t('Common.Chuacaptaikhoan'),
+											name: i18n.t('Common.Accountnotyetissued'),
 										},
 									]}
 								/>
@@ -273,7 +273,7 @@ function MainPageUser({}: PropsMainPageUser) {
 							<div style={{minWidth: 240}}>
 								<FilterCustom
 									isSearch
-									name={i18n.t('Common.Chucvu')}
+									name={i18n.t('Common.Regency')}
 									query='_regency'
 									listFilter={listRegencys?.data?.map((v: any) => ({
 										id: v?.uuid,
@@ -283,16 +283,16 @@ function MainPageUser({}: PropsMainPageUser) {
 							</div>
 							<div style={{minWidth: 240}}>
 								<FilterCustom
-									name={i18n.t('Common.Trangthai')}
+									name={i18n.t('Common.Status')}
 									query='_status'
 									listFilter={[
 										{
 											id: STATUS_GENERAL.SU_DUNG,
-											name: i18n.t('Common.Sudung'),
+											name: i18n.t('Common.Use'),
 										},
 										{
 											id: STATUS_GENERAL.KHONG_SU_DUNG,
-											name: i18n.t('Common.Khongsudung'),
+											name: i18n.t('Common.Donotuse'),
 										},
 									]}
 								/>
@@ -303,19 +303,19 @@ function MainPageUser({}: PropsMainPageUser) {
 					<div className={styles.table}>
 						<DataWrapper
 							data={listUser?.data?.items}
-							noti={<Noti des={i18n.t('User.Hientaichuaconhanviennao')} />}
+							noti={<Noti des={i18n.t('User.Therearecurrentlynouser ')} />}
 							loading={listUser?.isLoading}
 						>
 							<Table
 								data={listUser?.data?.items}
 								column={[
 									{
-										title: i18n.t('Common.STT'),
+										title: i18n.t('User.No.'),
 										render: (data: IUser, index: number) => <>{index + 1}</>,
 									},
 
 									{
-										title: i18n.t('Common.Manhanvien'),
+										title: i18n.t('User.IDuser'),
 										render: (data: IUser) => (
 											<Link href={`/nhan-vien/${data.uuid}`} className={styles.link}>
 												{data.code || '---'}
@@ -323,15 +323,15 @@ function MainPageUser({}: PropsMainPageUser) {
 										),
 									},
 									{
-										title: i18n.t('Common.Tennhanvien'),
+										title: i18n.t('User.Nameuser'),
 										render: (data: IUser) => <p>{data.fullname}</p>,
 									},
 									{
-										title: i18n.t('Common.Chucvu'),
+										title: i18n.t('User.Regency'),
 										render: (data: IUser) => <p>{data.regency || '---'}</p>,
 									},
 									{
-										title: i18n.t('Common.Thuocteam'),
+										title: i18n.t('User.Belongtotheteam'),
 										render: (data: IUser) => <p>{data.teamName || '---'}</p>,
 									},
 									{
@@ -339,7 +339,7 @@ function MainPageUser({}: PropsMainPageUser) {
 										render: (data: IUser) => <>{data.leadName || '---'}</>,
 									},
 									{
-										title: i18n.t('Common.Taikhoan'),
+										title: i18n.t('User.Account'),
 										render: (data: IUser) => (
 											<p
 												className={clsx(styles.status, {
@@ -347,19 +347,19 @@ function MainPageUser({}: PropsMainPageUser) {
 													[styles.noaccount]: !data.userName,
 												})}
 											>
-												{data.userName ? data.userName : i18n.t('Common.Chuacap')}
+												{data.userName ? data.userName : i18n.t('Common.Notissuedyet')}
 											</p>
 										),
 									},
 
 									{
-										title: i18n.t('Common.Trangthai'),
+										title: i18n.t('User.Status'),
 										render: (data: IUser) => (
 											<>
 												{data?.status == STATUS_GENERAL.SU_DUNG ? (
-													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Dangsudung')}</p>
+													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Using')}</p>
 												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Khongsudung')}</p>
+													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Donotuse')}</p>
 												) : (
 													'---'
 												)}
@@ -368,19 +368,19 @@ function MainPageUser({}: PropsMainPageUser) {
 									},
 
 									{
-										title: i18n.t('Common.Ngaytao'),
+										title: i18n.t('User.Datecreated'),
 										render: (data: IUser) => <Moment date={data.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 									},
 
 									{
-										title: i18n.t('Common.Tacvu'),
+										title: i18n.t('User.Action'),
 										render: (data: IUser) => (
 											<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 												{!data?.userName ? (
 													<IconCustom
 														create
 														icon={<UserCirlceAdd size='23' />}
-														tooltip={i18n.t('User.Themtaikhoan')}
+														tooltip={i18n.t('User.Addaccount')}
 														color='#777E90'
 														onClick={() => {
 															setDataCreateAccount(data);
@@ -390,7 +390,7 @@ function MainPageUser({}: PropsMainPageUser) {
 													<IconCustom
 														create
 														icon={<TickCircle size='23' />}
-														tooltip={i18n.t('Common.Dacap')}
+														tooltip={i18n.t('Common.Granted')}
 														color='#35c244'
 													/>
 												)}
@@ -398,7 +398,7 @@ function MainPageUser({}: PropsMainPageUser) {
 												<IconCustom
 													edit
 													icon={<LuPencil fontSize={20} fontWeight={600} />}
-													tooltip={i18n.t('Common.Chinhsua')}
+													tooltip={i18n.t('Common.Edit')}
 													color='#777E90'
 													onClick={() => {
 														router.push(`/nhan-vien/chinh-sua?_id=${data.uuid}`);
@@ -411,8 +411,8 @@ function MainPageUser({}: PropsMainPageUser) {
 													}
 													tooltip={
 														data.status === STATUS_GENERAL.SU_DUNG
-															? i18n.t('Common.Khoa')
-															: i18n.t('Common.Mokhoa')
+															? i18n.t('Common.Lock')
+															: i18n.t('Common.Unlock')
 													}
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
@@ -434,8 +434,8 @@ function MainPageUser({}: PropsMainPageUser) {
 							warn
 							open={!!dataChangeStatus}
 							onClose={() => setDataChangeStatus(null)}
-							title={i18n.t('Common.ChuyenTrangthai')}
-							note={i18n.t('Common.BancochacmuonchuyenTrangthai')}
+							title={i18n.t('Common.Changestatus')}
+							note={i18n.t('Common.Doyouwanttochangestatus')}
 							onSubmit={handleChangeStatusDevice}
 						/>
 					</div>

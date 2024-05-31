@@ -77,7 +77,7 @@ function TableDevice({}: PropsTableDevice) {
 							render: (data: IDevice) => <>{data.battery}%</>,
 						},
 						{
-							title: i18n.t('Common.Trangthai'),
+							title: i18n.t('Common.Status'),
 							render: (data: IDevice) => <StateDevice status={data.state} />,
 						},
 						{
