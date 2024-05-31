@@ -19,11 +19,11 @@ function MainDetailUser({}: PropsMainDetailUser) {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('User.quanlynhanvien'),
+						title: i18n.t('User.Quanlynhanvien'),
 						path: PATH.NhanVien,
 					},
 					{
-						title: i18n.t('User.chitietnhanvien'),
+						title: i18n.t('User.Chitietnhanvien'),
 						path: '',
 					},
 				]}

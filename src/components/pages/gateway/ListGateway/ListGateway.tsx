@@ -24,6 +24,7 @@ import PopupUpdateGateway from '../PopupUpdateGateway';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import {LuPencil} from 'react-icons/lu';
+import i18n from '~/locale/i18n';
 
 function ListGateway({onOpenCreate}: PropsListGateway) {
 	const router = useRouter();
@@ -69,7 +70,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Chuyển trạng thái thành công!',
+				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
 				http: gatewayServices.updateStatusGateway({
 					uuid: dataChange?.uuid!,
 					status: dataChange?.status == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -85,7 +86,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 
 	const handleChangeStatusGateway = async () => {
 		if (!dataChange?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy gateway!'});
+			return toastWarn({msg: i18n.t('Gateway.Khongtimthaygateway')});
 		}
 
 		return funcChangeStatus.mutate();
@@ -97,12 +98,12 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 			<div className={styles.control}>
 				<div className={styles.left}>
 					<div style={{minWidth: 360}}>
-						<Search keyName='_keyword' placeholder='Tìm kiếm theo tên gateway, ID' />
+						<Search keyName='_keyword' placeholder={i18n.t('Gateway.Timkiemthemgatewayid')} />
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
 							isSearch
-							name='Khu vực'
+							name={i18n.t('Common.Chucvu')}
 							query='_factoryAreaUuid'
 							listFilter={listAreas?.data?.map((v: any) => ({
 								id: v?.uuid,
@@ -112,7 +113,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
-							name='Hoạt động'
+							name={i18n.t('Common.Hoatdong')}
 							query='_state'
 							listFilter={[
 								{
@@ -128,16 +129,16 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
-							name='Trạng thái'
+							name={i18n.t('Common.Trangthai')}
 							query='_status'
 							listFilter={[
 								{
 									id: STATUS_GENERAL.SU_DUNG,
-									name: 'Sử dụng',
+									name: i18n.t('Common.Sudung'),
 								},
 								{
 									id: STATUS_GENERAL.KHONG_SU_DUNG,
-									name: 'Không sử dụng',
+									name: i18n.t('Common.Khongsudung'),
 								},
 							]}
 						/>
@@ -149,18 +150,24 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 				<DataWrapper
 					data={listGateways?.data?.items}
 					loading={listGateways?.isLoading}
-					noti={<Noti des='Hiện tại chưa có gateway nào ?' titleButton='Thêm gateway' onClick={onOpenCreate} />}
+					noti={
+						<Noti
+							des={i18n.t('Gateway.Hientaichuacogateway')}
+							titleButton={i18n.t('Gateway.Themgateway')}
+							onClick={onOpenCreate}
+						/>
+					}
 				>
 					<Table
 						data={listGateways?.data?.items}
 						column={[
 							{
-								title: 'STT',
+								title: i18n.t('Common.STT'),
 								render: (data: IGateway, index: number) => <>{index + 1}</>,
 							},
 
 							{
-								title: 'ID gateway',
+								title: i18n.t('Gateway.Idgateway'),
 								render: (data: IGateway) => (
 									<Link href={`/gateway/${data.uuid}`} className={styles.link}>
 										{data.code}
@@ -168,29 +175,29 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								),
 							},
 							{
-								title: 'Tên gateway',
+								title: i18n.t('Gateway.Tengateway'),
 								render: (data: IGateway) => <p>{data.name || '---'}</p>,
 							},
 							{
-								title: 'Khu vực quản lý',
+								title: i18n.t('Common.Khuvucquanly'),
 								render: (data: IGateway) => <p>{data.factoryName || '---'}</p>,
 							},
 							{
-								title: 'SL bộ phát đang kết nối',
+								title: i18n.t('Common.Slbophatdangketnoi'),
 								render: (data: IGateway) => <>{data.totalDevice}</>,
 							},
 							{
-								title: 'Hoạt động',
+								title: i18n.t('Common.Hoatdong'),
 								render: (data: IGateway) => <StateGateway state={data.state} />,
 							},
 							{
-								title: 'Trạng thái',
+								title: i18n.t('Common.Trangthai'),
 								render: (data: IGateway) => (
 									<>
 										{data?.status == STATUS_GENERAL.SU_DUNG ? (
-											<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+											<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Dangsudung')}</p>
 										) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-											<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+											<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Khongsudung')}</p>
 										) : (
 											'---'
 										)}
@@ -198,17 +205,17 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								),
 							},
 							{
-								title: 'Online lần cuối',
+								title: i18n.t('Common.Onlinelancuoi'),
 								render: (data: IGateway) => <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' />,
 							},
 							{
-								title: 'Tác vụ',
+								title: i18n.t('Common.Tacvu'),
 								render: (data: IGateway) => (
 									<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 										<IconCustom
 											edit
 											icon={<LuPencil fontSize={20} fontWeight={600} />}
-											tooltip='Chỉnh sửa'
+											tooltip={i18n.t('Common.Chinhsua')}
 											color='#777E90'
 											onClick={() => setDataUpdate(data)}
 										/>
@@ -216,7 +223,9 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 										<IconCustom
 											warn
 											icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
-											tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
+											tooltip={
+												data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Khoa') : i18n.t('Common.Mokhoa')
+											}
 											color='#777E90'
 											onClick={() => setDataChange(data)}
 										/>
@@ -236,8 +245,8 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					warn
 					open={!!dataChange}
 					onClose={() => setDataChange(null)}
-					title='Chuyển trạng thái'
-					note='Bạn có chắc chắn chuyển trạng thái cho gateway này?'
+					title={i18n.t('Common.ChuyenTrangthai')}
+					note={i18n.t('Gateway.BancochacmuonchuyenTrangthaichogatewaynay')}
 					onSubmit={handleChangeStatusGateway}
 				/>
 				<Popup open={!!dataUpdate} onClose={() => setDataUpdate(null)}>

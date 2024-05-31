@@ -29,7 +29,7 @@ function MainTreeTeam({}: PropsMainTreeTeam) {
 			<DataWrapper
 				data={listTreeTeams?.data}
 				loading={listTreeTeams.isLoading}
-				noti={<Noti disableButton title={i18n.t('Team.teamtrong')} des={i18n.t('Team.danhsachteamtrong')} />}
+				noti={<Noti disableButton title={i18n.t('Team.teamtrong')} des={i18n.t('Team.Danhsachteamtrong')} />}
 			>
 				{listTreeTeams?.data?.map((v: any) => (
 					<TreeTeam key={v?.uuid} team={v} level={0} />

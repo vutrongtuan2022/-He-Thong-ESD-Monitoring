@@ -18,6 +18,7 @@ import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import {useRouter} from 'next/router';
 import Loading from '~/components/common/Loading';
 import ImportExcel from '~/components/common/ImportExcel';
+import i18n from '~/locale/i18n';
 
 function MainGateway({}: PropsMainGateway) {
 	const router = useRouter();
@@ -100,11 +101,11 @@ function MainGateway({}: PropsMainGateway) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 					},
 					{
 						path: '',
-						title: 'Danh sách gateway',
+						title: i18n.t('Gateway.Danhsachgateway'),
 					},
 				]}
 				action={
@@ -163,7 +164,7 @@ function MainGateway({}: PropsMainGateway) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								onClick={() => setOpenCreate(true)}
 							>
-								Thêm mới
+								{i18n.t('Common.Themmoi')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>

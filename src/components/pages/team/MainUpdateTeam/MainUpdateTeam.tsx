@@ -113,7 +113,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Team.chinhsuateamthanhcong'),
+				msgSuccess: i18n.t('Team.Chinhsuateamthanhcong'),
 				http: teamServices.upsertTeam({
 					uuid: _id as string,
 					name: form.name,
@@ -150,16 +150,16 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 			return toastWarn({msg: i18n.t('Team.Khongtimthayteam')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: i18n.t('Team.vuilongnhapteam')});
+			return toastWarn({msg: i18n.t('Team.Vuilongnhapteam')});
 		}
 		if (!form.code) {
-			return toastWarn({msg: i18n.t('Team.vuilongnhapMateam')});
+			return toastWarn({msg: i18n.t('Team.VuilongnhapMateam')});
 		}
 		if (!form.leaderUuid) {
-			return toastWarn({msg: i18n.t('Team.vuilongchonnguoiquanly')});
+			return toastWarn({msg: i18n.t('Team.Vuilongchonnguoiquanly')});
 		}
 		if (!form.areaUuid) {
-			return toastWarn({msg: i18n.t('Team.vuilongnhapKhuvucquanly')});
+			return toastWarn({msg: i18n.t('Team.VuilongnhapKhuvucquanly')});
 		}
 
 		return upsertTeam.mutate();
@@ -175,7 +175,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 					},
 					{
 						path: PATH.Team,
-						title: i18n.t('Team.danhsachteam'),
+						title: i18n.t('Team.Danhsachteam'),
 					},
 					{
 						path: '',

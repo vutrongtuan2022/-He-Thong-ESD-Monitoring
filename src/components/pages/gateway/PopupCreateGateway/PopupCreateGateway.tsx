@@ -13,6 +13,7 @@ import {QUERY_KEY, STATE_GATEWAY, STATUS_GENERAL} from '~/constants/config/enum'
 import {useRouter} from 'next/router';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 	const router = useRouter();
@@ -31,7 +32,7 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thêm mới gateway thành công!',
+				msgSuccess: i18n.t('gateway.Themmoigatewaythanhcong'),
 				http: gatewayServices.upsertGateway({
 					uuid: '',
 					code: form.code,
@@ -60,10 +61,10 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 
 	const handleSubmit = async () => {
 		if (!form.code) {
-			return toastWarn({msg: 'Vui lòng nhập code gateway!'});
+			return toastWarn({msg: i18n.t('Gateway.Vuilongnhapcodegateway')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: 'Vui lòng nhập tên gateway!'});
+			return toastWarn({msg: i18n.t('Gateway.Vuilongnhaptengateway')});
 		}
 
 		return upsertGateway.mutate();
@@ -76,37 +77,42 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 			<Form form={form} setForm={setForm}>
 				<Input
 					type='text'
-					placeholder='Nhập code gateway'
+					placeholder={i18n.t('Gateway.Nhapcodegateway')}
 					name='code'
 					label={
 						<span>
-							Code gateway <span style={{color: 'red'}}>*</span>{' '}
+							{i18n.t('Gateway.Codegateway')} <span style={{color: 'red'}}>*</span>{' '}
 						</span>
 					}
 				/>
 				<Input
 					type='text'
-					placeholder='Nhập tên gateway'
+					placeholder={i18n.t('Gateway.Nhaptengateway')}
 					name='name'
 					label={
 						<span>
-							Tên gateway <span style={{color: 'red'}}>*</span>{' '}
+							{i18n.t('Gateway.Tengateway')} <span style={{color: 'red'}}>*</span>{' '}
 						</span>
 					}
 				/>
 				<div className={clsx('mt')}>
-					<TextArea placeholder='Nhập ghi chú' name='description' label={<span>Ghi chú</span>} blur />
+					<TextArea
+						placeholder={i18n.t('Common.Nhapghichu')}
+						name='description'
+						label={<span>{i18n.t('Common.Ghichu')}</span>}
+						blur
+					/>
 				</div>
 
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							Hủy bỏ
+							{i18n.t('Common.Huybo')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							Xác nhận
+							{i18n.t('Common.Xacnhan')}
 						</Button>
 					</div>
 				</div>

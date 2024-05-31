@@ -8,6 +8,7 @@ import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import ListDeviceGateway from '../ListDeviceGateway';
 import TableInforGateway from '../TableInforGateway';
+import i18n from '~/locale/i18n';
 
 function MainDetailGateway({}: PropsMainDetailGateway) {
 	return (
@@ -15,15 +16,15 @@ function MainDetailGateway({}: PropsMainDetailGateway) {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Danh sách gateway',
+						title: i18n.t('Gateway.Danhsachgateway'),
 						path: PATH.Gateway,
 					},
 					{
-						title: 'Chi tiết gateway',
+						title: i18n.t('Gateway.Chitietgateway'),
 						path: '',
 					},
 				]}
