@@ -17,6 +17,7 @@ import {httpRequest} from '~/services';
 import dashboardServices from '~/services/dashboardServices';
 import {formatTimeHistory} from '~/common/funcs/optionConvert';
 import ListDeviceNG from '../ListDeviceNG';
+import i18n from '~/locale/i18n';
 
 function MainDashboard({}: PropsMainDashboard) {
 	const dashboardOverview = useQuery([QUERY_KEY.trang_chu_tong_quan], {
@@ -36,11 +37,11 @@ function MainDashboard({}: PropsMainDashboard) {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Tổng quan',
+						title: i18n.t('Overview.tongQuan'),
 						path: '',
 					},
 				]}

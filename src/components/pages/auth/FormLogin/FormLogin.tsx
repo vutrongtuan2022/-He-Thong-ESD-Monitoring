@@ -20,6 +20,7 @@ import {setInfoUser} from '~/redux/reducer/user';
 import icons from '~/constants/images/icons';
 import {useSelector} from 'react-redux';
 import {setRememberPassword} from '~/redux/reducer/site';
+import i18n from '~/locale/i18n';
 
 function FormLogin({}: PropsFormLogin) {
 	const router = useRouter();
@@ -50,7 +51,7 @@ function FormLogin({}: PropsFormLogin) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Đăng nhập thành công!',
+				msgSuccess: i18n.t('Login.Dangnhapthanhcong'),
 				http: authServices.login({
 					userName: form.username,
 					password: form.password,
@@ -96,8 +97,8 @@ function FormLogin({}: PropsFormLogin) {
 			<Loading loading={login.isLoading} />
 			<div className={styles.header}>
 				<Image src={icons.logo} className={styles.logo_icon} alt='Logo' />
-				<h4 className={styles.title}>ĐĂNG NHẬP TÀI KHOẢN</h4>
-				<p className={styles.text}>Chào mừng bạn đến với hệ thống ESD monitoring . Đăng nhập để bắt đầu sử dụng</p>
+				<h4 className={styles.title}>{i18n.t('Login.Dangnhaptaikhoan')}</h4>
+				<p className={styles.text}>{i18n.t('Login.ChaomungbandenvoihethongEDS')}</p>
 			</div>
 
 			<div className={styles.form}>
@@ -106,13 +107,13 @@ function FormLogin({}: PropsFormLogin) {
 						type='text'
 						name='username'
 						value={form?.username}
-						placeholder='Tài khoản'
+						placeholder={i18n.t('Login.Taikhoan')}
 						onClean
 						isRequired
 						icon={<User size='20' variant='Bold' />}
 						label={
 							<span>
-								Tài khoản <span style={{color: 'red'}}>*</span>
+								{i18n.t('Login.Taikhoan')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					/>
@@ -120,7 +121,7 @@ function FormLogin({}: PropsFormLogin) {
 						type='password'
 						name='password'
 						value={form?.password}
-						placeholder='Mật khẩu'
+						placeholder={i18n.t('Login.Matkhau')}
 						onClean
 						isRequired
 						icon={<ShieldSecurity size='20' variant='Bold' />}
@@ -133,7 +134,7 @@ function FormLogin({}: PropsFormLogin) {
 								}}
 							>
 								<span>
-									Mật khẩu <span style={{color: 'red'}}>*</span>
+								{i18n.t('Login.Matkhau')}<span style={{color: 'red'}}>*</span>
 								</span>
 							</div>
 						}
@@ -146,7 +147,7 @@ function FormLogin({}: PropsFormLogin) {
 								value={isRememberPassword}
 								onChange={() => store.dispatch(setRememberPassword(!isRememberPassword))}
 							/>
-							<p className={styles.des}>Ghi nhớ đăng nhập</p>
+							<p className={styles.des}>{i18n.t('Login.Ghinhodangnhap')}</p>
 						</div>
 
 						<Link
@@ -157,7 +158,7 @@ function FormLogin({}: PropsFormLogin) {
 								textDecoration: 'underline',
 							}}
 						>
-							Quên mật khẩu?
+							{i18n.t('Login.Quenmatkhau')}
 						</Link>
 					</div>
 
@@ -165,7 +166,7 @@ function FormLogin({}: PropsFormLogin) {
 						<FormContext.Consumer>
 							{({isDone}) => (
 								<Button primary bold rounded_8 disable={!isDone}>
-									Đăng nhập
+									{i18n.t('Common.Dangnhap')}
 								</Button>
 							)}
 						</FormContext.Consumer>

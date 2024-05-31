@@ -9,6 +9,7 @@ import Button from '~/components/common/Button';
 import {useRouter} from 'next/router';
 import Popup from '~/components/common/Popup';
 import FormOTP from '../FormOTP';
+import i18n from '~/locale/i18n';
 
 function FormEmail({}: PropsFormEmail) {
 	const router = useRouter();
@@ -34,7 +35,7 @@ function FormEmail({}: PropsFormEmail) {
 					type='text'
 					name='email'
 					value={context?.form?.email}
-					placeholder='Nhập email'
+					placeholder={i18n.t('ForgotPass.NhapEmail')}
 					onClean
 					isRequired
 					isEmail
@@ -50,7 +51,7 @@ function FormEmail({}: PropsFormEmail) {
 					<FormContext.Consumer>
 						{({isDone}) => (
 							<Button primary bold rounded_8 disable={!isDone}>
-								Lấy lại mật khẩu
+								{i18n.t('ForgotPass.Laylaimatkhau')}
 							</Button>
 						)}
 					</FormContext.Consumer>

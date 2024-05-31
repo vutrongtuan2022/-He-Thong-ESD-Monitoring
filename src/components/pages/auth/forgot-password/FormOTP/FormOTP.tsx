@@ -9,6 +9,7 @@ import fancyTimeFormat from '~/common/funcs/fancyTimeFormat';
 import Button from '~/components/common/Button';
 import {useRouter} from 'next/router';
 import {obfuscateEmail} from '~/common/funcs/optionConvert';
+import i18n from '~/locale/i18n';
 
 function FormOTP({}: PropsFormOTP) {
 	const TIME_OTP = 60;
@@ -47,30 +48,30 @@ function FormOTP({}: PropsFormOTP) {
 
 	return (
 		<div className={styles.container}>
-			<h4 className={styles.title}>Xác thực mã OTP</h4>
+			<h4 className={styles.title}>{i18n.t('ForgotPass.XacthucOTP')}</h4>
 			<p className={styles.text}>
-				Một mã xác thực đã được gửi cho bạn qua địa chỉ email: <span>{obfuscateEmail(context?.form?.email!)}</span>
+			{i18n.t('ForgotPass.Motmaxacthucdaduocguichoban')}<span>{obfuscateEmail(context?.form?.email!)}</span>
 			</p>
 
 			<div className={styles.form}>
-				<p className={styles.des}>Nhập mã OTP</p>
+				<p className={styles.des}>{i18n.t('ForgotPass.NhapmaOTP')}</p>
 				<div className={styles.box_code}>
 					<InputSingle onSetValue={context.setForm} name='otp' lenght={6} />
 				</div>
 				<p className={styles.countDown}>
-					Bạn chưa nhận được mã.{' '}
+					{i18n.t('ForgotPass.Banchuanhanduocma')}{' '}
 					{countDown > 0 ? (
-						<span className={clsx(styles.textGreen, styles.btnOtp)}>Gửi lại OTP ({fancyTimeFormat(countDown)})</span>
+						<span className={clsx(styles.textGreen, styles.btnOtp)}>{i18n.t('ForgotPass.GuilaiOTP')}({fancyTimeFormat(countDown)})</span>
 					) : (
 						<span className={clsx(styles.textGreen, styles.btnOtp)} onClick={handleSendcode}>
-							Gửi lại OTP
+							{i18n.t('ForgotPass.GuilaiOTP')}
 						</span>
 					)}
 				</p>
 
 				<div className={styles.btn}>
 					<Button primary bold rounded_8 disable={context?.form?.otp?.length! < 6} onClick={handleSubmit}>
-						Xác thực Email
+					{i18n.t('ForgotPass.XacthucEmail')}
 					</Button>
 				</div>
 			</div>
