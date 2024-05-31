@@ -46,7 +46,7 @@ function InfoUser({}: PropsInfoUser) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('User.thaydoitrangthaithanhcong'),
+				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
 				http: userServices.updateUserStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -63,7 +63,7 @@ function InfoUser({}: PropsInfoUser) {
 
 	const handleChangeStatusUser = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: i18n.t('User.khongtimthaynhanviennao')});
+			return toastWarn({msg: i18n.t('User.Khongtimthaynhanviennao')});
 		}
 		return changeStatusUser.mutate();
 	};
@@ -75,7 +75,7 @@ function InfoUser({}: PropsInfoUser) {
 				<div className={styles.header}>
 					<Link href={PATH.NhanVien} className={styles.header_title}>
 						<IoArrowBackOutline fontSize={20} fontWeight={600} />
-						<p>{i18n.t('User.chitietnhanvien')}</p>
+						<p>{i18n.t('User.Chitietnhanvien')}</p>
 					</Link>
 					<div className={styles.list_btn}>
 						{data?.status == STATUS_GENERAL.SU_DUNG && (
@@ -88,13 +88,13 @@ function InfoUser({}: PropsInfoUser) {
 								bold
 								onClick={() => setDataChangeStatus(data)}
 							>
-								{i18n.t('User.khoa')}
+								{i18n.t('Common.Khoa')}
 							</Button>
 						)}
 
 						{data?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
 							<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setDataChangeStatus(data)}>
-								{i18n.t('User.mokhoa')}
+								{i18n.t('Common.Mokhoa')}
 							</Button>
 						)}
 						<Button
@@ -107,7 +107,7 @@ function InfoUser({}: PropsInfoUser) {
 								router.push(`/nhan-vien/chinh-sua?_id=${_id}`);
 							}}
 						>
-							{i18n.t('User.chinhsua')}
+							{i18n.t('Common.Chinhsua')}
 						</Button>
 					</div>
 				</div>
@@ -119,18 +119,18 @@ function InfoUser({}: PropsInfoUser) {
 						</colgroup>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('User.manhanvien')}: </span> {data?.code || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Manhanvien')}: </span> {data?.code || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('User.chucvu')}: </span> {data?.regency || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Chucvu')}: </span> {data?.regency || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('User.hovaten')}: </span> {data?.fullname || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Hovaten')}: </span> {data?.fullname || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('User.thuocteam')} : </span> {data?.teamName || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Thuocteam')} : </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -143,10 +143,10 @@ function InfoUser({}: PropsInfoUser) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('User.sodienthoai')}: </span> {data?.phone || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Sodienthoai')}: </span> {data?.phone || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('User.taoluc')}: </span>{' '}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Taoluc')}: </span>{' '}
 								<Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 							</td>
 						</tr>
@@ -156,8 +156,8 @@ function InfoUser({}: PropsInfoUser) {
 					warn
 					open={!!dataChangeStatus}
 					onClose={() => setDataChangeStatus(null)}
-					title={i18n.t('User.chuyentrangthai')}
-					note={i18n.t('User.bancochacmuonchuyentrangthai')}
+					title={i18n.t('Common.ChuyenTrangthai')}
+					note={i18n.t('User.BancochacmuonchuyenTrangthainhanviennay')}
 					onSubmit={handleChangeStatusUser}
 				/>
 			</div>

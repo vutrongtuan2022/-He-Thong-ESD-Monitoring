@@ -57,7 +57,7 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('User.captaikhoanthanhcong'),
+				msgSuccess: i18n.t('User.Captaikhoanthanhcong'),
 				http: accountServices.registerAccount({
 					userUuid: form?.userUuid,
 					roleUuid: form?.roleUuid,
@@ -75,13 +75,13 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 
 	const handleSubmit = async () => {
 		if (!file) {
-			return toastWarn({msg: i18n.t('User.vuilongchonanh')});
+			return toastWarn({msg: i18n.t('User.Vuilongchonanh')});
 		}
 		if (!form?.userUuid) {
-			return toastWarn({msg: i18n.t('User.khongtimthaynhanviennao')});
+			return toastWarn({msg: i18n.t('User.Khongtimthaynhanviennao')});
 		}
 		if (!form?.roleUuid) {
-			return toastWarn({msg: i18n.t('User.vuilongchonvaitrotaikhoan')});
+			return toastWarn({msg: i18n.t('User.Vuilongchonvaitrotaikhoan')});
 		}
 
 		const resImage = await httpRequest({
@@ -100,8 +100,8 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 	return (
 		<div className={styles.container}>
 			<Loading loading={loading || funcCreateAccount.isLoading} />
-			<h4>{i18n.t('User.captaikhoan')} </h4>
-			<p className={styles.p}>{i18n.t('User.dienayduthongtincanthiet')}</p>
+			<h4>{i18n.t('User.Captaikhoan')} </h4>
+			<p className={styles.p}>{i18n.t('User.Dienayduthongtincanthiet')}</p>
 			<Form form={form} setForm={setForm}>
 				<div className={'mb'}>
 					<AvatarChange path={form?.avatar} name='avatar' onSetFile={(file: any) => setFile(file)} />
@@ -109,24 +109,24 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 				<Input
 					readOnly
 					type='text'
-					placeholder={i18n.t('User.nhapmanhanvien')}
+					placeholder={i18n.t('Common.Nhapmanhanvien')}
 					name='fullName'
 					value={form.fullName}
 					label={
 						<span>
-							{i18n.t('User.tennhanvien')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('Common.Tennhanvien')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
 				<Input
 					readOnly
 					type='text'
-					placeholder={i18n.t('User.nhaptentaikhoan')}
+					placeholder={i18n.t('Common.Nhaptentaikhoan')}
 					name='userName'
 					value={form.userName}
 					label={
 						<span>
-							{i18n.t('User.tentaikhoan')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('Common.Tentaikhoan')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -136,7 +136,7 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 						isSearch
 						name='roleUuid'
 						value={form.roleUuid || null}
-						placeholder={i18n.t('User.luachon')}
+						placeholder={i18n.t('Common.Luachon')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
@@ -145,7 +145,7 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 						}
 						label={
 							<span>
-								{i18n.t('User.vaitro')} <span style={{color: 'red'}}>*</span>
+								{i18n.t('Common.Vaitro')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					>
@@ -158,12 +158,12 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							{i18n.t('Common.huybo')}
+							{i18n.t('Common.Huybo')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							{i18n.t('Common.xacnhan')}
+							{i18n.t('Common.Xacnhan')}
 						</Button>
 					</div>
 				</div>

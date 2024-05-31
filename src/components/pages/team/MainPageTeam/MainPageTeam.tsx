@@ -160,7 +160,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 					},
 					{
 						path: '',
-						title: i18n.t('Team.danhsachteam'),
+						title: i18n.t('Team.Danhsachteam'),
 					},
 				]}
 				action={
@@ -219,7 +219,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
 								href={PATH.ThemTeam}
 							>
-								{i18n.t('Team.themmoi')}
+								{i18n.t('Common.Themmoi')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
@@ -234,30 +234,30 @@ function MainPageTeam({}: PropsMainPageTeam) {
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalTeam}
-							text={i18n.t('Team.tongsoteam')}
+							text={i18n.t('Team.Tongsoteam')}
 							icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />}
 						/>
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalUserTeam}
-							text={i18n.t('Team.tongsonhanvientrongteam')}
+							text={i18n.t('Team.Tongsonhanvientrongteam')}
 							icon={<User size={30} color='#4DBFDD' />}
 						/>
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalDeviceTeam}
-							text={i18n.t('Team.tongsothietbitrongteam')}
+							text={i18n.t('Team.TongSothietbitrongteam')}
 							icon={<MdCast size={30} color='#4DBFDD' />}
 						/>
 					</GridColumn>
 				</div>
 				<div className={styles.head}>
 					{_view == 'tree' ? (
-						<h4 className={styles.title}>{i18n.t('Team.sodoteam')}</h4>
+						<h4 className={styles.title}>{i18n.t('Team.Sodoteam')}</h4>
 					) : (
 						<div className={styles.box_filter}>
 							<div className={styles.search}>
-								<Search keyName='_keyword' placeholder={i18n.t('Team.timkiemtheotenma')} />
+								<Search keyName='_keyword' placeholder={i18n.t('Team.Timkiemtheotenmateam')} />
 							</div>
 							<div className={styles.filter}>
 								<FilterCustom
@@ -283,7 +283,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 							</div>
 							<div className={styles.filter}>
 								<FilterCustom
-									name={i18n.t('Common.trangthai')}
+									name={i18n.t('Common.Trangthai')}
 									query='_status'
 									listFilter={[
 										{id: STATUS_GENERAL.SU_DUNG, name: i18n.t('Common.sudung')},

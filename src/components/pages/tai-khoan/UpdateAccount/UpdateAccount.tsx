@@ -102,7 +102,7 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={loading || funcCreateAccount.isLoading} />
-			<h4>{i18n.t('Account.chinhsuataikhoan')}</h4>
+			<h4>{i18n.t('Account.Chinhsuataikhoan')}</h4>
 			<p className={styles.p}>{i18n.t('Account.dienthongtin')}</p>
 			<Form form={form} setForm={setForm}>
 				<div className={'mb'}>
@@ -160,12 +160,12 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-						{i18n.t('Account.huybo')}
+							{i18n.t('Account.huybo')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-						{i18n.t('Account.capnhat')}
+							{i18n.t('Account.capnhat')}
 						</Button>
 					</div>
 				</div>

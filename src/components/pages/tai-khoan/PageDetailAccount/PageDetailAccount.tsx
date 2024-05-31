@@ -130,7 +130,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 								</Button>
 							)}
 							<Button rounded_8 w_fit p_6_16 blue_light bold onClick={() => setOpenUpdate(true)}>
-								{i18n.t('Account.chinhsua')}
+								{i18n.t('Account.Chinhsua')}
 							</Button>
 						</div>
 					</div>
@@ -151,12 +151,12 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>
-										{i18n.t('Account.trangthai')}:{' '}
+										{i18n.t('Account.Trangthai')}:{' '}
 										<span>
 											{dataDetailAccount?.status == STATUS_GENERAL.SU_DUNG ? (
-												<span style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.dangsudung')}</span>
+												<span style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.Dangsudung')}</span>
 											) : dataDetailAccount?.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-												<span style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Account.khongsudung')}</span>
+												<span style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Account.Khongsudung')}</span>
 											) : (
 												'---'
 											)}
@@ -230,7 +230,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 					open={!!dataChangeStatus}
 					onClose={() => setDataChangeStatus(null)}
 					title={i18n.t('Account.chuyen')}
-					note={i18n.t('Account.chuyentrangthai')}
+					note={i18n.t('Account.chuyenTrangthai')}
 					onSubmit={handleChangeStatusAccount}
 				/>
 

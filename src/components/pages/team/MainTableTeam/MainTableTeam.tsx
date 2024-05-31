@@ -50,7 +50,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.thaydoitrangthaithanhcong'),
+				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
 				http: teamServices.changeStatusTeam({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -75,7 +75,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 			<DataWrapper
 				data={pageListTeams?.data?.items}
 				loading={pageListTeams.isLoading}
-				noti={<Noti title={i18n.t('Team.teamtrong')} des={i18n.t('Team.danhsachteamtrong')} />}
+				noti={<Noti title={i18n.t('Team.teamtrong')} des={i18n.t('Team.Danhsachteamtrong')} />}
 			>
 				<Table
 					data={pageListTeams?.data?.items}
@@ -97,15 +97,15 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							),
 						},
 						{
-							title: i18n.t('Common.nguoiquanlyteam'),
+							title: i18n.t('Common.nguoiQuanlyteam'),
 							render: (data: ITeam) => <>{data.leaderName || '---'}</>,
 						},
 						{
-							title: i18n.t('Common.sothanhvien'),
+							title: i18n.t('Common.Sothanhvien'),
 							render: (data: ITeam) => <>{data.totalUser || 0}</>,
 						},
 						{
-							title: i18n.t('Common.sothietbi'),
+							title: i18n.t('Common.Sothietbi'),
 							render: (data: ITeam) => <>{data.totalDevices || 0}</>,
 						},
 						{
@@ -113,13 +113,13 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							render: (data: ITeam) => <>{data.areaName || '---'}</>,
 						},
 						{
-							title: i18n.t('Common.trangthai'),
+							title: i18n.t('Common.Trangthai'),
 							render: (data: ITeam) => (
 								<>
 									{data?.status == STATUS_GENERAL.SU_DUNG ? (
-										<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.dangsudung')}</p>
+										<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Dangsudung')}</p>
 									) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-										<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.khongsudung')}</p>
+										<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Khongsudung')}</p>
 									) : (
 										'---'
 									)}
@@ -127,13 +127,13 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							),
 						},
 						{
-							title: i18n.t('Common.tacvu'),
+							title: i18n.t('Common.Tacvu'),
 							render: (data: ITeam) => (
 								<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 									<IconCustom
 										edit
 										icon={<LuPencil fontSize={20} fontWeight={600} />}
-										tooltip={i18n.t('Common.chinhsua')}
+										tooltip={i18n.t('Common.Chinhsua')}
 										color='#777E90'
 										href={`/team/chinh-sua?_id=${data.uuid}`}
 									/>
@@ -162,8 +162,8 @@ function MainTableTeam({}: PropsMainTableTeam) {
 				warn
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
-				title={i18n.t('Common.thaydoitrangthai')}
-				note={i18n.t('Team.bancochacmuonchuyentrangthai')}
+				title={i18n.t('Common.thaydoiTrangthai')}
+				note={i18n.t('Team.BancochacmuonchuyenTrangthai')}
 				onSubmit={handleChangeStatusTeam}
 			/>
 		</div>
