@@ -103,7 +103,7 @@ function InfoDevice({}: PropsInfoDevice) {
 								{data?.macNumber}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.thuocteam') }: </span> {data?.teamName || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Thuocteam')}: </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
