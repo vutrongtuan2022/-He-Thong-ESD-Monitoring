@@ -35,6 +35,8 @@
 		"Changestatussuccessfully": "Thay đổi trạng thái thành công!",
 		"Confirm": "Xác nhận",
 		"Account": "Tài khoản",
+		"Accountcreated": "Đã cấp tài khoản",
+		"Accountnotyetissued": "Chưa cấp tài khoản",
 
 		"Lichsutrong": "Lịch sử trống",
 		"Danhsachlichsutrong": "Danh sách lịch sử trống!",
@@ -51,7 +53,6 @@
 		"Importfilethanhcong": "Import file thành công!",
 		"Khuvuc": "Khu vực",
 		"Trangthai": "Trạng thái",
-
 		"Hovaten": "Họ và tên",
 		"Nhaphovaten": "Nhập họ và tên",
 		"Nhapemail": "Nhập email",
@@ -66,18 +67,15 @@
 		"Manhanvien": "Mã nhân viên",
 		"Nhapmanhanvien": "Nhập mã nhân viên",
 		"Tennhanvien": "Tên nhân viên",
-
 		"Thuocteam": "Thuộc team",
 		"Hoatdong": "Hoạt động",
 		"Taikhoan": "Tài khoản",
 		"Ngaysinh": "Ngày sinh",
 		"Chonngaysinh": "Chọn ngày sinh",
-
 		"Chinhsua": "Chỉnh sửa",
 		"Khoa": "Khóa",
 		"Mokhoa": "Mở khóa",
 		"Sudung": "Sử dụng",
-
 		"ThaydoiTrangthai": "Thay đổi trạng thái",
 		"hienthi": "Hiển thị",
 		"trentong": "Trên tổng",
@@ -99,8 +97,6 @@
 		"Tenbophat": "Tên bộ phát",
 		"Teamsudung": "Team sử dụng",
 		"Tinhtrang": "Tình trạng",
-		"Accountcreated": "Đã cấp tài khoản",
-		"Accountnotyetissued": "Chưa cấp tài khoản",
 
 		"Dacap": "Đã cấp",
 		"BancochacmuonchuyenTrangthai": "Bạn có chắc chắn muốn chuyển trạng thái này?",
