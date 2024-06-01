@@ -58,7 +58,14 @@ function AvatarChange({path, name, onSetFile}: PropsAvatarChange) {
 				<p>{i18n.t('Common.UploadedImagesMustHaveMinimumSizeof300pixelsx300pixels')}</p>
 				<span>{i18n.t('Common.Supportedformats')}</span>
 				<label className={styles.input}>
-					<input hidden type='file' name={name} onChange={handleSelectImg} onClick={(e: any) => (e.target.value = null)} />
+					<input
+						hidden
+						type='file'
+						accept='image/png, image/jpeg, image/jpg'
+						name={name}
+						onChange={handleSelectImg}
+						onClick={(e: any) => (e.target.value = null)}
+					/>
 					<ImageFill src={icons.iconUpload} className={styles.upload} />
 					<h5>{i18n.t('Common.Choseimage')}</h5>
 				</label>

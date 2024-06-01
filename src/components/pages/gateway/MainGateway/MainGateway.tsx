@@ -115,11 +115,6 @@ function MainGateway({}: PropsMainGateway) {
 
 		// Check trùng code
 		for (let index = 0; index < dataConvert.length; index++) {
-			// Kiểm tra code null
-			if (!dataConvert[index]?.code || !dataConvert[index + 1]?.code) {
-				return toastWarn({msg: 'Dữ liệu đầu vào không hợp lệ!'});
-			}
-
 			// Kiểm tra trùng code
 			if (dataConvert[index]?.code == dataConvert[index + 1]?.code) {
 				return toastWarn({msg: 'Dữ liệu đầu vào không hợp lệ!'});
@@ -132,7 +127,6 @@ function MainGateway({}: PropsMainGateway) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={fucnImportExcel.isLoading || exportExcel.isLoading} />
-
 			<Breadcrumb
 				listUrls={[
 					{

@@ -121,7 +121,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 						</td>
 						<td>
 							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.LastOnline')}: </span>{' '}
-							{data?.timeLastOnline ? <Moment date={data?.timeLastOnline} format='DD:mm, DD/MM/YYYY' /> : '---'}
+							{data?.timeLastOnline ? <Moment date={data?.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---'}
 						</td>
 					</tr>
 					<tr>
