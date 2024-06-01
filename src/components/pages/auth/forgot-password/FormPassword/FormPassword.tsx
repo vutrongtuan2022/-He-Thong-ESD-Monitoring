@@ -35,13 +35,13 @@ function FormPassword({}: PropsFormPassword) {
 					type='password'
 					name='password'
 					value={context?.form?.password}
-					placeholder={i18n.t('ForgotPass.Nhapmatkhaumoi')}
+					placeholder={i18n.t('ForgotPass.EnterNewPassword')}
 					onClean
 					isRequired
 					icon={<ShieldSecurity size='20' variant='Bold' />}
 					label={
 						<span>
-							{i18n.t('ForgotPass.Matkhaumoi')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('ForgotPass.NewPassword')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -51,13 +51,13 @@ function FormPassword({}: PropsFormPassword) {
 					name='rePassword'
 					value={context?.form?.rePassword}
 					valueConfirm={context?.form?.password}
-					placeholder={i18n.t('ForgotPass.Nhaplaimatkhau')}
+					placeholder={i18n.t('ForgotPass.ReEnterPassword')}
 					onClean
 					isRequired
 					icon={<ShieldSecurity size='20' variant='Bold' />}
 					label={
 						<span>
-							{i18n.t('ForgotPass.Xacnhanmatkhaumoi')}<span style={{color: 'red'}}>*</span>
+							{i18n.t('ForgotPass.ConfirmNewPassword')}<span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -66,7 +66,7 @@ function FormPassword({}: PropsFormPassword) {
 					<FormContext.Consumer>
 						{({isDone}) => (
 							<Button primary bold rounded_8 disable={!isDone}>
-								{i18n.t('ForgotPass.Luumatkhau')}
+								{i18n.t('ForgotPass.SavePassword')}
 							</Button>
 						)}
 					</FormContext.Consumer>

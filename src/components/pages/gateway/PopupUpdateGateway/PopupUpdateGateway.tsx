@@ -89,33 +89,33 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 
 	return (
 		<div className={styles.container}>
-			<h4>{i18n.t('Gateway.Chinhsuagateway')}</h4>
+			<h4>{i18n.t('Gateway.EditGateway')}</h4>
 			<Loading loading={upsertGateway.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
 					readOnly
 					type='text'
-					placeholder={i18n.t('Gateway.NhapIDgateway')}
+					placeholder={i18n.t('Gateway.EnterGatewayID')}
 					name='code'
 					isRequired
 					min={5}
 					max={50}
 					label={
 						<span>
-							{i18n.t('Gateway.IDgateway')} <span style={{color: 'red'}}>*</span>{' '}
+							{i18n.t('Gateway.GatewayID')} <span style={{color: 'red'}}>*</span>{' '}
 						</span>
 					}
 				/>
 				<Input
 					type='text'
-					placeholder={i18n.t('Gateway.Nhaptengateway')}
+					placeholder={i18n.t('Gateway.EnterGatewayName')}
 					name='name'
 					isRequired
 					min={5}
 					max={50}
 					label={
 						<span>
-							{i18n.t('Gateway.Tengateway')} <span style={{color: 'red'}}>*</span>{' '}
+							{i18n.t('Gateway.NameGateway')} <span style={{color: 'red'}}>*</span>{' '}
 						</span>
 					}
 				/>

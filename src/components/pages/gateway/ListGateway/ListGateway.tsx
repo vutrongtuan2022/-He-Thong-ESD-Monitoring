@@ -70,7 +70,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: gatewayServices.updateStatusGateway({
 					uuid: dataChange?.uuid!,
 					status: dataChange?.status == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -86,7 +86,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 
 	const handleChangeStatusGateway = async () => {
 		if (!dataChange?.uuid) {
-			return toastWarn({msg: i18n.t('Gateway.Khongtimthaygateway')});
+			return toastWarn({msg: i18n.t('Gateway.NoGatewayFound')});
 		}
 
 		return funcChangeStatus.mutate();
@@ -98,7 +98,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 			<div className={styles.control}>
 				<div className={styles.left}>
 					<div style={{minWidth: 360}}>
-						<Search keyName='_keyword' placeholder={i18n.t('Gateway.Timkiemthemgatewayid')} />
+						<Search keyName='_keyword' placeholder={i18n.t('Gateway.PlaceholderSearchDevice')} />
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
@@ -152,7 +152,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					loading={listGateways?.isLoading}
 					noti={
 						<Noti
-							des={i18n.t('Gateway.Hientaichuacogateway')}
+							des={i18n.t('Gateway.CurrentlyThereIsNoGateway')}
 							titleButton={i18n.t('Gateway.Themgateway')}
 							onClick={onOpenCreate}
 						/>
@@ -167,7 +167,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 							},
 
 							{
-								title: i18n.t('Gateway.Idgateway'),
+								title: i18n.t('Gateway.GatewayID'),
 								render: (data: IGateway) => (
 									<Link href={`/gateway/${data.uuid}`} className={styles.link}>
 										{data.code}
@@ -175,7 +175,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								),
 							},
 							{
-								title: i18n.t('Gateway.Tengateway'),
+								title: i18n.t('Gateway.NameGateway'),
 								render: (data: IGateway) => <p>{data.name || '---'}</p>,
 							},
 							{
@@ -205,7 +205,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								),
 							},
 							{
-								title: i18n.t('Common.Onlinelancuoi'),
+								title: i18n.t('Gateway.LastOnline'),
 								render: (data: IGateway) =>
 									data.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---',
 							},
@@ -247,7 +247,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					open={!!dataChange}
 					onClose={() => setDataChange(null)}
 					title={i18n.t('Common.ChuyenTrangthai')}
-					note={i18n.t('Gateway.BancochacmuonchuyenTrangthaichogatewaynay')}
+					note={i18n.t('Gateway.AreYouSureYouWantToChangeTheStatusOfThisGateway')}
 					onSubmit={handleChangeStatusGateway}
 				/>
 				<Popup open={!!dataUpdate} onClose={() => setDataUpdate(null)}>
