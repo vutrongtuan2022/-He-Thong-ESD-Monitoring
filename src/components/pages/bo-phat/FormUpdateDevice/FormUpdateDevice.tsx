@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import {IFormUpdate, PropsFormUpdateDevice} from './interfaces';
 import styles from './FormUpdateDevice.module.scss';
-import Form, {Input} from '~/components/common/Form';
+import Form, {FormContext, Input} from '~/components/common/Form';
 import Select, {Option} from '~/components/common/Select';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
@@ -65,9 +65,9 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 					uuid: form.uuid,
 					name: form.name,
 					macNumber: form.macNumber,
-					teamUuid: form.teamUuid,
-					status: STATUS_GENERAL.SU_DUNG,
-					gatewayUuid: '',
+					teamUuid: form.teamUuid || null,
+					status: dataUpdate?.status!,
+					gatewayUuid: dataUpdate?.gatewayUuid || null,
 				}),
 			}),
 		onSuccess(data) {
@@ -113,12 +113,16 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 			<Loading loading={upsertDevice.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
+					readOnly
 					label={
 						<span>
 							{i18n.t('Device.DeviceMacAddress')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 					placeholder={i18n.t('Device.EnterDeviceMacAddress')}
+					isRequired
+					min={5}
+					max={50}
 					name='macNumber'
 					value={form.macNumber}
 					type='text'
@@ -130,6 +134,9 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 						</span>
 					}
 					placeholder={i18n.t('Device.EnterNewDeviceName')}
+					isRequired
+					min={5}
+					max={50}
 					name='name'
 					value={form.name}
 					type='text'
