@@ -117,9 +117,9 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							render: (data: ITeam) => (
 								<>
 									{data?.status == STATUS_GENERAL.SU_DUNG ? (
-										<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Dangsudung')}</p>
+										<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Using')}</p>
 									) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-										<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Khongsudung')}</p>
+										<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Donotuse')}</p>
 									) : (
 										'---'
 									)}
@@ -127,7 +127,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							),
 						},
 						{
-							title: i18n.t('Common.Tacvu'),
+							title: i18n.t('Common.Action'),
 							render: (data: ITeam) => (
 								<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 									<IconCustom

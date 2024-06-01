@@ -129,7 +129,7 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 								teamUuid: e.target.value,
 							}))
 						}
-						label={<span>{i18n.t('Common.thuocteam')} </span>}
+						label={<span>{i18n.t('Common.BelongToTeam')} </span>}
 					>
 						{listTeams?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
