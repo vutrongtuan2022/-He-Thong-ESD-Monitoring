@@ -102,7 +102,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 					gender: form.gender,
 					regencyUuid: form.regencyUuid,
 					code: form.code,
-					teamUuid: form.teamUuid,
+					teamUuid: form.teamUuid || null,
 					userName: detailUser?.data?.userName,
 					avatar: detailUser?.data?.avatar,
 					status: detailUser?.data?.status,
