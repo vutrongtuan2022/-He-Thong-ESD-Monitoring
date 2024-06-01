@@ -212,7 +212,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										value={form.phone || ''}
 										label={
 											<span>
-												{i18n.t('User.Phonenumber')} <span style={{color: 'red'}}>*</span>
+												{i18n.t('Common.PhoneNumber')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
 										placeholder={i18n.t('User.Enterphonenumber')}
@@ -235,7 +235,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 										}
 										label={
 											<span>
-												{i18n.t('User.Regency')} <span style={{color: 'red'}}>*</span>
+												{i18n.t('Common.Regency')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
 									>

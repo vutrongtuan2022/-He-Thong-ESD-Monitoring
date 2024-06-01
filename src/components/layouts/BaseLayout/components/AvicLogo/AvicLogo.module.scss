@@ -1,5 +1,30 @@
+@import '../../../../../styles/variables';
+
 .container {
 	padding: 20px;
+
+	&.small {
+		padding: 10px;
+
+		.main {
+			gap: 1px;
+		}
+
+		.image_avi {
+			width: 36px;
+			height: 24px;
+		}
+
+		.image_c {
+			width: 24px;
+			height: 24px;
+		}
+
+		.image_rotate {
+			width: 10px;
+			height: 10px;
+		}
+	}
 }
 
 .main {
@@ -37,6 +62,31 @@
 	width: 14px;
 	height: 14px;
 	animation: spinner 1s linear infinite;
+}
+
+@media (max-width: $widthTablet) {
+	.container {
+		padding: 10px;
+
+		.main {
+			gap: 1px;
+		}
+
+		.image_avi {
+			width: 36px;
+			height: 24px;
+		}
+
+		.image_c {
+			width: 24px;
+			height: 24px;
+		}
+
+		.image_rotate {
+			width: 10px;
+			height: 10px;
+		}
+	}
 }
 
 @keyframes spinner {
