@@ -53,7 +53,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Account.msgSuccess'),
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: accountServices.updateAccountStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -70,7 +70,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 
 	const handleChangeStatusAccount = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: i18n.t('Account.msg')});
+			return toastWarn({msg: i18n.t('Account.AccountNotFound')});
 		}
 		return changeStatusAccount.mutate();
 	};
@@ -84,11 +84,11 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('Account.quanlytaikhoan'),
+						title: i18n.t('Account.AccountManagement'),
 						path: PATH.TaiKhoan,
 					},
 					{
-						title: i18n.t('Account.chitiettaikhoan'),
+						title: i18n.t('Account.AccountDetails'),
 						path: '',
 					},
 				]}
@@ -99,7 +99,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 					<div className={styles.header}>
 						<Link href={PATH.TaiKhoan} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
-							<p>{i18n.t('Account.chitiettaikhoan')}</p>
+							<p>{i18n.t('Account.AccountDetails')}</p>
 						</Link>
 						<div className={styles.list_btn}>
 							{dataDetailAccount?.status == STATUS_GENERAL.SU_DUNG && (
@@ -112,7 +112,7 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									bold
 									onClick={() => setDataChangeStatus(dataDetailAccount)}
 								>
-									{i18n.t('Account.khoa')}
+									{i18n.t('Common.Lock')}
 								</Button>
 							)}
 
@@ -126,11 +126,11 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									bold
 									onClick={() => setDataChangeStatus(dataDetailAccount)}
 								>
-									{i18n.t('Account.mokhoa')}
+									{i18n.t('Common.Unlock')}
 								</Button>
 							)}
 							<Button rounded_8 w_fit p_6_16 blue_light bold onClick={() => setOpenUpdate(true)}>
-								{i18n.t('Account.Chinhsua')}
+								{i18n.t('Common.Edit')}
 							</Button>
 						</div>
 					</div>
@@ -146,17 +146,17 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 							</colgroup>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.manhanvien')}</span>
+									<span style={{marginRight: 6}}>{i18n.t('User.IDuser')}</span>
 									{dataDetailAccount?.code || '---'}
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>
-										{i18n.t('Account.Trangthai')}:{' '}
+										{i18n.t('Common.Status')}:{' '}
 										<span>
 											{dataDetailAccount?.status == STATUS_GENERAL.SU_DUNG ? (
-												<span style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.Dangsudung')}</span>
+												<span style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Using')}</span>
 											) : dataDetailAccount?.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-												<span style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Account.Khongsudung')}</span>
+												<span style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Donotuse')}</span>
 											) : (
 												'---'
 											)}
@@ -166,11 +166,11 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.chucvu')}: </span>{' '}
+									<span style={{marginRight: 6}}>{i18n.t('Common.Regency')}: </span>{' '}
 									<span>{dataDetailAccount?.regency || '---'}</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.vaitro')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Role')}: </span>
 									{dataDetailAccount?.roleName || '---'}
 								</td>
 							</tr>
@@ -179,39 +179,38 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 									<span style={{marginRight: 6}}>Email: </span> <span>{dataDetailAccount?.email || '---'}</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.team')}:</span>{' '}
-									<span>{dataDetailAccount?.teamName || '---'}</span>
+									<span style={{marginRight: 6}}>Team:</span> <span>{dataDetailAccount?.teamName || '---'}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.sodienthoai')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.PhoneNumber')}: </span>
 									{dataDetailAccount?.phone || '---'}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.nguoiquanly')}:</span>{' '}
+									<span style={{marginRight: 6}}>{i18n.t('Common.Manager')}:</span>{' '}
 									<span>{dataDetailAccount?.teamLeader || '---'}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.ngaysinh')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Dateofbirth')}: </span>
 									<span>
 										<Moment date={dataDetailAccount?.birthday} format='DD/MM/YYYY' />
 									</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.nguoitao')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Creator')}: </span>
 									<span>{dataDetailAccount?.createdBy || '---'}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.diachi')}: </span>{' '}
+									<span style={{marginRight: 6}}>{i18n.t('Common.Address')}: </span>{' '}
 									<span>{dataDetailAccount?.address || '---'}</span>
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Account.capnhat')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Update')}: </span>
 									<span>
 										{dataDetailAccount?.timeCreated ? (
 											<Moment date={dataDetailAccount?.timeCreated} format='DD/MM/YYYY' />
@@ -229,8 +228,8 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 					warn
 					open={!!dataChangeStatus}
 					onClose={() => setDataChangeStatus(null)}
-					title={i18n.t('Account.chuyen')}
-					note={i18n.t('Account.chuyenTrangthai')}
+					title={i18n.t('Common.Changestatus')}
+					note={i18n.t('Common.Doyouwanttochangestatus')}
 					onSubmit={handleChangeStatusAccount}
 				/>
 
