@@ -49,7 +49,7 @@ function MainPageUser({}: PropsMainPageUser) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.Doyouwanttochangestatus'),
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: userServices.updateUserStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
