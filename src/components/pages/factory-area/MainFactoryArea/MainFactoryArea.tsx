@@ -1,71 +1,48 @@
 import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
+import {Data, PictureFrame, TextalignJustifycenter} from 'iconsax-react';
 
-import {PropsMainPageTeam} from './interfaces';
-import styles from './MainPageTeam.module.scss';
-import WrapperContainer from '~/components/layouts/WrapperContainer';
+import {PropsMainFactoryArea} from './interfaces';
+import styles from './MainFactoryArea.module.scss';
+import Loading from '~/components/common/Loading';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import Button from '~/components/common/Button';
 import icons from '~/constants/images/icons';
 import {BsThreeDots} from 'react-icons/bs';
-import GridColumn from '~/components/layouts/GridColumn';
-import ItemDashboard from '../../dashboard/ItemDashboard';
-import {MdCast} from 'react-icons/md';
-import {HiOutlineUserGroup} from 'react-icons/hi';
-import {Data, TextalignJustifycenter, User} from 'iconsax-react';
+import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Search from '~/components/common/Search';
 import FilterCustom from '~/components/common/FilterCustom';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
-import {httpRequest} from '~/services';
-import categoryServices from '~/services/categoryServices';
 import {useRouter} from 'next/router';
 import clsx from 'clsx';
-import TableTeam from '../MainTableTeam';
-import teamServices from '~/services/teamServices';
-import MainTreeTeam from '../MainTreeTeam';
-import i18n from '~/locale/i18n';
-import Loading from '~/components/common/Loading';
 import Popup from '~/components/common/Popup';
+import MainCreateArea from '../MainCreateArea';
+import GridColumn from '~/components/layouts/GridColumn';
+import ItemDashboard from '../../dashboard/ItemDashboard';
+import {HiOutlineUserGroup} from 'react-icons/hi';
+import TableArea from '../TableArea';
+import MainTreeArea from '../MainTreeArea';
+import {GrMap} from 'react-icons/gr';
+import {FaChromecast, FaUser} from 'react-icons/fa';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {httpRequest} from '~/services';
+import areaServices from '~/services/areaServices';
+import i18n from '~/locale/i18n';
 import ImportExcel from '~/components/common/ImportExcel';
 
-function MainPageTeam({}: PropsMainPageTeam) {
+function MainFactoryArea({}: PropsMainFactoryArea) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_view, _page, _pageSize, _keyword, _leaderUuid, _areaUuid, _status, importExcel} = router.query;
+	const {_open, _view, _page, _pageSize, _keyword, _status, importExcel} = router.query;
 
 	const [file, setFile] = useState<any>(null);
 
-	const listUsers = useQuery([QUERY_KEY.dropdown_danh_sach_nguoi_dung], {
+	const sumAreas = useQuery([QUERY_KEY.thong_so_chung_khu_vuc], {
 		queryFn: () =>
 			httpRequest({
-				http: categoryServices.listUser({
-					keyword: '',
-				}),
-			}),
-		select(data) {
-			return data;
-		},
-	});
-
-	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
-		queryFn: () =>
-			httpRequest({
-				http: categoryServices.listArea({
-					keyword: '',
-				}),
-			}),
-		select(data) {
-			return data;
-		},
-	});
-
-	const sumTeams = useQuery([QUERY_KEY.thong_so_chung_team], {
-		queryFn: () =>
-			httpRequest({
-				http: teamServices.getSumTeam({}),
+				http: areaServices.getSumArea({}),
 			}),
 		select(data) {
 			return data;
@@ -74,7 +51,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 
 	useEffect(() => {
 		if (_view == 'tree') {
-			const {_page, _pageSize, _keyword, _leaderUuid, _areaUuid, _status, ...rest} = router.query;
+			const {_page, _pageSize, _keyword, _status, _open, ...rest} = router.query;
 
 			router.replace(
 				{
@@ -96,13 +73,12 @@ function MainPageTeam({}: PropsMainPageTeam) {
 	const exportExcel = useMutation({
 		mutationFn: () => {
 			return httpRequest({
-				http: teamServices.exportExcel({
+				http: areaServices.exportExcel({
 					keyword: _keyword as string,
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					status: _status ? Number(_status) : null,
-					leaderUuid: _leaderUuid ? [_leaderUuid as string] : null,
-					areaUuid: _areaUuid ? (_areaUuid as string) : null,
+					parentUuid: null,
 				}),
 			});
 		},
@@ -119,8 +95,8 @@ function MainPageTeam({}: PropsMainPageTeam) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.FileImportedSuccessfully'),
-				http: teamServices.importExcel({
+				msgSuccess: i18n.t('Device.importfilethanhcong'),
+				http: areaServices.importExcel({
 					FileData: file,
 					Type: 1,
 				}),
@@ -129,8 +105,8 @@ function MainPageTeam({}: PropsMainPageTeam) {
 		onSuccess(data) {
 			if (data) {
 				handleCloseImportExcel();
-				queryClient.invalidateQueries([QUERY_KEY.thong_so_chung_team]);
-				queryClient.invalidateQueries([QUERY_KEY.danh_sach_team, _page, _pageSize, _keyword, _leaderUuid, _areaUuid, _status]);
+				queryClient.invalidateQueries([QUERY_KEY.thong_so_chung_khu_vuc]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_khu_vuc, _page, _pageSize, _keyword, _status]);
 			}
 		},
 	});
@@ -156,11 +132,11 @@ function MainPageTeam({}: PropsMainPageTeam) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: i18n.t('Common.home'),
+						title: 'Trang chủ',
 					},
 					{
 						path: '',
-						title: i18n.t('Team.ListTeam'),
+						title: 'Danh sách khu vực',
 					},
 				]}
 				action={
@@ -208,6 +184,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 								Import excel
 							</Button>
 						</div>
+
 						<div>
 							<Button
 								className={styles.btn}
@@ -217,9 +194,24 @@ function MainPageTeam({}: PropsMainPageTeam) {
 								primary
 								bold
 								icon={<Image alt='icon add' src={icons.add} width={20} height={20} />}
-								href={PATH.CreateTeam}
+								onClick={() =>
+									router.replace(
+										{
+											pathname: PATH.FactoryArea,
+											query: {
+												...router.query,
+												_open: 'create',
+											},
+										},
+										undefined,
+										{
+											scroll: false,
+											shallow: false,
+										}
+									)
+								}
 							>
-								{i18n.t('Common.Addnew')}
+								Thêm mới
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
@@ -230,64 +222,54 @@ function MainPageTeam({}: PropsMainPageTeam) {
 			/>
 			<WrapperContainer>
 				<div className={styles.main}>
-					<GridColumn>
+					<GridColumn col_3>
 						<ItemDashboard
-							isLoading={sumTeams.isLoading}
-							value={sumTeams?.data?.totalTeam}
-							text={i18n.t('Team.TotalTeams')}
+							isLoading={sumAreas.isLoading}
+							value={sumAreas?.data?.totalParentArea}
+							text='Khu vực chính'
+							icon={<GrMap size={32} color='#2D74FF' />}
+						/>
+						<ItemDashboard
+							isLoading={sumAreas.isLoading}
+							value={sumAreas?.data?.totalChildArea}
+							text='Khu vực con'
+							icon={<PictureFrame size={32} color='#11B991' />}
+						/>
+						<ItemDashboard
+							isLoading={sumAreas.isLoading}
+							value={sumAreas?.data?.totalTeam}
+							text='Tổng số team'
 							icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />}
 						/>
-						<ItemDashboard
-							isLoading={sumTeams.isLoading}
-							value={sumTeams?.data?.totalUserTeam}
-							text={i18n.t('Team.TotalUsersInTeam')}
-							icon={<User size={30} color='#4DBFDD' />}
+						{/* <ItemDashboard
+							isLoading={sumAreas.isLoading}
+							value={sumAreas?.data?.totalUserTeam}
+							text='Tổng nhân viên'
+							icon={<FaUser size={32} color='#4DBFDD' />}
 						/>
 						<ItemDashboard
-							isLoading={sumTeams.isLoading}
-							value={sumTeams?.data?.totalDeviceTeam}
-							text={i18n.t('Team.TotalDevicesInTeam')}
-							icon={<MdCast size={30} color='#4DBFDD' />}
-						/>
+							isLoading={sumAreas.isLoading}
+							value={sumAreas?.data?.totalDeviceTeam}
+							text='Tổng thiết bị'
+							icon={<FaChromecast size={32} color='#4DBFDD' />}
+						/> */}
 					</GridColumn>
 				</div>
 				<div className={styles.head}>
 					{_view == 'tree' ? (
-						<h4 className={styles.title}>{i18n.t('Team.TeamDiagram')}</h4>
+						<h4 className={styles.title}>Sơ đồ khu vực</h4>
 					) : (
 						<div className={styles.box_filter}>
 							<div className={styles.search}>
-								<Search keyName='_keyword' placeholder={i18n.t('Team.SearchByNameTeamID')} />
+								<Search keyName='_keyword' placeholder='Tìm kiếm theo tên hoặc mã khu vực' />
 							</div>
 							<div className={styles.filter}>
 								<FilterCustom
-									isSearch
-									name='Leader'
-									query='_leaderUuid'
-									listFilter={listUsers?.data?.map((v: any) => ({
-										id: v?.uuid,
-										name: v?.name,
-									}))}
-								/>
-							</div>
-							<div className={styles.filter}>
-								<FilterCustom
-									isSearch
-									name={i18n.t('Common.Area')}
-									query='_areaUuid'
-									listFilter={listAreas?.data?.map((v: any) => ({
-										id: v?.uuid,
-										name: v?.name,
-									}))}
-								/>
-							</div>
-							<div className={styles.filter}>
-								<FilterCustom
-									name={i18n.t('Common.Status')}
+									name='Trạng thái'
 									query='_status'
 									listFilter={[
-										{id: STATUS_GENERAL.SU_DUNG, name: i18n.t('Common.Use')},
-										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: i18n.t('Common.Donotuse')},
+										{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
+										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: 'Không sử dụng'},
 									]}
 								/>
 							</div>
@@ -343,16 +325,58 @@ function MainPageTeam({}: PropsMainPageTeam) {
 				</div>
 
 				<div className={styles.wrapper}>
-					{!_view && <TableTeam />}
-					{_view == 'tree' && <MainTreeTeam />}
+					{!_view && <TableArea />}
+					{_view == 'tree' && <MainTreeArea />}
 				</div>
 			</WrapperContainer>
 
+			{/* POPUP */}
+			<Popup
+				open={_open == 'create'}
+				onClose={() => {
+					const {_open, ...rest} = router.query;
+
+					router.replace(
+						{
+							pathname: PATH.FactoryArea,
+							query: {
+								...rest,
+							},
+						},
+						undefined,
+						{
+							scroll: false,
+							shallow: false,
+						}
+					);
+				}}
+			>
+				<MainCreateArea
+					onClose={() => {
+						const {_open, ...rest} = router.query;
+
+						router.replace(
+							{
+								pathname: PATH.FactoryArea,
+								query: {
+									...rest,
+								},
+							},
+							undefined,
+							{
+								scroll: false,
+								shallow: false,
+							}
+						);
+					}}
+				/>
+			</Popup>
+
 			<Popup open={importExcel == 'open'} onClose={handleCloseImportExcel}>
 				<ImportExcel
-					name='file-team'
+					name='file-factory-area'
 					file={file}
-					pathTemplate='/static/files/Mau_Import_Team.xlsx'
+					pathTemplate='/static/files/Mau_Import_FactoryArea.xlsx'
 					setFile={setFile}
 					onClose={handleCloseImportExcel}
 					onSubmit={fucnImportExcel.mutate}
@@ -362,4 +386,4 @@ function MainPageTeam({}: PropsMainPageTeam) {
 	);
 }
 
-export default MainPageTeam;
+export default MainFactoryArea;

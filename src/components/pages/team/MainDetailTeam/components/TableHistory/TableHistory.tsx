@@ -10,7 +10,7 @@ import {QUERY_KEY} from '~/constants/config/enum';
 import {useQuery} from '@tanstack/react-query';
 import {useRouter} from 'next/router';
 import ngHistoryServices from '~/services/ngHistoryServices';
-import {IDeviceNGHistory} from '~/components/pages/bo-phat/HistoryDevice/interfaces';
+import {IDeviceNGHistory} from '~/components/pages/device/HistoryDevice/interfaces';
 import Link from 'next/link';
 
 import styles from './TableHistory.module.scss';
@@ -57,7 +57,7 @@ function TableHistory({}: PropsTableHistory) {
 						{
 							title: i18n.t('Team.MACNumber'),
 							render: (data: IDeviceNGHistory) => (
-								<Link href={`/bo-phat/${data.deviceUuid}`} className={styles.link}>
+								<Link href={`/device/${data.deviceUuid}`} className={styles.link}>
 									{data.macNumber || '---'}
 								</Link>
 							),

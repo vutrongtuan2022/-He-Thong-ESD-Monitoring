@@ -40,7 +40,7 @@ function TableTeam({}: PropsTableTeam) {
 			<DataWrapper
 				data={listTeamChild?.data?.items}
 				loading={listTeamChild.isLoading}
-				noti={<Noti title={i18n.t('Team.Teamtrong')} des={i18n.t('Team.Danhsachteamtrong')} disableButton />}
+				noti={<Noti title={i18n.t('Team.DrumTeam')} des={i18n.t('Team.TeamListIsEmpty')} disableButton />}
 			>
 				<Table
 					data={listTeamChild?.data?.items}

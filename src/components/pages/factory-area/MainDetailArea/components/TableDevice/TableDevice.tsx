@@ -15,27 +15,26 @@ import deviceServices from '~/services/deviceServices';
 import {IDevice} from '~/components/pages/device/MainDevice/interfaces';
 import Moment from 'react-moment';
 import StateDevice from '~/components/pages/device/StateDevice';
-import i18n from '~/locale/i18n';
 
 function TableDevice({}: PropsTableDevice) {
 	const router = useRouter();
 
 	const {_id, _page, _pageSize, _table} = router.query;
 
-	const listDeviceTeams = useQuery([QUERY_KEY.danh_sach_bo_phat_team, _id, _page, _pageSize], {
+	const listDeviceAreas = useQuery([QUERY_KEY.danh_sach_bo_phat_khu_vuc, _id, _page, _pageSize], {
 		queryFn: () =>
 			httpRequest({
 				http: deviceServices.listDevice({
 					keyword: '',
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
-					teamUuid: _id as string,
+					teamUuid: null,
 					status: null,
 					battery: null,
 					ngState: null,
 					onlineState: null,
 					edS_Static: null,
-					factoryAreaUuid: null,
+					factoryAreaUuid: _id as string,
 					gatewayUuid: null,
 					timeLastOnline: null,
 				}),
@@ -49,19 +48,19 @@ function TableDevice({}: PropsTableDevice) {
 	return (
 		<div>
 			<DataWrapper
-				data={listDeviceTeams?.data?.items}
-				loading={listDeviceTeams.isLoading}
-				noti={<Noti title={i18n.t('Device.DeviceIsEmpty')} des={i18n.t('Device.ListDeviceIsEmpty')} disableButton />}
+				data={listDeviceAreas?.data?.items}
+				loading={listDeviceAreas.isLoading}
+				noti={<Noti title='Bộ phát trống' des='Danh sách bộ phát trống!' disableButton />}
 			>
 				<Table
-					data={listDeviceTeams?.data?.items}
+					data={listDeviceAreas?.data?.items}
 					column={[
 						{
-							title: i18n.t('Common.No'),
+							title: 'STT',
 							render: (data: IDevice, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: i18n.t('Common.MACNumber'),
+							title: 'Số MAC',
 							render: (data: IDevice) => (
 								<Link href={`/device/${data.uuid}`} className={styles.link}>
 									{data.macNumber || '---'}
@@ -69,19 +68,19 @@ function TableDevice({}: PropsTableDevice) {
 							),
 						},
 						{
-							title: i18n.t('Team.NameDevice'),
+							title: 'Tên thiết bị',
 							render: (data: IDevice) => <>{data.name || '---'}</>,
 						},
 						{
-							title: i18n.t('Team.BateryPercent'),
+							title: 'Phần trăm pin',
 							render: (data: IDevice) => <>{data.battery}%</>,
 						},
 						{
-							title: i18n.t('Common.Status'),
+							title: 'Trạng thái',
 							render: (data: IDevice) => <StateDevice status={data.state} />,
 						},
 						{
-							title: i18n.t('Team.LastOnline'),
+							title: 'Oniline lần cuối',
 							render: (data: IDevice) => <Moment date={data.timeLastOnline} format='HH: mm, DD/MM/YYYY' />,
 						},
 					]}
@@ -90,7 +89,7 @@ function TableDevice({}: PropsTableDevice) {
 			<Pagination
 				currentPage={Number(_page) || 1}
 				pageSize={Number(_pageSize) || 20}
-				total={listDeviceTeams?.data?.pagination?.totalCount}
+				total={listDeviceAreas?.data?.pagination?.totalCount}
 				dependencies={[_id, _pageSize, _table]}
 			/>
 		</div>

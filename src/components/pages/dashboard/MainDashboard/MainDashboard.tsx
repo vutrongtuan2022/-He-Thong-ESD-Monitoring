@@ -41,7 +41,7 @@ function MainDashboard({}: PropsMainDashboard) {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('Overview.tongQuan'),
+						title: i18n.t('Overview.Overview'),
 						path: '',
 					},
 				]}
@@ -68,7 +68,7 @@ function MainDashboard({}: PropsMainDashboard) {
 					<ItemDashboard
 						isLoading={dashboardOverview.isLoading}
 						value={dashboardOverview?.data?.totalDeviceNG}
-						text={i18n.t('Overview.DurationNGLongest')}
+						text={i18n.t('Overview.TransmittersNG')}
 						icon={<MdCast size={30} color='#EB2E2E' />}
 					/>
 					<ItemDashboard

@@ -16,8 +16,8 @@ import {QUERY_KEY, STATE_DEVICE_NG} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import categoryServices from '~/services/categoryServices';
 import deviceServices from '~/services/deviceServices';
-import {IDevice} from '../../bo-phat/MainDevice/interfaces';
-import StateDevice from '../../bo-phat/StateDevice';
+import {IDevice} from '../../device/MainDevice/interfaces';
+import StateDevice from '../../device/StateDevice';
 import Link from 'next/link';
 import gatewayServices from '~/services/gatewayServices';
 import Loading from '~/components/common/Loading';
@@ -142,7 +142,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 							{
 								title: i18n.t('Common.MACNumber'),
 								render: (data: IDevice) => (
-									<Link href={`/bo-phat/${data.uuid}`} className={styles.link}>
+									<Link href={`/device/${data.uuid}`} className={styles.link}>
 										{data.macNumber}
 									</Link>
 								),
