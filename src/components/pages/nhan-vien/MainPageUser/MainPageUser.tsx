@@ -49,7 +49,7 @@ function MainPageUser({}: PropsMainPageUser) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
+				msgSuccess: i18n.t('Common.Doyouwanttochangestatus'),
 				http: userServices.updateUserStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -303,7 +303,7 @@ function MainPageUser({}: PropsMainPageUser) {
 					<div className={styles.table}>
 						<DataWrapper
 							data={listUser?.data?.items}
-							noti={<Noti des={i18n.t('User.Therearecurrentlynouser ')} />}
+							noti={<Noti des={i18n.t('User.Therearecurrentlynouser')} />}
 							loading={listUser?.isLoading}
 						>
 							<Table

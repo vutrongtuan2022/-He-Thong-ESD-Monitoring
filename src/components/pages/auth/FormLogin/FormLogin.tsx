@@ -134,7 +134,8 @@ function FormLogin({}: PropsFormLogin) {
 								}}
 							>
 								<span>
-								{i18n.t('Login.Password')}<span style={{color: 'red'}}>*</span>
+									{i18n.t('Login.Password')}
+									<span style={{color: 'red'}}>*</span>
 								</span>
 							</div>
 						}
@@ -166,7 +167,7 @@ function FormLogin({}: PropsFormLogin) {
 						<FormContext.Consumer>
 							{({isDone}) => (
 								<Button primary bold rounded_8 disable={!isDone}>
-									{i18n.t('Common.Dangnhap')}
+									{i18n.t('Common.Login')}
 								</Button>
 							)}
 						</FormContext.Consumer>

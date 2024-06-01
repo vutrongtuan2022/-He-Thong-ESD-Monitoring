@@ -198,7 +198,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 								<div>
 									<Input
 										name='code'
-										value={form.code || ''}
+										readOnly
 										label={
 											<span>
 												{i18n.t('User.IDuser')} <span style={{color: 'red'}}>*</span>
@@ -221,6 +221,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 
 							<div className={clsx('mt', 'col_2')}>
 								<Input
+									readOnly
 									name='email'
 									value={form.email || ''}
 									label={

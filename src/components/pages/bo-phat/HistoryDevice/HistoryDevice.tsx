@@ -97,7 +97,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 						data={listHistoryDevices?.data?.items}
 						column={[
 							{
-								title: i18n.t('Common.STT'),
+								title: i18n.t('Common.No'),
 								render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 							},
 							{
@@ -110,15 +110,15 @@ function HistoryDevice({}: PropsHistoryDevice) {
 							},
 							{
 								title: i18n.t('Device.ElectrostaticValue'),
-								render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
+								render: (data: IDeviceNGHistory) => <>{data.edsStatic || '---'}</>,
 							},
 							{
 								title: i18n.t('Common.BelongToTeam'),
-								render: (data: IDeviceNGHistory) => <>{data.teamName}</>,
+								render: (data: IDeviceNGHistory) => <>{data.teamName || '---'}</>,
 							},
 							{
-								title: i18n.t('Common.Mateam'),
-								render: (data: IDeviceNGHistory) => <>{data.teamCode}</>,
+								title: i18n.t('Team.IDTeam'),
+								render: (data: IDeviceNGHistory) => <>{data.teamCode || '---'}</>,
 							},
 						]}
 					/>

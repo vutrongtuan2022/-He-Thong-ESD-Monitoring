@@ -164,12 +164,12 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							{i18n.t('Common.Huybo')}
+							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							{i18n.t('Common.Capnhat')}
+							{i18n.t('Common.Update')}
 						</Button>
 					</div>
 				</div>

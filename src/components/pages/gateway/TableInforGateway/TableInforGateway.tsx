@@ -49,7 +49,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
+				msgSuccess: i18n.t('Common.Doyouwanttochangestatus'),
 				http: gatewayServices.updateStatusGateway({
 					uuid: data?.uuid!,
 					status: data?.status == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -80,11 +80,20 @@ function TableInforGateway({}: PropsTableInforGateway) {
 					<p>{i18n.t('Gateway.GatewayInformation')}</p>
 				</Link>
 				<div className={styles.list_btn}>
-					<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold onClick={() => setOpenDelete(true)}>
-						{i18n.t('Common.Khoa')}
-					</Button>
+					{data?.status == STATUS_GENERAL.SU_DUNG && (
+						<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold onClick={() => setOpenDelete(true)}>
+							{i18n.t('Common.Lock')}
+						</Button>
+					)}
+
+					{data?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
+						<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setOpenDelete(true)}>
+							{i18n.t('Common.Unlock')}
+						</Button>
+					)}
+
 					<Button className={styles.btn} rounded_8 w_fit p_6_16 blue_light bold onClick={() => setDataUpdate(data)}>
-						{i18n.t('Common.Chinhsua')}
+						{i18n.t('Common.Edit')}
 					</Button>
 				</div>
 			</div>
@@ -111,7 +120,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.NameGateway')}: </span> {data?.name}
 						</td>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Common.Onlinelancuoi')}: </span>{' '}
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.LastOnline')}: </span>{' '}
 							{data?.timeLastOnline ? <Moment date={data?.timeLastOnline} format='DD:mm, DD/MM/YYYY' /> : '---'}
 						</td>
 					</tr>
@@ -129,11 +138,11 @@ function TableInforGateway({}: PropsTableInforGateway) {
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Common.Slthietbiphatdangketnoi')}:</span>{' '}
+							<span style={{marginRight: '4px'}}>{i18n.t('Common.NumberofDeviceCurrentlyConnected')}:</span>{' '}
 							<span style={{color: '#3772FF'}}>{data?.connection}</span>
 						</td>
 						<td rowSpan={4} className={styles.description}>
-							<span style={{marginRight: '4px'}}>{i18n.t('Common.Ghichu')}:</span>
+							<span style={{marginRight: '4px'}}>{i18n.t('Common.Note')}:</span>
 							{data?.notes || '---'}
 						</td>
 					</tr>
@@ -149,7 +158,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 				warn
 				open={openDelete}
 				onClose={() => setOpenDelete(false)}
-				title={i18n.t('Common.ChuyenTrangthai')}
+				title={i18n.t('Common.Changestatus')}
 				note={i18n.t('Gateway.AreYouSureYouWantToChangeTheStatusOfThisGateway')}
 				onSubmit={handleChangeStatusGateway}
 			/>

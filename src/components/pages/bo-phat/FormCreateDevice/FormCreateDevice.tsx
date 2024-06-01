@@ -154,7 +154,7 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 						{({isDone}) => (
 							<div>
 								<Button disable={!isDone} p_10_24 rounded_6 primary>
-									{i18n.t('Common.xacnhan')}
+									{i18n.t('Common.Confirm')}
 								</Button>
 							</div>
 						)}

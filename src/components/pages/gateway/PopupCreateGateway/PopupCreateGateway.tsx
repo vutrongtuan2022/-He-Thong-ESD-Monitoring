@@ -80,35 +80,35 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 			<Form form={form} setForm={setForm} onSubmit={handleSubmit}>
 				<Input
 					type='text'
-					placeholder={i18n.t('Gateway.NhapIDgateway')}
+					placeholder={i18n.t('Gateway.EnterGatewayID')}
 					name='code'
 					isRequired
 					min={5}
 					max={50}
 					label={
 						<span>
-							{i18n.t('Gateway.IDgateway')} <span style={{color: 'red'}}>*</span>{' '}
+							{i18n.t('Gateway.GatewayID')} <span style={{color: 'red'}}>*</span>{' '}
 						</span>
 					}
 				/>
 				<Input
 					type='text'
-					placeholder={i18n.t('Gateway.Nhaptengateway')}
+					placeholder={i18n.t('Gateway.EnterGatewayName')}
 					name='name'
 					isRequired
 					min={5}
 					max={50}
 					label={
 						<span>
-							{i18n.t('Gateway.Tengateway')} <span style={{color: 'red'}}>*</span>{' '}
+							{i18n.t('Gateway.NameGateway')} <span style={{color: 'red'}}>*</span>{' '}
 						</span>
 					}
 				/>
 				<div className={clsx('mt')}>
 					<TextArea
-						placeholder={i18n.t('Common.Nhapghichu')}
+						placeholder={i18n.t('Common.EnterNote')}
 						name='description'
-						label={<span>{i18n.t('Common.Ghichu')}</span>}
+						label={<span>{i18n.t('Common.Note')}</span>}
 						blur
 					/>
 				</div>
@@ -116,14 +116,14 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							{i18n.t('Common.Huybo')}
+							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
 					<FormContext.Consumer>
 						{({isDone}) => (
 							<div>
 								<Button disable={!isDone} p_10_24 rounded_6 primary>
-									{i18n.t('Common.Xacnhan')}
+									{i18n.t('Common.Confirm')}
 								</Button>
 							</div>
 						)}

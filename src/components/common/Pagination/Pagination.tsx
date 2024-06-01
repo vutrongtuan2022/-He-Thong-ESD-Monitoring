@@ -182,7 +182,7 @@ function Pagination({total, pageSize, currentPage, onSetPage, onSetpageSize, dep
 			{total > 0 && (
 				<div className={styles.container}>
 					<div className={styles.left}>
-						<p className={styles.text}>{i18n.t('Common.hienthi')}</p>
+						<p className={styles.text}>{i18n.t('Common.Display')}</p>
 						<TippyHeadless
 							maxWidth={'100%'}
 							interactive
@@ -218,7 +218,7 @@ function Pagination({total, pageSize, currentPage, onSetPage, onSetpageSize, dep
 							</div>
 						</TippyHeadless>
 						<p className={styles.text}>
-							{i18n.t('Common.trentong')} <span style={{fontWeight: '600'}}>{total}</span> {i18n.t('Common.ketqua')}
+							{i18n.t('Common.OfTotal')} <span style={{fontWeight: '600'}}>{total}</span> {i18n.t('Common.Results')}
 						</p>
 					</div>
 					<div className={styles.pages}>

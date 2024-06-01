@@ -149,7 +149,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							</colgroup>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Teams.IDTeam')}:</span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.IDTeam')}:</span>
 									{dataDetail?.code}
 								</td>
 								<td>
