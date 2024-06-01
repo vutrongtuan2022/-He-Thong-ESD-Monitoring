@@ -12,7 +12,7 @@ import {QUERY_KEY} from '~/constants/config/enum';
 import {useQuery} from '@tanstack/react-query';
 import {useRouter} from 'next/router';
 import userServices from '~/services/userServices';
-import {IUser} from '~/components/pages/nhan-vien/MainPageUser/interfaces';
+import {IUser} from '~/components/pages/user/MainPageUser/interfaces';
 import i18n from '~/locale/i18n';
 
 function TableUser({}: PropsTableUser) {
@@ -58,7 +58,7 @@ function TableUser({}: PropsTableUser) {
 						{
 							title: i18n.t('User.IDuser'),
 							render: (data: IUser) => (
-								<Link href={`/nhan-vien/${data.uuid}`} className={styles.link}>
+								<Link href={`/user/${data.uuid}`} className={styles.link}>
 									{data.code || '---'}
 								</Link>
 							),

@@ -16,7 +16,6 @@ import * as loading from '../../../../public/static/anim/loadingScreen.json';
 import axios from 'axios';
 import {setDataLoginStorage, setStateLogin, setToken} from '~/redux/reducer/auth';
 import {setInfoUser} from '~/redux/reducer/user';
-import {useRouter} from 'next/router';
 
 const defaultOptions = {
 	loop: true,
@@ -28,7 +27,6 @@ const defaultOptions = {
 };
 
 function SplashScreen({}: PropsSplashScreen) {
-	const router = useRouter();
 	const {token, isLogin, dataLoginStorage} = useSelector((state: RootState) => state.auth);
 	const {infoUser} = useSelector((state: RootState) => state.user);
 	const {loading, isRememberPassword} = useSelector((state: RootState) => state.site);
@@ -56,21 +54,6 @@ function SplashScreen({}: PropsSplashScreen) {
 
 			axios.get('https://api.ipify.org?format=json').then((res) => store.dispatch(setIp(res.data.ip)));
 		})();
-	}, []);
-
-	// Reset query filter
-	useEffect(() => {
-		router.replace(
-			{
-				pathname: router.pathname,
-				query: null,
-			},
-			undefined,
-			{
-				scroll: false,
-				shallow: false,
-			}
-		);
 	}, []);
 
 	// Lưu vào localStorage

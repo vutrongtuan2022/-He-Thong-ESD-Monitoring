@@ -119,7 +119,8 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 			<Loading loading={fucnCheckDeviceNG.isLoading || exportExcel.isLoading} />
 
 			<h4>
-				{i18n.t('Overview.ListOfNGTransmitters')}({total})</h4>
+				{i18n.t('Overview.ListOfNGTransmitters')}({total})
+			</h4>
 			<div className={styles.control}>
 				<div className={styles.left}>
 					{data?.some((x) => x.isChecked !== false) && (
@@ -155,7 +156,11 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 				</div>
 			</div>
 			<div className={styles.table}>
-				<DataWrapper data={data} loading={loading} noti={<Noti disableButton={false} des={i18n.t('Overview.CurrentlyNoTransmitters')} />}>
+				<DataWrapper
+					data={data}
+					loading={loading}
+					noti={<Noti disableButton={false} des={i18n.t('Overview.CurrentlyNoTransmitters')} />}
+				>
 					<Table
 						data={data}
 						onSetData={setData}
@@ -166,7 +171,7 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 								render: (data: IDeviceDashboard, index: number) => <>{index + 1}</>,
 							},
 							{
-								title:i18n.t('Overview.TeamName'),
+								title: i18n.t('Overview.TeamName'),
 								render: (data: IDeviceDashboard) => <>{data?.teamName || '---'}</>,
 							},
 							{
@@ -187,7 +192,7 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 								title: i18n.t('Overview.IDTransmitter'),
 								render: (data: IDeviceDashboard) => (
 									<Link
-										href={`/bo-phat/${data.deviceUuid}`}
+										href={`/device/${data.deviceUuid}`}
 										className={styles.link}
 										onClick={(e) => {
 											!data.deviceUuid && e.preventDefault();
@@ -233,7 +238,8 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 										) : (
 											<div className={styles.pending}>
 												<RiLoader2Line size={20} />
-												<p>{i18n.t('Overview.Processing')}</p>											</div>
+												<p>{i18n.t('Overview.Processing')}</p>{' '}
+											</div>
 										)}
 									</>
 								),

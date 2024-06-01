@@ -1,11 +1,10 @@
 import {TYPE_DATE} from './enum';
 import {FaChromecast} from 'react-icons/fa';
-import {TbClipboardText, TbServer2} from 'react-icons/tb';
+import {TbClipboardText} from 'react-icons/tb';
 import {HiOutlineUser} from 'react-icons/hi';
 import {RiGroupLine} from 'react-icons/ri';
 import {LuUserCircle2} from 'react-icons/lu';
-import {BiSolidVector} from 'react-icons/bi';
-import {IoSettingsSharp, IoWifiSharp} from 'react-icons/io5';
+import {IoWifiSharp} from 'react-icons/io5';
 import {RxDashboard} from 'react-icons/rx';
 import icons from '../images/icons';
 import {GrMap} from 'react-icons/gr';
@@ -27,19 +26,16 @@ export enum PATH {
 	Profile = '/profile',
 	Home = '/',
 	Gateway = '/gateway',
-	BoPhat = '/bo-phat',
-	CongTy = '/cong-ty',
-	Line = '/quan-ly-line',
-	TaiKhoan = '/tai-khoan',
+	Device = '/device',
+	Account = '/account',
 	Team = '/team',
-	NhanVien = '/nhan-vien',
-	ThongKe = '/thong-ke',
-	PhanQuyen = '/phan-quyen',
-	CaiDat = '/cai-dat',
-	Khuvuc = '/khu-vuc',
-
-	ThemNhanvien = '/nhan-vien/them-moi',
-	ThemTeam = '/team/them-moi',
+	User = '/user',
+	FactoryArea = '/factory-area',
+	CreateUser = '/user/create',
+	CreateTeam = '/team/create',
+	Settings = '/settings',
+	Report = '/report',
+	Permission = '/permission',
 }
 
 export const Menu: {
@@ -58,31 +54,30 @@ export const Menu: {
 		title: 'THIẾT BỊ',
 		group: [
 			{title: 'Quản lý gateway', icon: IoWifiSharp, path: PATH.Gateway},
-			{title: 'Quản lý bộ phát', icon: FaChromecast, path: PATH.BoPhat},
-			// {title: 'Quản lý line', icon: TbServer2, path: PATH.Line},
+			{title: 'Quản lý bộ phát', icon: FaChromecast, path: PATH.Device},
 		],
 	},
 	{
 		title: 'NHÂN SỰ',
 		group: [
-			{title: 'Quản lý tài khoản', icon: HiOutlineUser, path: PATH.TaiKhoan},
+			{title: 'Quản lý tài khoản', icon: HiOutlineUser, path: PATH.Account},
 			{title: 'Quản lý team', icon: RiGroupLine, path: PATH.Team},
-			{title: 'Quản lý nhân viên', icon: LuUserCircle2, path: PATH.NhanVien},
+			{title: 'Quản lý nhân viên', icon: LuUserCircle2, path: PATH.User},
 		],
 	},
 	{
 		title: 'KHU VỰC',
-		group: [{title: 'Quản lý khu vực', icon: GrMap, path: PATH.Khuvuc}],
+		group: [{title: 'Quản lý khu vực', icon: GrMap, path: PATH.FactoryArea}],
 	},
 	{
 		title: 'THỐNG KÊ',
-		group: [{title: 'Báo cáo', icon: TbClipboardText, path: PATH.ThongKe}],
+		group: [{title: 'Báo cáo', icon: TbClipboardText, path: PATH.Report}],
 	},
 	// {
 	// 	title: 'HỆ THỐNG',
 	// 	group: [
-	// 		{title: 'Phân quyền', icon: BiSolidVector, path: PATH.PhanQuyen},
-	// 		{title: 'Cài đặt', icon: IoSettingsSharp, path: PATH.CaiDat},
+	// 		{title: 'Phân quyền', icon: BiSolidVector, path: PATH.Permission},
+	// 		{title: 'Cài đặt', icon: IoSettingsSharp, path: PATH.Settings},
 	// 	],
 	// },
 ];

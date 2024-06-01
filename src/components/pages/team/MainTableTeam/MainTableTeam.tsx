@@ -135,7 +135,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 										icon={<LuPencil fontSize={20} fontWeight={600} />}
 										tooltip={i18n.t('Common.Edit')}
 										color='#777E90'
-										href={`/team/chinh-sua?_id=${data.uuid}`}
+										href={`/team/update?_id=${data.uuid}`}
 									/>
 									<IconCustom
 										warn

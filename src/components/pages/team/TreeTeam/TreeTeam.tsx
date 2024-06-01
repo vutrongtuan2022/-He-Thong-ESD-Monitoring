@@ -89,7 +89,7 @@ function TreeTeam({team, level}: PropsTreeTeam) {
 				</Tippy>
 				<div className={styles.line}></div>
 				<Tippy content={i18n.t('Common.Edit')}>
-					<Link href={`/team/chinh-sua?_id=${team.uuid}`} className={styles.icon}>
+					<Link href={`/team/update?_id=${team.uuid}`} className={styles.icon}>
 						<LuPencil size={20} color='#777E90' />
 					</Link>
 				</Tippy>

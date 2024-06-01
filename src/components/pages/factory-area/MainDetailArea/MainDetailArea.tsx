@@ -1,43 +1,44 @@
 import React, {useState} from 'react';
 
-import {IDataDetailTeam, PropsMainDetailTeam} from './interfaces';
-import styles from './MainDetailTeam.module.scss';
+import {IDataDetailArea, PropsMainDetailArea} from './interfaces';
+import styles from './MainDetailArea.module.scss';
+import Loading from '~/components/common/Loading';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
-import Link from 'next/link';
-import {IoArrowBackOutline} from 'react-icons/io5';
-import Button from '~/components/common/Button';
+import Dialog from '~/components/common/Dialog';
+import {useRouter} from 'next/router';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
-import teamServices from '~/services/teamServices';
-import {useRouter} from 'next/router';
-import TabNavLink from '~/components/common/TabNavLink';
-import TableTeam from './components/TableTeam';
-import TableUser from './components/TableUser';
-import TableDevice from './components/TableDevice';
-import TableHistory from './components/TableHistory';
+import areaServices from '~/services/areaServices';
+import Link from 'next/link';
+import {IoArrowBackOutline} from 'react-icons/io5';
+import Button from '~/components/common/Button';
 import clsx from 'clsx';
-import Dialog from '~/components/common/Dialog';
-import Loading from '~/components/common/Loading';
-import i18n from '~/locale/i18n';
+import TabNavLink from '~/components/common/TabNavLink';
+import Moment from 'react-moment';
+import Popup from '~/components/common/Popup';
+import MainUpdateArea from '../MainUpdateArea';
+import TableTeam from './components/TableTeam';
+import TableChildArea from './components/TableChildArea';
+import TableDevice from './components/TableDevice';
 
-function MainDetailTeam({}: PropsMainDetailTeam) {
+function MainDetailArea({}: PropsMainDetailArea) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_id, _table} = router.query;
+	const {_id, _table, _open} = router.query;
 
-	const [dataDetail, setDataDetail] = useState<IDataDetailTeam>();
+	const [dataDetail, setDataDetail] = useState<IDataDetailArea>();
 	const [openChangeStatus, setOpenChangeStatus] = useState<boolean>(false);
 
 	// GET DETAIL TEAM
-	useQuery([QUERY_KEY.chi_tiet_team, _id], {
+	useQuery([QUERY_KEY.chi_tiet_khu_vuc, _id], {
 		queryFn: () =>
 			httpRequest({
-				http: teamServices.detailTeam({
+				http: areaServices.getDetail({
 					uuid: _id as string,
 				}),
 			}),
@@ -50,13 +51,13 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 	});
 
 	// Đổi trạng thái team
-	const fucnChangeStatusTeam = useMutation({
+	const fucnChangeStatusArea = useMutation({
 		mutationFn: () => {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
-				http: teamServices.changeStatusTeam({
+				msgSuccess: 'Thay đổi trạng thái thành công!',
+				http: areaServices.changeStatusArea({
 					uuid: dataDetail?.uuid!,
 					status: dataDetail?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
 				}),
@@ -65,31 +66,31 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 		onSuccess(data) {
 			if (data) {
 				setOpenChangeStatus(false);
-				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_team, _id]);
+				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_khu_vuc, _id]);
 			}
 		},
 	});
 
 	const handleChangeStatusTeam = async () => {
-		fucnChangeStatusTeam.mutate();
+		fucnChangeStatusArea.mutate();
 	};
 
 	return (
 		<div className={styles.container}>
-			<Loading loading={fucnChangeStatusTeam.isLoading} />
+			<Loading loading={fucnChangeStatusArea.isLoading} />
 			<Breadcrumb
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: i18n.t('Common.home'),
+						title: 'Trang chủ',
 					},
 					{
-						path: PATH.Team,
-						title: i18n.t('Team.ListTeam'),
+						path: PATH.FactoryArea,
+						title: 'Danh sách khu vực',
 					},
 					{
 						path: '',
-						title: i18n.t('Team.DetailTeam'),
+						title: 'Chi tiết khu vực',
 					},
 				]}
 				action={
@@ -103,9 +104,9 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 			<WrapperContainer>
 				<div className={styles.main}>
 					<div className={styles.header}>
-						<Link href={PATH.Team} className={styles.header_title}>
+						<Link href={PATH.FactoryArea} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
-							<p>{i18n.t('Team.TeamInformation')}</p>
+							<p>Thông tin khu vực</p>
 						</Link>
 						<div className={styles.list_btn}>
 							{dataDetail?.status == STATUS_GENERAL.SU_DUNG && (
@@ -118,13 +119,13 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 									bold
 									onClick={() => setOpenChangeStatus(true)}
 								>
-									{i18n.t('Common.Lock')}
+									Khóa
 								</Button>
 							)}
 
 							{dataDetail?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
 								<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setOpenChangeStatus(true)}>
-									{i18n.t('Common.Unlock')}
+									Mở khóa
 								</Button>
 							)}
 
@@ -135,9 +136,25 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 								p_6_16
 								blue_light
 								bold
-								href={`/team/update?_id=${dataDetail?.uuid}`}
+								onClick={() =>
+									router.replace(
+										{
+											pathname: router.pathname,
+											query: {
+												...router.query,
+												_open: 'update',
+												_uuid: dataDetail?.uuid,
+											},
+										},
+										undefined,
+										{
+											scroll: false,
+											shallow: false,
+										}
+									)
+								}
 							>
-								{i18n.t('Common.Edit')}
+								Chỉnh sửa
 							</Button>
 						</div>
 					</div>
@@ -149,53 +166,40 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							</colgroup>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.IDTeam')}:</span>
+									<span style={{marginRight: 6}}>Mã khu vực:</span>
 									{dataDetail?.code}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.TeamManager')}: </span>
-									{dataDetail?.leaderName || '---'}
+									<span style={{marginRight: 6}}>Số khu vực con: </span> {dataDetail?.totalChild}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.TeamName')}: </span> {dataDetail?.name}
+									<span style={{marginRight: 6}}>Tên khu vực: </span> {dataDetail?.name}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.IDManager')}: </span>
-									{dataDetail?.leadCode || ''}
+									<span style={{marginRight: 6}}>Số team: </span>
+									{dataDetail?.totalTeam}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.Khuvucquanly')}: </span>
-									{dataDetail?.areaName || ''}
+									<span style={{marginRight: 6}}>Địa chỉ: </span>
+									{dataDetail?.address || '---'}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.ManagementArea')}: </span>
-									{dataDetail?.parentName || '---'}
+									<span style={{marginRight: 6}}>Số thiết bị: </span>
+									{dataDetail?.totalDevice}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.NumberofMember')}: </span>
-									{dataDetail?.totalUser}
+									<span style={{marginRight: 6}}>Tạo lúc: </span>
+									<Moment date={dataDetail?.timeCreated} format='HH:mm, DD/MM/YYYY' />
 								</td>
-								<td rowSpan={3} className={styles.description}>
-									<span style={{marginRight: 6}}>{i18n.t('Common.Note')}:</span>
+								<td>
+									<span style={{marginRight: 6}}>Ghi chú: </span>
 									{dataDetail?.notes || '---'}
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.NumberofDevices')}: </span>
-									{dataDetail?.totalDevices}
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.TeamNumberDependent')}: </span>
-									{dataDetail?.totalUnderTeam}
 								</td>
 							</tr>
 						</table>
@@ -210,30 +214,24 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							{
 								pathname: router.pathname,
 								query: null,
-								title: i18n.t('Team.ListTeamDependent'),
+								title: 'Danh sách khu vực con',
 							},
 							{
 								pathname: router.pathname,
-								query: 'nhan-vien',
-								title: i18n.t('User.Listuser'),
+								query: 'list-team',
+								title: 'Danh sách team',
 							},
 							{
 								pathname: router.pathname,
 								query: 'bo-phat',
-								title: i18n.t('Team.ListDevice'),
-							},
-							{
-								pathname: router.pathname,
-								query: 'lich-su',
-								title: i18n.t('Team.HistoryofNGDevice'),
+								title: 'Danh sách thiết bị',
 							},
 						]}
 					/>
 					<div className={styles.main_table}>
-						{!_table && <TableTeam />}
-						{_table == 'nhan-vien' && <TableUser />}
+						{!_table && <TableChildArea />}
+						{_table == 'list-team' && <TableTeam />}
 						{_table == 'bo-phat' && <TableDevice />}
-						{_table == 'lich-su' && <TableHistory />}
 					</div>
 				</div>
 			</WrapperContainer>
@@ -242,13 +240,54 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 			<Dialog
 				warn
 				open={openChangeStatus}
-				onClose={() => setOpenChangeStatus(false)}
-				title={i18n.t('Common.Changestatus')}
-				note={i18n.t('Common.Doyouwanttochangestatus')}
+				onClose={() => setOpenChangeStatus(true)}
+				title='Thay đổi trạng thái'
+				note='Bạn có chắc chắn muốn thay đổi trạng thái cho team này?'
 				onSubmit={handleChangeStatusTeam}
 			/>
+
+			<Popup
+				open={_open == 'update'}
+				onClose={() => {
+					const {_open, _uuid, ...rest} = router.query;
+
+					router.replace(
+						{
+							pathname: router.pathname,
+							query: {
+								...rest,
+							},
+						},
+						undefined,
+						{
+							scroll: false,
+							shallow: false,
+						}
+					);
+				}}
+			>
+				<MainUpdateArea
+					onClose={() => {
+						const {_open, _uuid, ...rest} = router.query;
+
+						router.replace(
+							{
+								pathname: router.pathname,
+								query: {
+									...rest,
+								},
+							},
+							undefined,
+							{
+								scroll: false,
+								shallow: false,
+							}
+						);
+					}}
+				/>
+			</Popup>
 		</div>
 	);
 }
 
-export default MainDetailTeam;
+export default MainDetailArea;
