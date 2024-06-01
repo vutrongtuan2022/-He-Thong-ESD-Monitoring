@@ -122,7 +122,7 @@ function InfoUser({}: PropsInfoUser) {
 								<span style={{marginRight: 6}}>{i18n.t('User.IDuser')}: </span> {data?.code || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('User.Regency')}: </span> {data?.regency || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.Regency')}: </span> {data?.regency || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -143,7 +143,7 @@ function InfoUser({}: PropsInfoUser) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('User.Phonenumber')}: </span> {data?.phone || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.PhoneNumber')}: </span> {data?.phone || '---'}
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('User.Createat')}: </span>{' '}

@@ -155,7 +155,7 @@ function MainPageUser({}: PropsMainPageUser) {
 
 	const handleChangeStatusDevice = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: i18n.t('User.Khongtimthaynhanvien')});
+			return toastWarn({msg: i18n.t('User.Nousernotfound')});
 		}
 
 		return changeStatusUser.mutate();
@@ -310,7 +310,7 @@ function MainPageUser({}: PropsMainPageUser) {
 								data={listUser?.data?.items}
 								column={[
 									{
-										title: i18n.t('User.No.'),
+										title: i18n.t('Common.No'),
 										render: (data: IUser, index: number) => <>{index + 1}</>,
 									},
 
@@ -327,7 +327,7 @@ function MainPageUser({}: PropsMainPageUser) {
 										render: (data: IUser) => <p>{data.fullname}</p>,
 									},
 									{
-										title: i18n.t('User.Regency'),
+										title: i18n.t('Common.Regency'),
 										render: (data: IUser) => <p>{data.regency || '---'}</p>,
 									},
 									{
