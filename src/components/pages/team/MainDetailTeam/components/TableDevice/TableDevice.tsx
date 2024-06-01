@@ -51,17 +51,17 @@ function TableDevice({}: PropsTableDevice) {
 			<DataWrapper
 				data={listDeviceTeams?.data?.items}
 				loading={listDeviceTeams.isLoading}
-				noti={<Noti title={i18n.t('Device.Bophattrong')} des={i18n.t('Device.Danhsachbophattrong')} disableButton />}
+				noti={<Noti title={i18n.t('Device.DeviceIsEmpty')} des={i18n.t('Device.ListDeviceIsEmpty')} disableButton />}
 			>
 				<Table
 					data={listDeviceTeams?.data?.items}
 					column={[
 						{
-							title: i18n.t('Common.STT'),
+							title: i18n.t('Common.No'),
 							render: (data: IDevice, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: i18n.t('Common.SoMAC'),
+							title: i18n.t('Common.MACNumber'),
 							render: (data: IDevice) => (
 								<Link href={`/bo-phat/${data.uuid}`} className={styles.link}>
 									{data.macNumber || '---'}
@@ -69,11 +69,11 @@ function TableDevice({}: PropsTableDevice) {
 							),
 						},
 						{
-							title: i18n.t('Common.Tenthietbi'),
+							title: i18n.t('Team.NameDevice'),
 							render: (data: IDevice) => <>{data.name || '---'}</>,
 						},
 						{
-							title: i18n.t('Device.Phantrampin'),
+							title: i18n.t('Team.BateryPercent'),
 							render: (data: IDevice) => <>{data.battery}%</>,
 						},
 						{
@@ -81,7 +81,7 @@ function TableDevice({}: PropsTableDevice) {
 							render: (data: IDevice) => <StateDevice status={data.state} />,
 						},
 						{
-							title: i18n.t('Common.Onlinelancuoi'),
+							title: i18n.t('Team.LastOnline'),
 							render: (data: IDevice) => <Moment date={data.timeLastOnline} format='HH: mm, DD/MM/YYYY' />,
 						},
 					]}

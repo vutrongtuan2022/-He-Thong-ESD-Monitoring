@@ -45,17 +45,17 @@ function TableHistory({}: PropsTableHistory) {
 			<DataWrapper
 				data={listHistoryTeams?.data?.items}
 				loading={listHistoryTeams.isLoading}
-				noti={<Noti title={i18n.t('Common.Lichsutrong')} des={i18n.t('Common.Danhsachlichsutrong')} disableButton />}
+				noti={<Noti title={i18n.t('Team.HistoryIsEmpty')} des={i18n.t('Team.ListHistoryIsEmpty')} disableButton />}
 			>
 				<Table
 					data={listHistoryTeams?.data?.items}
 					column={[
 						{
-							title: i18n.t('Common.STT'),
+							title: i18n.t('Common.No'),
 							render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: i18n.t('Common.SoMAC'),
+							title: i18n.t('Team.MACNumber'),
 							render: (data: IDeviceNGHistory) => (
 								<Link href={`/bo-phat/${data.deviceUuid}`} className={styles.link}>
 									{data.macNumber || '---'}
@@ -63,19 +63,19 @@ function TableHistory({}: PropsTableHistory) {
 							),
 						},
 						{
-							title: i18n.t('Common.Tenthietbi'),
+							title: i18n.t('Team.NameDevice'),
 							render: (data: IDeviceNGHistory) => <>{data.deviceName || '---'}</>,
 						},
 						{
-							title: i18n.t('Device.Giatritinhdien'),
+							title: i18n.t('Team.ElectrostaticValue'),
 							render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
 						},
 						{
-							title: i18n.t('Device.ThoigianphathienNG'),
+							title: i18n.t('Team.NGDetectionTime'),
 							render: (data: IDeviceNGHistory) => <Moment date={data.timeNgStart} format='HH:mm, DD/MM/YYYY' />,
 						},
 						{
-							title: i18n.t('Device.KhoangthoigianNG'),
+							title: i18n.t('Team.NGTimePeriod'),
 							render: (data: IDeviceNGHistory) => <>{formatTimeHistory(data.totalNgMinutes || 0)}</>,
 						},
 					]}
