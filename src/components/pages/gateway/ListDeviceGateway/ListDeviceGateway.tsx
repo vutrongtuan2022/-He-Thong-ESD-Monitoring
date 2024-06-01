@@ -92,7 +92,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 		<div className={styles.container}>
 			<Loading loading={exportGatewayDeviceExcel.isLoading} />
 			<h4>
-				{i18n.t('Gateway.ListDeviceConnected')} ({listDevices?.data?.pagination?.totalCount})
+				{i18n.t('Gateway.ListOfConnectedDevices')} ({listDevices?.data?.pagination?.totalCount})
 			</h4>
 			<div className={styles.control}>
 				<div className={styles.left}>
@@ -131,7 +131,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 					data={listDevices?.data?.items}
 					loading={listDevices?.isLoading}
 					noti={
-						<Noti disableButton title={i18n.t('Common.Danhsachtrong')} des={i18n.t('Gateway.Danhsachbophatcuagatewaytrong')} />
+						<Noti disableButton title={i18n.t('Common.Danhsachtrong')} des={i18n.t('Gateway.GatewayDeviceListIsEmpty')} />
 					}
 				>
 					<Table

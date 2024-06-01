@@ -51,7 +51,7 @@ function FormLogin({}: PropsFormLogin) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Login.Dangnhapthanhcong'),
+				msgSuccess: i18n.t('Login.LoginSuccessful'),
 				http: authServices.login({
 					userName: form.username,
 					password: form.password,
@@ -97,8 +97,8 @@ function FormLogin({}: PropsFormLogin) {
 			<Loading loading={login.isLoading} />
 			<div className={styles.header}>
 				<Image src={icons.logo} className={styles.logo_icon} alt='Logo' />
-				<h4 className={styles.title}>{i18n.t('Login.Dangnhaptaikhoan')}</h4>
-				<p className={styles.text}>{i18n.t('Login.ChaomungbandenvoihethongEDS')}</p>
+				<h4 className={styles.title}>{i18n.t('Login.LoginAccount')}</h4>
+				<p className={styles.text}>{i18n.t('Login.WelcomeToTheESDMonitoringSystem')}</p>
 			</div>
 
 			<div className={styles.form}>
@@ -107,13 +107,13 @@ function FormLogin({}: PropsFormLogin) {
 						type='text'
 						name='username'
 						value={form?.username}
-						placeholder={i18n.t('Login.Taikhoan')}
+						placeholder={i18n.t('Login.Username')}
 						onClean
 						isRequired
 						icon={<User size='20' variant='Bold' />}
 						label={
 							<span>
-								{i18n.t('Login.Taikhoan')} <span style={{color: 'red'}}>*</span>
+								{i18n.t('Login.Username')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					/>
@@ -121,7 +121,7 @@ function FormLogin({}: PropsFormLogin) {
 						type='password'
 						name='password'
 						value={form?.password}
-						placeholder={i18n.t('Login.Matkhau')}
+						placeholder={i18n.t('Login.Password')}
 						onClean
 						isRequired
 						icon={<ShieldSecurity size='20' variant='Bold' />}
@@ -134,7 +134,7 @@ function FormLogin({}: PropsFormLogin) {
 								}}
 							>
 								<span>
-								{i18n.t('Login.Matkhau')}<span style={{color: 'red'}}>*</span>
+								{i18n.t('Login.Password')}<span style={{color: 'red'}}>*</span>
 								</span>
 							</div>
 						}
@@ -147,7 +147,7 @@ function FormLogin({}: PropsFormLogin) {
 								value={isRememberPassword}
 								onChange={() => store.dispatch(setRememberPassword(!isRememberPassword))}
 							/>
-							<p className={styles.des}>{i18n.t('Login.Ghinhodangnhap')}</p>
+							<p className={styles.des}>{i18n.t('Login.RememberMe')}</p>
 						</div>
 
 						<Link
@@ -158,7 +158,7 @@ function FormLogin({}: PropsFormLogin) {
 								textDecoration: 'underline',
 							}}
 						>
-							{i18n.t('Login.Quenmatkhau')}
+							{i18n.t('Login.ForgotPassword')}
 						</Link>
 					</div>
 

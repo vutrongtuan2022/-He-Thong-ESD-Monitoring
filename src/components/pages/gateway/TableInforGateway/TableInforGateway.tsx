@@ -77,7 +77,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 			<div className={styles.header}>
 				<Link href={PATH.Gateway} className={styles.header_title}>
 					<IoArrowBackOutline fontSize={20} fontWeight={600} />
-					<p>{i18n.t('Gateway.Thongtingateway')}</p>
+					<p>{i18n.t('Gateway.GatewayInformation')}</p>
 				</Link>
 				<div className={styles.list_btn}>
 					<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold onClick={() => setOpenDelete(true)}>
@@ -96,7 +96,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 					</colgroup>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.IDgateway')}: </span>
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.GatewayID')}: </span>
 							{data?.code}
 						</td>
 						<td>
@@ -139,7 +139,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 					</tr>
 					<tr>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.Ipdangketnoi')}: </span>
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.ConnectingIP')}: </span>
 							<span style={{color: '#3772FF'}}>{data?.ipConnect || '---'}</span>
 						</td>
 					</tr>
@@ -150,7 +150,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 				open={openDelete}
 				onClose={() => setOpenDelete(false)}
 				title={i18n.t('Common.ChuyenTrangthai')}
-				note={i18n.t('Gateway.BancochacmuonchuyenTrangthaichogatewaynay')}
+				note={i18n.t('Gateway.AreYouSureYouWantToChangeTheStatusOfThisGateway')}
 				onSubmit={handleChangeStatusGateway}
 			/>
 

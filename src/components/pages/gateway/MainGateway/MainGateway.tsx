@@ -141,7 +141,7 @@ function MainGateway({}: PropsMainGateway) {
 					},
 					{
 						path: '',
-						title: i18n.t('Gateway.Danhsachgateway'),
+						title: i18n.t('Gateway.GatewayList'),
 					},
 				]}
 				action={

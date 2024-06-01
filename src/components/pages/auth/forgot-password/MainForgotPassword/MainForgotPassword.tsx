@@ -21,12 +21,12 @@ function MainForgotPassword({}: PropsMainForgotPassword) {
 		des: string;
 	}[] = [
 		{
-			title: i18n.t('ForgotPass.Quenmatkhau'),
-			des: i18n.t('ForgotPass.NhapdiachiEmaillienketvoitaikhoancuaban'),
+			title: i18n.t('ForgotPass.ForgotPassword'),
+			des: i18n.t('ForgotPass.EnterTheEmailAddressLinkedToYourAccountToRetrieveYourPassword'),
 		},
 		{
-			title: i18n.t('ForgotPass.Thietlapmatkhau'),
-			des: i18n.t('ForgotPass.Matkhaumoibaogomchuhoachuthuongvaso'),
+			title: i18n.t('ForgotPass.SetPassword'),
+			des: i18n.t('ForgotPass.TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers'),
 		},
 	];
 

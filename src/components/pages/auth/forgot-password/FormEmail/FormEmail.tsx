@@ -35,7 +35,7 @@ function FormEmail({}: PropsFormEmail) {
 					type='text'
 					name='email'
 					value={context?.form?.email}
-					placeholder={i18n.t('ForgotPass.NhapEmail')}
+					placeholder={i18n.t('ForgotPass.EnterEmail')}
 					onClean
 					isRequired
 					isEmail
@@ -51,7 +51,7 @@ function FormEmail({}: PropsFormEmail) {
 					<FormContext.Consumer>
 						{({isDone}) => (
 							<Button primary bold rounded_8 disable={!isDone}>
-								{i18n.t('ForgotPass.Laylaimatkhau')}
+								{i18n.t('ForgotPass.RetrievePassword')}
 							</Button>
 						)}
 					</FormContext.Consumer>

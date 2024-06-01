@@ -20,11 +20,11 @@ function MainDetailGateway({}: PropsMainDetailGateway) {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('Gateway.Danhsachgateway'),
+						title: i18n.t('Gateway.GatewayList'),
 						path: PATH.Gateway,
 					},
 					{
-						title: i18n.t('Gateway.Chitietgateway'),
+						title: i18n.t('Gateway.GatewayDetails'),
 						path: '',
 					},
 				]}
