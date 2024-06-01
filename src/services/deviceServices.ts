@@ -6,8 +6,8 @@ const deviceServices = {
 			uuid: string;
 			macNumber: string;
 			name: string;
-			gatewayUuid: string;
-			teamUuid: string;
+			gatewayUuid: string | null;
+			teamUuid: string | null;
 			status: number;
 		},
 		tokenAxios?: any

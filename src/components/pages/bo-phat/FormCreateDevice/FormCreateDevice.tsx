@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {IForm, PropsFormCreateDevice} from './interfaces';
 import styles from './FormCreateDevice.module.scss';
-import Form, {Input} from '~/components/common/Form';
+import Form, {FormContext, Input} from '~/components/common/Form';
 import Select, {Option} from '~/components/common/Select';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
@@ -47,12 +47,12 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.ThemmoibophatThanhcong'),
+				msgSuccess: i18n.t('Device.TransmitterAddedSuccessfully'),
 				http: deviceServices.upsertDevice({
 					uuid: '',
 					name: form.name,
 					macNumber: form.macNumber,
-					teamUuid: form.teamUuid,
+					teamUuid: form.teamUuid || null,
 					status: STATUS_GENERAL.SU_DUNG,
 					gatewayUuid: '',
 				}),
@@ -94,7 +94,7 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 		<div className={styles.container}>
 			<h4>{i18n.t('Device.AddNewTransmitter')} </h4>
 			<Loading loading={upsertDevice.isLoading} />
-			<Form form={form} setForm={setForm}>
+			<Form form={form} setForm={setForm} onSubmit={handleSubmit}>
 				<Input
 					label={
 						<span>
@@ -102,6 +102,9 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 						</span>
 					}
 					placeholder={i18n.t('Device.EnterDeviceMacAddress')}
+					isRequired
+					min={5}
+					max={50}
 					name='macNumber'
 					value={form.macNumber}
 					type='text'
@@ -113,6 +116,9 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 						</span>
 					}
 					placeholder={i18n.t('Device.EnterNewDeviceName')}
+					isRequired
+					min={5}
+					max={50}
 					name='name'
 					value={form.name}
 					type='text'
@@ -143,11 +149,16 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
-					<div>
-						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							{i18n.t('Common.Confirm')}
-						</Button>
-					</div>
+
+					<FormContext.Consumer>
+						{({isDone}) => (
+							<div>
+								<Button disable={!isDone} p_10_24 rounded_6 primary>
+									{i18n.t('Common.xacnhan')}
+								</Button>
+							</div>
+						)}
+					</FormContext.Consumer>
 				</div>
 
 				<div className={styles.close} onClick={onClose}>

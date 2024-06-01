@@ -8,8 +8,8 @@ export default function Page() {
 	return (
 		<Fragment>
 			<Head>
-				<title>{i18n.t('Account.quanlytaikhoan')} </title>
-				<meta name='description' content={i18n.t('Account.quanlytaikhoan')} />
+				<title>{i18n.t('Account.AccountManagement')} </title>
+				<meta name='description' content={i18n.t('Account.AccountManagement')} />
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
@@ -20,5 +20,5 @@ export default function Page() {
 }
 
 Page.getLayout = function (Page: ReactElement) {
-	return <BaseLayout title={i18n.t('Account.quanlytaikhoan')}>{Page}</BaseLayout>;
+	return <BaseLayout title={i18n.t('Account.AccountManagement')}>{Page}</BaseLayout>;
 };
