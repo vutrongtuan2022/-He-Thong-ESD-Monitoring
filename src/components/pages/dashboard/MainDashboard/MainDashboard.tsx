@@ -56,25 +56,25 @@ function MainDashboard({}: PropsMainDashboard) {
 					<ItemDashboard
 						isLoading={dashboardOverview.isLoading}
 						value={dashboardOverview?.data?.totalDevice}
-						text='Tổng số bộ phát'
+						text={i18n.t('Overview.TransmittersTotal')}
 						icon={<MdCast size={30} color='#4DBFDD' />}
 					/>
 					<ItemDashboard
 						isLoading={dashboardOverview.isLoading}
 						value={dashboardOverview?.data?.totalDeviceOnline}
-						text='Số bộ phát đang hoạt động'
+						text={i18n.t('Overview.TransmittersActive')}
 						icon={<MdCast size={30} color='#2CAE39' />}
 					/>
 					<ItemDashboard
 						isLoading={dashboardOverview.isLoading}
 						value={dashboardOverview?.data?.totalDeviceNG}
-						text='Số bộ phát NG'
+						text={i18n.t('Overview.DurationNGLongest')}
 						icon={<MdCast size={30} color='#EB2E2E' />}
 					/>
 					<ItemDashboard
 						isLoading={dashboardOverview.isLoading}
 						value={formatTimeHistory(dashboardOverview?.data?.longestNGTime || 0)}
-						text='Khoảng thời gian NG lâu nhất'
+						text={i18n.t('Overview.DurationNGLongest')}
 						icon={<FaRegHourglassHalf size={30} color='#ED8145' />}
 					/>
 				</GridColumn>

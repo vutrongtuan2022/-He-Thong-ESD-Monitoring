@@ -138,7 +138,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								},
 								{
 									id: STATUS_GENERAL.KHONG_SU_DUNG,
-									name: i18n.t('Common.Khongsudung'),
+									name: i18n.t('Common.Donotuse'),
 								},
 							]}
 						/>
@@ -184,7 +184,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 							},
 							{
 								title: i18n.t('Common.Slbophatdangketnoi'),
-								render: (data: IGateway) => <>{data.totalDevice}</>,
+								render: (data: IGateway) => <>{data.connection}</>,
 							},
 							{
 								title: i18n.t('Common.Hoatdong'),
@@ -195,9 +195,9 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								render: (data: IGateway) => (
 									<>
 										{data?.status == STATUS_GENERAL.SU_DUNG ? (
-											<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Dangsudung')}</p>
+											<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Using')}</p>
 										) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-											<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Khongsudung')}</p>
+											<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Donotuse')}</p>
 										) : (
 											'---'
 										)}
@@ -210,7 +210,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 									data.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---',
 							},
 							{
-								title: i18n.t('Common.Tacvu'),
+								title: i18n.t('Common.Action'),
 								render: (data: IGateway) => (
 									<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 										<IconCustom

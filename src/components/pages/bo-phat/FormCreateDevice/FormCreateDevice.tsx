@@ -81,10 +81,10 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 
 	const handleSubmit = async () => {
 		if (!form.macNumber) {
-			return toastWarn({msg: i18n.t('Device.VuilongnhapsoMac')});
+			return toastWarn({msg: i18n.t('Device.PleaseEnterDeviceMacAddress')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: i18n.t('Device.VuilongnhapTenthietbi')});
+			return toastWarn({msg: i18n.t('Device.PleaseEnterDeviceName')});
 		}
 
 		return upsertDevice.mutate();
@@ -92,16 +92,16 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>{i18n.t('Device.Themmoibophat')} </h4>
+			<h4>{i18n.t('Device.AddNewTransmitter')} </h4>
 			<Loading loading={upsertDevice.isLoading} />
 			<Form form={form} setForm={setForm}>
 				<Input
 					label={
 						<span>
-							{i18n.t('Device.somacthietbi')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.DeviceMacAddress')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder={i18n.t('Device.nhapsomacthietbi')}
+					placeholder={i18n.t('Device.EnterDeviceMacAddress')}
 					name='macNumber'
 					value={form.macNumber}
 					type='text'
@@ -109,10 +109,10 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 				<Input
 					label={
 						<span>
-							{i18n.t('Device.tenthietbi')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.DeviceName')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
-					placeholder={i18n.t('Device.Nhaptenmoichothietbi')}
+					placeholder={i18n.t('Device.EnterNewDeviceName')}
 					name='name'
 					value={form.name}
 					type='text'
@@ -122,14 +122,14 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 						isSearch
 						name='teamUuid'
 						value={form.teamUuid || null}
-						placeholder={i18n.t('Device.luachon')}
+						placeholder={i18n.t('Device.Options')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
 								teamUuid: e.target.value,
 							}))
 						}
-						label={<span>{i18n.t('Common.thuocteam')} </span>}
+						label={<span>{i18n.t('Common.BelongToTeam')} </span>}
 					>
 						{listTeams?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />

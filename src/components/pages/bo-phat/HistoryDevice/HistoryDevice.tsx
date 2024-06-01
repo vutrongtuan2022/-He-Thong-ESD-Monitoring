@@ -58,7 +58,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 
 	return (
 		<div className={styles.container}>
-			<h4>{i18n.t('Device.LichsubophatNG')}</h4>
+			<h4>{i18n.t('Device.NgTransmitterHistory')}</h4>
 			<div className={styles.flex}>
 				<div className={styles.main_search}>
 					<div className={styles.filter}>
@@ -91,7 +91,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 				<DataWrapper
 					data={listHistoryDevices?.data?.items}
 					loading={listHistoryDevices.isLoading}
-					noti={<Noti disableButton title={i18n.t('Device.danhsachgtrong')} des={i18n.t('Device.Danhsachbophattrong')} />}
+					noti={<Noti disableButton title={i18n.t('Device.EmptyList')} des={i18n.t('Device.EmptyTransmitterList')} />}
 				>
 					<Table
 						data={listHistoryDevices?.data?.items}
@@ -101,19 +101,19 @@ function HistoryDevice({}: PropsHistoryDevice) {
 								render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 							},
 							{
-								title: i18n.t('Device.ThoigianphathienNG'),
+								title: i18n.t('Device.NgDetectionTime'),
 								render: (data: IDeviceNGHistory) => <Moment date={data.timeNgStart} format='HH:mm, DD/MM/YYYY' />,
 							},
 							{
-								title: i18n.t('Device.KhoangthoigianNG'),
+								title: i18n.t('Device.NgDuration'),
 								render: (data: IDeviceNGHistory) => <>{formatTimeHistory(data.totalNgMinutes || 0)}</>,
 							},
 							{
-								title: i18n.t('Device.Giatritinhdien'),
+								title: i18n.t('Device.ElectrostaticValue'),
 								render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
 							},
 							{
-								title: i18n.t('Common.thuocteam'),
+								title: i18n.t('Common.BelongToTeam'),
 								render: (data: IDeviceNGHistory) => <>{data.teamName}</>,
 							},
 							{

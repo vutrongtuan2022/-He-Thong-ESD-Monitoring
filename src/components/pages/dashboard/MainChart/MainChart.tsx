@@ -10,16 +10,22 @@ import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEY} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import dashboardServices from '~/services/dashboardServices';
+import DatePicker from '~/components/common/DatePicker';
+import moment from 'moment';
+import i18n from '~/locale/i18n';
 
 function MainChart({}: PropsMainChart) {
+	const [date, setDate] = useState<Date | null>(new Date());
 	const [dataChart, setDataChart] = useState<any[]>([]);
 	const [allTimeDeviceOnline, setAllTimeDeviceOnline] = useState<number>(0);
 	const [allTimeDeviceNG, setAllTimeDeviceNG] = useState<number>(0);
 
-	useQuery([QUERY_KEY.trang_chu_bieu_do], {
+	useQuery([QUERY_KEY.trang_chu_bieu_do, date], {
 		queryFn: () =>
 			httpRequest({
-				http: dashboardServices.dashboardChart({}),
+				http: dashboardServices.dashboardChart({
+					date: moment(date).format('YYYY-MM-DD'),
+				}),
 			}),
 		onSuccess(data) {
 			setAllTimeDeviceOnline(data?.allTimeDeviceOnline);
@@ -35,25 +41,35 @@ function MainChart({}: PropsMainChart) {
 			);
 		},
 		refetchInterval: 50000, // 5phút/1 lần call api
+		enabled: !!date,
 	});
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.head}>
-				<h4>Biểu đồ thống kê số lượng bộ phát NG</h4>
+				<h4>{i18n.t('Overview.StatisticalChart')}</h4>
 				<div className={styles.right}>
 					<div style={{marginLeft: '12px'}} className={styles.item}>
 						<Image src={icons.icon_chart_2} alt='Icon chart' />
 						<p>
-							Bộ phát NG: <span style={{color: '#FF6666'}}>{allTimeDeviceNG}</span>
+							{i18n.t('Overview.GeneratorNG')}: <span style={{color: '#FF6666'}}>{allTimeDeviceNG}</span>
 						</p>
 					</div>
 					<div className={styles.item}>
 						<Image src={icons.icon_chart_1} alt='Icon chart' />
 						<p>
-							Bộ phát hoạt động: <span style={{color: '#4ECB71'}}>{allTimeDeviceOnline}</span>
+							{i18n.t('Overview.GeneratorIsWorking')}: <span style={{color: '#4ECB71'}}>{allTimeDeviceOnline}</span>
 						</p>
 					</div>
+
+					<DatePicker
+						name='date'
+						icon={true}
+						value={date}
+						onSetValue={setDate}
+						placeholder='Chọn ngày hiện tại'
+						className={styles.date}
+					/>
 				</div>
 			</div>
 			<div className={styles.main}>
@@ -63,8 +79,8 @@ function MainChart({}: PropsMainChart) {
 						<XAxis dataKey='time' />
 						<Tooltip />
 						<YAxis />
-						<Line type='linear' dataKey='Bộ phát hoạt động' stroke='#4ECB71' strokeWidth={3} />
-						<Line type='linear' dataKey='Bộ phát NG' stroke='#FF6666' strokeWidth={3} />
+						<Line type='linear' dataKey={i18n.t('Overview.GeneratorIsWorking')} stroke='#4ECB71' strokeWidth={3} />
+						<Line type='linear' dataKey={i18n.t('Overview.GeneratorNG')} stroke='#FF6666' strokeWidth={3} />
 					</LineChart>
 				</ResponsiveContainer>
 			</div>

@@ -55,7 +55,7 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Cấp tài khoản thành công!',
+				msgSuccess: i18n.t('Account.AccountGrantedSuccessfully'),
 				http: accountServices.updateAccount({
 					uuid: dataUpdateAccount?.uuid!,
 					roleUuid: form.roleUuid,
@@ -71,13 +71,13 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 
 	const handleSubmit = async () => {
 		if (!file && !form.avatar) {
-			return toastWarn({msg: 'Vui lòng chọn ảnh!'});
+			return toastWarn({msg: i18n.t('Account.PleaseChooseImage')});
 		}
 		if (!dataUpdateAccount?.uuid) {
-			return toastWarn({msg: 'Không tìm thấy tài khoản!'});
+			return toastWarn({msg: i18n.t('Account.AccountNotFound')});
 		}
 		if (!form?.roleUuid) {
-			return toastWarn({msg: 'Vui lòng chọn vai trò cho tài khoản!'});
+			return toastWarn({msg: i18n.t('Account.PleaseChooseRoleAccount')});
 		}
 
 		if (!!file) {
@@ -102,8 +102,8 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={loading || funcCreateAccount.isLoading} />
-			<h4>{i18n.t('Account.Chinhsuataikhoan')}</h4>
-			<p className={styles.p}>{i18n.t('Account.dienthongtin')}</p>
+			<h4>{i18n.t('Account.EditAccount')}</h4>
+			<p className={styles.p}>{i18n.t('Common.FillInAllNecessaryInformation')}</p>
 			<Form form={form} setForm={setForm}>
 				<div className={'mb'}>
 					{/* <AvatarChange path={form?.avatar} name='avatar' onSetFile={(file: any) => setFile(file)} /> */}
@@ -111,24 +111,24 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 				<Input
 					readOnly
 					type='text'
-					placeholder={i18n.t('Account.nhaptennhanvien')}
+					placeholder={i18n.t('User.EnterNameUser')}
 					name='fullName'
 					value={form.fullName}
 					label={
 						<span>
-							{i18n.t('User.tennhanvien')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('User.Nameuser')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
 				<Input
 					readOnly
 					type='text'
-					placeholder={i18n.t('Account.nhaptentaikhoan')}
+					placeholder={i18n.t('Account.EnterNameAccount')}
 					name='userName'
 					value={form.userName}
 					label={
 						<span>
-							{i18n.t('Account.tentaikhoan')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('Account.NameAccount')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -138,7 +138,7 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 						isSearch
 						name='roleUuid'
 						value={form.roleUuid || null}
-						placeholder={i18n.t('Account.luachon')}
+						placeholder={i18n.t('Common.Select')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
@@ -147,7 +147,7 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 						}
 						label={
 							<span>
-								{i18n.t('Account.vaitro')} <span style={{color: 'red'}}>*</span>
+								{i18n.t('Common.Role')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					>
@@ -160,12 +160,12 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							{i18n.t('Account.huybo')}
+							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							{i18n.t('Account.capnhat')}
+							{i18n.t('Common.Update')}
 						</Button>
 					</div>
 				</div>

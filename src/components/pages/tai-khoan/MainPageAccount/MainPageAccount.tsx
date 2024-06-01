@@ -46,7 +46,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Account.msgSuccess'),
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: accountServices.updateAccountStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -83,7 +83,6 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 					roleUuid: _roleUuid ? (_roleUuid as string) : null,
 					status: _status ? Number(_status) : null,
 					// roleName:_roleName ? (_roleName as string) : null
-
 				}),
 			}),
 		select(data) {
@@ -93,7 +92,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 
 	const handleChangeStatusDevice = async () => {
 		if (!dataChangeStatus?.uuid) {
-			return toastWarn({msg: i18n.t('Account.msg')});
+			return toastWarn({msg: i18n.t('Account.AccountNotFound')});
 		}
 		return changeStatusAccount.mutate();
 	};
@@ -108,7 +107,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('Account.quanlytaikhoan'),
+						title: i18n.t('Account.AccountManagement'),
 						path: '',
 					},
 				]}
@@ -137,12 +136,12 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 				<div className={styles.container}>
 					<div className={styles.main_search}>
 						<div className={styles.search}>
-							<Search placeholder={i18n.t('Account.timkiem')} keyName='_keyword' />
+							<Search placeholder={i18n.t('Common.Search')} keyName='_keyword' />
 						</div>
 						<div style={{minWidth: 240}}>
 							<FilterCustom
 								isSearch
-								name={i18n.t('Account.vaitro')}
+								name={i18n.t('Account.Role')}
 								query='_roleUuid'
 								listFilter={listRoles?.data?.map((v: any) => ({
 									id: v?.uuid,
@@ -152,16 +151,16 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						</div>
 						<div className={styles.filter}>
 							<FilterCustom
-								name={i18n.t('Account.Trangthai')}
+								name={i18n.t('Account.Status')}
 								query='_status'
 								listFilter={[
 									{
 										id: STATUS_GENERAL.SU_DUNG,
-										name: i18n.t('Account.Sudung'),
+										name: i18n.t('Common.Use'),
 									},
 									{
 										id: STATUS_GENERAL.KHONG_SU_DUNG,
-										name: i18n.t('Account.Khongsudung'),
+										name: i18n.t('Common.Donotuse'),
 									},
 								]}
 							/>
@@ -171,18 +170,18 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 				<div className={styles.table}>
 					<DataWrapper
 						data={listAccount?.data?.items}
-						noti={<Noti des={i18n.t('Account.hientai')} />}
+						noti={<Noti des={i18n.t('Account.CurrentlyThereAreNoAccounts')} />}
 						loading={listAccount?.isLoading}
 					>
 						<Table
 							data={listAccount?.data?.items}
 							column={[
 								{
-									title: i18n.t('Account.STT'),
+									title: i18n.t('Common.No'),
 									render: (data: any, index: number) => <>{index + 1}</>,
 								},
 								{
-									title: i18n.t('Account.manhanvien'),
+									title: i18n.t('User.IDuser'),
 									render: (data: IAccount) => (
 										<Link href={`/nhan-vien/${data?.userUuid}`} className={styles.link}>
 											{data?.code || '---'}
@@ -190,7 +189,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									),
 								},
 								{
-									title: i18n.t('Account.tennhanvien'),
+									title: i18n.t('User.Nameuser'),
 									render: (data: IAccount) => (
 										<div className={styles.info}>
 											<ImageFill
@@ -207,25 +206,25 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									render: (data: IAccount) => <p>{data?.email || '---'}</p>,
 								},
 								{
-									title: i18n.t('Account.sodienthoai'),
+									title: i18n.t('Common.PhoneNumber'),
 									render: (data: IAccount) => <p>{data?.phone || '---'}</p>,
 								},
 								{
-									title: i18n.t('Account.chucvu'),
+									title: i18n.t('Common.Regency'),
 									render: (data: IAccount) => <p>{data?.regency || '---'}</p>,
 								},
 								{
-									title: i18n.t('Account.vaitro'),
+									title: i18n.t('Common.Role'),
 									render: (data: IAccount) => <>{data?.roleName || '---'}</>,
 								},
 								{
-									title: i18n.t('Account.Trangthai'),
+									title: i18n.t('Common.Status'),
 									render: (data: IAccount) => (
 										<>
 											{data?.status == STATUS_GENERAL.SU_DUNG ? (
-												<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Account.Dangsudung')}</p>
+												<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Using')}</p>
 											) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-												<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Account.Khongsudung')}</p>
+												<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Donotuse')}</p>
 											) : (
 												'---'
 											)}
@@ -233,20 +232,20 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 									),
 								},
 								{
-									title: '',
+									title: i18n.t('Common.Action'),
 									render: (data: IAccount) => (
 										<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 											<IconCustom
 												create
 												icon={<Eye fontSize={20} fontWeight={600} />}
-												tooltip={i18n.t('Account.chitiet')}
+												tooltip={i18n.t('Common.SeeDetails')}
 												color='#777E90'
 												href={`/tai-khoan/${data?.uuid}`}
 											/>
 											<IconCustom
 												edit
 												icon={<LuPencil fontSize={20} fontWeight={600} />}
-												tooltip={i18n.t('Account.Chinhsua')}
+												tooltip={i18n.t('Common.Edit')}
 												color='#777E90'
 												onClick={() => setDataUpdateAccount(data)}
 											/>
@@ -254,9 +253,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 												warn
 												icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
 												tooltip={
-													data.status === STATUS_GENERAL.SU_DUNG
-														? i18n.t('Account.khoa')
-														: i18n.t('Account.mokhoa')
+													data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Lock') : i18n.t('Common.Unlock')
 												}
 												color='#777E90'
 												onClick={() => setDataChangeStatus(data)}
@@ -277,8 +274,8 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						warn
 						open={!!dataChangeStatus}
 						onClose={() => setDataChangeStatus(null)}
-						title={i18n.t('Account.khoataikhoa')}
-						note={i18n.t('Account.bancochac')}
+						title={i18n.t('Account.LockAccount')}
+						note={i18n.t('Account.AreYouSureYouWantToLockAccount')}
 						onSubmit={handleChangeStatusDevice}
 					/>
 				</div>

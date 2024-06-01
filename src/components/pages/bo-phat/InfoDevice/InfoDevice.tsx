@@ -46,7 +46,7 @@ function InfoDevice({}: PropsInfoDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.huyquyensudungthanhcong'),
+				msgSuccess: i18n.t('Device.UsageRightsRevokedSuccessfully'),
 				http: deviceServices.updateTeamUsing({
 					uuid: data?.uuid!,
 					teamUuid: null,
@@ -64,7 +64,7 @@ function InfoDevice({}: PropsInfoDevice) {
 
 	const handleCancel = async () => {
 		if (!data?.uuid) {
-			return toastWarn({msg: i18n.t('Device.khongtimthaythietbi')});
+			return toastWarn({msg: i18n.t('Device.DeviceNotFound')});
 		}
 
 		return cancelTeamUsing.mutate();
@@ -77,16 +77,16 @@ function InfoDevice({}: PropsInfoDevice) {
 				<div className={styles.header}>
 					<Link href={PATH.BoPhat} className={styles.header_title}>
 						<IoArrowBackOutline fontSize={20} fontWeight={600} />
-						<p>{i18n.t('Device.thongtinbophat')}</p>
+						<p>{i18n.t('Device.TransmitterInformation')}</p>
 					</Link>
 					<div className={styles.list_btn}>
 						{data?.teamUuid ? (
 							<Button className={styles.btn} rounded_8 w_fit p_6_16 danger_opacity bold onClick={() => setOpenCancel(true)}>
-								{i18n.t('Device.huyquyensudung')}
+								{i18n.t('Device.RevokeUsageRights')}
 							</Button>
 						) : (
 							<Button className={styles.btn} rounded_8 w_fit p_6_16 blue_light bold onClick={() => setOpenAssign(true)}>
-								{i18n.t('Device.moquyensudung')}
+								{i18n.t('Device.GrantUsageRights')}
 							</Button>
 						)}
 					</div>
@@ -99,16 +99,16 @@ function InfoDevice({}: PropsInfoDevice) {
 						</colgroup>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.somacthietbi')} </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.DeviceMacAddress')} </span>
 								{data?.macNumber}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Thuocteam')}: </span> {data?.teamName || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.BelongToTeam')}: </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.tenthietbi')} : </span> {data?.name}
+								<span style={{marginRight: 6}}>{i18n.t('Device.DeviceName')} : </span> {data?.name}
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('Common.Mateam')}: </span> {data?.codeTeam || '---'}
@@ -116,16 +116,17 @@ function InfoDevice({}: PropsInfoDevice) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.Giatritinhdienhientai')}:</span> {data?.edsStatic || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Device.CurrentElectrostaticValue')}:</span>{' '}
+								{data?.edsStatic || '---'}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.leaderteam')}: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.LeaderTeam')}: </span>
 								{data?.teamLeaderName || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.Phantrampin')}: </span> {data?.battery}%
+								<span style={{marginRight: 6}}>{i18n.t('Device.BatteryPercentage')}: </span> {data?.battery}%
 							</td>
 							<td rowSpan={5} className={styles.description}>
 								<span style={{marginRight: 6}}>{i18n.t('Common.Ghichu')}:</span>
@@ -134,25 +135,25 @@ function InfoDevice({}: PropsInfoDevice) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.Gatewaydangketnoi')}: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.GatewayConnected')}: </span>
 								{data?.gatewayName || '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.trangthaisong')}: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.SignalStatus')}: </span>
 								{data?.signalStatus == SIGNAL_STATUS_DEVICE.MANH
-									? i18n.t('Device.manh')
+									? i18n.t('Device.Strong')
 									: data?.signalStatus == SIGNAL_STATUS_DEVICE.TRUNG_BINH
-									? i18n.t('Device.trungbinh')
+									? i18n.t('Device.Average')
 									: data?.signalStatus == SIGNAL_STATUS_DEVICE.YEU
-									? i18n.t('Device.yeu')
+									? i18n.t('Device.Weak')
 									: '---'}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.trangthaihoatdong')}: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.OperatingStatus')}: </span>
 								{data?.state == STATE_ONLINE_DEVICE.ONLINE
 									? 'Onine'
 									: data?.state == STATE_ONLINE_DEVICE.OFFLINE
@@ -162,9 +163,9 @@ function InfoDevice({}: PropsInfoDevice) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.tinhtrang')}: </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.Condition')}: </span>
 								{data?.ngStatus && data?.ngStatus == STATE_DEVICE_NG.KHONG_NG
-									? i18n.t('Device.binhthuong')
+									? i18n.t('Device.Normal')
 									: data?.ngStatus && data?.ngStatus == STATE_DEVICE_NG.BI_NG
 									? 'NG'
 									: '---'}
@@ -179,8 +180,8 @@ function InfoDevice({}: PropsInfoDevice) {
 				danger
 				open={openCancel}
 				onClose={() => setOpenCancel(false)}
-				title={i18n.t('Device.huyquyensudung')}
-				note={i18n.t('Device.huyquyensudungbophat')}
+				title={i18n.t('Device.RevokeUsageRights')}
+				note={i18n.t('Device.AreYouSureYouWantToRevokeTheUsageRightsForThisTransmitter')}
 				onSubmit={handleCancel}
 			/>
 
