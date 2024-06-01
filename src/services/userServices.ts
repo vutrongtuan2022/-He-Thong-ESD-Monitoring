@@ -8,7 +8,7 @@ const userServices = {
 			uuid: string | null;
 			userName: string;
 			fullname: string;
-			teamUuid: string;
+			teamUuid: string | null;
 			gender: GENDER;
 			email: string;
 			phone: string;
