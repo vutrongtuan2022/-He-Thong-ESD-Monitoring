@@ -5,10 +5,15 @@ import {PropsAvicLogo} from './interfaces';
 import styles from './AvicLogo.module.scss';
 import Image from 'next/image';
 import icons from '~/constants/images/icons';
+import {useSelector} from 'react-redux';
+import {RootState} from '~/redux/store';
+import clsx from 'clsx';
 
 function AvicLogo({}: PropsAvicLogo) {
+	const {fullMenu, isMobile} = useSelector((state: RootState) => state.site);
+
 	return (
-		<div className={styles.container}>
+		<div className={clsx(styles.container, {[styles.small]: !fullMenu || isMobile})}>
 			<div className={styles.main}>
 				<Image src={icons.avic_avi_logo} alt='logo avic' className={styles.image_avi} />
 				<div className={styles.main_farame}>
