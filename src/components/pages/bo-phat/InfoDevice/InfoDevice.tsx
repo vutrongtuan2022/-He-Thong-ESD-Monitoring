@@ -8,7 +8,7 @@ import Button from '~/components/common/Button';
 import Dialog from '~/components/common/Dialog';
 import {useRouter} from 'next/router';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {QUERY_KEY, SIGNAL_STATUS_DEVICE, STATE_DEVICE_NG, STATE_ONLINE_DEVICE} from '~/constants/config/enum';
+import {QUERY_KEY, SIGNAL_STATUS_DEVICE, STATE_DEVICE_NG, STATE_ONLINE_DEVICE, STATUS_GENERAL} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import deviceServices from '~/services/deviceServices';
 import {toastWarn} from '~/common/funcs/toast';
@@ -16,6 +16,7 @@ import Loading from '~/components/common/Loading';
 import Popup from '~/components/common/Popup';
 import PopupAssignDevice from '../PopupAssignDevice';
 import i18n from '~/locale/i18n';
+import Moment from 'react-moment';
 
 function InfoDevice({}: PropsInfoDevice) {
 	const router = useRouter();
@@ -121,7 +122,40 @@ function InfoDevice({}: PropsInfoDevice) {
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('Device.LeaderTeam')}: </span>
-								{data?.teamLeaderName || '---'}
+								<span style={{color: '#4484FF'}}>{data?.teamLeaderName || '---'}</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style={{marginRight: 6}}>{i18n.t('Device.GatewayConnected')}: </span>
+								{data?.gatewayName || '---'}
+							</td>
+							<td>
+								<span style={{marginRight: 6}}>{i18n.t('Device.SignalStatus')}: </span>
+								{data?.signalStatus == SIGNAL_STATUS_DEVICE.MANH
+									? i18n.t('Device.Strong')
+									: data?.signalStatus == SIGNAL_STATUS_DEVICE.TRUNG_BINH
+									? i18n.t('Device.Average')
+									: data?.signalStatus == SIGNAL_STATUS_DEVICE.YEU
+									? i18n.t('Device.Weak')
+									: '---'}
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<span style={{marginRight: 6}}>{i18n.t('Device.StatusDeviceUsed')}: </span>
+								<span>{data?.status == STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Using') : i18n.t('Common.Donotuse')}</span>
+							</td>
+							<td>
+								<span style={{marginRight: 6}}>{i18n.t('Device.Condition')}: </span>
+								<span style={{color: data?.ngStatus! == STATE_DEVICE_NG.KHONG_NG ? '#2CAE39' : '#EB2E2E'}}>
+									{data?.ngStatus && data?.ngStatus == STATE_DEVICE_NG.KHONG_NG
+										? i18n.t('Device.Normal')
+										: data?.ngStatus && data?.ngStatus == STATE_DEVICE_NG.BI_NG
+										? 'NG'
+										: '---'}
+								</span>
 							</td>
 						</tr>
 						<tr>
@@ -135,40 +169,22 @@ function InfoDevice({}: PropsInfoDevice) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.GatewayConnected')}: </span>
-								{data?.gatewayName || '---'}
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.SignalStatus')}: </span>
-								{data?.signalStatus == SIGNAL_STATUS_DEVICE.MANH
-									? i18n.t('Device.Strong')
-									: data?.signalStatus == SIGNAL_STATUS_DEVICE.TRUNG_BINH
-									? i18n.t('Device.Average')
-									: data?.signalStatus == SIGNAL_STATUS_DEVICE.YEU
-									? i18n.t('Device.Weak')
-									: '---'}
-							</td>
-						</tr>
-						<tr>
-							<td>
 								<span style={{marginRight: 6}}>{i18n.t('Device.OperatingStatus')}: </span>
-								{data?.state == STATE_ONLINE_DEVICE.ONLINE
-									? 'Onine'
-									: data?.state == STATE_ONLINE_DEVICE.OFFLINE
-									? 'Offline'
-									: '---'}
+								<span style={{color: data?.state == STATE_ONLINE_DEVICE.ONLINE ? '#2CAE39' : '#EB2E2E'}}>
+									{data?.state == STATE_ONLINE_DEVICE.ONLINE
+										? 'Onine'
+										: data?.state == STATE_ONLINE_DEVICE.OFFLINE
+										? 'Offline'
+										: '---'}
+								</span>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.Condition')}: </span>
-								{data?.ngStatus && data?.ngStatus == STATE_DEVICE_NG.KHONG_NG
-									? i18n.t('Device.Normal')
-									: data?.ngStatus && data?.ngStatus == STATE_DEVICE_NG.BI_NG
-									? 'NG'
-									: '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Device.LastOnline')}: </span>
+								<span>
+									{data?.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---'}
+								</span>
 							</td>
 						</tr>
 					</table>

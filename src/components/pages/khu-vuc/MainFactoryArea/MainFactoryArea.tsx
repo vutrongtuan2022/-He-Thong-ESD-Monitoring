@@ -222,7 +222,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 			/>
 			<WrapperContainer>
 				<div className={styles.main}>
-					<GridColumn col_5>
+					<GridColumn col_3>
 						<ItemDashboard
 							isLoading={sumAreas.isLoading}
 							value={sumAreas?.data?.totalParentArea}
@@ -241,7 +241,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 							text='Tổng số team'
 							icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />}
 						/>
-						<ItemDashboard
+						{/* <ItemDashboard
 							isLoading={sumAreas.isLoading}
 							value={sumAreas?.data?.totalUserTeam}
 							text='Tổng nhân viên'
@@ -252,7 +252,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 							value={sumAreas?.data?.totalDeviceTeam}
 							text='Tổng thiết bị'
 							icon={<FaChromecast size={32} color='#4DBFDD' />}
-						/>
+						/> */}
 					</GridColumn>
 				</div>
 				<div className={styles.head}>
