@@ -140,12 +140,12 @@ function FormCreateDevice({onClose}: PropsFormCreateDevice) {
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-							{i18n.t('Common.Huybo')}
+							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							{i18n.t('Common.xacnhan')}
+							{i18n.t('Common.Confirm')}
 						</Button>
 					</div>
 				</div>

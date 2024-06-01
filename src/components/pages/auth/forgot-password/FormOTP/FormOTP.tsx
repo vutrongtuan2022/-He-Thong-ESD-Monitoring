@@ -48,30 +48,30 @@ function FormOTP({}: PropsFormOTP) {
 
 	return (
 		<div className={styles.container}>
-			<h4 className={styles.title}>{i18n.t('ForgotPass.XacthucOTP')}</h4>
+			<h4 className={styles.title}>{i18n.t('ForgotPass.VerifyOTPCode')}</h4>
 			<p className={styles.text}>
-			{i18n.t('ForgotPass.Motmaxacthucdaduocguichoban')}<span>{obfuscateEmail(context?.form?.email!)}</span>
+			{i18n.t('ForgotPass.AVerificationCodeHasBeenSentToYourEmailAddress')}<span>{obfuscateEmail(context?.form?.email!)}</span>
 			</p>
 
 			<div className={styles.form}>
-				<p className={styles.des}>{i18n.t('ForgotPass.NhapmaOTP')}</p>
+				<p className={styles.des}>{i18n.t('ForgotPass.EnterOTPCode')}</p>
 				<div className={styles.box_code}>
 					<InputSingle onSetValue={context.setForm} name='otp' lenght={6} />
 				</div>
 				<p className={styles.countDown}>
-					{i18n.t('ForgotPass.Banchuanhanduocma')}{' '}
+					{i18n.t('ForgotPass.DidntReceiveTheCode')}{' '}
 					{countDown > 0 ? (
-						<span className={clsx(styles.textGreen, styles.btnOtp)}>{i18n.t('ForgotPass.GuilaiOTP')}({fancyTimeFormat(countDown)})</span>
+						<span className={clsx(styles.textGreen, styles.btnOtp)}>{i18n.t('ForgotPass.ResendOTP')}({fancyTimeFormat(countDown)})</span>
 					) : (
 						<span className={clsx(styles.textGreen, styles.btnOtp)} onClick={handleSendcode}>
-							{i18n.t('ForgotPass.GuilaiOTP')}
+							{i18n.t('ForgotPass.ResendOTP')}
 						</span>
 					)}
 				</p>
 
 				<div className={styles.btn}>
 					<Button primary bold rounded_8 disable={context?.form?.otp?.length! < 6} onClick={handleSubmit}>
-					{i18n.t('ForgotPass.XacthucEmail')}
+					{i18n.t('ForgotPass.VerifyEmail')}
 					</Button>
 				</div>
 			</div>
