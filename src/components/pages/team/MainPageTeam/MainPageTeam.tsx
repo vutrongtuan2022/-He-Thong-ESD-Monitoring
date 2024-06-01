@@ -287,7 +287,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 									query='_status'
 									listFilter={[
 										{id: STATUS_GENERAL.SU_DUNG, name: i18n.t('Common.Use')},
-										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: i18n.t('Common.khongsudung')},
+										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: i18n.t('Common.Donotuse')},
 									]}
 								/>
 							</div>

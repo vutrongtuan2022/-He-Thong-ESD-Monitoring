@@ -55,6 +55,8 @@
 		"Changestatussuccessfully": "Thay đổi trạng thái thành công!",
 		"Confirm": "Xác nhận",
 		"Account": "Tài khoản",
+		"STT": "No.",
+		"BelongToTeam": "Thuộc team",
 
 		"Lichsutrong": "Lịch sử trống",
 		"Danhsachlichsutrong": "Danh sách lịch sử trống!",
@@ -87,7 +89,6 @@
 		"Nhapmanhanvien": "Nhập mã nhân viên",
 		"Tennhanvien": "Tên nhân viên",
 
-		"Thuocteam": "Thuộc team",
 		"Hoatdong": "Hoạt động",
 		"Taikhoan": "Tài khoản",
 		"Ngaysinh": "Ngày sinh",
@@ -272,7 +273,7 @@
 		"Account": "Tài khoản",
 		"Belongtotheteam": "Thuộc team",
 		"Regency": "Chức vụ",
-		"Createat": "tạo lúc",
+		"Createat": "Tạo lúc",
 		"No.": "STT",
 		"Fullname": "Họ và tên",
 		"Enterfullname": "Nhập họ và tên",
@@ -357,7 +358,6 @@
 		"EmptyTransmitterList": "Danh sách bộ phát trống!",
 		"AddNewTransmitter": "Thêm mới bộ phát",
 		"TransmitterList": "Danh sách bộ phát",
-		"STT": "STT",
 		"MacAddress": "Số MAC",
 		"DeviceName": "Tên thiết bị",
 		"Team": "Thuộc team",

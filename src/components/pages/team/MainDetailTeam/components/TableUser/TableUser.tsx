@@ -76,7 +76,7 @@ function TableUser({}: PropsTableUser) {
 							render: (data: IUser) => <>{data.phone || 0}</>,
 						},
 						{
-							title: i18n.t('Common.Thuocteam'),
+							title: i18n.t('Common.BelongToTeam'),
 							render: (data: IUser) => <>{data.teamName || 0}</>,
 						},
 					]}

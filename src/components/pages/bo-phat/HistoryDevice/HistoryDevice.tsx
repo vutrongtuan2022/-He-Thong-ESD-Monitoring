@@ -113,7 +113,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 								render: (data: IDeviceNGHistory) => <>{data.edsStatic}</>,
 							},
 							{
-								title: i18n.t('Common.thuocteam'),
+								title: i18n.t('Common.BelongToTeam'),
 								render: (data: IDeviceNGHistory) => <>{data.teamName}</>,
 							},
 							{

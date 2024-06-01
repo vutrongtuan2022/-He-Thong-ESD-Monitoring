@@ -84,7 +84,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 						}
 						label={
 							<span>
-								{i18n.t('Common.thuocteam')} <span style={{color: 'red'}}>*</span>
+								{i18n.t('Common.BelongToTeam')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					>
@@ -100,12 +100,12 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 			<div className={styles.btn}>
 				<div>
 					<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-					{i18n.t('Common.huybo')}
+						{i18n.t('Common.huybo')}
 					</Button>
 				</div>
 				<div>
 					<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-					{i18n.t('Common.xacnhan')}
+						{i18n.t('Common.xacnhan')}
 					</Button>
 				</div>
 			</div>

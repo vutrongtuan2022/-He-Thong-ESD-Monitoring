@@ -147,7 +147,7 @@ function InfoUser({}: PropsInfoUser) {
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('User.Createat')}: </span>{' '}
-								<Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />,
+								<Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />
 							</td>
 						</tr>
 					</table>

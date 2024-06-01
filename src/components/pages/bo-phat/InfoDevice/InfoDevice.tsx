@@ -103,7 +103,7 @@ function InfoDevice({}: PropsInfoDevice) {
 								{data?.macNumber}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Thuocteam')}: </span> {data?.teamName || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Common.BelongToTeam')}: </span> {data?.teamName || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -116,7 +116,8 @@ function InfoDevice({}: PropsInfoDevice) {
 						</tr>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.CurrentElectrostaticValue')}:</span> {data?.edsStatic || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Device.CurrentElectrostaticValue')}:</span>{' '}
+								{data?.edsStatic || '---'}
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('Device.LeaderTeam')}: </span>

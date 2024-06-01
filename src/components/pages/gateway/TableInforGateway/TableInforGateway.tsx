@@ -119,7 +119,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 						<td>
 							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.StatusGatewayUsed')}: </span>
 							<span style={{color: data?.status == STATUS_GENERAL.SU_DUNG ? '#2CAE39' : '#EB2E2E'}}>
-								{data?.status == STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Dangsudung') : i18n.t('Common.Khongsudung')}
+								{data?.status == STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Using') : i18n.t('Common.Donotuse')}
 							</span>
 						</td>
 						<td>
