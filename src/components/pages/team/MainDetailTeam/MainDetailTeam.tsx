@@ -55,7 +55,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.ThaydoiTrangthaithanhcong'),
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: teamServices.changeStatusTeam({
 					uuid: dataDetail?.uuid!,
 					status: dataDetail?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -85,11 +85,11 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 					},
 					{
 						path: PATH.Team,
-						title: i18n.t('Team.Danhsachteam'),
+						title: i18n.t('Team.ListTeam'),
 					},
 					{
 						path: '',
-						title: i18n.t('Team.Chitietteam'),
+						title: i18n.t('Team.DetailTeam'),
 					},
 				]}
 				action={
@@ -105,7 +105,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 					<div className={styles.header}>
 						<Link href={PATH.Team} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
-							<p>{i18n.t('Team.Thongtinteams')}</p>
+							<p>{i18n.t('Team.TeamInformation')}</p>
 						</Link>
 						<div className={styles.list_btn}>
 							{dataDetail?.status == STATUS_GENERAL.SU_DUNG && (
@@ -118,13 +118,13 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 									bold
 									onClick={() => setOpenChangeStatus(true)}
 								>
-									{i18n.t('Common.Khoa')}
+									{i18n.t('Common.Lock')}
 								</Button>
 							)}
 
 							{dataDetail?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
 								<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setOpenChangeStatus(true)}>
-									{i18n.t('Common.Mokhoa')}
+									{i18n.t('Common.Unlock')}
 								</Button>
 							)}
 
@@ -137,7 +137,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 								bold
 								href={`/team/chinh-sua?_id=${dataDetail?.uuid}`}
 							>
-								{i18n.t('Common.Chinhsua')}
+								{i18n.t('Common.Edit')}
 							</Button>
 						</div>
 					</div>
@@ -149,20 +149,20 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							</colgroup>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Common.Mateam')}:</span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.IDTeam')}:</span>
 									{dataDetail?.code}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Common.NguoiQuanlyteam')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.TeamManager')}: </span>
 									{dataDetail?.leaderName || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Common.Tenteam')}: </span> {dataDetail?.name}
+									<span style={{marginRight: 6}}>{i18n.t('Team.TeamName')}: </span> {dataDetail?.name}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.Idnguoiquanly')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.IDManager')}: </span>
 									{dataDetail?.leadCode || ''}
 								</td>
 							</tr>
@@ -172,29 +172,29 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 									{dataDetail?.areaName || ''}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.Khuvucquanly')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.ManagementArea')}: </span>
 									{dataDetail?.parentName || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Common.Sothanhvien')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.NumberofMember')}: </span>
 									{dataDetail?.totalUser}
 								</td>
 								<td rowSpan={3} className={styles.description}>
-									<span style={{marginRight: 6}}>{i18n.t('Common.Ghichu')}:</span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Note')}:</span>
 									{dataDetail?.notes || '---'}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Common.Sothietbi')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.NumberofDevices')}: </span>
 									{dataDetail?.totalDevices}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.Soteamphuthuoc')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.TeamNumberDependent')}: </span>
 									{dataDetail?.totalUnderTeam}
 								</td>
 							</tr>
@@ -210,7 +210,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							{
 								pathname: router.pathname,
 								query: null,
-								title: i18n.t('Team.Danhsachteamphuthuoc'),
+								title: i18n.t('Team.ListTeamDependent'),
 							},
 							{
 								pathname: router.pathname,
@@ -220,12 +220,12 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							{
 								pathname: router.pathname,
 								query: 'bo-phat',
-								title: i18n.t('Device.Danhsachbophat'),
+								title: i18n.t('Team.ListDevice'),
 							},
 							{
 								pathname: router.pathname,
 								query: 'lich-su',
-								title: i18n.t('Device.LichsubophatNG'),
+								title: i18n.t('Team.HistoryofNGDevice'),
 							},
 						]}
 					/>
@@ -243,8 +243,8 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 				warn
 				open={openChangeStatus}
 				onClose={() => setOpenChangeStatus(false)}
-				title={i18n.t('Common.ThaydoiTrangthai')}
-				note={i18n.t('Team.BancochacmuonchuyenTrangthai')}
+				title={i18n.t('Common.Changestatus')}
+				note={i18n.t('Team.Doyouwanttochangestatus')}
 				onSubmit={handleChangeStatusTeam}
 			/>
 		</div>

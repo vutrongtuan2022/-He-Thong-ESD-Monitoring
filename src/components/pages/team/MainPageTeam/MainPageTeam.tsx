@@ -119,7 +119,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.importfilethanhcong'),
+				msgSuccess: i18n.t('Common.FileImportedSuccessfully'),
 				http: teamServices.importExcel({
 					FileData: file,
 					Type: 1,
@@ -160,7 +160,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 					},
 					{
 						path: '',
-						title: i18n.t('Team.Danhsachteam'),
+						title: i18n.t('Team.ListTeam'),
 					},
 				]}
 				action={
@@ -234,30 +234,30 @@ function MainPageTeam({}: PropsMainPageTeam) {
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalTeam}
-							text={i18n.t('Team.Tongsoteam')}
+							text={i18n.t('Team.TotalTeams')}
 							icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />}
 						/>
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalUserTeam}
-							text={i18n.t('Team.Tongsonhanvientrongteam')}
+							text={i18n.t('Team.TotalUsersInTeam')}
 							icon={<User size={30} color='#4DBFDD' />}
 						/>
 						<ItemDashboard
 							isLoading={sumTeams.isLoading}
 							value={sumTeams?.data?.totalDeviceTeam}
-							text={i18n.t('Team.TongSothietbitrongteam')}
+							text={i18n.t('Team.TotalDevicesInTeam')}
 							icon={<MdCast size={30} color='#4DBFDD' />}
 						/>
 					</GridColumn>
 				</div>
 				<div className={styles.head}>
 					{_view == 'tree' ? (
-						<h4 className={styles.title}>{i18n.t('Team.Sodoteam')}</h4>
+						<h4 className={styles.title}>{i18n.t('Team.TeamDiagram')}</h4>
 					) : (
 						<div className={styles.box_filter}>
 							<div className={styles.search}>
-								<Search keyName='_keyword' placeholder={i18n.t('Team.Timkiemtheotenmateam')} />
+								<Search keyName='_keyword' placeholder={i18n.t('Team.SearchByNameTeamID')} />
 							</div>
 							<div className={styles.filter}>
 								<FilterCustom
@@ -273,7 +273,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 							<div className={styles.filter}>
 								<FilterCustom
 									isSearch
-									name={i18n.t('Common.Khuvuc')}
+									name={i18n.t('Common.Area')}
 									query='_areaUuid'
 									listFilter={listAreas?.data?.map((v: any) => ({
 										id: v?.uuid,

@@ -15,6 +15,7 @@ import deviceServices from '~/services/deviceServices';
 import {useRouter} from 'next/router';
 import Loading from '~/components/common/Loading';
 import i18n from '~/locale/i18n';
+import {toastWarn} from '~/common/funcs/toast';
 
 function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 	const router = useRouter();
@@ -62,7 +63,9 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 	});
 
 	const handleSubmit = async () => {
-		assignTeamUsing.mutate();
+		if (!form.teamUuid) {
+			return toastWarn({msg: i18n.t('Device.PleaseEnterTeamDependent')});
+		}
 	};
 
 	return (
@@ -94,18 +97,18 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 					</Select>
 				</div>
 				<div className='mt'>
-					<TextArea name='note' value={form.note} label={i18n.t('Device.Options')} placeholder={i18n.t('Device.Nhapghichu')} />
+					<TextArea name='note' value={form.note} label={i18n.t('Device.Options')} placeholder={i18n.t('Common.EnterNote')} />
 				</div>
 			</Form>
 			<div className={styles.btn}>
 				<div>
 					<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-						{i18n.t('Common.huybo')}
+						{i18n.t('Common.Cancel')}
 					</Button>
 				</div>
 				<div>
 					<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-						{i18n.t('Common.xacnhan')}
+						{i18n.t('Common.Confirm')}
 					</Button>
 				</div>
 			</div>

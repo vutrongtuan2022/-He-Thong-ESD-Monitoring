@@ -113,7 +113,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
-							name={i18n.t('Common.Hoatdong')}
+							name={i18n.t('Common.Active')}
 							query='_state'
 							listFilter={[
 								{
@@ -153,7 +153,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					noti={
 						<Noti
 							des={i18n.t('Gateway.CurrentlyThereIsNoGateway')}
-							titleButton={i18n.t('Gateway.Themgateway')}
+							titleButton={i18n.t('Gateway.AddGateway')}
 							onClick={onOpenCreate}
 						/>
 					}
@@ -162,7 +162,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 						data={listGateways?.data?.items}
 						column={[
 							{
-								title: i18n.t('Common.STT'),
+								title: i18n.t('Common.No'),
 								render: (data: IGateway, index: number) => <>{index + 1}</>,
 							},
 
@@ -179,15 +179,15 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 								render: (data: IGateway) => <p>{data.name || '---'}</p>,
 							},
 							{
-								title: i18n.t('Common.Khuvucquanly'),
+								title: i18n.t('Common.Managementarea'),
 								render: (data: IGateway) => <p>{data.factoryName || '---'}</p>,
 							},
 							{
-								title: i18n.t('Common.Slbophatdangketnoi'),
+								title: i18n.t('Common.NumberofDeviceCurrentlyConnected'),
 								render: (data: IGateway) => <>{data.connection}</>,
 							},
 							{
-								title: i18n.t('Common.Hoatdong'),
+								title: i18n.t('Common.Active'),
 								render: (data: IGateway) => <StateGateway state={data.state} />,
 							},
 							{
@@ -216,7 +216,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 										<IconCustom
 											edit
 											icon={<LuPencil fontSize={20} fontWeight={600} />}
-											tooltip={i18n.t('Common.Chinhsua')}
+											tooltip={i18n.t('Common.Edit')}
 											color='#777E90'
 											onClick={() => setDataUpdate(data)}
 										/>
@@ -225,7 +225,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 											warn
 											icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
 											tooltip={
-												data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Khoa') : i18n.t('Common.Mokhoa')
+												data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Lock') : i18n.t('Common.Unlock')
 											}
 											color='#777E90'
 											onClick={() => setDataChange(data)}
@@ -246,7 +246,7 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 					warn
 					open={!!dataChange}
 					onClose={() => setDataChange(null)}
-					title={i18n.t('Common.ChuyenTrangthai')}
+					title={i18n.t('Common.Changestatus')}
 					note={i18n.t('Gateway.AreYouSureYouWantToChangeTheStatusOfThisGateway')}
 					onSubmit={handleChangeStatusGateway}
 				/>

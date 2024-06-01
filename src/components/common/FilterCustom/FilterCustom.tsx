@@ -18,7 +18,7 @@ function FilterCustom({listFilter, name, query, isSearch, disabled = false}: Pro
 
 	function getNameMethod(arr: {id: number | string; name: string}[], id: number | string) {
 		const item = arr?.find((v) => v.id == id) || null;
-		return item?.name || i18n.t('Common.Tatca');
+		return item?.name || i18n.t('Common.All');
 	}
 
 	return (
@@ -32,7 +32,7 @@ function FilterCustom({listFilter, name, query, isSearch, disabled = false}: Pro
 				<div className={styles.mainOption}>
 					{isSearch ? (
 						<input
-							placeholder={i18n.t('Common.timkiem')}
+							placeholder={i18n.t('Common.Search')}
 							className={styles.inputSearch}
 							value={keyword}
 							onChange={(e) => setKeyword(e.target.value)}
@@ -58,7 +58,7 @@ function FilterCustom({listFilter, name, query, isSearch, disabled = false}: Pro
 								);
 							}}
 						>
-							<p>{i18n.t('Common.Tatca')}</p>
+							<p>{i18n.t('Common.All')}</p>
 							{!queryStr && (
 								<div className={styles.icon_check}>
 									<BiCheck fontSize={18} color='#5755FF' fontWeight={600} />

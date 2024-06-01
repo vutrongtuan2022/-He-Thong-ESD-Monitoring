@@ -61,34 +61,34 @@ function TreeTeam({team, level}: PropsTreeTeam) {
 					{team?.name} - {team.leaderName}
 				</p>
 				<div className={styles.dash}></div>
-				<Tippy content={i18n.t('Team.Soteamcon')}>
+				<Tippy content={i18n.t('Team.NumberofChildTeams')}>
 					<div className={styles.icon}>
 						<FaUserGroup size={19} color='#EB2E2E' />
 					</div>
 				</Tippy>
 				<p className={styles.totalTeam}>{team?.totalSubTeams}</p>
 				<div className={styles.dash}></div>
-				<Tippy content={i18n.t('Team.Sothanhvien')}>
+				<Tippy content={i18n.t('Team.NumberofMember')}>
 					<div className={styles.icon}>
 						<GiPerson size={22} color='#4DBFDD' />
 					</div>
 				</Tippy>
 				<p className={styles.totalUser}>{team?.totalUsers}</p>
 				<div className={styles.dash}></div>
-				<Tippy content={i18n.t('Team.Sothietbi')}>
+				<Tippy content={i18n.t('Team.NumberofDevices')}>
 					<div className={styles.icon}>
 						<FaChromecast size={18} color='#4DBFDD' />
 					</div>
 				</Tippy>
 				<p className={styles.totalDevice}>{team?.totalDevices}</p>
 				<div className={styles.line}></div>
-				<Tippy content={i18n.t('Team.xemchitiet')}>
+				<Tippy content={i18n.t('Common.SeeDetails')}>
 					<Link href={`/team/${team.uuid}`} className={styles.icon}>
 						<Eye size={20} color='#777E90' />
 					</Link>
 				</Tippy>
 				<div className={styles.line}></div>
-				<Tippy content={i18n.t('Common.Chinhsua')}>
+				<Tippy content={i18n.t('Common.Edit')}>
 					<Link href={`/team/chinh-sua?_id=${team.uuid}`} className={styles.icon}>
 						<LuPencil size={20} color='#777E90' />
 					</Link>

@@ -46,11 +46,11 @@ function TableTeam({}: PropsTableTeam) {
 					data={listTeamChild?.data?.items}
 					column={[
 						{
-							title: i18n.t('Common.STT'),
+							title: i18n.t('Common.No'),
 							render: (data: ITeamChild, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: i18n.t('Common.Tenteam'),
+							title: i18n.t('Team.TeamName'),
 							render: (data: ITeamChild) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
@@ -58,19 +58,19 @@ function TableTeam({}: PropsTableTeam) {
 							),
 						},
 						{
-							title: i18n.t('Common.Mateam'),
+							title: i18n.t('Team.IDTeam'),
 							render: (data: ITeamChild) => <>{data.code || '---'}</>,
 						},
 						{
-							title: i18n.t('Common.NguoiQuanlyteam'),
+							title: i18n.t('Team.TeamManager'),
 							render: (data: ITeamChild) => <>{data.leaderName || '---'}</>,
 						},
 						{
-							title: i18n.t('Common.Sothanhvien'),
+							title: i18n.t('Team.NumberofMember'),
 							render: (data: ITeamChild) => <>{data.totalUser || 0}</>,
 						},
 						{
-							title: i18n.t('Common.Sothietbi'),
+							title: i18n.t('Team.NumberofDevices'),
 							render: (data: ITeamChild) => <>{data.totalDevices || 0}</>,
 						},
 					]}

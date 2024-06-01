@@ -112,7 +112,7 @@ function InfoDevice({}: PropsInfoDevice) {
 								<span style={{marginRight: 6}}>{i18n.t('Device.DeviceName')} : </span> {data?.name}
 							</td>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Mateam')}: </span> {data?.codeTeam || '---'}
+								<span style={{marginRight: 6}}>{i18n.t('Team.IDTeam')}: </span> {data?.codeTeam || '---'}
 							</td>
 						</tr>
 						<tr>
@@ -163,7 +163,7 @@ function InfoDevice({}: PropsInfoDevice) {
 								<span style={{marginRight: 6}}>{i18n.t('Device.BatteryPercentage')}: </span> {data?.battery}%
 							</td>
 							<td rowSpan={5} className={styles.description}>
-								<span style={{marginRight: 6}}>{i18n.t('Common.Ghichu')}:</span>
+								<span style={{marginRight: 6}}>{i18n.t('Common.Note')}:</span>
 								{data?.notes || '---'}
 							</td>
 						</tr>
@@ -197,7 +197,7 @@ function InfoDevice({}: PropsInfoDevice) {
 				open={openCancel}
 				onClose={() => setOpenCancel(false)}
 				title={i18n.t('Device.RevokeUsageRights')}
-				note={i18n.t('Device.AreYouSureYouWantToRevokeTheUsageRightsForThisTransmitter')}
+				note={i18n.t('Common.AreYouSureYouWantToRevokeTheUsageRightsForThisDevice')}
 				onSubmit={handleCancel}
 			/>
 

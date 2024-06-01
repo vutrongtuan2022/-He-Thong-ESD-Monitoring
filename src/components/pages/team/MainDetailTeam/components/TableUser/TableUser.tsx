@@ -46,17 +46,17 @@ function TableUser({}: PropsTableUser) {
 			<DataWrapper
 				data={listUserTeams?.data?.items}
 				loading={listUserTeams.isLoading}
-				noti={<Noti title={i18n.t('User.Nhanvientrong')} des={i18n.t('User.Listusertrong')} disableButton />}
+				noti={<Noti title={i18n.t('Team.UserIsEpty')} des={i18n.t('Team.ListUserIsEmpty')} disableButton />}
 			>
 				<Table
 					data={listUserTeams?.data?.items}
 					column={[
 						{
-							title: i18n.t('Common.STT'),
+							title: i18n.t('Common.No'),
 							render: (data: IUser, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: i18n.t('Common.Manhanvien'),
+							title: i18n.t('User.IDuser'),
 							render: (data: IUser) => (
 								<Link href={`/nhan-vien/${data.uuid}`} className={styles.link}>
 									{data.code || '---'}
@@ -64,7 +64,7 @@ function TableUser({}: PropsTableUser) {
 							),
 						},
 						{
-							title: i18n.t('Common.Tennhanvien'),
+							title: i18n.t('User.Nameuser'),
 							render: (data: IUser) => <>{data.fullname || '---'}</>,
 						},
 						{
@@ -72,7 +72,7 @@ function TableUser({}: PropsTableUser) {
 							render: (data: IUser) => <>{data.email || '---'}</>,
 						},
 						{
-							title: i18n.t('Common.Sodienthoai'),
+							title: i18n.t('Common.PhoneNumber'),
 							render: (data: IUser) => <>{data.phone || 0}</>,
 						},
 						{

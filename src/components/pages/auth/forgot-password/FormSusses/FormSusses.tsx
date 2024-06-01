@@ -14,7 +14,8 @@ function FormSusses({}: PropsFormSusses) {
 			<h4 className={styles.title}>{i18n.t('ForgotPass.PasswordChangeSuccessful')}</h4>
 			<div>
 				<Button bold rounded_8 p_12_32 href={PATH.Login}>
-				{i18n.t('Common.Dangnhap')}				</Button>
+					{i18n.t('Common.Login')}{' '}
+				</Button>
 			</div>
 		</div>
 	);

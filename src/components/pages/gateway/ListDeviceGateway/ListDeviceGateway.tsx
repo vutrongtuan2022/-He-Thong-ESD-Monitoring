@@ -130,19 +130,17 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 				<DataWrapper
 					data={listDevices?.data?.items}
 					loading={listDevices?.isLoading}
-					noti={
-						<Noti disableButton title={i18n.t('Common.Danhsachtrong')} des={i18n.t('Gateway.GatewayDeviceListIsEmpty')} />
-					}
+					noti={<Noti disableButton title={i18n.t('Common.ListIsEmpty')} des={i18n.t('Gateway.GatewayDeviceListIsEmpty')} />}
 				>
 					<Table
 						data={listDevices?.data?.items}
 						column={[
 							{
-								title: i18n.t('Common.STT'),
+								title: i18n.t('Common.No'),
 								render: (data: IDevice, index: number) => <>{index + 1}</>,
 							},
 							{
-								title: i18n.t('Common.SoMAC'),
+								title: i18n.t('Common.MACNumber'),
 								render: (data: IDevice) => (
 									<Link href={`/bo-phat/${data.uuid}`} className={styles.link}>
 										{data.macNumber}
@@ -150,15 +148,15 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 								),
 							},
 							{
-								title: i18n.t('Common.Tenbophat'),
+								title: i18n.t('Common.DeviceName'),
 								render: (data: IDevice) => <p>{data.name}</p>,
 							},
 							{
-								title: i18n.t('Common.Teamsudung'),
+								title: i18n.t('Common.TeamUse'),
 								render: (data: IDevice) => <p>{data.teamName || '---'}</p>,
 							},
 							{
-								title: i18n.t('Common.Mateam'),
+								title: i18n.t('Team.IDTeam'),
 								render: (data: IDevice) => <p>{data.codeTeam || '---'}</p>,
 							},
 							{
@@ -166,7 +164,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 								render: (data: IDevice) => <>{data.teamLeaderName || '---'}</>,
 							},
 							{
-								title: i18n.t('Common.Tinhtrang'),
+								title: i18n.t('Common.Status'),
 								render: (data: IDevice) => (
 									<>
 										{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (

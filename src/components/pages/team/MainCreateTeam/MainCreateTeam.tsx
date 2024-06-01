@@ -85,7 +85,7 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Team.Themmoiteamthanhcong'),
+				msgSuccess: i18n.t('Team.AddNewTeamSuccessfully'),
 				http: teamServices.upsertTeam({
 					uuid: '',
 					name: form.name,
@@ -119,16 +119,16 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 	// SUBMIT
 	const handleSubmit = async () => {
 		if (!form.name) {
-			return toastWarn({msg: i18n.t('Team.Vuilongnhapteam')});
+			return toastWarn({msg: i18n.t('Team.PleaseEnterTeamName')});
 		}
 		if (!form.code) {
-			return toastWarn({msg: i18n.t('Team.VuilongnhapMateam')});
+			return toastWarn({msg: i18n.t('Team.PleaseEnterTeamID')});
 		}
 		if (!form.leaderUuid) {
-			return toastWarn({msg: i18n.t('Team.Vuilongchonnguoiquanly')});
+			return toastWarn({msg: i18n.t('Team.PleaseChooseManager')});
 		}
 		if (!form.areaUuid) {
-			return toastWarn({msg: i18n.t('Team.VuilongnhapKhuvucquanly')});
+			return toastWarn({msg: i18n.t('Team.PleaseEnterArea')});
 		}
 
 		return upsertTeam.mutate();
@@ -144,11 +144,11 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 					},
 					{
 						path: PATH.Team,
-						title: i18n.t('Team.Danhsachteam'),
+						title: i18n.t('Team.ListTeam'),
 					},
 					{
 						path: '',
-						title: i18n.t('Team.Themmoiteam'),
+						title: i18n.t('Team.AddNewTeam'),
 					},
 				]}
 				action={
@@ -163,15 +163,15 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<div className={styles.left}>
-							<h4>{i18n.t('Team.Themmoiteam')}</h4>
-							<p>{i18n.t('Team.Diendayduthongtinteam')}</p>
+							<h4>{i18n.t('Team.AddNewTeam')}</h4>
+							<p>{i18n.t('Team.EnterFullInformation')}</p>
 						</div>
 						<div className={styles.right}>
 							<Button href={PATH.Team} p_10_24 rounded_2 grey_outline>
-								{i18n.t('Common.Huybo')}
+								{i18n.t('Common.Cancel')}
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								{i18n.t('Common.Luulai')}
+								{i18n.t('Common.Save')}
 							</Button>
 						</div>
 					</div>
@@ -184,10 +184,10 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 								type='text'
 								label={
 									<span>
-										{i18n.t('Common.Tenteam')} <span style={{color: 'red'}}>*</span>
+										{i18n.t('Team.TeamName')} <span style={{color: 'red'}}>*</span>
 									</span>
 								}
-								placeholder={i18n.t('Team.NhapTenteam')}
+								placeholder={i18n.t('Team.EnterTeamName')}
 							/>
 
 							<div className={clsx('mt', 'col_2')}>
@@ -197,15 +197,15 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 									type='text'
 									label={
 										<span>
-											{i18n.t('Common.Mateam')} <span style={{color: 'red'}}>*</span>
+											{i18n.t('Team.IDTeam')} <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder={i18n.t('Team.NhapMateam')}
+									placeholder={i18n.t('Team.EnterTeamID')}
 								/>
 								<Select
 									isSearch
 									name='leaderUuid'
-									placeholder={i18n.t('Team.Nguoiquanly')}
+									placeholder={i18n.t('Team.TeamManager')}
 									value={form?.leaderUuid || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
@@ -215,7 +215,7 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 									}
 									label={
 										<span>
-											{i18n.t('Team.Nguoiquanly')}
+											{i18n.t('Team.TeamManager')}
 											<span style={{color: 'red'}}>*</span>
 										</span>
 									}
@@ -231,7 +231,7 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 									<Select
 										isSearch
 										name='parentUuid'
-										placeholder={i18n.t('Team.Tencaptren')}
+										placeholder={i18n.t('Team.NameofSuperior')}
 										value={form?.parentUuid || null}
 										onChange={(e: any) =>
 											setForm((prev: any) => ({
@@ -239,7 +239,7 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 												parentUuid: e.target.value,
 											}))
 										}
-										label={<span>{i18n.t('Team.Tencaptren')}</span>}
+										label={<span>{i18n.t('Team.NameofSuperior')}</span>}
 									>
 										{listTeams.data?.map((v: any) => (
 											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -249,7 +249,7 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 								<Select
 									isSearch
 									name='areaUuid'
-									placeholder={i18n.t('Team.ChonKhuvucquanly')}
+									placeholder={i18n.t('Team.ChooseManagementArea')}
 									value={form?.areaUuid || null}
 									onChange={(e: any) =>
 										setForm((prev: any) => ({
@@ -259,7 +259,7 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 									}
 									label={
 										<span>
-											{i18n.t('Common.Khuvuc')} <span style={{color: 'red'}}>*</span>
+											{i18n.t('Common.Area')} <span style={{color: 'red'}}>*</span>
 										</span>
 									}
 								>
@@ -272,8 +272,8 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 								<TextArea
 									name='note'
 									value={form.note}
-									placeholder={i18n.t('Common.Nhapmota')}
-									label={<span>{i18n.t('Common.Mota')}</span>}
+									placeholder={i18n.t('Common.EnterDescription')}
+									label={<span>{i18n.t('Common.Description')}</span>}
 								/>
 							</div>
 						</Form>

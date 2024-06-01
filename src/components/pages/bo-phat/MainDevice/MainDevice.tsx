@@ -341,11 +341,11 @@ function MainDevice({}: PropsMainDevice) {
 								data={listDevices?.data?.items}
 								column={[
 									{
-										title: i18n.t('Common.STT'),
+										title: i18n.t('Common.No'),
 										render: (data: IDevice, index: number) => <>{index + 1}</>,
 									},
 									{
-										title: i18n.t('Common.SoMAC'),
+										title: i18n.t('Common.MACNumber'),
 										render: (data: IDevice) => (
 											<Link href={`/bo-phat/${data.uuid}`} className={styles.link}>
 												{data.macNumber}
@@ -369,11 +369,11 @@ function MainDevice({}: PropsMainDevice) {
 										render: (data: IDevice) => <>{data.battery}%</>,
 									},
 									{
-										title: i18n.t('Common.Hoatdong'),
+										title: i18n.t('Common.Active'),
 										render: (data: IDevice) => <StateDevice status={data.state} />,
 									},
 									{
-										title: i18n.t('Common.Tinhtrang'),
+										title: i18n.t('Common.Status'),
 										render: (data: IDevice) => (
 											<>
 												{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
@@ -401,7 +401,7 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: i18n.t('Common.Onlinelancuoi'),
+										title: i18n.t('Gateway.LastOnline'),
 										render: (data: IDevice) =>
 											data.timeLastOnline ? <Moment date={data.timeLastOnline} format='HH:mm, DD/MM/YYYY' /> : '---',
 									},
@@ -424,8 +424,8 @@ function MainDevice({}: PropsMainDevice) {
 													}
 													tooltip={
 														data.status === STATUS_GENERAL.SU_DUNG
-															? i18n.t('Common.Khoa')
-															: i18n.t('Common.Mokhoa')
+															? i18n.t('Common.Lock')
+															: i18n.t('Common.Unlock')
 													}
 													color='#777E90'
 													onClick={() => setDataChangeStatus(data)}
@@ -451,7 +451,7 @@ function MainDevice({}: PropsMainDevice) {
 				warn
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
-				title={i18n.t('Common.ThaydoiTrangthai')}
+				title={i18n.t('Common.Changestatus')}
 				note={i18n.t('Device.AreYouSureYouWantToChangeTheStatusOfThisTransmitter')}
 				onSubmit={handleChangeStatusDevice}
 			/>
