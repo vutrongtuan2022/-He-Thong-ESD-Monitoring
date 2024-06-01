@@ -168,11 +168,11 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.Khuvucquanly')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.ManagementArea')}: </span>
 									{dataDetail?.areaName || ''}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Team.ManagementArea')}: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Team.Belongtotheteam')}: </span>
 									{dataDetail?.parentName || '---'}
 								</td>
 							</tr>

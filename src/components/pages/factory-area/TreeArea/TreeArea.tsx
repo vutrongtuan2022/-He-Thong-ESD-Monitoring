@@ -71,7 +71,7 @@ function TreeArea({area, level}: PropsTreeArea) {
 				</Tippy>
 				<p className={styles.totalTeam}>{area?.totalChildArea}</p>
 				<div className={styles.dash}></div>
-				<Tippy content='Tổng sổ team'>
+				<Tippy content='Tổng số team'>
 					<div className={styles.icon}>
 						<HiOutlineUserGroup size={22} color='#EB2E2E' />
 					</div>

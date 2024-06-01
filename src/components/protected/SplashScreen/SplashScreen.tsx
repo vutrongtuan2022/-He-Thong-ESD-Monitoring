@@ -1,21 +1,20 @@
-import {Fragment, useEffect} from 'react';
-import {RootState, store} from '~/redux/store';
-
-import {setCookie} from 'cookies-next';
-import Lottie from 'react-lottie';
-
-import {PropsSplashScreen} from './interfaces';
 import clsx from 'clsx';
-import styles from './SplashScreen.module.scss';
+import axios from 'axios';
+import Lottie from 'react-lottie';
+import {setCookie} from 'cookies-next';
 import {useSelector} from 'react-redux';
-import {getItemStorage, setItemStorage} from '~/common/funcs/localStorage';
+import {Fragment, useEffect} from 'react';
+
 import {KEY_STORE} from '~/constants/config';
+import {RootState, store} from '~/redux/store';
+import {setInfoUser} from '~/redux/reducer/user';
+import {getItemStorage, setItemStorage} from '~/common/funcs/localStorage';
+import {setDataLoginStorage, setStateLogin, setToken} from '~/redux/reducer/auth';
 import {setIp, setIsMobile, setLoading, setRememberPassword} from '~/redux/reducer/site';
 
+import {PropsSplashScreen} from './interfaces';
+import styles from './SplashScreen.module.scss';
 import * as loading from '../../../../public/static/anim/loadingScreen.json';
-import axios from 'axios';
-import {setDataLoginStorage, setStateLogin, setToken} from '~/redux/reducer/auth';
-import {setInfoUser} from '~/redux/reducer/user';
 
 const defaultOptions = {
 	loop: true,
@@ -27,9 +26,9 @@ const defaultOptions = {
 };
 
 function SplashScreen({}: PropsSplashScreen) {
-	const {token, isLogin, dataLoginStorage} = useSelector((state: RootState) => state.auth);
 	const {infoUser} = useSelector((state: RootState) => state.user);
 	const {loading, isRememberPassword} = useSelector((state: RootState) => state.site);
+	const {token, isLogin, dataLoginStorage} = useSelector((state: RootState) => state.auth);
 
 	useEffect(() => {
 		(async () => {

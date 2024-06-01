@@ -265,6 +265,7 @@
 		"IDTeam": "Mã team",
 		"TeamManagement": "Quản lý team",
 		"TeamManager": "Người quản lý team",
+		"Belongtotheteam": "Thuộc team",
 		"NumberofMember": "Số thành viên",
 		"NumberofDevices": "Số thiết bị",
 		"TeamNumberDependent": "Số team phụ thuộc",
