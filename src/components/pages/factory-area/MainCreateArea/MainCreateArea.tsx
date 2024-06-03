@@ -14,6 +14,7 @@ import {httpRequest} from '~/services';
 import areaServices from '~/services/areaServices';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
+import i18n from '~/locale/i18n';
 
 function MainCreateArea({onClose}: PropsMainCreateArea) {
 	const queryClient = useQueryClient();
@@ -43,7 +44,7 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thêm mới khu vực thành công!',
+				msgSuccess: i18n.t('Device.SuccessfullyAddedNewArea'),
 				http: areaServices.upsertArea({
 					uuid: '',
 					code: form.code,
@@ -68,13 +69,13 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 
 	const handleSubmit = () => {
 		if (!form.code) {
-			return toastWarn({msg: 'Vui lòng nhập code!'});
+			return toastWarn({msg: i18n.t('Device.PleaseEnterCodeOnly')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: 'Vui lòng nhập tên!'});
+			return toastWarn({msg:i18n.t('Device.PleaseEnterAName') });
 		}
 		if (!form.address) {
-			return toastWarn({msg: 'Vui lòng nhập địa chỉ!'});
+			return toastWarn({msg:i18n.t('Device.PleaseEnterLocation') });
 		}
 
 		return upsertArea.mutate();
@@ -83,13 +84,13 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={upsertArea.isLoading} />
-			<h4>Thêm khu vực </h4>
-			<p className={styles.p}>Điền đẩy đủ các thông tin cần thiết</p>
+			<h4>{i18n.t('Device.AddRegion')} </h4>
+			<p className={styles.p}>{i18n.t('Device.FillInAllNecessaryInformation')}</p>
 
 			<Form form={form} setForm={setForm}>
 				<Input
 					type='text'
-					placeholder='Nhập code'
+					placeholder={i18n.t('Device.EnterCode')}
 					value={form.code}
 					name='code'
 					label={
@@ -100,12 +101,12 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 				/>
 				<Input
 					type='text'
-					placeholder='Nhập tên khu vực'
+					placeholder={i18n.t('Device.EnterAreaName')}
 					value={form.name}
 					name='name'
 					label={
 						<span>
-							Tên khu vực <span style={{color: 'red'}}>*</span>
+							{i18n.t('Device.AreaName')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -115,14 +116,14 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 						isSearch
 						name='uuidArea'
 						value={form.uuidArea || null}
-						placeholder='Lựa chọn khu vực quản lý'
+						placeholder={i18n.t('Device.SelectManagementArea')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
 								uuidArea: e.target.value,
 							}))
 						}
-						label={<span>Thuộc khu vực</span>}
+						label={<span>{i18n.t('Device.BelongsToRegion')}</span>}
 					>
 						{listAreas?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -133,30 +134,30 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 				<div className={'mt'}>
 					<Input
 						type='text'
-						placeholder='Nhập địa chỉ'
+						placeholder={i18n.t('Common.Enteraddress')}
 						value={form.address}
 						name='address'
 						label={
 							<span>
-								Địa chỉ chi tiết <span style={{color: 'red'}}>*</span>
+								{i18n.t('Common.DetailedAddress')} <span style={{color: 'red'}}>*</span>
 							</span>
 						}
 					/>
 				</div>
 
 				<div className='mt'>
-					<TextArea name='note' value={form.note} placeholder='Nhập ghi chú' label={<span>Ghi chú </span>} />
+					<TextArea name='note' value={form.note} placeholder={i18n.t('Common.EnterNote')} label={<span>{i18n.t('Common.Note')} </span>} />
 				</div>
 
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_2 grey_outline onClick={onClose}>
-							Hủy bỏ
+						{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-							Xác nhận
+						{i18n.t('Common.Confirm')}
 						</Button>
 					</div>
 				</div>

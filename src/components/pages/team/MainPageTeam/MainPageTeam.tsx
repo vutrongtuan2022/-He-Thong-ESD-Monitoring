@@ -156,7 +156,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: i18n.t('Common.home'),
+						title: i18n.t('Common.Home'),
 					},
 					{
 						path: '',

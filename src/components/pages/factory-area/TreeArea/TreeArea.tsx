@@ -18,6 +18,7 @@ import {GrMap} from 'react-icons/gr';
 import {HiOutlineUserGroup} from 'react-icons/hi';
 import {PATH} from '~/constants/config';
 import {useRouter} from 'next/router';
+import i18n from '~/locale/i18n';
 
 function TreeArea({area, level}: PropsTreeArea) {
 	const router = useRouter();
@@ -64,41 +65,41 @@ function TreeArea({area, level}: PropsTreeArea) {
 					{area?.code} - {area?.name}
 				</p>
 				<div className={styles.dash}></div>
-				<Tippy content='Khu vực con'>
+				<Tippy content={i18n.t('Area.Subareas')}>
 					<div className={styles.icon}>
 						<PictureFrame size={19} color='#11B991' />
 					</div>
 				</Tippy>
 				<p className={styles.totalTeam}>{area?.totalChildArea}</p>
 				<div className={styles.dash}></div>
-				<Tippy content='Tổng số team'>
+				<Tippy content={i18n.t('Area.TotalTeams')}>
 					<div className={styles.icon}>
 						<HiOutlineUserGroup size={22} color='#EB2E2E' />
 					</div>
 				</Tippy>
 				<p className={styles.totalUser}>{area?.totalTeams}</p>
 				<div className={styles.dash}></div>
-				<Tippy content='Tổng nhân viên'>
+				<Tippy content={i18n.t('Area.GeneralStaff')}>
 					<div className={styles.icon}>
 						<FaUser size={17} color='#4DBFDD' />
 					</div>
 				</Tippy>
 				<p className={styles.totalUser}>{area?.totalUsers}</p>
 				<div className={styles.dash}></div>
-				<Tippy content='Tổng thiết bị'>
+				<Tippy content={i18n.t('Area.TotalEquipment')}>
 					<div className={styles.icon}>
 						<FaChromecast size={18} color='#4DBFDD' />
 					</div>
 				</Tippy>
 				<p className={styles.totalDevice}>{area?.totalDevices}</p>
 				<div className={styles.line}></div>
-				<Tippy content='Xem chi tiết'>
+				<Tippy content={i18n.t('Common.SeeDetails')}>
 					<Link href={`/factory-area/${area?.uuid}`} className={styles.icon}>
 						<Eye size={20} color='#777E90' />
 					</Link>
 				</Tippy>
 				<div className={styles.line}></div>
-				<Tippy content='Chỉnh sửa'>
+				<Tippy content={i18n.t('Common.Edit')}>
 					<div
 						className={styles.icon}
 						onClick={() =>
