@@ -11,6 +11,7 @@ import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import StatisticalGeneral from '../StatisticalGeneral';
 import DetailStatistical from '../DetailStatistical';
+import i18n from '~/locale/i18n';
 
 function MainPageStatistical({}: PropsMainPageStatistical) {
 	return (
@@ -18,11 +19,11 @@ function MainPageStatistical({}: PropsMainPageStatistical) {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: 'Trang chủ',
+						title: i18n.t('Common.Home'),
 						path: PATH.Home,
 					},
 					{
-						title: 'Báo cáo thống kê',
+						title: i18n.t('Report.ReportStatistics'),
 						path: '',
 					},
 				]}
