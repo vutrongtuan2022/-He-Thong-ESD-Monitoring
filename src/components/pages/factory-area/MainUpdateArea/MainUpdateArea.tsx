@@ -27,9 +27,8 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 		code: string;
 		name: string;
 		uuidArea: string;
-		address: string;
 		note: string;
-	}>({name: '', code: '', uuidArea: '', address: '', note: ''});
+	}>({name: '', code: '', uuidArea: '', note: ''});
 
 	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
 		queryFn: () =>
@@ -56,7 +55,6 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 				name: data?.name || '',
 				code: data?.code || '',
 				uuidArea: data?.parentUuid || '',
-				address: data?.address || '',
 				note: data?.notes || '',
 			});
 		},
@@ -68,12 +66,12 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess:i18n.t('Area.AreaEditingSuccessful'),
+				msgSuccess: i18n.t('Area.AreaEditingSuccessful'),
 				http: areaServices.upsertArea({
 					uuid: _uuid as string,
 					code: form.code,
 					name: form.name,
-					address: form.address,
+					address: null,
 					notes: form.note,
 					parentUuid: form.uuidArea || null,
 					rootUuid: detailArea?.data?.rootUuid || null,
@@ -82,7 +80,7 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 			}),
 		onSuccess(data) {
 			if (data) {
-				setForm({name: '', code: '', uuidArea: '', address: '', note: ''});
+				setForm({name: '', code: '', uuidArea: '', note: ''});
 				onClose();
 				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_khu_vuc]);
 				queryClient.invalidateQueries([QUERY_KEY.danh_sach_khu_vuc]);
@@ -94,13 +92,10 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 
 	const handleSubmit = () => {
 		if (!form.code) {
-			return toastWarn({msg:i18n.t('Area.PleaseEnterCodeOnly')});
+			return toastWarn({msg: i18n.t('Area.PleaseEnterCodeOnly')});
 		}
 		if (!form.name) {
-			return toastWarn({msg:i18n.t('Area.PleaseEnterAName') });
-		}
-		if (!form.address) {
-			return toastWarn({msg: i18n.t('Area.PleaseEnterLocation')});
+			return toastWarn({msg: i18n.t('Area.PleaseEnterAName')});
 		}
 
 		return upsertArea.mutate();
@@ -115,12 +110,12 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 			<Form form={form} setForm={setForm}>
 				<Input
 					type='text'
-					placeholder={i18n.t('Area.EnterCode')}
+					placeholder={i18n.t('Area.EnterAreaCode')}
 					value={form.code}
 					name='code'
 					label={
 						<span>
-							CODE <span style={{color: 'red'}}>*</span>
+							{i18n.t('Area.AreaCode')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -154,33 +149,25 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 						))}
 					</Select>
 				</div>
-				<div className={'mt'}>
-					<Input
-						type='text'
-						placeholder={i18n.t('Area.EnterAddress')}
-						value={form.address}
-						name='address'
-						label={
-							<span>
-								{i18n.t('Area.DetailedAddress')} <span style={{color: 'red'}}>*</span>
-							</span>
-						}
-					/>
-				</div>
 
 				<div className='mt'>
-					<TextArea name='note' value={form.note} placeholder={i18n.t('Common.EnterNote')} label={<span>{i18n.t('Common.Note')} </span>} />
+					<TextArea
+						name='note'
+						value={form.note}
+						placeholder={i18n.t('Common.EnterNote')}
+						label={<span>{i18n.t('Common.Note')} </span>}
+					/>
 				</div>
 
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_2 grey_outline onClick={onClose}>
-						{i18n.t('Common.Cancel')}
+							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-						{i18n.t('Common.Confirm')}
+							{i18n.t('Common.Confirm')}
 						</Button>
 					</div>
 				</div>

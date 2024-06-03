@@ -159,7 +159,7 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 				<DataWrapper
 					data={data}
 					loading={loading}
-					noti={<Noti disableButton={false} des={i18n.t('Overview.CurrentlyNoTransmitters')} />}
+					noti={<Noti disableButton={true} des={i18n.t('Overview.CurrentlyNoTransmitters')} />}
 				>
 					<Table
 						data={data}
