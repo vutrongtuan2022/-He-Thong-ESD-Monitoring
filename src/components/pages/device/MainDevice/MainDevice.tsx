@@ -80,7 +80,7 @@ function MainDevice({}: PropsMainDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.msgSuccess'),
+				msgSuccess: i18n.t('Device.TransmitterAddedSuccessfully'),
 				http: deviceServices.updateDeviceStatus({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
