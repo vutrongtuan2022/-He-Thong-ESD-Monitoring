@@ -47,7 +47,6 @@ const userServices = {
 			cancelToken: tokenAxios,
 		});
 	},
-
 	userDetail: (data: {uuid: string}, tokenAxios?: any) => {
 		return axiosClient.post(`/User/user_detail`, data, {
 			cancelToken: tokenAxios,
