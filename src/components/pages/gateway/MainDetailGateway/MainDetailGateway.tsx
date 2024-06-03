@@ -16,7 +16,7 @@ function MainDetailGateway({}: PropsMainDetailGateway) {
 			<Breadcrumb
 				listUrls={[
 					{
-						title: i18n.t('Common.home'),
+						title: i18n.t('Common.Home'),
 						path: PATH.Home,
 					},
 					{

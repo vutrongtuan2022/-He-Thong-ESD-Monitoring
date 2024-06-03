@@ -51,7 +51,7 @@ function TableDevice({}: PropsTableDevice) {
 			<DataWrapper
 				data={listDeviceTeams?.data?.items}
 				loading={listDeviceTeams.isLoading}
-				noti={<Noti title={i18n.t('Device.DeviceIsEmpty')} des={i18n.t('Device.ListDeviceIsEmpty')} disableButton />}
+				noti={<Noti title={i18n.t('Team.DeviceIsEmpty')} des={i18n.t('Team.ListDeviceIsEmpty')} disableButton />}
 			>
 				<Table
 					data={listDeviceTeams?.data?.items}

@@ -20,6 +20,7 @@ import Dialog from '~/components/common/Dialog';
 import Popup from '~/components/common/Popup';
 import {PATH} from '~/constants/config';
 import MainUpdateArea from '../MainUpdateArea';
+import i18n from '~/locale/i18n';
 
 function TableArea({}: PropsTableArea) {
 	const router = useRouter();
@@ -51,7 +52,7 @@ function TableArea({}: PropsTableArea) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess:i18n.t('Common.Changestatussuccessfully') ,
 				http: areaServices.changeStatusArea({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -77,21 +78,21 @@ function TableArea({}: PropsTableArea) {
 			<DataWrapper
 				data={pageListAreas?.data?.items}
 				loading={pageListAreas.isLoading}
-				noti={<Noti title='Khu vực trống' des='Danh sách khu vực trống!' />}
+				noti={<Noti title={i18n.t('Area.EmptyAreas')} des={i18n.t('Area.AreaListIsEmpty')} />}
 			>
 				<Table
 					data={pageListAreas?.data?.items}
 					column={[
 						{
-							title: 'STT',
+							title: i18n.t('Common.STT'),
 							render: (data: IArea, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: 'Mã khu vực',
+							title: i18n.t('Area.AreaCode'),
 							render: (data: IArea) => <>{data.code}</>,
 						},
 						{
-							title: 'Tên khu vực',
+							title: i18n.t('Area.AreaName'),
 							render: (data: IArea) => (
 								<Link href={`/factory-area/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
@@ -99,33 +100,33 @@ function TableArea({}: PropsTableArea) {
 							),
 						},
 						{
-							title: 'Số khu vực con',
+							title: i18n.t('Area.NumberOfSubareas'),
 							render: (data: IArea) => <>{data.totalChild}</>,
 						},
 						{
-							title: 'Số team',
+							title: i18n.t('Area.NumberOfTeams'),
 							render: (data: IArea) => <>{data.totalTeam}</>,
 						},
 						{
-							title: 'Số thành viên',
+							title:i18n.t('Area.NumberofMember'),
 							render: (data: IArea) => <>{data.totalUser || 0}</>,
 						},
 						{
-							title: 'Số thiết bị',
+							title:i18n.t('Area.NumberofDevices'),
 							render: (data: IArea) => <>{data.totalDevice}</>,
 						},
 						{
-							title: 'Khu vực cha',
+							title: i18n.t('Area.AreaFather'),
 							render: (data: IArea) => <>{data.parentName || '---'}</>,
 						},
 						{
-							title: 'Trạng thái',
+							title: i18n.t('Common.Status'),
 							render: (data: IArea) => (
 								<>
 									{data?.status == STATUS_GENERAL.SU_DUNG ? (
-										<p style={{color: '#35C244', fontWeight: 600}}>Đang sử dụng</p>
+										<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Using')}</p>
 									) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-										<p style={{color: '#E85A5A', fontWeight: 600}}>Không sử dụng</p>
+										<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Donotuse')}</p>
 									) : (
 										'---'
 									)}
@@ -133,13 +134,13 @@ function TableArea({}: PropsTableArea) {
 							),
 						},
 						{
-							title: 'Tác vụ',
+							title: i18n.t('Common.Action'),
 							render: (data: IArea) => (
 								<div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
 									<IconCustom
 										edit
 										icon={<LuPencil fontSize={20} fontWeight={600} />}
-										tooltip='Chỉnh sửa'
+										tooltip={i18n.t('Common.Edit')}
 										color='#777E90'
 										onClick={() =>
 											router.replace(
@@ -163,7 +164,7 @@ function TableArea({}: PropsTableArea) {
 									<IconCustom
 										warn
 										icon={data.status === STATUS_GENERAL.SU_DUNG ? <Lock1 size='22' /> : <Unlock size='22' />}
-										tooltip={data.status === STATUS_GENERAL.SU_DUNG ? 'Khóa' : 'Mở khóa'}
+										tooltip={data.status === STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Lock') : i18n.t('Common.UnLock')}
 										color='#777E90'
 										onClick={() => setDataChangeStatus(data)}
 									/>
@@ -185,8 +186,8 @@ function TableArea({}: PropsTableArea) {
 				warn
 				open={!!dataChangeStatus}
 				onClose={() => setDataChangeStatus(null)}
-				title='Thay đổi trạng thái'
-				note='Bạn có chắc chắn muốn thay đổi trạng thái cho khu vực này?'
+				title={i18n.t('Common.Changestatus')}
+				note={i18n.t('Area.DoyouwanttochangestatusArea')}
 				onSubmit={handleChangeStatusArea}
 			/>
 
