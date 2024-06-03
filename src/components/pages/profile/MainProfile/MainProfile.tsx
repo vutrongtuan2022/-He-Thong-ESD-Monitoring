@@ -23,28 +23,31 @@ import {useSelector} from 'react-redux';
 import {RootState} from '~/redux/store';
 import {httpRequest} from '~/services';
 import Moment from 'react-moment';
-import userServices from '~/services/userServices';
 import accountServices from '~/services/accountServices';
 import md5 from 'md5';
 import Loading from '~/components/common/Loading';
+import {toastWarn} from '~/common/funcs/toast';
 
 function MainProfile({}: PropsMainProfile) {
 	const queryClient = useQueryClient();
+
+	const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
 	const {infoUser} = useSelector((state: RootState) => state.user);
 
 	const [form, setForm] = useState<{oldPass: string; newPass: string; resPass: string}>({oldPass: '', newPass: '', resPass: ''});
 
-	const {data: detailUser} = useQuery([QUERY_KEY.chi_tiet_nguoi_dung, infoUser?.userUuid], {
+	const {data: detailUser} = useQuery([QUERY_KEY.chi_tiet_nguoi_dung, infoUser?.uuid], {
 		queryFn: () =>
 			httpRequest({
-				http: userServices.userDetail({
-					uuid: infoUser?.userUuid!,
+				http: accountServices.accountDetail({
+					uuid: infoUser?.uuid!,
 				}),
 			}),
 		select(data) {
 			return data;
 		},
-		enabled: !!infoUser?.userUuid,
+		enabled: !!infoUser?.uuid,
 	});
 
 	const funcChangePass = useMutation({
@@ -68,7 +71,11 @@ function MainProfile({}: PropsMainProfile) {
 	});
 
 	const handleSubmit = () => {
-		funcChangePass.mutate();
+		if (regex.test(form?.newPass) == false) {
+			return toastWarn({msg: 'Mật khẩu mới bao gồm tối thiểu 6 ký tự gồm chữ hoa, chữ thường và số.'});
+		}
+
+		return funcChangePass.mutate();
 	};
 
 	return (
@@ -102,7 +109,7 @@ function MainProfile({}: PropsMainProfile) {
 								<p>Chi tiết tài khoản</p>
 							</Link>
 							<p className={styles.des}>
-								Chào mừng <span style={{fontWeight: 600, color: '#23262f'}}>{detailUser?.fullname}</span> đến với hệ thống
+								Chào mừng <span style={{fontWeight: 600, color: '#23262f'}}>{detailUser?.fullName}</span> đến với hệ thống
 								quản lý ESD Monitoring.
 							</p>
 						</div>
@@ -125,13 +132,13 @@ function MainProfile({}: PropsMainProfile) {
 					<div className={styles.main}>
 						<div className={styles.box_info}>
 							<ImageFill
-								src={`${process.env.NEXT_PUBLIC_AVATAR}/${detailUser?.avatar}`}
+								src={`${process.env.NEXT_PUBLIC_AVATAR}/${detailUser?.image}`}
 								alt='anh dai dien'
 								className={styles.avatar}
 							/>
 							<div className={styles.info}>
 								<div className={styles.name}>
-									<h5>{detailUser?.fullname}</h5>
+									<h5>{detailUser?.fullName}</h5>
 									<div className={styles.role}>{detailUser?.regency || '---'}</div>
 								</div>
 								<div className={styles.item}>

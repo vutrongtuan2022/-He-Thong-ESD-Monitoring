@@ -14,7 +14,6 @@ import {httpRequest} from '~/services';
 import authServices from '~/services/authServices';
 import Loading from '~/components/common/Loading';
 import {RootState, store} from '~/redux/store';
-import {toastWarn} from '~/common/funcs/toast';
 import {setDataLoginStorage, setStateLogin, setToken} from '~/redux/reducer/auth';
 import {setInfoUser} from '~/redux/reducer/user';
 import icons from '~/constants/images/icons';
@@ -25,8 +24,6 @@ import md5 from 'md5';
 
 function FormLogin({}: PropsFormLogin) {
 	const router = useRouter();
-
-	const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
 	const {isRememberPassword} = useSelector((state: RootState) => state.site);
 	const {dataLoginStorage} = useSelector((state: RootState) => state.auth);
@@ -75,10 +72,6 @@ function FormLogin({}: PropsFormLogin) {
 	});
 
 	const handleSubmit = () => {
-		// if (regex.test(form?.password) == false) {
-		// 	return toastWarn({msg: 'Mật khẩu mới bao gồm tối thiểu 6 ký tự gồm chữ hoa, chữ thường và số.'});
-		// }
-
 		if (isRememberPassword) {
 			store.dispatch(
 				setDataLoginStorage({

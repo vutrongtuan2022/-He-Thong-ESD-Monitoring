@@ -34,6 +34,7 @@ const accountServices = {
 		data: {
 			uuid: string;
 			roleUuid: string;
+			imagesUuid: string;
 		},
 		tokenAxios?: any
 	) => {
@@ -64,6 +65,25 @@ const accountServices = {
 		tokenAxios?: any
 	) => {
 		return axiosClient.post(`/Account/change_pass_account`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	updateAccoutLogin: (
+		data: {
+			uuid: string;
+			roleUuid: string;
+			imagesUuid: string;
+			fullName: string;
+			gender: number;
+			phone: string;
+			birthday: string;
+			address: string;
+			regencyUuid: string;
+			email: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Account/Update_account_login`, data, {
 			cancelToken: tokenAxios,
 		});
 	},

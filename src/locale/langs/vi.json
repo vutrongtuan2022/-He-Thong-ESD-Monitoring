@@ -118,7 +118,8 @@
 		"ListOfConnectedDevices": "Danh sách bộ phát đang kết nối",
 		"GatewayDeviceListIsEmpty": "Danh sách bộ phát của gateway trống!",
 		"GatewayDetails": "Chi tiết gateway",
-		"ConnectingIP": "IP đang kết nối"
+		"ConnectingIP": "IP đang kết nối",
+		"GatewayManagament": "Quản lý gateway"
 	},
 	"Login": {
 		"LoginSuccessful": "Đăng nhập thành công!",
@@ -169,6 +170,7 @@
 		"NameAccount": "Tên tài khoản"
 	},
 	"User": {
+		"User": "Nhân sự",
 		"Action": "Tác vụ",
 		"Role": "Vai trò",
 		"NameAccount": "Tên tài khoản",
@@ -281,6 +283,7 @@
 		"ChooseManagementArea": "Chọn khu vực quản lý"
 	},
 	"Device": {
+		"Device": "Thiết bị",
 		"PleaseEnterTeamDependent": "Vui lòng chọn team phụ thuộc !",
 		"EmptyTransmitter": "Bộ phát trống",
 		"TransmitterManagement": "Quản lý bộ phát",
@@ -350,6 +353,7 @@
 		"TransmitterAddedSuccessfully": "Thêm mới bộ phát thành công!"
 	},
 	"Area": {
+		"Area": "Khu vực",
 		"SuccessfullyAddedNewArea": "Thêm mới khu vực thành công",
 		"PleaseEnterCodeOnly": "Vui lòng nhập code! ",
 		"PleaseEnterAName": " Vui lòng nhập tên!",
@@ -392,6 +396,8 @@
 		"AreaParentName": "Tên khu vực cha"
 	},
 	"Report": {
+		"Report": "Thống kê",
+		"ReportManagement": "Quản lý báo cáo",
 		"ReportStatistics": "Báo cáo thống kê",
 		"TotalNumberofNGTransmittersForAllTeams": "Tổng số bộ phát NG của các team",
 		"TotalTimeNGForTeams": "Tổng thời gian NG các team ",

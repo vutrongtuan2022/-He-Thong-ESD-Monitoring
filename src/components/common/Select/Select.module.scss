@@ -1,6 +1,7 @@
 $bg: #fff;
 $bg-focus: #fff;
 $bg-btn: #2367ed;
+$bg-disable: #f1f4f9;
 
 $color-btn: #fff;
 $color-placeholder: #b4b5bc;
@@ -10,6 +11,7 @@ $color-done: #2cae39;
 $color-error: #e93a3a;
 
 $border: #e1e5ed;
+$border-disable: #e1e5ed;
 
 $border-radius: 8px;
 $padding: 8px 20px;
@@ -80,6 +82,12 @@ $font-size: 16px;
 			color: $color-focus;
 			transform: rotate(180deg);
 		}
+	}
+
+	&.readOnly {
+		cursor: inherit;
+		background-color: $bg-disable;
+		border: 1px solid $border-disable;
 	}
 }
 

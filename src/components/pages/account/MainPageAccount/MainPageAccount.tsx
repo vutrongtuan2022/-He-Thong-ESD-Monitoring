@@ -31,10 +31,14 @@ import ImageFill from '~/components/common/ImageFill';
 import Popup from '~/components/common/Popup';
 import UpdateAccount from '../UpdateAccount';
 import i18n from '~/locale/i18n';
+import {useSelector} from 'react-redux';
+import {RootState} from '~/redux/store';
 
 const MainPageAccount = ({}: PropsMainPageAccount) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
+
+	const {infoUser} = useSelector((state: RootState) => state.user);
 
 	const {_page, _pageSize, _status, _keyword, _roleUuid} = router.query;
 
@@ -189,12 +193,12 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 				</div>
 				<div className={styles.table}>
 					<DataWrapper
-						data={listAccount?.data?.items}
+						data={listAccount?.data?.items?.filter((v: any) => v?.uuid != infoUser?.uuid)}
 						noti={<Noti des={i18n.t('Account.CurrentlyThereAreNoAccounts')} />}
 						loading={listAccount?.isLoading}
 					>
 						<Table
-							data={listAccount?.data?.items}
+							data={listAccount?.data?.items?.filter((v: any) => v?.uuid != infoUser?.uuid)}
 							column={[
 								{
 									title: i18n.t('Common.No'),
