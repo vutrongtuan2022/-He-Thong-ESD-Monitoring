@@ -94,7 +94,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.importfilethanhcong'),
+				msgSuccess: i18n.t('Device.FileImportedSuccessfully'),
 				http: areaServices.importExcel({
 					FileData: file,
 					Type: 1,

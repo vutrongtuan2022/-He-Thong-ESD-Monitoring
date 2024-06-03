@@ -24,6 +24,7 @@ import MainUpdateArea from '../MainUpdateArea';
 import TableTeam from './components/TableTeam';
 import TableChildArea from './components/TableChildArea';
 import TableDevice from './components/TableDevice';
+import i18n from '~/locale/i18n';
 
 function MainDetailArea({}: PropsMainDetailArea) {
 	const router = useRouter();
@@ -82,15 +83,15 @@ function MainDetailArea({}: PropsMainDetailArea) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.Home'),
 					},
 					{
 						path: PATH.FactoryArea,
-						title: 'Danh sách khu vực',
+						title: i18n.t('Area.AreaList'),
 					},
 					{
 						path: '',
-						title: 'Chi tiết khu vực',
+						title: i18n.t('Area.AreaDetails'),
 					},
 				]}
 				action={
@@ -106,7 +107,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 					<div className={styles.header}>
 						<Link href={PATH.FactoryArea} className={styles.header_title}>
 							<IoArrowBackOutline fontSize={20} fontWeight={600} />
-							<p>Thông tin khu vực</p>
+							<p>{i18n.t('Area.RegionalInformation')}</p>
 						</Link>
 						<div className={styles.list_btn}>
 							{dataDetail?.status == STATUS_GENERAL.SU_DUNG && (
@@ -119,13 +120,13 @@ function MainDetailArea({}: PropsMainDetailArea) {
 									bold
 									onClick={() => setOpenChangeStatus(true)}
 								>
-									Khóa
+									{i18n.t('Common.Lock')}
 								</Button>
 							)}
 
 							{dataDetail?.status == STATUS_GENERAL.KHONG_SU_DUNG && (
 								<Button className={styles.btn} rounded_8 w_fit p_6_16 green bold onClick={() => setOpenChangeStatus(true)}>
-									Mở khóa
+									{i18n.t('Common.Unlock')}
 								</Button>
 							)}
 
@@ -154,7 +155,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 									)
 								}
 							>
-								Chỉnh sửa
+								{i18n.t('Common.Edit')}
 							</Button>
 						</div>
 					</div>
@@ -166,39 +167,39 @@ function MainDetailArea({}: PropsMainDetailArea) {
 							</colgroup>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Mã khu vực:</span>
+									<span style={{marginRight: 6}}>{i18n.t('Area.AreaCode')}:</span>
 									{dataDetail?.code}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Số khu vực con: </span> {dataDetail?.totalChild}
+									<span style={{marginRight: 6}}>{i18n.t('Area.NumberOfSubareas')}: </span> {dataDetail?.totalChild}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Tên khu vực: </span> {dataDetail?.name}
+									<span style={{marginRight: 6}}>{i18n.t('Area.AreaName')}: </span> {dataDetail?.name}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Số team: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Area.NumberOfTeams')}: </span>
 									{dataDetail?.totalTeam}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Địa chỉ: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Address')}: </span>
 									{dataDetail?.address || '---'}
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Số thiết bị: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Area.NumberofDevices')}: </span>
 									{dataDetail?.totalDevice}
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>Tạo lúc: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Area.Createat')}: </span>
 									<Moment date={dataDetail?.timeCreated} format='HH:mm, DD/MM/YYYY' />
 								</td>
 								<td>
-									<span style={{marginRight: 6}}>Ghi chú: </span>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Note')}: </span>
 									{dataDetail?.notes || '---'}
 								</td>
 							</tr>
@@ -214,17 +215,17 @@ function MainDetailArea({}: PropsMainDetailArea) {
 							{
 								pathname: router.pathname,
 								query: null,
-								title: 'Danh sách khu vực con',
+								title:i18n.t('Area.ListOfSubareas'),
 							},
 							{
 								pathname: router.pathname,
 								query: 'list-team',
-								title: 'Danh sách team',
+								title: i18n.t('Area.ListTeam'),
 							},
 							{
 								pathname: router.pathname,
 								query: 'bo-phat',
-								title: 'Danh sách thiết bị',
+								title: i18n.t('Area.ListOfDevices'),
 							},
 						]}
 					/>
@@ -240,9 +241,9 @@ function MainDetailArea({}: PropsMainDetailArea) {
 			<Dialog
 				warn
 				open={openChangeStatus}
-				onClose={() => setOpenChangeStatus(true)}
-				title='Thay đổi trạng thái'
-				note='Bạn có chắc chắn muốn thay đổi trạng thái cho team này?'
+				onClose={() => setOpenChangeStatus(false)}
+				title={i18n.t('Common.Changestatus')}
+				note={i18n.t('Area.DoyouwanttochangestatusTeam')}
 				onSubmit={handleChangeStatusTeam}
 			/>
 
