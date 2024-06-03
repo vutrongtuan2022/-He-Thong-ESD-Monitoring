@@ -50,7 +50,7 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 				http: deviceServices.updateTeamUsing({
 					uuid: _id as string,
 					teamUuid: form.teamUuid,
-					note: form.note,
+					note: form.note || '',
 				}),
 			});
 		},
@@ -66,6 +66,12 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 		if (!form.teamUuid) {
 			return toastWarn({msg: i18n.t('Device.PleaseEnterTeamDependent')});
 		}
+
+		if (form?.note?.length > 255) {
+			return toastWarn({msg: i18n.t('Common.MaxLengthNote')});
+		}
+
+		return assignTeamUsing.mutate();
 	};
 
 	return (

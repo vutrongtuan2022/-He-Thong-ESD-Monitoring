@@ -91,9 +91,7 @@ function ListDeviceGateway({}: PropsListDeviceGateway) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={exportGatewayDeviceExcel.isLoading} />
-			<h4>
-				{i18n.t('Gateway.ListOfConnectedDevices')} ({listDevices?.data?.pagination?.totalCount})
-			</h4>
+			<h4>{i18n.t('Gateway.ListOfConnectedDevices')}</h4>
 			<div className={styles.control}>
 				<div className={styles.left}>
 					<div style={{minWidth: 360}}>

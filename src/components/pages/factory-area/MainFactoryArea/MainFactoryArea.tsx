@@ -24,7 +24,6 @@ import {HiOutlineUserGroup} from 'react-icons/hi';
 import TableArea from '../TableArea';
 import MainTreeArea from '../MainTreeArea';
 import {GrMap} from 'react-icons/gr';
-import {FaChromecast, FaUser} from 'react-icons/fa';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import areaServices from '~/services/areaServices';
@@ -95,7 +94,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.importfilethanhcong'),
+				msgSuccess: i18n.t('Device.FileImportedSuccessfully'),
 				http: areaServices.importExcel({
 					FileData: file,
 					Type: 1,
@@ -241,18 +240,6 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 							text='Tổng số team'
 							icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />}
 						/>
-						{/* <ItemDashboard
-							isLoading={sumAreas.isLoading}
-							value={sumAreas?.data?.totalUserTeam}
-							text='Tổng nhân viên'
-							icon={<FaUser size={32} color='#4DBFDD' />}
-						/>
-						<ItemDashboard
-							isLoading={sumAreas.isLoading}
-							value={sumAreas?.data?.totalDeviceTeam}
-							text='Tổng thiết bị'
-							icon={<FaChromecast size={32} color='#4DBFDD' />}
-						/> */}
 					</GridColumn>
 				</div>
 				<div className={styles.head}>

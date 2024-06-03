@@ -8,7 +8,7 @@ const userServices = {
 			uuid: string | null;
 			userName: string;
 			fullname: string;
-			teamUuid: string;
+			teamUuid: string | null;
 			gender: GENDER;
 			email: string;
 			phone: string;
@@ -47,7 +47,6 @@ const userServices = {
 			cancelToken: tokenAxios,
 		});
 	},
-
 	userDetail: (data: {uuid: string}, tokenAxios?: any) => {
 		return axiosClient.post(`/User/user_detail`, data, {
 			cancelToken: tokenAxios,

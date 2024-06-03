@@ -8,8 +8,8 @@ export default function Home() {
 	return (
 		<Fragment>
 			<Head>
-				<title>{i18n.t('Common.home')}</title>
-				<meta name='description' content={i18n.t('Common.home')} />
+				<title>{i18n.t('Common.Home')}</title>
+				<meta name='description' content={i18n.t('Common.Home')} />
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>

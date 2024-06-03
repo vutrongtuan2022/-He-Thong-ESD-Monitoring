@@ -8,7 +8,6 @@ const accountServices = {
 			keyword: string;
 			roleUuid: string | null;
 			status: number | null;
-			// roleName:string|null
 		},
 		tokenAxios?: any
 	) => {
@@ -39,6 +38,20 @@ const accountServices = {
 		tokenAxios?: any
 	) => {
 		return axiosClient.post(`/Account/update_account`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
+	exportExcel: (
+		data: {
+			pageSize: number;
+			page: number;
+			keyword: string;
+			roleUuid: string | null;
+			status: number | null;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Account/export_excel`, data, {
 			cancelToken: tokenAxios,
 		});
 	},

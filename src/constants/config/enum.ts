@@ -34,6 +34,7 @@ export enum QUERY_KEY {
 	danh_sach_khu_vuc,
 	danh_sach_khu_vuc_con,
 	chi_tiet_khu_vuc,
+	chi_tiet_nguoi_dung,
 }
 
 export enum TYPE_DATE {
