@@ -106,7 +106,7 @@ function Header({title}: PropsHeader) {
 				>
 					<div className={styles.info} onClick={() => setOpenMenu(!openMenu)}>
 						<p className={styles.name}>{infoUser?.fullname}</p>
-						<Avatar src={''} className={styles.avatar} />
+						<Avatar src={`${process.env.NEXT_PUBLIC_AVATAR}/${infoUser?.avatar}`} className={styles.avatar} />
 					</div>
 				</TippyHeadless>
 			</div>

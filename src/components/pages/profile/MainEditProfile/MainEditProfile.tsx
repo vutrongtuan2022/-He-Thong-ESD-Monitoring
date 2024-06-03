@@ -188,88 +188,26 @@ function MainEditProfile({}: PropsMainEditProfile) {
 									<Option title='Chức vụ 1' value={1} />
 									<Option title='Chức vụ 2' value={2} />
 								</Select>
-								<Select
-									isSearch
-									name='role'
-									value={form.role || null}
-									placeholder='Vai trò'
-									onChange={(role) =>
-										setForm((prev: any) => ({
-											...prev,
-											role: role,
-										}))
-									}
-									label={<span>Vai trò</span>}
-								>
-									<Option title='Vai trò 1' value={1} />
-									<Option title='Vai trò 2' value={2} />
-								</Select>
-							</div>
-
-							<div className={clsx('mt', 'col_3')}>
-								<Select
-									isSearch
-									name='province'
-									value={form.province || null}
-									placeholder='Chọn tỉnh, thành phố'
-									onChange={(province) =>
-										setForm((prev: any) => ({
-											...prev,
-											province: province,
-										}))
-									}
-									label={
-										<span>
-											Tỉnh/Thành phố<span style={{color: 'red'}}>*</span>
-										</span>
-									}
-								>
-									<Option title='Hà Nôi' value={1} />
-									<Option title='Hà Tĩnh' value={2} />
-								</Select>
 								<div>
 									<Select
 										isSearch
-										name='district'
-										value={form.district || null}
-										placeholder='Chọn quận/huyện'
-										onChange={(district) =>
+										name='role'
+										value={form.role || null}
+										placeholder='Vai trò'
+										onChange={(role) =>
 											setForm((prev: any) => ({
 												...prev,
-												district: district,
+												role: role,
 											}))
 										}
-										label={
-											<span>
-												Quận/Huyện<span style={{color: 'red'}}>*</span>
-											</span>
-										}
+										label={<span>Vai trò</span>}
 									>
-										<Option title='Ba Đình' value={1} />
-										<Option title='Đống Đa' value={2} />
+										<Option title='Vai trò 1' value={1} />
+										<Option title='Vai trò 2' value={2} />
 									</Select>
 								</div>
-								<Select
-									isSearch
-									name='ward'
-									value={form.ward || null}
-									placeholder='Chọn xã, phường'
-									onChange={(ward) =>
-										setForm((prev: any) => ({
-											...prev,
-											ward: ward,
-										}))
-									}
-									label={
-										<span>
-											Xã/phường<span style={{color: 'red'}}>*</span>
-										</span>
-									}
-								>
-									<Option title='Trâu Quỳ' value={1} />
-									<Option title='Đặng Xá' value={2} />
-								</Select>
 							</div>
+
 							<div className={clsx('mt')}>
 								<Input
 									name='address'

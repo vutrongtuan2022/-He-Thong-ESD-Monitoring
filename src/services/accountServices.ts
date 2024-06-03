@@ -55,6 +55,18 @@ const accountServices = {
 			cancelToken: tokenAxios,
 		});
 	},
+	changePassword: (
+		data: {
+			uuid: string;
+			oldPassword: string;
+			newPassword: string;
+		},
+		tokenAxios?: any
+	) => {
+		return axiosClient.post(`/Account/change_pass_account`, data, {
+			cancelToken: tokenAxios,
+		});
+	},
 };
 
 export default accountServices;
