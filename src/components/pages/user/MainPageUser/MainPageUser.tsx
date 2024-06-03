@@ -33,10 +33,14 @@ import Loading from '~/components/common/Loading';
 import Moment from 'react-moment';
 import ImportExcel from '~/components/common/ImportExcel';
 import i18n from '~/locale/i18n';
+import {useSelector} from 'react-redux';
+import {RootState} from '~/redux/store';
 
 function MainPageUser({}: PropsMainPageUser) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
+
+	const {infoUser} = useSelector((state: RootState) => state.user);
 
 	const {_page, _pageSize, _status, _isHaveAcc, _username, importExcel, _keyword, _regency} = router.query;
 
@@ -302,12 +306,12 @@ function MainPageUser({}: PropsMainPageUser) {
 					</div>
 					<div className={styles.table}>
 						<DataWrapper
-							data={listUser?.data?.items}
+							data={listUser?.data?.items?.filter((v: any) => v?.uuid != infoUser?.userUuid)}
 							noti={<Noti des={i18n.t('User.Therearecurrentlynouser')} />}
 							loading={listUser?.isLoading}
 						>
 							<Table
-								data={listUser?.data?.items}
+								data={listUser?.data?.items?.filter((v: any) => v?.uuid != infoUser?.userUuid)}
 								column={[
 									{
 										title: i18n.t('Common.No'),

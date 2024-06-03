@@ -8,6 +8,7 @@ import {IoWifiSharp} from 'react-icons/io5';
 import {RxDashboard} from 'react-icons/rx';
 import icons from '../images/icons';
 import {GrMap} from 'react-icons/gr';
+import i18n from '~/locale/i18n';
 
 export const MAXIMUM_FILE = 10; //MB
 
@@ -48,30 +49,30 @@ export const Menu: {
 }[] = [
 	{
 		title: 'OVERVIEW',
-		group: [{title: 'Tổng quan', icon: RxDashboard, path: PATH.Home}],
+		group: [{title: i18n.t('Overview.Overview'), icon: RxDashboard, path: PATH.Home}],
 	},
 	{
-		title: 'THIẾT BỊ',
+		title: i18n.t('Device.Device'),
 		group: [
-			{title: 'Quản lý gateway', icon: IoWifiSharp, path: PATH.Gateway},
-			{title: 'Quản lý bộ phát', icon: FaChromecast, path: PATH.Device},
+			{title: i18n.t('Gateway.GatewayManagament'), icon: IoWifiSharp, path: PATH.Gateway},
+			{title: i18n.t('Device.TransmitterManagement'), icon: FaChromecast, path: PATH.Device},
 		],
 	},
 	{
-		title: 'NHÂN SỰ',
+		title: i18n.t('User.User'),
 		group: [
-			{title: 'Quản lý tài khoản', icon: HiOutlineUser, path: PATH.Account},
-			{title: 'Quản lý team', icon: RiGroupLine, path: PATH.Team},
-			{title: 'Quản lý nhân viên', icon: LuUserCircle2, path: PATH.User},
+			{title: i18n.t('Account.AccountManagement'), icon: HiOutlineUser, path: PATH.Account},
+			{title: i18n.t('Team.TeamManagement'), icon: RiGroupLine, path: PATH.Team},
+			{title: i18n.t('User.UserManagement'), icon: LuUserCircle2, path: PATH.User},
 		],
 	},
 	{
-		title: 'KHU VỰC',
-		group: [{title: 'Quản lý khu vực', icon: GrMap, path: PATH.FactoryArea}],
+		title: i18n.t('Area.Area'),
+		group: [{title: i18n.t('Area.AreaManagement'), icon: GrMap, path: PATH.FactoryArea}],
 	},
 	{
-		title: 'THỐNG KÊ',
-		group: [{title: 'Báo cáo', icon: TbClipboardText, path: PATH.Report}],
+		title: i18n.t('Report.Report'),
+		group: [{title: i18n.t('Report.ReportManagement'), icon: TbClipboardText, path: PATH.Report}],
 	},
 	// {
 	// 	title: 'HỆ THỐNG',

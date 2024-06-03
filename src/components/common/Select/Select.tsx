@@ -49,15 +49,22 @@ function Select(props: PropsSelector) {
 			<div className={styles.container}>
 				{props?.label ? <label>{props.label}</label> : null}
 				<div className={clsx(styles.select)} ref={ref}>
-					<div className={clsx(styles.value, {[styles.active]: show})} onClick={() => setShow(!show)}>
+					<div
+						className={clsx(styles.value, {[styles.active]: show, [styles.readOnly]: props.readOnly})}
+						onClick={() => {
+							if (props.readOnly) {
+								return null;
+							} else {
+								setShow(!show);
+							}
+						}}
+					>
 						<p
 							className={clsx(styles.text, {
 								[styles.placeholder]: props.value == null || props.value == undefined,
-								// [styles.placeholder]: props.value == null || props.value == undefined || props.value == '',
 							})}
 						>
 							{props.value != null && props.value != undefined ? value?.title : props.placeholder}
-							{/* {props.value != null && props.value != undefined && props.value != '' ? value?.title : props.placeholder} */}
 						</p>
 						<span className={styles.icon}>
 							<ArrowDown2 size={16} />
