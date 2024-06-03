@@ -96,7 +96,7 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 					placeholder={i18n.t('Gateway.EnterGatewayName')}
 					name='name'
 					isRequired
-					min={5}
+					min={2}
 					max={50}
 					label={
 						<span>
