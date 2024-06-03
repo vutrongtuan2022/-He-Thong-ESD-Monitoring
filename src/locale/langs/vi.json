@@ -40,6 +40,8 @@
 		"Granted": "Đã cấp",
 		"Addaccount": "Thêm tài khoản",
 		"Edit": "Chỉnh sửa",
+		"UploadedImagesMustHaveMinimumSizeof300pixelsx300pixels": "Ảnh tải lên phải có kích thước tối thiểu 300 pixels x 300 pixels",
+		"Supportedformats": "Định dạng hỗ trợ: JPG, JPEG, PNG",
 		"Lock": "Khóa",
 		"ListIsEmpty": "Danh sách trống!",
 		"Unlock": "Mở khóa",
@@ -151,6 +153,7 @@
 		"UnlockAccount": "Mở tài khoản",
 		"AreYouSureYouWantToUnLockAccount": "Bạn có chắc chắn muốn mở tài khoản này?",
 		"Status": "Trạng thái",
+		"PlaceholderSearchAccount": "Tìm kiếm theo tên tài khoản, mã nhân viên",
 		"Role": "Vai trò",
 		"AccountNotFound": "Không tìm thấy tài khoản!",
 		"AccountManagement": "Quản lý tài khoản",
@@ -388,6 +391,7 @@
 		"GeneralStaff": "Tổng nhân viên",
 		"TotalEquipment": "Tổng thiết bị",
 		"NumberofMember": "Số nhân viên",
-		"AreaManagement": "Quản lý khu vực"
+		"AreaManagement": "Quản lý khu vực",
+		"AreaParentName": "Tên khu vực cha"
 	}
 }

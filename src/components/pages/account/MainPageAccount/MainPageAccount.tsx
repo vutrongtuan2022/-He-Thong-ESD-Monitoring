@@ -156,7 +156,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 				<div className={styles.container}>
 					<div className={styles.main_search}>
 						<div className={styles.search}>
-							<Search placeholder={i18n.t('Account.PlaceholderSearchAccout')} keyName='_keyword' />
+							<Search placeholder={i18n.t('Account.PlaceholderSearchAccount')} keyName='_keyword' />
 						</div>
 						<div style={{minWidth: 240}}>
 							<FilterCustom

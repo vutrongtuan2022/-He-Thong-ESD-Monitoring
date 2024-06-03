@@ -185,14 +185,27 @@ function MainDetailArea({}: PropsMainDetailArea) {
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Common.Address')}: </span>
-									{dataDetail?.address || '---'}
+									<span style={{marginRight: 6}}>{i18n.t('Area.AreaParentName')}: </span> {dataDetail?.parentName}
 								</td>
+								<td>
+									<span style={{marginRight: 6}}>{i18n.t('Area.NumberofMember')}: </span>
+									{dataDetail?.totalUser}
+								</td>
+							</tr>
+
+							<tr>
 								<td>
 									<span style={{marginRight: 6}}>{i18n.t('Area.NumberofDevices')}: </span>
 									{dataDetail?.totalDevice}
 								</td>
+								<td>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Status')} : </span>
+									<span style={{color: dataDetail?.status == STATUS_GENERAL.SU_DUNG ? '#2CAE39' : '#EB2E2E'}}>
+										{dataDetail?.status == STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Use') : i18n.t('Common.Donotuse')}
+									</span>
+								</td>
 							</tr>
+
 							<tr>
 								<td>
 									<span style={{marginRight: 6}}>{i18n.t('Area.Createat')}: </span>
@@ -215,7 +228,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 							{
 								pathname: router.pathname,
 								query: null,
-								title:i18n.t('Area.ListOfSubareas'),
+								title: i18n.t('Area.ListOfSubareas'),
 							},
 							{
 								pathname: router.pathname,
