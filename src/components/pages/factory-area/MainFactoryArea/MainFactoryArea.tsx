@@ -131,11 +131,11 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.Home'),
 					},
 					{
 						path: '',
-						title: 'Danh sách khu vực',
+						title: i18n.t('Area.AreaList'),
 					},
 				]}
 				action={
@@ -210,7 +210,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 									)
 								}
 							>
-								Thêm mới
+								{i18n.t('Common.Addnew')}
 							</Button>
 						</div>
 						<div className={styles.box_icon}>
@@ -225,38 +225,38 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 						<ItemDashboard
 							isLoading={sumAreas.isLoading}
 							value={sumAreas?.data?.totalParentArea}
-							text='Khu vực chính'
+							text={i18n.t('Area.AreaMain')}
 							icon={<GrMap size={32} color='#2D74FF' />}
 						/>
 						<ItemDashboard
 							isLoading={sumAreas.isLoading}
 							value={sumAreas?.data?.totalChildArea}
-							text='Khu vực con'
+							text={i18n.t('Area.Subareas')}
 							icon={<PictureFrame size={32} color='#11B991' />}
 						/>
 						<ItemDashboard
 							isLoading={sumAreas.isLoading}
 							value={sumAreas?.data?.totalTeam}
-							text='Tổng số team'
+							text={i18n.t('Area.TotalTeams')}
 							icon={<HiOutlineUserGroup size={32} color='#EB2E2E' />}
 						/>
 					</GridColumn>
 				</div>
 				<div className={styles.head}>
 					{_view == 'tree' ? (
-						<h4 className={styles.title}>Sơ đồ khu vực</h4>
+						<h4 className={styles.title}>{i18n.t('Area.MapArea')}</h4>
 					) : (
 						<div className={styles.box_filter}>
 							<div className={styles.search}>
-								<Search keyName='_keyword' placeholder='Tìm kiếm theo tên hoặc mã khu vực' />
+								<Search keyName='_keyword' placeholder={i18n.t('Area.SearchByNameOrAreaCode')} />
 							</div>
 							<div className={styles.filter}>
 								<FilterCustom
-									name='Trạng thái'
+									name={i18n.t('Common.Status')}
 									query='_status'
 									listFilter={[
-										{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
-										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: 'Không sử dụng'},
+										{id: STATUS_GENERAL.SU_DUNG, name: i18n.t('Common.Use')},
+										{id: STATUS_GENERAL.KHONG_SU_DUNG, name: i18n.t('Common.Donotuse')},
 									]}
 								/>
 							</div>
