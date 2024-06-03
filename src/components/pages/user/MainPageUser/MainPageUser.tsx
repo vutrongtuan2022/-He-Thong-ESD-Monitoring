@@ -435,7 +435,7 @@ function MainPageUser({}: PropsMainPageUser) {
 							open={!!dataChangeStatus}
 							onClose={() => setDataChangeStatus(null)}
 							title={i18n.t('Common.Changestatus')}
-							note={i18n.t('Common.Doyouwanttochangestatus')}
+							note={i18n.t('User.AreYouWantToChangeStatus')}
 							onSubmit={handleChangeStatusDevice}
 						/>
 					</div>

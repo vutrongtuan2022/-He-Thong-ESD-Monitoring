@@ -51,7 +51,6 @@ export enum TYPE_DATE {
 export enum GENDER {
 	NAM,
 	NU,
-	KHAC,
 }
 
 export enum STATUS_GENERAL {
