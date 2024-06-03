@@ -12,7 +12,7 @@ import Moment from 'react-moment';
 import Pagination from '~/components/common/Pagination';
 import Button from '~/components/common/Button';
 import icons from '~/constants/images/icons';
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import {QUERY_KEY} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import categoryServices from '~/services/categoryServices';
@@ -21,6 +21,8 @@ import ngHistoryServices from '~/services/ngHistoryServices';
 import Noti from '~/components/common/DataWrapper/components/Noti';
 import {formatTimeHistory} from '~/common/funcs/optionConvert';
 import i18n from '~/locale/i18n';
+import Loading from '~/components/common/Loading';
+import Link from 'next/link';
 
 function HistoryDevice({}: PropsHistoryDevice) {
 	const router = useRouter();
@@ -56,8 +58,29 @@ function HistoryDevice({}: PropsHistoryDevice) {
 		enabled: !!_id,
 	});
 
+	// Func export excel
+	const exportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				http: ngHistoryServices.exportExcel({
+					pageSize: Number(_pageSize) || 20,
+					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
+					deviceUuid: _id as string,
+					teamUuid: (_teamUuid as string) || null,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
+			}
+		},
+	});
+
 	return (
 		<div className={styles.container}>
+			<Loading loading={exportExcel.isLoading} />
 			<h4>{i18n.t('Device.NgTransmitterHistory')}</h4>
 			<div className={styles.flex}>
 				<div className={styles.main_search}>
@@ -82,6 +105,7 @@ function HistoryDevice({}: PropsHistoryDevice) {
 						green
 						bold
 						icon={<Image alt='icon export' src={icons.export_excel} width={20} height={20} />}
+						onClick={exportExcel.mutate}
 					>
 						Export excel
 					</Button>
@@ -101,6 +125,22 @@ function HistoryDevice({}: PropsHistoryDevice) {
 								render: (data: IDeviceNGHistory, index: number) => <>{index + 1}</>,
 							},
 							{
+								title: i18n.t('Team.IDTeam'),
+								render: (data: IDeviceNGHistory) => (
+									<Link href={`/team/${data.teamUuid}`} className={styles.link}>
+										{data.teamCode}
+									</Link>
+								),
+							},
+							{
+								title: i18n.t('Common.BelongToTeam'),
+								render: (data: IDeviceNGHistory) => <>{data.teamName || '---'}</>,
+							},
+							{
+								title: i18n.t('Device.LeaderTeam'),
+								render: (data: IDeviceNGHistory) => <>{data.teamLeader || '---'}</>,
+							},
+							{
 								title: i18n.t('Device.NgDetectionTime'),
 								render: (data: IDeviceNGHistory) => <Moment date={data.timeNgStart} format='HH:mm, DD/MM/YYYY' />,
 							},
@@ -111,14 +151,6 @@ function HistoryDevice({}: PropsHistoryDevice) {
 							{
 								title: i18n.t('Device.ElectrostaticValue'),
 								render: (data: IDeviceNGHistory) => <>{data.edsStatic || '---'}</>,
-							},
-							{
-								title: i18n.t('Common.BelongToTeam'),
-								render: (data: IDeviceNGHistory) => <>{data.teamName || '---'}</>,
-							},
-							{
-								title: i18n.t('Team.IDTeam'),
-								render: (data: IDeviceNGHistory) => <>{data.teamCode || '---'}</>,
 							},
 						]}
 					/>
