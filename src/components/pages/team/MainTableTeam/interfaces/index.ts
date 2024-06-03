@@ -12,6 +12,7 @@ export interface ITeam {
 	timeCreated: string;
 	status: number;
 	parentUuid: string;
+	areaUuid: string;
 	parentName: string;
 	totalUnderTeam: number;
 	leadCode: string | null;

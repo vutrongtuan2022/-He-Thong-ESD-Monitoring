@@ -107,7 +107,11 @@ function MainTableTeam({}: PropsMainTableTeam) {
 						},
 						{
 							title: i18n.t('Common.Area'),
-							render: (data: ITeam) => <>{data.areaName || '---'}</>,
+							render: (data: ITeam) => (
+								<Link href={`/factory-area/${data.areaUuid}`} className={styles.link}>
+									{data.areaName || '---'}
+								</Link>
+							),
 						},
 						{
 							title: i18n.t('Common.Status'),
