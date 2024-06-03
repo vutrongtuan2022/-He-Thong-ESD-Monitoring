@@ -57,7 +57,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi trạng thái thành công!',
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: areaServices.changeStatusArea({
 					uuid: dataDetail?.uuid!,
 					status: dataDetail?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,

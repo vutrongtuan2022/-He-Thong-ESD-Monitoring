@@ -13,6 +13,7 @@ import Popup from '~/components/common/Popup';
 import MainUpdateArea from '../MainUpdateArea';
 import {useRouter} from 'next/router';
 import {PATH} from '~/constants/config';
+import i18n from '~/locale/i18n';
 
 function MainTreeArea({}: PropsMainTreeArea) {
 	const router = useRouter();
@@ -36,7 +37,7 @@ function MainTreeArea({}: PropsMainTreeArea) {
 			<DataWrapper
 				data={listTreeAreas?.data}
 				loading={listTreeAreas.isLoading}
-				noti={<Noti disableButton title='Khu vực trống' des='Danh sách khu vực trống!' />}
+				noti={<Noti disableButton title={i18n.t('Area.EmptyAreas')} des={i18n.t('Area.AreaListIsEmpty')} />}
 			>
 				{listTreeAreas?.data?.map((v: any) => (
 					<TreeArea key={v?.uuid} area={v} level={0} />
