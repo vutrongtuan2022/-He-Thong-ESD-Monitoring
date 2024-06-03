@@ -52,7 +52,7 @@ function TableArea({}: PropsTableArea) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess:i18n.t('Common.Changestatussuccessfully') ,
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: areaServices.changeStatusArea({
 					uuid: dataChangeStatus?.uuid!,
 					status: dataChangeStatus?.status! == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -89,15 +89,15 @@ function TableArea({}: PropsTableArea) {
 						},
 						{
 							title: i18n.t('Area.AreaCode'),
-							render: (data: IArea) => <>{data.code}</>,
+							render: (data: IArea) => (
+								<Link href={`/factory-area/${data.uuid}`} className={styles.link}>
+									{data.code || '---'}
+								</Link>
+							),
 						},
 						{
 							title: i18n.t('Area.AreaName'),
-							render: (data: IArea) => (
-								<Link href={`/factory-area/${data.uuid}`} className={styles.link}>
-									{data.name || '---'}
-								</Link>
-							),
+							render: (data: IArea) => <>{data.name}</>,
 						},
 						{
 							title: i18n.t('Area.NumberOfSubareas'),
@@ -108,11 +108,11 @@ function TableArea({}: PropsTableArea) {
 							render: (data: IArea) => <>{data.totalTeam}</>,
 						},
 						{
-							title:i18n.t('Area.NumberofMember'),
+							title: i18n.t('Area.NumberofMember'),
 							render: (data: IArea) => <>{data.totalUser || 0}</>,
 						},
 						{
-							title:i18n.t('Area.NumberofDevices'),
+							title: i18n.t('Area.NumberofDevices'),
 							render: (data: IArea) => <>{data.totalDevice}</>,
 						},
 						{

@@ -84,10 +84,7 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							title: i18n.t('Common.No'),
 							render: (data: ITeam, index: number) => <>{index + 1}</>,
 						},
-						{
-							title: i18n.t('Team.IDTeam'),
-							render: (data: ITeam) => <>{data.code || '---'}</>,
-						},
+
 						{
 							title: i18n.t('Team.TeamName'),
 							render: (data: ITeam) => (
@@ -110,7 +107,11 @@ function MainTableTeam({}: PropsMainTableTeam) {
 						},
 						{
 							title: i18n.t('Common.Area'),
-							render: (data: ITeam) => <>{data.areaName || '---'}</>,
+							render: (data: ITeam) => (
+								<Link href={`/factory-area/${data.areaUuid}`} className={styles.link}>
+									{data.areaName || '---'}
+								</Link>
+							),
 						},
 						{
 							title: i18n.t('Common.Status'),
