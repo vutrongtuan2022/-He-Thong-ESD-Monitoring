@@ -33,6 +33,7 @@
 		"Notissuedyet": "Chưa cấp",
 		"Status": "Trạng thái",
 		"Datecreated": "Ngày tạo",
+		"UploadError": "Lỗi tải lên!",
 		"Using": "Đang sử dụng",
 		"Donotuse": "Không sử dụng",
 		"Use": "Sử dụng",
@@ -237,6 +238,7 @@
 		"DeviceIsEmpty": "Bộ phát trống!",
 		"ListDeviceIsEmpty": "Danh sách bộ phát trống!",
 		"MACNumber": "Số MAC",
+		"Belongtotheteam": "Thuộc team",
 		"AddNewTeam": "Thêm mới team",
 		"EnterFullInformation": "Điền đầy đủ thông tin",
 		"UserIsEpty": "Nhân viên trống!",
@@ -388,5 +390,12 @@
 		"MapArea": "Sơ đồ khu vực",
 		"SearchByNameOrAreaCode": "Tìm kiếm theo tên hoặc mã khu vực",
 		"AreaParentName": "Tên khu vực cha"
+	},
+	"Report": {
+		"ReportStatistics": "Báo cáo thống kê",
+		"TotalNumberofNGTransmittersForAllTeams": "Tổng số bộ phát NG của các team",
+		"TotalTimeNGForTeams": "Tổng thời gian NG các team ",
+		"TotalWorkingTimeOfTeams": "Tổng thời gian làm việc của các team",
+		"MonitorOrderProcessingPlansandWorkPlans": "Theo dõi kế hoạch xử lý đơn và kế hoạch công việc"
 	}
 }
