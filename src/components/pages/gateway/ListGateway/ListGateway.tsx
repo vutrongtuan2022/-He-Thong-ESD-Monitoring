@@ -98,12 +98,12 @@ function ListGateway({onOpenCreate}: PropsListGateway) {
 			<div className={styles.control}>
 				<div className={styles.left}>
 					<div style={{minWidth: 360}}>
-						<Search keyName='_keyword' placeholder={i18n.t('Gateway.PlaceholderSearchDevice')} />
+						<Search keyName='_keyword' placeholder={i18n.t('Gateway.PlaceholderSearchGateway')} />
 					</div>
 					<div style={{minWidth: 240}}>
 						<FilterCustom
 							isSearch
-							name={i18n.t('Common.Regency')}
+							name={i18n.t('Common.Area')}
 							query='_factoryAreaUuid'
 							listFilter={listAreas?.data?.map((v: any) => ({
 								id: v?.uuid,
