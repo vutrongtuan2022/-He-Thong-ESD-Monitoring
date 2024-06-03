@@ -94,12 +94,13 @@
 		"Managementarea": "Khu vực quản lý"
 	},
 	"Gateway": {
+		"WorkGateway": "Hoạt động",
 		"StatusGateway": "Trạng thái",
 		"StatusGatewayUsed": "Trạng thái sử dụng",
 		"AreaManageGateway": "Khu vực quản lý",
 		"GatewayList": "Danh sách gateway",
 		"NoGatewayFound": "Không tìm thấy gateway!",
-		"PlaceholderSearchDevice": "Tìm kiếm theo tên bộ phát, ID",
+		"PlaceholderSearchDevice": "Tìm kiếm theo ID gateway và tên",
 		"CurrentlyThereIsNoGateway": "Hiện tại chưa có gateway nào ?",
 		"GatewayInformation": "Thông tin gateway",
 		"EditGateway": "Chỉnh sửa gateway",
@@ -148,9 +149,10 @@
 		"TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers": "Mật khẩu mới bao gồm tối thiểu 6 ký tự gồm chữ hoa, chữ thường và số."
 	},
 	"Account": {
-		"AreYouSureYouWantToLockAccount": "Bạn có chắc chắn muốn khóa tài khoản này?",
 		"LockAccount": "Khóa tài khoản",
-		"UnlockAccount": "Mở khóa tài khoản",
+		"AreYouSureYouWantToLockAccount": "Bạn có chắc chắn muốn khóa tài khoản này?",
+		"UnlockAccount": "Mở tài khoản",
+		"AreYouSureYouWantToUnLockAccount": "Bạn có chắc chắn muốn mở tài khoản này?",
 		"Status": "Trạng thái",
 		"Role": "Vai trò",
 		"AccountNotFound": "Không tìm thấy tài khoản!",
@@ -162,7 +164,8 @@
 		"PleaseChooseRoleAccount": "Vui lòng chọn vai trò tài khoản!",
 		"EditAccount": "Chỉnh sửa tài khoản",
 		"EnterNameAccount": "Nhập tên tài khoản",
-		"NameAccount": "Tên tài khoản"
+		"NameAccount": "Tên tài khoản",
+		"PlaceholderSearchAccout": "Tìm kiếm theo email"
 	},
 	"User": {
 		"Action": "Tác vụ",

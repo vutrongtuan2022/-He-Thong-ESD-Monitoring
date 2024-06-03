@@ -5,12 +5,10 @@ import Link from 'next/link';
 import {IoArrowBackOutline} from 'react-icons/io5';
 
 import {PATH} from '~/constants/config';
-import {HiDotsHorizontal} from 'react-icons/hi';
 import clsx from 'clsx';
 import Breadcrumb from '~/components/common/Breadcrumb';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Avatar from '~/components/common/Avatar';
-import {CiLock} from 'react-icons/ci';
 import {toastWarn} from '~/common/funcs/toast';
 import accountServices from '~/services/accountServices';
 import {useRouter} from 'next/router';

@@ -82,11 +82,30 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 					keyword: (_keyword as string) || '',
 					roleUuid: _roleUuid ? (_roleUuid as string) : null,
 					status: _status ? Number(_status) : null,
-					// roleName:_roleName ? (_roleName as string) : null
 				}),
 			}),
 		select(data) {
 			return data;
+		},
+	});
+
+	// Func export excel
+	const exportExcel = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				http: accountServices.exportExcel({
+					page: Number(_page) || 1,
+					pageSize: Number(_pageSize) || 20,
+					keyword: (_keyword as string) || '',
+					roleUuid: _roleUuid ? (_roleUuid as string) : null,
+					status: _status ? Number(_status) : null,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				window.open(`${process.env.NEXT_PUBLIC_PATH_EXPORT}/${data}`, '_blank');
+			}
 		},
 	});
 
@@ -99,7 +118,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 
 	return (
 		<div className={styles.container}>
-			<Loading loading={changeStatusAccount.isLoading} />
+			<Loading loading={changeStatusAccount.isLoading || exportExcel.isLoading} />
 			<Breadcrumb
 				listUrls={[
 					{
@@ -122,6 +141,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 								green
 								bold
 								icon={<Image alt='icon export' src={icons.export_excel} width={20} height={20} />}
+								onClick={exportExcel.mutate}
 							>
 								Export excel
 							</Button>
@@ -136,7 +156,7 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 				<div className={styles.container}>
 					<div className={styles.main_search}>
 						<div className={styles.search}>
-							<Search placeholder={i18n.t('Common.Search')} keyName='_keyword' />
+							<Search placeholder={i18n.t('Account.PlaceholderSearchAccout')} keyName='_keyword' />
 						</div>
 						<div style={{minWidth: 240}}>
 							<FilterCustom
@@ -274,8 +294,16 @@ const MainPageAccount = ({}: PropsMainPageAccount) => {
 						warn
 						open={!!dataChangeStatus}
 						onClose={() => setDataChangeStatus(null)}
-						title={i18n.t('Account.LockAccount')}
-						note={i18n.t('Account.AreYouSureYouWantToLockAccount')}
+						title={
+							dataChangeStatus?.status == STATUS_GENERAL.SU_DUNG
+								? i18n.t('Account.LockAccount')
+								: i18n.t('Account.UnlockAccount')
+						}
+						note={
+							dataChangeStatus?.status == STATUS_GENERAL.SU_DUNG
+								? i18n.t('Account.AreYouSureYouWantToLockAccount')
+								: i18n.t('Account.AreYouSureYouWantToUnLockAccount')
+						}
 						onSubmit={handleChangeStatusDevice}
 					/>
 				</div>

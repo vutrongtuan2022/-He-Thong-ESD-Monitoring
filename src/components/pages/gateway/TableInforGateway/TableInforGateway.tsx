@@ -109,7 +109,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 							{data?.code}
 						</td>
 						<td>
-							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.StatusGateway')}: </span>
+							<span style={{marginRight: '4px'}}>{i18n.t('Gateway.WorkGateway')}: </span>
 							<span style={{color: data?.state == STATE_GATEWAY.ONLINE ? '#2CAE39' : '#EB2E2E'}}>
 								{data?.state == STATE_GATEWAY.ONLINE ? 'Online' : 'Offline'}
 							</span>

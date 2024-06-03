@@ -64,6 +64,7 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 		onSuccess(data) {
 			if (data) {
 				onClose();
+				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_tai_khoan]);
 				queryClient.invalidateQueries([QUERY_KEY.danh_sach_nhan_vien]);
 			}
 		},

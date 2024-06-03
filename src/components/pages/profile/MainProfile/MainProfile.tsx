@@ -11,17 +11,41 @@ import Link from 'next/link';
 import {IoArrowBackOutline} from 'react-icons/io5';
 import Button from '~/components/common/Button';
 import icons from '~/constants/images/icons';
-import {FaCalendarCheck, FaMapMarkerAlt} from 'react-icons/fa';
+import {FaCalendarCheck, FaPhoneAlt} from 'react-icons/fa';
 import {IoMdMail} from 'react-icons/io';
 import Form, {FormContext, Input} from '~/components/common/Form';
 import {ShieldSecurity} from 'iconsax-react';
 import clsx from 'clsx';
 import ImageFill from '~/components/common/ImageFill';
+import {useQuery} from '@tanstack/react-query';
+import {QUERY_KEY} from '~/constants/config/enum';
+import {useSelector} from 'react-redux';
+import {RootState} from '~/redux/store';
+import {httpRequest} from '~/services';
+import accountServices from '~/services/accountServices';
+import Moment from 'react-moment';
 
 function MainProfile({}: PropsMainProfile) {
+	const {infoUser} = useSelector((state: RootState) => state.user);
+
 	const [form, setForm] = useState<any>({oldPass: '', newPass: ''});
 
+	const {data: detailUser} = useQuery([QUERY_KEY.chi_tiet_nguoi_dung, infoUser?.uuid], {
+		queryFn: () =>
+			httpRequest({
+				http: accountServices.accountDetail({
+					uuid: infoUser?.uuid!,
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+		enabled: !!infoUser?.uuid,
+	});
+
 	const handleSubmit = () => {};
+
+	console.log(infoUser);
 
 	return (
 		<div className={styles.container}>
@@ -52,7 +76,10 @@ function MainProfile({}: PropsMainProfile) {
 								<IoArrowBackOutline fontSize={24} fontWeight={600} />
 								<p>Chi tiết tài khoản</p>
 							</Link>
-							<p className={styles.des}>Chào mừng Dương Mĩ linh đến với hệ thống quản lý Thái Hưng</p>
+							<p className={styles.des}>
+								Chào mừng <span style={{fontWeight: 600, color: '#23262f'}}>{detailUser?.fullName}</span> đến với hệ thống
+								quản lý.
+							</p>
 						</div>
 						<div className={styles.list_btn}>
 							<Button
@@ -63,7 +90,7 @@ function MainProfile({}: PropsMainProfile) {
 								primary
 								bold
 								icon={<Image alt='icon import' src={icons.icon_edit} width={20} height={20} />}
-								href={`${PATH.Profile}/123`}
+								href={`${PATH.Profile}/${detailUser?.uuid}`}
 							>
 								Cập nhật
 							</Button>
@@ -72,29 +99,33 @@ function MainProfile({}: PropsMainProfile) {
 
 					<div className={styles.main}>
 						<div className={styles.box_info}>
-							<ImageFill src={''} alt='anh dai dien' className={styles.avatar} />
+							<ImageFill
+								src={`${process.env.NEXT_PUBLIC_AVATAR}/${detailUser?.image}`}
+								alt='anh dai dien'
+								className={styles.avatar}
+							/>
 							<div className={styles.info}>
 								<div className={styles.name}>
-									<h5>Dương Mĩ Linh</h5>
-									<div className={styles.role}>Chức vụ</div>
+									<h5>{detailUser?.fullName}</h5>
+									<div className={styles.role}>{detailUser?.regency || '---'}</div>
 								</div>
 								<div className={styles.item}>
 									<div className={styles.icon}>
 										<FaCalendarCheck />
 									</div>
-									<p>24/08/1986</p>
+									{detailUser?.birthDay ? <Moment date={detailUser?.birthDay} format='DD/MM/YYYY' /> : '---'}
 								</div>
 								<div className={styles.item}>
 									<div className={styles.icon}>
 										<IoMdMail />
 									</div>
-									<p>Duongmilinh23@gmail.com</p>
+									<p>{detailUser?.email}</p>
 								</div>
 								<div className={styles.item}>
 									<div className={styles.icon}>
-										<FaMapMarkerAlt />
+										<FaPhoneAlt />
 									</div>
-									<p>Số 219 Đường Nguyễn Văn Cừ, Phường Hồng Hà, Thành phố Hạ Long, Tỉnh Quảng Ninh</p>
+									<p>{detailUser?.phone}</p>
 								</div>
 							</div>
 						</div>
