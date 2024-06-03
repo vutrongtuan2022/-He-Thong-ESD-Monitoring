@@ -167,7 +167,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('User.Usermanager'),
+						title: i18n.t('User.UserManagement'),
 						path: PATH.User,
 					},
 					{
@@ -198,6 +198,8 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 								<div>
 									<Input
 										name='code'
+										isRequired
+										max={20}
 										readOnly
 										label={
 											<span>
@@ -210,6 +212,8 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 								<Input
 									name='fullname'
 									value={form.fullname || ''}
+									isRequired
+									max={50}
 									label={
 										<span>
 											{i18n.t('User.Fullname')} <span style={{color: 'red'}}>*</span>
@@ -223,6 +227,9 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 								<Input
 									readOnly
 									name='email'
+									isRequired
+									min={5}
+									max={50}
 									value={form.email || ''}
 									label={
 										<span>
@@ -234,6 +241,9 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 								<div>
 									<Input
 										name='phone'
+										isRequired
+										min={5}
+										max={20}
 										value={form.phone || ''}
 										label={
 											<span>
@@ -358,6 +368,7 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 								<Input
 									type='text'
 									name='address'
+									max={255}
 									value={form.address || ''}
 									label={<span>{i18n.t('Common.Address')}</span>}
 									placeholder={i18n.t('Common.Enteraddress')}

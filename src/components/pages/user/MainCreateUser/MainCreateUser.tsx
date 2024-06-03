@@ -143,7 +143,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 						path: PATH.Home,
 					},
 					{
-						title: i18n.t('User.Usermanager'),
+						title: i18n.t('User.UserManagement'),
 						path: PATH.User,
 					},
 					{
@@ -175,6 +175,9 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 									<Input
 										name='code'
 										value={form.code || ''}
+										isRequired
+										min={2}
+										max={20}
 										label={
 											<span>
 												{i18n.t('User.IDuser')} <span style={{color: 'red'}}>*</span>
@@ -186,6 +189,9 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 								<Input
 									name='fullname'
 									value={form.fullname || ''}
+									isRequired
+									min={2}
+									max={50}
 									label={
 										<span>
 											{i18n.t('User.Fullname')} <span style={{color: 'red'}}>*</span>
@@ -198,6 +204,8 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 							<div className={clsx('mt', 'col_2')}>
 								<Input
 									name='email'
+									max={50}
+									isRequired
 									value={form.email || ''}
 									label={
 										<span>
@@ -210,6 +218,8 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 									<Input
 										name='phone'
 										value={form.phone || ''}
+										isRequired
+										max={20}
 										label={
 											<span>
 												{i18n.t('Common.PhoneNumber')} <span style={{color: 'red'}}>*</span>
@@ -333,6 +343,7 @@ const MainCreateUser = ({}: PropsMainCreateUser) => {
 								<Input
 									type='text'
 									name='address'
+									max={255}
 									value={form.address || ''}
 									label={<span>{i18n.t('Common.Address')}</span>}
 									placeholder={i18n.t('Common.Enteraddress')}
