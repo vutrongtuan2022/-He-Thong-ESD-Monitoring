@@ -21,6 +21,7 @@ import icons from '~/constants/images/icons';
 import {useSelector} from 'react-redux';
 import {setRememberPassword} from '~/redux/reducer/site';
 import i18n from '~/locale/i18n';
+import md5 from 'md5';
 
 function FormLogin({}: PropsFormLogin) {
 	const router = useRouter();
@@ -54,7 +55,7 @@ function FormLogin({}: PropsFormLogin) {
 				msgSuccess: i18n.t('Login.LoginSuccessful'),
 				http: authServices.login({
 					userName: form.username,
-					password: form.password,
+					password: md5(`${form?.password}${process.env.NEXT_PUBLIC_KEY_PASS}`),
 				}),
 			}),
 		onSuccess(data) {
