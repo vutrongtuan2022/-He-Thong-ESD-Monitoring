@@ -23,9 +23,8 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 		code: string;
 		name: string;
 		uuidArea: string;
-		address: string;
 		note: string;
-	}>({name: '', code: '', uuidArea: '', address: '', note: ''});
+	}>({name: '', code: '', uuidArea: '', note: ''});
 
 	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
 		queryFn: () =>
@@ -44,12 +43,12 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.SuccessfullyAddedNewArea'),
+				msgSuccess: i18n.t('Area.SuccessfullyAddedNewArea'),
 				http: areaServices.upsertArea({
 					uuid: '',
 					code: form.code,
 					name: form.name,
-					address: form.address,
+					address: null,
 					notes: form.note,
 					rootUuid: null,
 					parentUuid: form.uuidArea || null,
@@ -58,7 +57,7 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 			}),
 		onSuccess(data) {
 			if (data) {
-				setForm({name: '', code: '', uuidArea: '', address: '', note: ''});
+				setForm({name: '', code: '', uuidArea: '', note: ''});
 				onClose();
 				queryClient.invalidateQueries([QUERY_KEY.danh_sach_khu_vuc]);
 				queryClient.invalidateQueries([QUERY_KEY.thong_so_chung_khu_vuc]);
@@ -69,13 +68,10 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 
 	const handleSubmit = () => {
 		if (!form.code) {
-			return toastWarn({msg: i18n.t('Device.PleaseEnterCodeOnly')});
+			return toastWarn({msg: i18n.t('Area.PleaseEnterCodeOnly')});
 		}
 		if (!form.name) {
-			return toastWarn({msg:i18n.t('Device.PleaseEnterAName') });
-		}
-		if (!form.address) {
-			return toastWarn({msg:i18n.t('Device.PleaseEnterLocation') });
+			return toastWarn({msg: i18n.t('Area.PleaseEnterAName')});
 		}
 
 		return upsertArea.mutate();
@@ -84,29 +80,29 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={upsertArea.isLoading} />
-			<h4>{i18n.t('Device.AddRegion')} </h4>
-			<p className={styles.p}>{i18n.t('Device.FillInAllNecessaryInformation')}</p>
+			<h4>{i18n.t('Area.AddRegion')} </h4>
+			<p className={styles.p}>{i18n.t('Area.FillInAllNecessaryInformation')}</p>
 
 			<Form form={form} setForm={setForm}>
 				<Input
 					type='text'
-					placeholder={i18n.t('Device.EnterCode')}
+					placeholder={i18n.t('Area.EnterAreaCode')}
 					value={form.code}
 					name='code'
 					label={
 						<span>
-							CODE <span style={{color: 'red'}}>*</span>
+							{i18n.t('Area.AreaCode')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
 				<Input
 					type='text'
-					placeholder={i18n.t('Device.EnterAreaName')}
+					placeholder={i18n.t('Area.EnterAreaName')}
 					value={form.name}
 					name='name'
 					label={
 						<span>
-							{i18n.t('Device.AreaName')} <span style={{color: 'red'}}>*</span>
+							{i18n.t('Area.AreaName')} <span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>
@@ -116,14 +112,14 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 						isSearch
 						name='uuidArea'
 						value={form.uuidArea || null}
-						placeholder={i18n.t('Device.SelectManagementArea')}
+						placeholder={i18n.t('Area.SelectManagementArea')}
 						onChange={(e) =>
 							setForm((prev) => ({
 								...prev,
 								uuidArea: e.target.value,
 							}))
 						}
-						label={<span>{i18n.t('Device.BelongsToRegion')}</span>}
+						label={<span>{i18n.t('Area.BelongsToRegion')}</span>}
 					>
 						{listAreas?.data?.map((v: any) => (
 							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -131,33 +127,24 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 					</Select>
 				</div>
 
-				<div className={'mt'}>
-					<Input
-						type='text'
-						placeholder={i18n.t('Common.Enteraddress')}
-						value={form.address}
-						name='address'
-						label={
-							<span>
-								{i18n.t('Common.DetailedAddress')} <span style={{color: 'red'}}>*</span>
-							</span>
-						}
-					/>
-				</div>
-
 				<div className='mt'>
-					<TextArea name='note' value={form.note} placeholder={i18n.t('Common.EnterNote')} label={<span>{i18n.t('Common.Note')} </span>} />
+					<TextArea
+						name='note'
+						value={form.note}
+						placeholder={i18n.t('Common.EnterNote')}
+						label={<span>{i18n.t('Common.Note')} </span>}
+					/>
 				</div>
 
 				<div className={styles.btn}>
 					<div>
 						<Button p_10_24 rounded_2 grey_outline onClick={onClose}>
-						{i18n.t('Common.Cancel')}
+							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
 					<div>
 						<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-						{i18n.t('Common.Confirm')}
+							{i18n.t('Common.Confirm')}
 						</Button>
 					</div>
 				</div>

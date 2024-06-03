@@ -22,7 +22,7 @@ const areaServices = {
 			parentUuid: string | null;
 			code: string;
 			name: string;
-			address: string;
+			address: string | null;
 			notes: string;
 			status: number | null;
 		},

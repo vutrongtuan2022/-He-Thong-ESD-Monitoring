@@ -4,6 +4,7 @@ interface IUser {
 	token: string;
 	uuid: string;
 	userName: string;
+	userUuid: string;
 	avatar: string | null;
 	fullname: string;
 }

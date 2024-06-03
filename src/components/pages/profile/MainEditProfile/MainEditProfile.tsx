@@ -167,26 +167,6 @@ function MainEditProfile({}: PropsMainEditProfile) {
 												Nữ
 											</label>
 										</div>
-
-										<div className={styles.item_radio}>
-											<input
-												id='other'
-												className={styles.input_radio}
-												type='radio'
-												name='gender'
-												value={form.gender}
-												checked={form.gender == GENDER.KHAC}
-												onChange={(e) =>
-													setForm((prev: any) => ({
-														...prev,
-														gender: GENDER.KHAC,
-													}))
-												}
-											/>
-											<label className={styles.input_lable} htmlFor='other'>
-												Khác
-											</label>
-										</div>
 									</div>
 								</div>
 							</div>

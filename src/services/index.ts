@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {delay} from '~/common/funcs/delay';
 import {getKeyCert} from '~/common/funcs/optionConvert';
-import {toastError, toastInfo, toastSuccess, toastWarn} from '~/common/funcs/toast';
+import {toastInfo, toastSuccess, toastWarn} from '~/common/funcs/toast';
 import {logout} from '~/redux/reducer/auth';
 import {setInfoUser} from '~/redux/reducer/user';
 import {store} from '~/redux/store';
