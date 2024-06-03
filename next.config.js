@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	output: 'static',
-	exportTrailingSlash: true,
+	output: 'standalone',
 	reactStrictMode: true,
 	swcMinify: false,
 	devIndicators: {
