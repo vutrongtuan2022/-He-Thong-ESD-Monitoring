@@ -12,7 +12,7 @@ import clsx from 'clsx';
 import userServices from '~/services/userServices';
 import {PATH} from '~/constants/config';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
+import {GENDER, QUERY_KEY, STATUS_GENERAL} from '~/constants/config/enum';
 import Dialog from '~/components/common/Dialog';
 import {toastWarn} from '~/common/funcs/toast';
 import Moment from 'react-moment';
@@ -135,6 +135,27 @@ function InfoUser({}: PropsInfoUser) {
 						</tr>
 						<tr>
 							<td>
+								<span style={{marginRight: 6}}>{i18n.t('Common.Gender')}: </span>
+								{data?.status == GENDER.NAM ? i18n.t('Common.Male') : i18n.t('Common.Female') || '---'}
+							</td>
+							<td>
+								<span style={{marginRight: 6}}>{i18n.t('User.Dateofbirth')} : </span>
+								<Moment date={data?.birthday || '---'} format='DD/MM/YYYY' />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style={{marginRight: 6}}>{i18n.t('Common.Address')}: </span> {data?.address || '---'}
+							</td>
+							<td>
+								<span style={{marginRight: 6}}>{i18n.t('Common.Status')} : </span>
+								<span style={{color: data?.status == STATUS_GENERAL.SU_DUNG ? '#2CAE39' : '#EB2E2E'}}>
+									{data?.status == STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Use') : i18n.t('Common.Donotuse')}
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<span style={{marginRight: 6}}>Email: </span> {data?.email || '---'}
 							</td>
 							<td>
@@ -147,7 +168,7 @@ function InfoUser({}: PropsInfoUser) {
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('User.Createat')}: </span>{' '}
-								<Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />
+								<Moment date={data?.timeCreated || '---'} format='HH:mm, DD/MM/YYYY' />
 							</td>
 						</tr>
 					</table>

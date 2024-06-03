@@ -181,15 +181,21 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 									<span style={{marginRight: 6}}>{i18n.t('Team.NumberofMember')}: </span>
 									{dataDetail?.totalUser}
 								</td>
-								<td rowSpan={3} className={styles.description}>
-									<span style={{marginRight: 6}}>{i18n.t('Common.Note')}:</span>
-									{dataDetail?.notes || '---'}
+								<td>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Status')} : </span>
+									<span style={{color: dataDetail?.status == STATUS_GENERAL.SU_DUNG ? '#2CAE39' : '#EB2E2E'}}>
+										{dataDetail?.status == STATUS_GENERAL.SU_DUNG ? i18n.t('Common.Using') : i18n.t('Common.Donotuse')}
+									</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<span style={{marginRight: 6}}>{i18n.t('Team.NumberofDevices')}: </span>
 									{dataDetail?.totalDevices}
+								</td>
+								<td rowSpan={3} className={styles.description}>
+									<span style={{marginRight: 6}}>{i18n.t('Common.Note')}:</span>
+									{dataDetail?.notes || '---'}
 								</td>
 							</tr>
 							<tr>
