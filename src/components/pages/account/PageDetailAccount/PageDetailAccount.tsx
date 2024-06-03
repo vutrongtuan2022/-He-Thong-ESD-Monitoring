@@ -226,8 +226,14 @@ const PageDetailAccount = ({}: PropsPageDetailAccount) => {
 					warn
 					open={!!dataChangeStatus}
 					onClose={() => setDataChangeStatus(null)}
-					title={i18n.t('Common.Changestatus')}
-					note={i18n.t('Common.Doyouwanttochangestatus')}
+					title={
+						dataChangeStatus?.status == STATUS_GENERAL.SU_DUNG ? i18n.t('Account.LockAccount') : i18n.t('Account.UnlockAccount')
+					}
+					note={
+						dataChangeStatus?.status == STATUS_GENERAL.SU_DUNG
+							? i18n.t('Account.AreYouSureYouWantToLockAccount')
+							: i18n.t('Account.AreYouSureYouWantToUnLockAccount')
+					}
 					onSubmit={handleChangeStatusAccount}
 				/>
 

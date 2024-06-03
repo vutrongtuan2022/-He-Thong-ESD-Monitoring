@@ -145,8 +145,8 @@ export function getBatteryCapacity(battery: number | null): {toDouble: number | 
 
 	if (battery == TYPE_BATTERY['< 20%']) {
 		return {
-			fromDouble: 20,
-			toDouble: 0,
+			fromDouble: 0,
+			toDouble: 20,
 		};
 	}
 

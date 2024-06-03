@@ -110,20 +110,12 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 			<Form form={form} setForm={setForm}>
 				<Input
 					type='text'
-					placeholder={i18n.t('Area.EnterAreaCode')}
-					value={form.code}
-					name='code'
-					label={
-						<span>
-							{i18n.t('Area.AreaCode')} <span style={{color: 'red'}}>*</span>
-						</span>
-					}
-				/>
-				<Input
-					type='text'
 					placeholder={i18n.t('Area.EnterAreaName')}
 					value={form.name}
 					name='name'
+					isRequired
+					min={5}
+					max={50}
 					label={
 						<span>
 							{i18n.t('Area.AreaName')} <span style={{color: 'red'}}>*</span>
@@ -153,6 +145,8 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 				<div className='mt'>
 					<TextArea
 						name='note'
+						min={0}
+						max={255}
 						value={form.note}
 						placeholder={i18n.t('Common.EnterNote')}
 						label={<span>{i18n.t('Common.Note')} </span>}

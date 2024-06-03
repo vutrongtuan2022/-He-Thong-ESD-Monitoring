@@ -182,6 +182,9 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 								name='name'
 								value={form.name || ''}
 								type='text'
+								isRequired
+								min={5}
+								max={50}
 								label={
 									<span>
 										{i18n.t('Team.TeamName')} <span style={{color: 'red'}}>*</span>
@@ -195,6 +198,9 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 									name='code'
 									value={form.code || ''}
 									type='text'
+									isRequired
+									min={5}
+									max={20}
 									label={
 										<span>
 											{i18n.t('Team.IDTeam')} <span style={{color: 'red'}}>*</span>
@@ -272,6 +278,8 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 								<TextArea
 									name='note'
 									value={form.note}
+									min={0}
+									max={255}
 									placeholder={i18n.t('Common.EnterDescription')}
 									label={<span>{i18n.t('Common.Description')}</span>}
 								/>

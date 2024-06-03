@@ -213,6 +213,9 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 								name='name'
 								value={form.name || ''}
 								type='text'
+								isRequired
+								min={5}
+								max={50}
 								label={
 									<span>
 										{i18n.t('Team.TeamName')} <span style={{color: 'red'}}>*</span>
@@ -302,6 +305,8 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 							<div className={clsx('mt')}>
 								<TextArea
 									name='note'
+									min={5}
+									max={255}
 									value={form.note}
 									placeholder={i18n.t('Common.EnterDescription')}
 									label={<span>{i18n.t('Common.Description')} </span>}
