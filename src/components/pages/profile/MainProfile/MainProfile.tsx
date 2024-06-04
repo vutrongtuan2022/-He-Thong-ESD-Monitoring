@@ -27,6 +27,7 @@ import accountServices from '~/services/accountServices';
 import md5 from 'md5';
 import Loading from '~/components/common/Loading';
 import {toastWarn} from '~/common/funcs/toast';
+import i18n from '~/locale/i18n';
 
 function MainProfile({}: PropsMainProfile) {
 	const queryClient = useQueryClient();
@@ -55,7 +56,7 @@ function MainProfile({}: PropsMainProfile) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Thay đổi mật khẩu thành công!',
+				msgSuccess:i18n.t('Profile.PasswordChangeSuccessful'),
 				http: accountServices.changePassword({
 					uuid: infoUser?.uuid!,
 					oldPassword: md5(`${form?.oldPass}${process.env.NEXT_PUBLIC_KEY_PASS}`),
@@ -72,7 +73,7 @@ function MainProfile({}: PropsMainProfile) {
 
 	const handleSubmit = () => {
 		if (regex.test(form?.newPass) == false) {
-			return toastWarn({msg: 'Mật khẩu mới bao gồm tối thiểu 6 ký tự gồm chữ hoa, chữ thường và số.'});
+			return toastWarn({msg: i18n.t('Profile.TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers')});
 		}
 
 		return funcChangePass.mutate();
@@ -85,11 +86,11 @@ function MainProfile({}: PropsMainProfile) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.Home'),
 					},
 					{
 						path: '',
-						title: 'Chi tiết tài khoản',
+						title:i18n.t('Account.AccountDetails') ,
 					},
 				]}
 				action={
@@ -106,11 +107,10 @@ function MainProfile({}: PropsMainProfile) {
 						<div>
 							<Link href={PATH.Home} className={styles.header_title}>
 								<IoArrowBackOutline fontSize={24} fontWeight={600} />
-								<p>Chi tiết tài khoản</p>
+								<p>{i18n.t('Account.AccountDetails')}</p>
 							</Link>
 							<p className={styles.des}>
-								Chào mừng <span style={{fontWeight: 600, color: '#23262f'}}>{detailUser?.fullName}</span> đến với hệ thống
-								quản lý ESD Monitoring.
+								{i18n.t('Profile.Welcome')} <span style={{fontWeight: 600, color: '#23262f'}}>{detailUser?.fullName}</span> {i18n.t('Profile.TheESDMonitoring')} 
 							</p>
 						</div>
 						<div className={styles.list_btn}>
@@ -123,8 +123,7 @@ function MainProfile({}: PropsMainProfile) {
 								bold
 								icon={<Image alt='icon import' src={icons.icon_edit} width={20} height={20} />}
 								href={`${PATH.Profile}/${detailUser?.uuid}`}
-							>
-								Cập nhật
+							>{i18n.t('Common.Update')}
 							</Button>
 						</div>
 					</div>
@@ -165,22 +164,21 @@ function MainProfile({}: PropsMainProfile) {
 						<div className={styles.line}></div>
 
 						<div className={styles.changePass}>
-							<h5>Thay đổi mật khẩu</h5>
-							<p>Bạn có thể thay đổi mật khẩu theo ý muốn của bạn. Mật khẩu thay đổi không trùng với mật khẩu cũ.</p>
-
+							<h5>{i18n.t('Profile.ChangeThePassword')}</h5>
+							<p>{i18n.t('Profile.YouCanChangeThePasswordAccording')}</p>
 							<div className={styles.form}>
 								<Form form={form} setForm={setForm} onSubmit={handleSubmit}>
 									<Input
 										type='password'
 										name='oldPass'
 										value={form?.oldPass}
-										placeholder='Nhập mật khẩu cũ'
+										placeholder={i18n.t('Profile.EnterOldPassword')}
 										onClean
 										isRequired
 										icon={<ShieldSecurity size='20' variant='Bold' />}
 										label={
 											<span>
-												Mật khẩu cũ <span style={{color: 'red'}}>*</span>
+												{i18n.t('Profile.OldPassword')} <span style={{color: 'red'}}>*</span>
 											</span>
 										}
 									/>
@@ -190,13 +188,13 @@ function MainProfile({}: PropsMainProfile) {
 											type='password'
 											name='newPass'
 											value={form?.newPass}
-											placeholder='Nhập mật khẩu mới'
+											placeholder={i18n.t('Profile.EnterNewPassword')}
 											onClean
 											isRequired
 											icon={<ShieldSecurity size='20' variant='Bold' />}
 											label={
 												<span>
-													Nhập mật khẩu mới <span style={{color: 'red'}}>*</span>
+													{i18n.t('Profile.EnterNewPassword')} <span style={{color: 'red'}}>*</span>
 												</span>
 											}
 										/>
@@ -207,13 +205,13 @@ function MainProfile({}: PropsMainProfile) {
 												name='resPass'
 												value={form?.resPass}
 												valueConfirm={form?.newPass}
-												placeholder='Nhập lại mật khẩu'
+												placeholder={i18n.t('Profile.EnterThePassword')}
 												onClean
 												isRequired
 												icon={<ShieldSecurity size='20' variant='Bold' />}
 												label={
 													<span>
-														Xác nhận mật khẩu mới <span style={{color: 'red'}}>*</span>
+														{i18n.t('Profile.ConfirmNewPassword')} <span style={{color: 'red'}}>*</span>
 													</span>
 												}
 											/>
@@ -224,7 +222,7 @@ function MainProfile({}: PropsMainProfile) {
 										<FormContext.Consumer>
 											{({isDone}) => (
 												<Button primary bold rounded_8 disable={!isDone}>
-													Đổi mật khẩu
+												{i18n.t('Profile.ChangePassword')}	
 												</Button>
 											)}
 										</FormContext.Consumer>

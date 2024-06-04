@@ -308,8 +308,8 @@ function MainDevice({}: PropsMainDevice) {
 								name={i18n.t('Device.Status')}
 								query='_status'
 								listFilter={[
-									{id: STATUS_GENERAL.SU_DUNG, name: 'Sử dụng'},
-									{id: STATUS_GENERAL.KHONG_SU_DUNG, name: 'Không sử dụng'},
+									{id: STATUS_GENERAL.SU_DUNG, name: i18n.t('Device.InUse')},
+									{id: STATUS_GENERAL.KHONG_SU_DUNG, name: i18n.t('Device.NotInUse')},
 								]}
 							/>
 						</div>

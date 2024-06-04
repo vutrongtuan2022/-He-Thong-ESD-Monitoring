@@ -117,7 +117,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Cập nhật thành công!',
+				msgSuccess: i18n.t('Profile.UpdateSuccessful'),
 				http: accountServices.updateAccoutLogin({
 					uuid: _id as string,
 					email: form?.email,
@@ -212,11 +212,11 @@ function MainEditProfile({}: PropsMainEditProfile) {
 				listUrls={[
 					{
 						path: PATH.Home,
-						title: 'Trang chủ',
+						title: i18n.t('Common.Home'),
 					},
 					{
 						path: '',
-						title: 'Chỉnh sửa tài khoản',
+						title:i18n.t('Profile.EditAccount') ,
 					},
 				]}
 				action={
@@ -231,15 +231,15 @@ function MainEditProfile({}: PropsMainEditProfile) {
 				<div className={styles.wrapper}>
 					<div className={styles.header}>
 						<div className={styles.left}>
-							<h4>Chỉnh sửa người dùng</h4>
-							<p>Điền đầy đủ các thông tin người dùng</p>
+							<h4>{i18n.t('Profile.PasswordChangeSuccessful')}Chỉnh sửa người dùng</h4>
+							<p>{i18n.t('Profile.PasswordChangeSuccessful')}Điền đầy đủ các thông tin người dùng</p>
 						</div>
 						<div className={styles.right}>
 							<Button href={PATH.Profile} p_10_24 rounded_2 grey_outline>
-								Hủy bỏ
+								{i18n.t('Profile.PasswordChangeSuccessful')}Hủy bỏ
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								Cập nhật
+								{i18n.t('Profile.PasswordChangeSuccessful')}Cập nhật
 							</Button>
 						</div>
 					</div>
@@ -254,10 +254,10 @@ function MainEditProfile({}: PropsMainEditProfile) {
 								value={form.fullName || ''}
 								label={
 									<span>
-										Họ và tên <span style={{color: 'red'}}>*</span>
+									{i18n.t('Usr.Fullname')}<span style={{color: 'red'}}>*</span>
 									</span>
 								}
-								placeholder='Nhập tên người dùng'
+								placeholder={i18n.t('Profile.EnterUsername')}
 							/>
 							<div className={clsx('mt', 'col_2')}>
 								<Input
@@ -269,7 +269,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 											Email <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Nhập email'
+									placeholder={i18n.t('Profile.Enteremail')}
 								/>
 								<div>
 									<Input
@@ -279,10 +279,10 @@ function MainEditProfile({}: PropsMainEditProfile) {
 										value={form.phone || ''}
 										label={
 											<span>
-												Số điện thoại<span style={{color: 'red'}}>*</span>
+												{i18n.t('Common.PhoneNumber')}<span style={{color: 'red'}}>*</span>
 											</span>
 										}
-										placeholder='Nhập số điện thoại'
+										placeholder={i18n.t('Profile.Enterphonenumber')}
 									/>
 								</div>
 							</div>
@@ -292,10 +292,10 @@ function MainEditProfile({}: PropsMainEditProfile) {
 									icon={true}
 									label={
 										<span>
-											Ngày sinh <span style={{color: 'red'}}>*</span>
+											{i18n.t('Common.Dateofbirth')} <span style={{color: 'red'}}>*</span>
 										</span>
 									}
-									placeholder='Chọn ngày sinh'
+									placeholder={i18n.t('Profile.Selectdateofbirth')}
 									value={form.birthday}
 									onSetValue={(date) =>
 										setForm((prev: any) => ({
@@ -308,7 +308,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 								/>
 								<div className={styles.gennder}>
 									<label>
-										Giới tính <span style={{color: 'red'}}>*</span>
+										{i18n.t('Common.Gender')} <span style={{color: 'red'}}>*</span>
 									</label>
 									<div className={styles.group_radio}>
 										<div className={styles.item_radio}>
@@ -404,7 +404,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 							</div>
 
 							<div className={clsx('mt')}>
-								<Input name='address' value={form.address || ''} label={<span>Địa chỉ</span>} placeholder='Nhập địa chỉ' />
+								<Input name='address' value={form.address || ''} label={<span>{i18n.t('Profile.PasswordChangeSuccessful')}Địa chỉ</span>} placeholder={i18n.t('Profile.PasswordChangeSuccessful')}'Nhập địa chỉ' />
 							</div>
 						</Form>
 					</div>
