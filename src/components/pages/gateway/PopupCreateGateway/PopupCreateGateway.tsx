@@ -64,7 +64,7 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 			return toastWarn({msg: i18n.t('Gateway.VuilongnhapIDgateway')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: i18n.t('Gateway.Vuilongnhaptengateway')});
+			return toastWarn({msg: i18n.t('Gateway.PleaseEnterTheGatewayName')});
 		}
 		if (form?.description?.length > 255) {
 			return toastWarn({msg: i18n.t('Common.MaxLengthNote')});

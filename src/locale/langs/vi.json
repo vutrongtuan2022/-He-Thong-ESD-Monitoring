@@ -62,7 +62,6 @@
 		"Account": "Tài khoản",
 		"Accountcreated": "Đã cấp tài khoản",
 		"Accountnotyetissued": "Chưa cấp tài khoản",
-		"STT": "No.",
 		"BelongToTeam": "Thuộc team",
 		"Search": "Tìm kiếm",
 		"DeviceName": "Tên bộ phát",
@@ -277,7 +276,7 @@
 		"PleaseChooseManager": "Vui lòng chọn người quản lý!",
 		"PleaseEnterArea": "Vui lòng nhập khu vực quản lý!",
 		"FillinTeamInformation": "Điền đầy đủ thông tin team",
-		"NameofSuperior": "Tên cấp trên",
+		"TeamofSuperior": "Team cấp trên",
 		"ChooseManagementArea": "Chọn khu vực quản lý"
 	},
 	"Device": {

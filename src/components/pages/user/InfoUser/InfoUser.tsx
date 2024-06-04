@@ -136,7 +136,7 @@ function InfoUser({}: PropsInfoUser) {
 						<tr>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('Common.Gender')}: </span>
-								{data?.status == GENDER.NAM ? i18n.t('Common.Male') : i18n.t('Common.Female') || '---'}
+								<span>{data?.gender == GENDER.NAM ? i18n.t('Common.Male') : i18n.t('Common.Female') || '---'}</span>
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('User.Dateofbirth')} : </span>
