@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {PropsTableHistory} from './interfaces';
 import DataWrapper from '~/components/common/DataWrapper';
@@ -17,17 +17,23 @@ import styles from './TableHistory.module.scss';
 import Moment from 'react-moment';
 import {formatTimeHistory} from '~/common/funcs/optionConvert';
 import i18n from '~/locale/i18n';
+import SearchInput from '~/components/common/SearchInput';
+import useDebounce from '~/common/hooks/useDebounce';
 
 function TableHistory({}: PropsTableHistory) {
 	const router = useRouter();
 
 	const {_id, _page, _pageSize, _table} = router.query;
 
-	const listHistoryTeams = useQuery([QUERY_KEY.danh_sach_lich_su_team, _id, _page, _pageSize], {
+	const [keyword, setKeyword] = useState<string>('');
+
+	const keywordDebounce = useDebounce(keyword, 500);
+
+	const listHistoryTeams = useQuery([QUERY_KEY.danh_sach_lich_su_team, _id, _page, _pageSize, keywordDebounce], {
 		queryFn: () =>
 			httpRequest({
 				http: ngHistoryServices.listNGhistory({
-					keyword: '',
+					keyword: keywordDebounce,
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					teamUuid: _id as string,
@@ -42,6 +48,9 @@ function TableHistory({}: PropsTableHistory) {
 
 	return (
 		<div>
+			<div className={'mb'}>
+				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+			</div>
 			<DataWrapper
 				data={listHistoryTeams?.data?.items}
 				loading={listHistoryTeams.isLoading}

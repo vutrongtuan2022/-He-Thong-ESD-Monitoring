@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {PropsTableUser} from './interfaces';
 import styles from './TableUser.module.scss';
@@ -14,17 +14,23 @@ import {useRouter} from 'next/router';
 import userServices from '~/services/userServices';
 import {IUser} from '~/components/pages/user/MainPageUser/interfaces';
 import i18n from '~/locale/i18n';
+import SearchInput from '~/components/common/SearchInput';
+import useDebounce from '~/common/hooks/useDebounce';
 
 function TableUser({}: PropsTableUser) {
 	const router = useRouter();
 
 	const {_id, _page, _pageSize, _table} = router.query;
 
-	const listUserTeams = useQuery([QUERY_KEY.danh_sach_nhan_vien_team, _id, _page, _pageSize], {
+	const [keyword, setKeyword] = useState<string>('');
+
+	const keywordDebounce = useDebounce(keyword, 500);
+
+	const listUserTeams = useQuery([QUERY_KEY.danh_sach_nhan_vien_team, _id, _page, _pageSize, keywordDebounce], {
 		queryFn: () =>
 			httpRequest({
 				http: userServices.listUser({
-					keyword: '',
+					keyword: keywordDebounce,
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					teamUuid: _id as string,
@@ -43,6 +49,9 @@ function TableUser({}: PropsTableUser) {
 
 	return (
 		<div>
+			<div className={'mb'}>
+				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+			</div>
 			<DataWrapper
 				data={listUserTeams?.data?.items}
 				loading={listUserTeams.isLoading}

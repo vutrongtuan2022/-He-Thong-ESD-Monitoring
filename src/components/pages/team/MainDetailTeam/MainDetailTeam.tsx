@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {IDataDetailTeam, PropsMainDetailTeam} from './interfaces';
 import styles from './MainDetailTeam.module.scss';
@@ -23,7 +23,6 @@ import clsx from 'clsx';
 import Dialog from '~/components/common/Dialog';
 import Loading from '~/components/common/Loading';
 import i18n from '~/locale/i18n';
-import Search from '~/components/common/Search';
 
 function MainDetailTeam({}: PropsMainDetailTeam) {
 	const router = useRouter();
@@ -74,24 +73,6 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 	const handleChangeStatusTeam = async () => {
 		fucnChangeStatusTeam.mutate();
 	};
-
-	useEffect(() => {
-		const {_keyword, ...rest} = router.query;
-
-		router.replace(
-			{
-				pathname: router.pathname,
-				query: {
-					...rest,
-				},
-			},
-			undefined,
-			{
-				scroll: false,
-				shallow: false,
-			}
-		);
-	}, [_table]);
 
 	return (
 		<div className={styles.container}>
@@ -254,10 +235,6 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							},
 						]}
 					/>
-
-					<div className={'mt'}>
-						<Search keyName='_keyword' placeholder={i18n.t('Common.Search')} />
-					</div>
 
 					<div className={styles.main_table}>
 						{!_table && <TableTeam />}

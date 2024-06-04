@@ -93,6 +93,7 @@ $padding: 20px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			color: #777e90;
 		}
 
 		& + .itemGroup {
@@ -103,17 +104,17 @@ $padding: 20px;
 			color: var(--light);
 			background: var(--bg-primary);
 
-			// i {
-			// 	filter: initial;
-			// }
+			.icon {
+				color: #ffffff;
+			}
 		}
 
 		&:hover {
 			color: var(--light);
 			background: var(--bg-primary);
 
-			i {
-				filter: initial;
+			.icon {
+				color: #ffffff;
 			}
 		}
 	}
