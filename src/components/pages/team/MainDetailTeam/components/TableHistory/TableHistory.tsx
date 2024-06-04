@@ -49,7 +49,7 @@ function TableHistory({}: PropsTableHistory) {
 	return (
 		<div>
 			<div className={'mb'} style={{maxWidth: '320px'}}>
-				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+				<SearchInput placeholder={i18n.t('Common.SearchNameAndID')} keyword={keyword} setKeyword={setKeyword} />
 			</div>
 			<DataWrapper
 				data={listHistoryTeams?.data?.items}

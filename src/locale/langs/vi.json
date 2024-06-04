@@ -91,7 +91,8 @@
 		"Display": "Hiển thị",
 		"Active": "Hoạt động",
 		"NumberofDeviceCurrentlyConnected": "Số bộ phát đang kết nối",
-		"Managementarea": "Khu vực quản lý"
+		"Managementarea": "Khu vực quản lý",
+		"SearchNameAndID": "Tìm kiếm theo tên, mã"
 	},
 	"Gateway": {
 		"PlaceholderSearchDevice": "Tìm kiếm theo ID thiết bị, tên thiết bị",
@@ -156,13 +157,13 @@
 		"UnlockAccount": "Mở tài khoản",
 		"AreYouSureYouWantToUnLockAccount": "Bạn có chắc chắn muốn mở tài khoản này?",
 		"Status": "Trạng thái",
-		"PlaceholderSearchAccount": "Tìm kiếm theo tên tài khoản, mã nhân viên",
+		"PlaceholderSearchAccount": "Tìm kiếm theo email",
 		"Role": "Vai trò",
 		"AccountNotFound": "Không tìm thấy tài khoản!",
 		"AccountManagement": "Quản lý tài khoản",
 		"CurrentlyThereAreNoAccounts": "Hiện tại chưa có tài khoản nào ?",
 		"AccountDetails": "Chi tiết tài khoản",
-		"AccountGrantedSuccessfully": "Cấp tài khoản thành công!",
+		"AccountGrantedSuccessfully": "Chỉnh sửa tài khoản thành công!",
 		"PleaseChooseImage": "Vui lòng chọn ảnh!",
 		"PleaseChooseRoleAccount": "Vui lòng chọn vai trò tài khoản!",
 		"EditAccount": "Chỉnh sửa tài khoản",

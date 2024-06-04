@@ -4,7 +4,7 @@ import {PropsMainUpdateArea} from './interfaces';
 import styles from './MainUpdateArea.module.scss';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
-import Form, {Input} from '~/components/common/Form';
+import Form, {FormContext, Input} from '~/components/common/Form';
 import TextArea from '~/components/common/Form/components/TextArea';
 import {useRouter} from 'next/router';
 import Select, {Option} from '~/components/common/Select';
@@ -103,18 +103,29 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 
 	return (
 		<div className={styles.container}>
-			<Loading loading={upsertArea.isLoading} />
 			<h4>{i18n.t('Area.AreaEditing')}</h4>
-			<p className={styles.p}>{i18n.t('Area.FillInAllNecessaryInformation')}</p>
-
+			<Loading loading={upsertArea.isLoading} />
 			<Form form={form} setForm={setForm}>
+				<p className={styles.p}>{i18n.t('Area.FillInAllNecessaryInformation')}</p>
+				<Input
+					type='text'
+					placeholder={i18n.t('Area.EnterAreaCode')}
+					value={form.code}
+					name='code'
+					readOnly
+					max={50}
+					label={
+						<span>
+							{i18n.t('Area.AreaCode')} <span style={{color: 'red'}}>*</span>
+						</span>
+					}
+				/>
 				<Input
 					type='text'
 					placeholder={i18n.t('Area.EnterAreaName')}
 					value={form.name}
 					name='name'
 					isRequired
-					min={5}
 					max={50}
 					label={
 						<span>
@@ -159,11 +170,15 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
-					<div>
-						<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-							{i18n.t('Common.Confirm')}
-						</Button>
-					</div>
+					<FormContext.Consumer>
+						{({isDone}) => (
+							<div>
+								<Button disable={!isDone} p_10_24 rounded_2 primary onClick={handleSubmit}>
+									{i18n.t('Common.Confirm')}
+								</Button>
+							</div>
+						)}
+					</FormContext.Consumer>
 				</div>
 
 				<div className={styles.close} onClick={onClose}>

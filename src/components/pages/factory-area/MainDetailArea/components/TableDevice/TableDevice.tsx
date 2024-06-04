@@ -17,6 +17,7 @@ import Moment from 'react-moment';
 import StateDevice from '~/components/pages/device/StateDevice';
 import useDebounce from '~/common/hooks/useDebounce';
 import SearchInput from '~/components/common/SearchInput';
+import i18n from '~/locale/i18n';
 
 function TableDevice({}: PropsTableDevice) {
 	const router = useRouter();
@@ -54,7 +55,7 @@ function TableDevice({}: PropsTableDevice) {
 	return (
 		<div>
 			<div className={'mb'} style={{maxWidth: '320px'}}>
-				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+				<SearchInput placeholder={i18n.t('Common.SearchNameAndID')} keyword={keyword} setKeyword={setKeyword} />
 			</div>
 			<DataWrapper
 				data={listDeviceAreas?.data?.items}

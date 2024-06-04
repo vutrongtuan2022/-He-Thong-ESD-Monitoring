@@ -4,7 +4,7 @@ import {PropsMainCreateArea} from './interfaces';
 import styles from './MainCreateArea.module.scss';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
-import Form, {Input} from '~/components/common/Form';
+import Form, {FormContext, Input} from '~/components/common/Form';
 import TextArea from '~/components/common/Form/components/TextArea';
 import Select, {Option} from '~/components/common/Select';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
@@ -89,7 +89,7 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 					placeholder={i18n.t('Area.EnterAreaCode')}
 					value={form.code}
 					isRequired
-					min={5}
+					min={1}
 					max={20}
 					name='code'
 					label={
@@ -104,7 +104,7 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 					value={form.name}
 					name='name'
 					isRequired
-					min={5}
+					min={1}
 					max={50}
 					label={
 						<span>
@@ -150,11 +150,15 @@ function MainCreateArea({onClose}: PropsMainCreateArea) {
 							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
-					<div>
-						<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-							{i18n.t('Common.Confirm')}
-						</Button>
-					</div>
+					<FormContext.Consumer>
+						{({isDone}) => (
+							<div>
+								<Button disable={!isDone} p_10_24 rounded_2 primary onClick={handleSubmit}>
+									{i18n.t('Common.Confirm')}
+								</Button>
+							</div>
+						)}
+					</FormContext.Consumer>
 				</div>
 
 				<div className={styles.close} onClick={onClose}>

@@ -17,6 +17,7 @@ import {IArea} from '../../../TableArea/interfaces';
 import Moment from 'react-moment';
 import useDebounce from '~/common/hooks/useDebounce';
 import SearchInput from '~/components/common/SearchInput';
+import i18n from '~/locale/i18n';
 
 function TableChildArea({}: PropsTableChildArea) {
 	const router = useRouter();
@@ -31,10 +32,10 @@ function TableChildArea({}: PropsTableChildArea) {
 		queryFn: () =>
 			httpRequest({
 				http: areaServices.getChildArea({
+					keyword: keywordDebounce,
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					uuid: _id as string,
-					keyword: keywordDebounce,
 				}),
 			}),
 		select(data) {
@@ -46,7 +47,7 @@ function TableChildArea({}: PropsTableChildArea) {
 	return (
 		<div>
 			<div className={'mb'} style={{maxWidth: '320px'}}>
-				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+				<SearchInput placeholder={i18n.t('Common.SearchNameAndID')} keyword={keyword} setKeyword={setKeyword} />
 			</div>
 			<DataWrapper
 				data={listAreaChild?.data?.items}

@@ -121,7 +121,6 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 					}
 					placeholder={i18n.t('Device.EnterDeviceMacAddress')}
 					isRequired
-					min={5}
 					max={50}
 					name='macNumber'
 					value={form.macNumber}
@@ -135,7 +134,6 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 					}
 					placeholder={i18n.t('Device.EnterNewDeviceName')}
 					isRequired
-					min={2}
 					max={50}
 					name='name'
 					value={form.name}
