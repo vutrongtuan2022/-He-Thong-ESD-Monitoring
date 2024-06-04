@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {PropsTableChildArea} from './interfaces';
 import DataWrapper from '~/components/common/DataWrapper';
@@ -15,19 +15,26 @@ import Link from 'next/link';
 import areaServices from '~/services/areaServices';
 import {IArea} from '../../../TableArea/interfaces';
 import Moment from 'react-moment';
+import useDebounce from '~/common/hooks/useDebounce';
+import SearchInput from '~/components/common/SearchInput';
 
 function TableChildArea({}: PropsTableChildArea) {
 	const router = useRouter();
 
 	const {_id, _page, _pageSize, _table} = router.query;
 
-	const listAreaChild = useQuery([QUERY_KEY.danh_sach_khu_vuc_con, _page, _id, _pageSize], {
+	const [keyword, setKeyword] = useState<string>('');
+
+	const keywordDebounce = useDebounce(keyword, 500);
+
+	const listAreaChild = useQuery([QUERY_KEY.danh_sach_khu_vuc_con, _page, keywordDebounce, _id, _pageSize], {
 		queryFn: () =>
 			httpRequest({
 				http: areaServices.getChildArea({
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					uuid: _id as string,
+					keyword: keywordDebounce,
 				}),
 			}),
 		select(data) {
@@ -38,6 +45,9 @@ function TableChildArea({}: PropsTableChildArea) {
 
 	return (
 		<div>
+			<div className={'mb'} style={{maxWidth: '320px'}}>
+				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+			</div>
 			<DataWrapper
 				data={listAreaChild?.data?.items}
 				loading={listAreaChild.isLoading}

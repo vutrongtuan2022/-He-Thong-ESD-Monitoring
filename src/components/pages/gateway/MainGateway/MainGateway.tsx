@@ -100,10 +100,10 @@ function MainGateway({}: PropsMainGateway) {
 
 	const handleImportExcel = async () => {
 		const dataConvert: IDataExcelGetway[] = dataExcel?.map((v: any) => ({
-			code: v['Code'],
-			name: v['Name'],
-			factoryArea: v['FactoryArea'],
-			notes: v['Notes'],
+			code: v['Mã gateway'],
+			name: v['Tên gateway'],
+			factoryArea: v['Tên khu vực quản lý'],
+			notes: v['Ghi chú'],
 		}));
 
 		// Check require code, name
