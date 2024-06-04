@@ -256,7 +256,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 				open={openChangeStatus}
 				onClose={() => setOpenChangeStatus(false)}
 				title={i18n.t('Common.Changestatus')}
-				note={i18n.t('Area.DoyouwanttochangestatusTeam')}
+				note={i18n.t('Area.DoyouwanttochangestatusArea')}
 				onSubmit={handleChangeStatusTeam}
 			/>
 

@@ -140,7 +140,7 @@ function InfoUser({}: PropsInfoUser) {
 							</td>
 							<td>
 								<span style={{marginRight: 6}}>{i18n.t('User.Dateofbirth')} : </span>
-								<Moment date={data?.birthday || '---'} format='DD/MM/YYYY' />
+								{data?.birthday ? <Moment date={data.birthday} format='DD/MM/YYYY' /> : '---'}
 							</td>
 						</tr>
 						<tr>

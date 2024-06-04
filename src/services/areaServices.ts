@@ -73,6 +73,7 @@ const areaServices = {
 			pageSize: number;
 			page: number;
 			uuid: string;
+			keyword: string;
 		},
 		tokenAxios?: any
 	) => {

@@ -94,6 +94,7 @@
 		"Managementarea": "Khu vực quản lý"
 	},
 	"Gateway": {
+		"PlaceholderSearchDevice": "Tìm kiếm theo ID thiết bị, tên thiết bị",
 		"WorkGateway": "Hoạt động",
 		"StatusGateway": "Trạng thái",
 		"StatusGatewayUsed": "Trạng thái sử dụng",
@@ -352,6 +353,7 @@
 		"TransmitterAddedSuccessfully": "Thêm mới bộ phát thành công!"
 	},
 	"Area": {
+		"DoyouwanttochangestatusTeam": "Bạn có chắc chắn muốn thay đổi trạng thái cho team này?",
 		"Area": "Khu vực",
 		"SuccessfullyAddedNewArea": "Thêm mới khu vực thành công",
 		"PleaseEnterCodeOnly": "Vui lòng nhập code! ",
