@@ -10,7 +10,7 @@ import AvatarChange from '~/components/common/AvatarChange';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import accountServices from '~/services/accountServices';
-import {QUERY_KEY, STATUS_GENERAL, TYPE_UPLOAD} from '~/constants/config/enum';
+import {QUERY_KEY, TYPE_UPLOAD} from '~/constants/config/enum';
 import categoryServices from '~/services/categoryServices';
 import Loading from '~/components/common/Loading';
 import {toastWarn} from '~/common/funcs/toast';
@@ -50,7 +50,7 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 		});
 	}, [dataUpdateAccount]);
 
-	const funcCreateAccount = useMutation({
+	const funcUpdateAccount = useMutation({
 		mutationFn: (body: {avatar: string}) =>
 			httpRequest({
 				showMessageFailed: true,
@@ -59,12 +59,14 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 				http: accountServices.updateAccount({
 					uuid: dataUpdateAccount?.uuid!,
 					roleUuid: form.roleUuid,
+					imagesUuid: body.avatar,
 				}),
 			}),
 		onSuccess(data) {
 			if (data) {
 				onClose();
 				queryClient.invalidateQueries([QUERY_KEY.chi_tiet_tai_khoan]);
+				queryClient.invalidateQueries([QUERY_KEY.danh_sach_tai_khoan]);
 				queryClient.invalidateQueries([QUERY_KEY.danh_sach_nhan_vien]);
 			}
 		},
@@ -90,11 +92,15 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 				}),
 			});
 
-			return funcCreateAccount.mutate({
+			if (!resImage) {
+				return toastWarn({msg: i18n.t('Common.UploadError')});
+			}
+
+			return funcUpdateAccount.mutate({
 				avatar: resImage,
 			});
 		} else {
-			return funcCreateAccount.mutate({
+			return funcUpdateAccount.mutate({
 				avatar: form.avatar,
 			});
 		}
@@ -102,12 +108,12 @@ function UpdateAccount({dataUpdateAccount, onClose}: PropsUpdateAccount) {
 
 	return (
 		<div className={styles.container}>
-			<Loading loading={loading || funcCreateAccount.isLoading} />
+			<Loading loading={loading || funcUpdateAccount.isLoading} />
 			<h4>{i18n.t('Account.EditAccount')}</h4>
 			<p className={styles.p}>{i18n.t('Common.FillInAllNecessaryInformation')}</p>
 			<Form form={form} setForm={setForm}>
 				<div className={'mb'}>
-					{/* <AvatarChange path={form?.avatar} name='avatar' onSetFile={(file: any) => setFile(file)} /> */}
+					<AvatarChange path={form?.avatar} name='avatar' onSetFile={(file: any) => setFile(file)} />
 				</div>
 				<Input
 					readOnly

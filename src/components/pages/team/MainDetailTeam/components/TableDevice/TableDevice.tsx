@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {PropsTableDevice} from './interfaces';
 import styles from './TableDevice.module.scss';
@@ -16,17 +16,23 @@ import {IDevice} from '~/components/pages/device/MainDevice/interfaces';
 import Moment from 'react-moment';
 import StateDevice from '~/components/pages/device/StateDevice';
 import i18n from '~/locale/i18n';
+import SearchInput from '~/components/common/SearchInput';
+import useDebounce from '~/common/hooks/useDebounce';
 
 function TableDevice({}: PropsTableDevice) {
 	const router = useRouter();
 
 	const {_id, _page, _pageSize, _table} = router.query;
 
-	const listDeviceTeams = useQuery([QUERY_KEY.danh_sach_bo_phat_team, _id, _page, _pageSize], {
+	const [keyword, setKeyword] = useState<string>('');
+
+	const keywordDebounce = useDebounce(keyword, 500);
+
+	const listDeviceTeams = useQuery([QUERY_KEY.danh_sach_bo_phat_team, _id, _page, _pageSize, keywordDebounce], {
 		queryFn: () =>
 			httpRequest({
 				http: deviceServices.listDevice({
-					keyword: '',
+					keyword: keywordDebounce,
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					teamUuid: _id as string,
@@ -48,6 +54,9 @@ function TableDevice({}: PropsTableDevice) {
 
 	return (
 		<div>
+			<div className={'mb'}>
+				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+			</div>
 			<DataWrapper
 				data={listDeviceTeams?.data?.items}
 				loading={listDeviceTeams.isLoading}

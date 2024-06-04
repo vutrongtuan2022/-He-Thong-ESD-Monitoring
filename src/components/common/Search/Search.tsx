@@ -5,8 +5,9 @@ import {GrSearch} from 'react-icons/gr';
 import clsx from 'clsx';
 import styles from './Search.module.scss';
 import {useRouter} from 'next/router';
+import i18n from '~/locale/i18n';
 
-function Search({isNumber = false, placeholder = 'Nhập từ khoá tìm kiếm', keyName = '_q'}: PropsSearch) {
+function Search({isNumber = false, placeholder = i18n.t('Common.Search'), keyName = '_q'}: PropsSearch) {
 	const router = useRouter();
 	const [keyword, setKeyword] = useState<string>('');
 	const [isFocus, setIsfocus] = useState<boolean>(false);

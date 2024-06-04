@@ -92,6 +92,10 @@ function CreateAccountFromUser({dataCreateAccount, onClose}: PropsCreateAccountF
 			}),
 		});
 
+		if (!resImage) {
+			return toastWarn({msg: i18n.t('Common.UploadError')});
+		}
+
 		return funcCreateAccount.mutate({
 			avatar: resImage,
 		});
