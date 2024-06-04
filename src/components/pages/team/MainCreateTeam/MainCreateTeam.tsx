@@ -191,7 +191,7 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 								value={form.name || ''}
 								type='text'
 								isRequired
-								min={5}
+								min={2}
 								max={50}
 								label={
 									<span>
@@ -207,7 +207,7 @@ function MainCreateTeam({}: PropsMainCreateTeam) {
 									value={form.code || ''}
 									type='text'
 									isRequired
-									min={5}
+									min={2}
 									max={20}
 									label={
 										<span>

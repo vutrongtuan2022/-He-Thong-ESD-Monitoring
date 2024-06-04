@@ -234,6 +234,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 
 							<div className={clsx('mt', 'col_2')}>
 								<Input
+									readOnly
 									name='code'
 									value={form.code || ''}
 									type='text'

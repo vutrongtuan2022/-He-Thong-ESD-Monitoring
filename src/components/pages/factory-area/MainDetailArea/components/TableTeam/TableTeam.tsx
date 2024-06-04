@@ -15,6 +15,7 @@ import Table from '~/components/common/Table';
 import Link from 'next/link';
 import useDebounce from '~/common/hooks/useDebounce';
 import SearchInput from '~/components/common/SearchInput';
+import i18n from '~/locale/i18n';
 
 function TableTeam({}: PropsTableTeam) {
 	const router = useRouter();
@@ -46,7 +47,7 @@ function TableTeam({}: PropsTableTeam) {
 	return (
 		<div>
 			<div className={'mb'} style={{maxWidth: '320px'}}>
-				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+				<SearchInput placeholder={i18n.t('Common.SearchNameAndID')} keyword={keyword} setKeyword={setKeyword} />
 			</div>
 			<DataWrapper
 				data={listTeamArea?.data?.items}
