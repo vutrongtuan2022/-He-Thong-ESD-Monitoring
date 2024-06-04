@@ -44,7 +44,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Chỉnh sửa gateway thành công!',
+				msgSuccess: i18n.t('Gateway.EditedGatewaysuccessfully'),
 				http: gatewayServices.upsertGateway({
 					uuid: form.uuid,
 					code: form.code,
@@ -75,7 +75,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 
 	const handleSubmit = async () => {
 		if (!form.code) {
-			return toastWarn({msg: i18n.t('Gateway.VuilongnhapIDgateway')});
+			return toastWarn({msg: i18n.t('Gateway.PleaseEnterTheGatewayID')});
 		}
 		if (!form.name) {
 			return toastWarn({msg: i18n.t('Gateway.PleaseEnterTheGatewayName')});
