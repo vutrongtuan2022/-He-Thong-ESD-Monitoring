@@ -48,7 +48,7 @@ function TableHistory({}: PropsTableHistory) {
 
 	return (
 		<div>
-			<div className={'mb'}>
+			<div className={'mb'} style={{maxWidth: '320px'}}>
 				<SearchInput keyword={keyword} setKeyword={setKeyword} />
 			</div>
 			<DataWrapper

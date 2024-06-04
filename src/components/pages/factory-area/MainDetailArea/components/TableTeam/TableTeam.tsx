@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {ITeamChild, PropsTableTeam} from './interfaces';
 import DataWrapper from '~/components/common/DataWrapper';
@@ -13,20 +13,26 @@ import Noti from '~/components/common/DataWrapper/components/Noti';
 import Pagination from '~/components/common/Pagination';
 import Table from '~/components/common/Table';
 import Link from 'next/link';
+import useDebounce from '~/common/hooks/useDebounce';
+import SearchInput from '~/components/common/SearchInput';
 
 function TableTeam({}: PropsTableTeam) {
 	const router = useRouter();
 
 	const {_id, _page, _pageSize, _table} = router.query;
 
-	const listTeamArea = useQuery([QUERY_KEY.danh_sach_team_khu_vuc, _page, _id, _pageSize], {
+	const [keyword, setKeyword] = useState<string>('');
+
+	const keywordDebounce = useDebounce(keyword, 500);
+
+	const listTeamArea = useQuery([QUERY_KEY.danh_sach_team_khu_vuc, _page, keywordDebounce, _id, _pageSize], {
 		queryFn: () =>
 			httpRequest({
 				http: teamServices.pageListTeam({
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
 					areaUuid: _id as string,
-					keyword: '',
+					keyword: keywordDebounce,
 					leaderUuid: null,
 					status: null,
 				}),
@@ -39,6 +45,9 @@ function TableTeam({}: PropsTableTeam) {
 
 	return (
 		<div>
+			<div className={'mb'} style={{maxWidth: '320px'}}>
+				<SearchInput keyword={keyword} setKeyword={setKeyword} />
+			</div>
 			<DataWrapper
 				data={listTeamArea?.data?.items}
 				loading={listTeamArea.isLoading}

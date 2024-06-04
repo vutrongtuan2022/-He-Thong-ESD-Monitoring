@@ -128,7 +128,7 @@ function MainPageUser({}: PropsMainPageUser) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.Importfilethanhcong'),
+				msgSuccess: i18n.t('Common.FileImportedSuccessfully'),
 				http: userServices.importExcel({
 					FileData: file,
 					Type: 1,

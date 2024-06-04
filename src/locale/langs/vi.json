@@ -94,6 +94,7 @@
 		"Managementarea": "Khu vực quản lý"
 	},
 	"Gateway": {
+		"PlaceholderSearchDevice": "Tìm kiếm theo ID thiết bị, tên thiết bị",
 		"WorkGateway": "Hoạt động",
 		"StatusGateway": "Trạng thái",
 		"StatusGatewayUsed": "Trạng thái sử dụng",

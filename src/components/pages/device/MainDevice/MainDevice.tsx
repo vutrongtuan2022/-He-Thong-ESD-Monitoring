@@ -140,7 +140,7 @@ function MainDevice({}: PropsMainDevice) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Device.importfilethanhcong'),
+				msgSuccess: i18n.t('Common.FileImportedSuccessfully'),
 				http: deviceServices.importExcel({
 					FileData: file,
 					Type: 1,
@@ -383,14 +383,15 @@ function MainDevice({}: PropsMainDevice) {
 											</>
 										),
 									},
+
 									{
 										title: i18n.t('Common.Status'),
 										render: (data: IDevice) => (
 											<>
-												{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
+												{data?.status == STATUS_GENERAL.SU_DUNG ? (
 													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Device.InUse')}</p>
-												) : data.ngStatus == STATE_DEVICE_NG.BI_NG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.NotGood')}</p>
+												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
+													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.NotInUse')}</p>
 												) : (
 													'---'
 												)}
@@ -401,9 +402,9 @@ function MainDevice({}: PropsMainDevice) {
 										title: i18n.t('Device.Condition'),
 										render: (data: IDevice) => (
 											<>
-												{data?.status == STATUS_GENERAL.SU_DUNG ? (
+												{data?.ngStatus == STATE_DEVICE_NG.KHONG_NG ? (
 													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Device.Normal')}</p>
-												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
+												) : data.ngStatus == STATE_DEVICE_NG.BI_NG ? (
 													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.NotGood')}</p>
 												) : (
 													'---'
