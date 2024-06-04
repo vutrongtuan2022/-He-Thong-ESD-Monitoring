@@ -7,7 +7,7 @@ import {PATH} from '~/constants/config';
 import {BsThreeDots} from 'react-icons/bs';
 import WrapperContainer from '~/components/layouts/WrapperContainer';
 import Button from '~/components/common/Button';
-import Form, {Input} from '~/components/common/Form';
+import Form, {FormContext, Input} from '~/components/common/Form';
 import clsx from 'clsx';
 import Select, {Option} from '~/components/common/Select';
 import TextArea from '~/components/common/Form/components/TextArea';
@@ -191,24 +191,32 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 				}
 			/>
 			<WrapperContainer>
-				<div className={styles.container}>
-					<div className={styles.header}>
-						<div className={styles.left}>
-							<h4>{i18n.t('Team.EditTeam')}</h4>
-							<p>{i18n.t('Team.FillinTeamInformation')}</p>
+				<Form form={form} setForm={setForm}>
+					<div className={styles.container}>
+						<div className={styles.header}>
+							<div className={styles.left}>
+								<h4>{i18n.t('Team.EditTeam')}</h4>
+								<p>{i18n.t('Team.FillinTeamInformation')}</p>
+							</div>
+							<div className={styles.right}>
+								<div>
+									<Button href={PATH.Team} p_10_24 rounded_2 grey_outline>
+										{i18n.t('Common.Cancel')}
+									</Button>
+								</div>
+								<FormContext.Consumer>
+									{({isDone}) => (
+										<div>
+											<Button disable={!isDone} p_10_24 rounded_2 primary onClick={handleSubmit}>
+												{i18n.t('Common.Update')}
+											</Button>
+										</div>
+									)}
+								</FormContext.Consumer>
+							</div>
 						</div>
-						<div className={styles.right}>
-							<Button href={PATH.Team} p_10_24 rounded_2 grey_outline>
-								{i18n.t('Common.Cancel')}
-							</Button>
-							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								{i18n.t('Common.Update')}
-							</Button>
-						</div>
-					</div>
-					<Loading loading={upsertTeam.isLoading} />
-					<div className={styles.form}>
-						<Form form={form} setForm={setForm}>
+						<Loading loading={upsertTeam.isLoading} />
+						<div className={styles.form}>
 							<Input
 								name='name'
 								value={form.name || ''}
@@ -265,7 +273,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 									<Select
 										isSearch
 										name='parentUuid'
-										placeholder={i18n.t('Team.NameofSuperior')}
+										placeholder={i18n.t('Team.TeamofSuperior')}
 										value={form?.parentUuid || null}
 										onChange={(e: any) =>
 											setForm((prev: any) => ({
@@ -273,7 +281,7 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 												parentUuid: e.target.value,
 											}))
 										}
-										label={<span>{i18n.t('Team.NameofSuperior')}</span>}
+										label={<span>{i18n.t('Team.TeamofSuperior')}</span>}
 									>
 										{listTeams.data?.map((v: any) => (
 											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
@@ -312,9 +320,9 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 									label={<span>{i18n.t('Common.Description')} </span>}
 								/>
 							</div>
-						</Form>
+						</div>
 					</div>
-				</div>
+				</Form>
 			</WrapperContainer>
 		</Fragment>
 	);

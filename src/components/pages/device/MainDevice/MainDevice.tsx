@@ -24,7 +24,7 @@ import Popup from '~/components/common/Popup';
 import FormCreateTransmitter from '../FormCreateDevice';
 import FormUpdateTransmitter from '../FormUpdateDevice';
 import Link from 'next/link';
-import {QUERY_KEY, STATE_DEVICE_NG, STATE_ONLINE_DEVICE, STATUS_GENERAL, TYPE_BATTERY} from '~/constants/config/enum';
+import {QUERY_KEY, STATE_DEVICE_NG, STATE_GATEWAY, STATE_ONLINE_DEVICE, STATUS_GENERAL, TYPE_BATTERY} from '~/constants/config/enum';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import deviceServices from '~/services/deviceServices';
@@ -370,7 +370,18 @@ function MainDevice({}: PropsMainDevice) {
 									},
 									{
 										title: i18n.t('Common.Active'),
-										render: (data: IDevice) => <StateDevice status={data.state} />,
+										// render: (data: IDevice) => <StateDevice status={data.state} />,
+										render: (data: IDevice) => (
+											<>
+												{data?.ngStatus == STATE_GATEWAY.ONLINE ? (
+													<p style={{color: '#35C244', fontWeight: 600}}>Online</p>
+												) : data.ngStatus == STATE_GATEWAY.OFFLINE ? (
+													<p style={{color: '#E85A5A', fontWeight: 600}}>Offline</p>
+												) : (
+													'---'
+												)}
+											</>
+										),
 									},
 									{
 										title: i18n.t('Common.Status'),
@@ -387,13 +398,13 @@ function MainDevice({}: PropsMainDevice) {
 										),
 									},
 									{
-										title: i18n.t('Common.Status'),
+										title: i18n.t('Device.Condition'),
 										render: (data: IDevice) => (
 											<>
 												{data?.status == STATUS_GENERAL.SU_DUNG ? (
-													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Common.Using')}</p>
+													<p style={{color: '#35C244', fontWeight: 600}}>{i18n.t('Device.Normal')}</p>
 												) : data.status == STATUS_GENERAL.KHONG_SU_DUNG ? (
-													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Common.Donotuse')}</p>
+													<p style={{color: '#E85A5A', fontWeight: 600}}>{i18n.t('Device.NotGood')}</p>
 												) : (
 													'---'
 												)}

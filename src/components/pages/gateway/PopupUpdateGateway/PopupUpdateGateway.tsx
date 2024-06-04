@@ -4,7 +4,7 @@ import styles from './PopupUpdateGateway.module.scss';
 import clsx from 'clsx';
 import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
-import Form, {Input} from '~/components/common/Form';
+import Form, {FormContext, Input} from '~/components/common/Form';
 import TextArea from '~/components/common/Form/components/TextArea';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
@@ -78,7 +78,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 			return toastWarn({msg: i18n.t('Gateway.VuilongnhapIDgateway')});
 		}
 		if (!form.name) {
-			return toastWarn({msg: i18n.t('Gateway.Vuilongnhaptengateway')});
+			return toastWarn({msg: i18n.t('Gateway.PleaseEnterTheGatewayName')});
 		}
 		if (form?.description?.length > 255) {
 			return toastWarn({msg: i18n.t('Common.MaxLengthNote')});
@@ -111,7 +111,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 					placeholder={i18n.t('Gateway.EnterGatewayName')}
 					name='name'
 					isRequired
-					min={5}
+					min={2}
 					max={50}
 					label={
 						<span>
@@ -134,11 +134,15 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
-					<div>
-						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							{i18n.t('Common.Update')}
-						</Button>
-					</div>
+					<FormContext.Consumer>
+						{({isDone}) => (
+							<div>
+								<Button disable={!isDone} p_10_24 rounded_6 primary onClick={handleSubmit}>
+									{i18n.t('Common.Update')}
+								</Button>
+							</div>
+						)}
+					</FormContext.Consumer>
 				</div>
 
 				<div className={styles.close} onClick={onClose}>

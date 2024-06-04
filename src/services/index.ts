@@ -76,7 +76,7 @@ export const httpRequest = async ({
 			throw res?.error?.message;
 		}
 	} catch (err: any) {
-		if (err?.status === 401) {
+		if (err?.status === 401 || err?.status === 403) {
 			store.dispatch(logout());
 			store.dispatch(setInfoUser(null));
 		} else if (typeof err == 'string') {

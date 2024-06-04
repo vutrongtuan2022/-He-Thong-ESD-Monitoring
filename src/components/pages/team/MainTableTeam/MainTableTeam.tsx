@@ -84,6 +84,10 @@ function MainTableTeam({}: PropsMainTableTeam) {
 							title: i18n.t('Common.No'),
 							render: (data: ITeam, index: number) => <>{index + 1}</>,
 						},
+						{
+							title: i18n.t('Overview.TeamCode'),
+							render: (data: ITeam) => <>{data.code || '---'}</>,
+						},
 
 						{
 							title: i18n.t('Team.TeamName'),

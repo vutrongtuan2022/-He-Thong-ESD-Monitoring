@@ -103,21 +103,22 @@ function PopupAssignDevice({onClose}: PropsPopupAssignDevice) {
 					</Select>
 				</div>
 				<div className='mt'>
-					<TextArea name='note' value={form.note} label={i18n.t('Device.Options')} placeholder={i18n.t('Common.EnterNote')} />
+					<TextArea name='note' value={form.note} label={i18n.t('Common.Note')} placeholder={i18n.t('Common.EnterNote')} />
+				</div>
+				<div className={styles.btn}>
+					<div>
+						<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
+							{i18n.t('Common.Cancel')}
+						</Button>
+					</div>
+					<div>
+						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
+							{i18n.t('Common.Confirm')}
+						</Button>
+					</div>
 				</div>
 			</Form>
-			<div className={styles.btn}>
-				<div>
-					<Button p_10_24 rounded_6 grey_outline onClick={onClose}>
-						{i18n.t('Common.Cancel')}
-					</Button>
-				</div>
-				<div>
-					<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-						{i18n.t('Common.Confirm')}
-					</Button>
-				</div>
-			</div>
+
 			<div className={styles.close} onClick={onClose}>
 				<IoClose />
 			</div>

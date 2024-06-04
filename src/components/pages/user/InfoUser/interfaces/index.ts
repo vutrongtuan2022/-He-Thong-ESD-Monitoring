@@ -9,13 +9,13 @@ export interface IUserDetail {
 	email: string | null;
 	phone: string | null;
 	address: string | null;
-	birthday: '2024-05-22';
+	birthday: string | null;
 	avatar: string | null;
 	regencyUuid: string | null;
 	regency: string | null;
 	status: number;
 	leadName: string | null;
 	code: string | null;
-	timeCreated: '2024-05-22T03:00:57.249Z';
+	timeCreated: string | null;
 	teamName: string | null;
 }

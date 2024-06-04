@@ -84,7 +84,7 @@ function TableArea({}: PropsTableArea) {
 					data={pageListAreas?.data?.items}
 					column={[
 						{
-							title: i18n.t('Common.STT'),
+							title: i18n.t('Common.No'),
 							render: (data: IArea, index: number) => <>{index + 1}</>,
 						},
 						{

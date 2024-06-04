@@ -18,13 +18,14 @@ import i18n from '~/locale/i18n';
 function TableTeam({}: PropsTableTeam) {
 	const router = useRouter();
 
-	const {_id, _page, _pageSize, _table} = router.query;
+	const {_id, _page, _pageSize, _keyword, _table} = router.query;
 
-	const listTeamChild = useQuery([QUERY_KEY.danh_sach_team_con, _page, _id, _pageSize], {
+	const listTeamChild = useQuery([QUERY_KEY.danh_sach_team_con, _page, _keyword, _id, _pageSize], {
 		queryFn: () =>
 			httpRequest({
 				http: teamServices.listTeamChild({
 					page: Number(_page) || 1,
+					keyword: _keyword ? (_keyword as string) : '',
 					pageSize: Number(_pageSize) || 20,
 					uuid: _id as string,
 				}),

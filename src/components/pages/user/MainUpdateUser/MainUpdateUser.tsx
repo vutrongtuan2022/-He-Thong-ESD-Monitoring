@@ -2,7 +2,7 @@ import React, {Fragment, useState} from 'react';
 import {IFormUpdate, PropsMainUpdateUser} from './interfaces';
 import styles from './MainUpdateUser.module.scss';
 import Button from '~/components/common/Button';
-import Form, {Input} from '~/components/common/Form';
+import Form, {FormContext, Input} from '~/components/common/Form';
 import clsx from 'clsx';
 import Select, {Option} from '~/components/common/Select';
 import {PATH} from '~/constants/config';
@@ -177,23 +177,31 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 				]}
 			/>
 			<WrapperContainer>
-				<div className={styles.container}>
-					<div className={styles.header}>
-						<div className={styles.left}>
-							<h4>{i18n.t('User.Edituser')}</h4>
-							<p>{i18n.t('User.Fillinuserinformationcompletely')}</p>
+				<Form form={form} setForm={setForm}>
+					<div className={styles.container}>
+						<div className={styles.header}>
+							<div className={styles.left}>
+								<h4>{i18n.t('User.Edituser')}</h4>
+								<p>{i18n.t('User.Fillinuserinformationcompletely')}</p>
+							</div>
+							<div className={styles.right}>
+								<div>
+									<Button href={PATH.User} p_10_24 rounded_2 grey_outline>
+										{i18n.t('Common.Cancel')}
+									</Button>
+								</div>
+								<FormContext.Consumer>
+									{({isDone}) => (
+										<div>
+											<Button disable={!isDone} p_10_24 rounded_2 primary onClick={handleSubmit}>
+												{i18n.t('Common.Save')}
+											</Button>
+										</div>
+									)}
+								</FormContext.Consumer>
+							</div>
 						</div>
-						<div className={styles.right}>
-							<Button href={PATH.User} p_10_24 rounded_2 grey_outline>
-								{i18n.t('Common.Cancel')}
-							</Button>
-							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								{i18n.t('Common.Save')}
-							</Button>
-						</div>
-					</div>
-					<div className={styles.form}>
-						<Form form={form} setForm={setForm}>
+						<div className={styles.form}>
 							<div className={clsx('col_2')}>
 								<div>
 									<Input
@@ -374,9 +382,9 @@ const MainUpdateUser = ({}: PropsMainUpdateUser) => {
 									placeholder={i18n.t('Common.Enteraddress')}
 								/>
 							</div>
-						</Form>
+						</div>
 					</div>
-				</div>
+				</Form>
 			</WrapperContainer>
 		</Fragment>
 	);

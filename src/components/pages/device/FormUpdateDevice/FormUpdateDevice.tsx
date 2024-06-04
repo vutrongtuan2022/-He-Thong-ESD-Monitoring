@@ -135,7 +135,7 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 					}
 					placeholder={i18n.t('Device.EnterNewDeviceName')}
 					isRequired
-					min={5}
+					min={2}
 					max={50}
 					name='name'
 					value={form.name}
@@ -167,11 +167,15 @@ function FormUpdateDevice({dataUpdate, onClose}: PropsFormUpdateDevice) {
 							{i18n.t('Common.Cancel')}
 						</Button>
 					</div>
-					<div>
-						<Button p_10_24 rounded_6 primary onClick={handleSubmit}>
-							{i18n.t('Common.Update')}
-						</Button>
-					</div>
+					<FormContext.Consumer>
+						{({isDone}) => (
+							<div>
+								<Button disable={!isDone} p_10_24 rounded_6 primary onClick={handleSubmit}>
+									{i18n.t('Common.Update')}
+								</Button>
+							</div>
+						)}
+					</FormContext.Consumer>
 				</div>
 
 				<div className={styles.close} onClick={onClose}>
