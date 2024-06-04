@@ -349,6 +349,7 @@
 		"TransmitterAddedSuccessfully": "Thêm mới bộ phát thành công!"
 	},
 	"Area": {
+		"DoyouwanttochangestatusTeam": "Bạn có chắc chắn muốn thay đổi trạng thái cho team này?",
 		"SuccessfullyAddedNewArea": "Thêm mới khu vực thành công",
 		"PleaseEnterCodeOnly": "Vui lòng nhập code! ",
 		"PleaseEnterAName": " Vui lòng nhập tên!",
