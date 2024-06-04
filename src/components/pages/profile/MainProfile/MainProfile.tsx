@@ -56,7 +56,7 @@ function MainProfile({}: PropsMainProfile) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess:i18n.t('Profile.PasswordChangeSuccessful'),
+				msgSuccess: i18n.t('Profile.PasswordChangeSuccessful'),
 				http: accountServices.changePassword({
 					uuid: infoUser?.uuid!,
 					oldPassword: md5(`${form?.oldPass}${process.env.NEXT_PUBLIC_KEY_PASS}`),
@@ -73,7 +73,9 @@ function MainProfile({}: PropsMainProfile) {
 
 	const handleSubmit = () => {
 		if (regex.test(form?.newPass) == false) {
-			return toastWarn({msg: i18n.t('Profile.TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers')});
+			return toastWarn({
+				msg: i18n.t('Profile.TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers'),
+			});
 		}
 
 		return funcChangePass.mutate();
@@ -90,7 +92,7 @@ function MainProfile({}: PropsMainProfile) {
 					},
 					{
 						path: '',
-						title:i18n.t('Account.AccountDetails') ,
+						title: i18n.t('Account.AccountDetails'),
 					},
 				]}
 				action={
@@ -110,7 +112,8 @@ function MainProfile({}: PropsMainProfile) {
 								<p>{i18n.t('Account.AccountDetails')}</p>
 							</Link>
 							<p className={styles.des}>
-								{i18n.t('Profile.Welcome')} <span style={{fontWeight: 600, color: '#23262f'}}>{detailUser?.fullName}</span> {i18n.t('Profile.TheESDMonitoring')} 
+								{i18n.t('Profile.Welcome')} <span style={{fontWeight: 600, color: '#23262f'}}>{detailUser?.fullName}</span>{' '}
+								{i18n.t('Profile.TheESDMonitoring')}
 							</p>
 						</div>
 						<div className={styles.list_btn}>
@@ -123,7 +126,8 @@ function MainProfile({}: PropsMainProfile) {
 								bold
 								icon={<Image alt='icon import' src={icons.icon_edit} width={20} height={20} />}
 								href={`${PATH.Profile}/${detailUser?.uuid}`}
-							>{i18n.t('Common.Update')}
+							>
+								{i18n.t('Common.Update')}
 							</Button>
 						</div>
 					</div>
@@ -222,7 +226,7 @@ function MainProfile({}: PropsMainProfile) {
 										<FormContext.Consumer>
 											{({isDone}) => (
 												<Button primary bold rounded_8 disable={!isDone}>
-												{i18n.t('Profile.ChangePassword')}	
+													{i18n.t('Profile.ChangePassword')}
 												</Button>
 											)}
 										</FormContext.Consumer>

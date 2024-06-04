@@ -216,7 +216,7 @@ function MainEditProfile({}: PropsMainEditProfile) {
 					},
 					{
 						path: '',
-						title:i18n.t('Profile.EditAccount') ,
+						title: i18n.t('Profile.EditAccount'),
 					},
 				]}
 				action={
@@ -231,15 +231,15 @@ function MainEditProfile({}: PropsMainEditProfile) {
 				<div className={styles.wrapper}>
 					<div className={styles.header}>
 						<div className={styles.left}>
-							<h4>{i18n.t('Profile.PasswordChangeSuccessful')}Chỉnh sửa người dùng</h4>
-							<p>{i18n.t('Profile.PasswordChangeSuccessful')}Điền đầy đủ các thông tin người dùng</p>
+							<h4>{i18n.t('Profile.EditUser')}</h4>
+							<p>{i18n.t('Profile.FillInAllUserInformation')}</p>
 						</div>
 						<div className={styles.right}>
 							<Button href={PATH.Profile} p_10_24 rounded_2 grey_outline>
-								{i18n.t('Profile.PasswordChangeSuccessful')}Hủy bỏ
+								{i18n.t('Common.Cancel')}
 							</Button>
 							<Button p_10_24 rounded_2 primary onClick={handleSubmit}>
-								{i18n.t('Profile.PasswordChangeSuccessful')}Cập nhật
+								{i18n.t('Common.Update')}
 							</Button>
 						</div>
 					</div>
@@ -254,10 +254,11 @@ function MainEditProfile({}: PropsMainEditProfile) {
 								value={form.fullName || ''}
 								label={
 									<span>
-									{i18n.t('Usr.Fullname')}<span style={{color: 'red'}}>*</span>
+										{i18n.t('Profile.Fullname')}
+										<span style={{color: 'red'}}>*</span>
 									</span>
 								}
-								placeholder={i18n.t('Profile.EnterUsername')}
+								placeholder={i18n.t('Profile.Enterfullname')}
 							/>
 							<div className={clsx('mt', 'col_2')}>
 								<Input
@@ -279,7 +280,8 @@ function MainEditProfile({}: PropsMainEditProfile) {
 										value={form.phone || ''}
 										label={
 											<span>
-												{i18n.t('Common.PhoneNumber')}<span style={{color: 'red'}}>*</span>
+												{i18n.t('Common.PhoneNumber')}
+												<span style={{color: 'red'}}>*</span>
 											</span>
 										}
 										placeholder={i18n.t('Profile.Enterphonenumber')}
@@ -404,7 +406,12 @@ function MainEditProfile({}: PropsMainEditProfile) {
 							</div>
 
 							<div className={clsx('mt')}>
-								<Input name='address' value={form.address || ''} label={<span>{i18n.t('Profile.PasswordChangeSuccessful')}Địa chỉ</span>} placeholder={i18n.t('Profile.PasswordChangeSuccessful')}'Nhập địa chỉ' />
+								<Input
+									name='address'
+									value={form.address || ''}
+									label={<span>{i18n.t('Profile.Address')}</span>}
+									placeholder={i18n.t('Profile.EnterAddress')}
+								/>
 							</div>
 						</Form>
 					</div>

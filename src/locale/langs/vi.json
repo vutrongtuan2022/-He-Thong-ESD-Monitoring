@@ -404,5 +404,31 @@
 		"TotalTimeNGForTeams": "Tổng thời gian NG các team ",
 		"TotalWorkingTimeOfTeams": "Tổng thời gian làm việc của các team",
 		"MonitorOrderProcessingPlansandWorkPlans": "Theo dõi kế hoạch xử lý đơn và kế hoạch công việc"
+	},
+	"Profile": {
+		"Fullname": "Họ và tên",
+		"Enterfullname": "Nhập họ và tên",
+		"Address": "Địa chỉ",
+		"EnterAddress": "Nhập địa chỉ",
+		"PasswordChangeSuccessful": "Thay đổi mật khẩu thành công!",
+		"TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers": "Mật khẩu mới bao gồm tối thiểu 6 ký tự gồm chữ hoa, chữ thường và số.",
+		"Welcome": "Chào mừng",
+		"TheESDMonitoring": "đến với hệ thống quản lý ESD Monitoring.",
+		"EditAccount": "Chỉnh sửa tài khoản",
+		"ChangeThePassword": "Thay đổi mật khẩu",
+		"YouCanChangeThePasswordAccording": "Bạn có thể thay đổi mật khẩu theo ý muốn của bạn. Mật khẩu thay đổi không trùng với mật khẩu cũ.",
+		"EditUser": "Chỉnh sửa người dùng",
+		"FillInAllUserInformation": "Điền đầy đủ các thông tin người dùng",
+		"EnterOldPassword": "Nhập mật khẩu cũ",
+		"OldPassword": "Mật khẩu cũ ",
+		"EnterUsername": "Nhập tên người dùng",
+		"EnterNewPassword": "Nhập mật khẩu mới",
+		"EnterThePassword": "Nhập lại mật khẩu",
+		"ConfirmNewPassword": "Xác nhận mật khẩu mới",
+		"ChangePassword": "Đổi mật khẩu",
+		"Enteremail": "Nhập email",
+		"Enterphonenumber": "Nhập số điện thoại",
+		"UpdateSuccessful": "Cập nhật thành công!",
+		"Selectdateofbirth": "Chọn ngày sinh"
 	}
 }
