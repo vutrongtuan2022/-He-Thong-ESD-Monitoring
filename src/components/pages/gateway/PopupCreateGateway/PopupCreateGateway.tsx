@@ -32,7 +32,7 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('gateway.Themmoigatewaythanhcong'),
+				msgSuccess: i18n.t('Gateway.SuccessfullyAddedNewGateway'),
 				http: gatewayServices.upsertGateway({
 					uuid: '',
 					code: form.code,
