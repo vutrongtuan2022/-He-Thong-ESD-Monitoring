@@ -71,7 +71,7 @@ function ImportExcel({name, file, pathTemplate, setDataReadFile, setFile, onClos
 					<p className={styles.download}>
 						<a download href={pathTemplate} style={{color: '#2A85FF'}}>
 							{i18n.t('Common.Download')}
-						</a>
+						</a>{' '}
 						{i18n.t('Common.FileBase')}
 					</p>
 				</div>
