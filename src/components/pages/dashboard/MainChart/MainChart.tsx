@@ -31,7 +31,7 @@ function MainChart({}: PropsMainChart) {
 			setAllTimeDeviceOnline(data?.allTimeDeviceOnline);
 			setAllTimeDeviceNG(data?.allTimeDeviceNG);
 			setDataChart(
-				data?.dashboardChartResp?.map((v: any, i: number) => {
+				data?.dashboardChartResp?.map((v: any) => {
 					return {
 						time: `${v?.timeCheck}: 00`,
 						[i18n.t('Overview.GeneratorIsWorking')]: v?.totalDeviceOnline || 0,
