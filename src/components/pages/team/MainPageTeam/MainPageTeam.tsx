@@ -29,6 +29,16 @@ import i18n from '~/locale/i18n';
 import Loading from '~/components/common/Loading';
 import Popup from '~/components/common/Popup';
 import ImportExcel from '~/components/common/ImportExcel';
+import {toastWarn} from '~/common/funcs/toast';
+
+interface IDataExcelTeam {
+	codeTeam: string;
+	codeTeamParent: string;
+	areaCode: string;
+	nameTeam: string;
+	codeLeader: string;
+	notes: string;
+}
 
 function MainPageTeam({}: PropsMainPageTeam) {
 	const router = useRouter();
@@ -37,6 +47,7 @@ function MainPageTeam({}: PropsMainPageTeam) {
 	const {_view, _page, _pageSize, _keyword, _leaderUuid, _areaUuid, _status, importExcel} = router.query;
 
 	const [file, setFile] = useState<any>(null);
+	const [dataExcel, setDataExcel] = useState<any[]>([]);
 
 	const listUsers = useQuery([QUERY_KEY.dropdown_danh_sach_nguoi_dung], {
 		queryFn: () =>
@@ -147,6 +158,31 @@ function MainPageTeam({}: PropsMainPageTeam) {
 			undefined,
 			{scroll: false}
 		);
+	};
+
+	const handleImportExcel = async () => {
+		const dataConvert: IDataExcelTeam[] = dataExcel?.map((v: any) => ({
+			codeTeam: v['Mã team'],
+			codeTeamParent: v['Mã team cấp trên'],
+			areaCode: v['Mã khu vực'],
+			nameTeam: v['Tên team'],
+			codeLeader: v['Mã người quản lý'],
+			notes: v['Ghi chú'],
+		}));
+
+		const isValid = dataConvert.every((item) => item.codeTeam && item.nameTeam && item.codeLeader);
+
+		if (!isValid) {
+			return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+		}
+
+		for (let index = 0; index < dataConvert.length; index++) {
+			if (dataConvert[index]?.codeTeam == dataConvert[index + 1]?.codeTeam) {
+				return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+			}
+		}
+
+		return fucnImportExcel.mutate();
 	};
 
 	return (
@@ -354,8 +390,9 @@ function MainPageTeam({}: PropsMainPageTeam) {
 					file={file}
 					pathTemplate='/static/files/Mau_Import_Team.xlsx'
 					setFile={setFile}
+					setDataReadFile={setDataExcel}
 					onClose={handleCloseImportExcel}
-					onSubmit={fucnImportExcel.mutate}
+					onSubmit={handleImportExcel}
 				/>
 			</Popup>
 		</div>

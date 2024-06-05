@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Image from 'next/image';
 
 import {IDevice, PropsMainDevice} from './interfaces';
@@ -28,13 +28,18 @@ import {QUERY_KEY, STATE_DEVICE_NG, STATE_GATEWAY, STATE_ONLINE_DEVICE, STATUS_G
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import deviceServices from '~/services/deviceServices';
-import StateDevice from '../StateDevice';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import ImportExcel from '~/components/common/ImportExcel';
 import Noti from '~/components/common/DataWrapper/components/Noti';
 import i18n from '~/locale/i18n';
 import {getBatteryCapacity} from '~/common/funcs/optionConvert';
+
+interface IDataExcelDevice {
+	macNumber: string;
+	name: string;
+	teamCode: string;
+}
 
 function MainDevice({}: PropsMainDevice) {
 	const router = useRouter();
@@ -43,6 +48,7 @@ function MainDevice({}: PropsMainDevice) {
 	const {_page, _pageSize, _keyword, _pin, _onlineState, _status, _ngState, importExcel} = router.query;
 
 	const [file, setFile] = useState<any>(null);
+	const [dataExcel, setDataExcel] = useState<any[]>([]);
 	const [openCreate, setOpenCreate] = useState<boolean>(false);
 	const [dataUpdate, setDataUpdate] = useState<IDevice | null>(null);
 	const [dataChangeStatus, setDataChangeStatus] = useState<IDevice | null>(null);
@@ -187,11 +193,29 @@ function MainDevice({}: PropsMainDevice) {
 	};
 
 	const handleExportExcel = async () => {
-		exportExcel.mutate();
+		return exportExcel.mutate();
 	};
 
 	const handleImportExcel = async () => {
-		fucnImportExcel.mutate();
+		const dataConvert: IDataExcelDevice[] = dataExcel?.map((v: any) => ({
+			macNumber: v['Số MAC'],
+			name: v['Tên thiết bị'],
+			teamCode: v['Mã team'],
+		}));
+
+		const isValid = dataConvert.every((item) => item.macNumber && item.name);
+
+		if (!isValid) {
+			return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+		}
+
+		for (let index = 0; index < dataConvert.length; index++) {
+			if (dataConvert[index]?.macNumber == dataConvert[index + 1]?.macNumber) {
+				return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+			}
+		}
+
+		return fucnImportExcel.mutate();
 	};
 
 	return (
@@ -479,6 +503,7 @@ function MainDevice({}: PropsMainDevice) {
 					file={file}
 					pathTemplate='/static/files/Mau_Import_Device.xlsx'
 					setFile={setFile}
+					setDataReadFile={setDataExcel}
 					onClose={handleCloseImportExcel}
 					onSubmit={handleImportExcel}
 				/>

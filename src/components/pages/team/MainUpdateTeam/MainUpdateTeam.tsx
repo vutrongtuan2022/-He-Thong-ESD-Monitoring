@@ -284,9 +284,11 @@ function MainUpdateTeam({}: PropsMainUpdateTeam) {
 										}
 										label={<span>{i18n.t('Team.TeamofSuperior')}</span>}
 									>
-										{listTeams.data?.map((v: any) => (
-											<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
-										))}
+										{listTeams?.data
+											?.filter((x: any) => x?.uuid != _id)
+											?.map((v: any) => (
+												<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+											))}
 									</Select>
 								</div>
 								<Select
