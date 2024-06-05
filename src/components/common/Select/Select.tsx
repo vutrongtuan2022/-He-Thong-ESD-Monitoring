@@ -4,6 +4,7 @@ import {PropsSelector} from './interfaces';
 import clsx from 'clsx';
 import styles from './Select.module.scss';
 import {ArrowDown2} from 'iconsax-react';
+import i18n from '~/locale/i18n';
 
 export const ContextSelect = createContext<any>({});
 
@@ -80,7 +81,7 @@ function Select(props: PropsSelector) {
 								<input
 									className={styles.input_search}
 									type='text'
-									placeholder='Tìm kiếm...'
+									placeholder={i18n.t('Common.SearchPlaceholder')}
 									onChange={(e) => setKeyword(e.target.value)}
 									value={keyword}
 									autoFocus={show}

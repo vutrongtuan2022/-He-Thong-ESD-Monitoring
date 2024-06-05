@@ -60,17 +60,17 @@ function TableDevice({}: PropsTableDevice) {
 			<DataWrapper
 				data={listDeviceAreas?.data?.items}
 				loading={listDeviceAreas.isLoading}
-				noti={<Noti title='Bộ phát trống' des='Danh sách bộ phát trống!' disableButton />}
+				noti={<Noti title={i18n.t('Device.DeviceIsEmpty')} des={i18n.t('Device.ListDeviceIsEmpty')} disableButton />}
 			>
 				<Table
 					data={listDeviceAreas?.data?.items}
 					column={[
 						{
-							title: 'STT',
+							title: i18n.t('Common.No'),
 							render: (data: IDevice, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: 'Số MAC',
+							title: i18n.t('Common.MACNumber'),
 							render: (data: IDevice) => (
 								<Link href={`/device/${data.uuid}`} className={styles.link}>
 									{data.macNumber || '---'}
@@ -78,19 +78,19 @@ function TableDevice({}: PropsTableDevice) {
 							),
 						},
 						{
-							title: 'Tên thiết bị',
+							title: i18n.t('Device.DeviceName'),
 							render: (data: IDevice) => <>{data.name ? `${data.name}` : '---'}</>,
 						},
 						{
-							title: 'Phần trăm pin',
+							title: i18n.t('Team.BateryPercent'),
 							render: (data: IDevice) => <>{data.battery}%</>,
 						},
 						{
-							title: 'Trạng thái',
+							title: i18n.t('Common.Status'),
 							render: (data: IDevice) => <StateDevice status={data.state} />,
 						},
 						{
-							title: 'Oniline lần cuối',
+							title: i18n.t('Gateway.LastOnline'),
 							render: (data: IDevice) => <Moment date={data.timeLastOnline} format='HH: mm, DD/MM/YYYY' />,
 						},
 					]}

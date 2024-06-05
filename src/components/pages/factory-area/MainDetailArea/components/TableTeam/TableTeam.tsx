@@ -52,17 +52,17 @@ function TableTeam({}: PropsTableTeam) {
 			<DataWrapper
 				data={listTeamArea?.data?.items}
 				loading={listTeamArea.isLoading}
-				noti={<Noti title='Team trống' des='Danh sách team trống!' disableButton />}
+				noti={<Noti title={i18n.t('Team.DrumTeam')} des={i18n.t('Team.TeamListIsEmpty')} disableButton />}
 			>
 				<Table
 					data={listTeamArea?.data?.items}
 					column={[
 						{
-							title: 'STT',
+							title: i18n.t('Common.No'),
 							render: (data: ITeamChild, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: 'Tên team',
+							title: i18n.t('Overview.TeamName'),
 							render: (data: ITeamChild) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}
@@ -70,19 +70,19 @@ function TableTeam({}: PropsTableTeam) {
 							),
 						},
 						{
-							title: 'Mã team',
+							title: i18n.t('Overview.TeamCode'),
 							render: (data: ITeamChild) => <>{data.code || '---'}</>,
 						},
 						{
-							title: 'Người quản lý',
+							title: i18n.t('Common.Manager'),
 							render: (data: ITeamChild) => <>{data.leaderName || '---'}</>,
 						},
 						{
-							title: 'Số nhân viên',
+							title: i18n.t('Team.NumberofMember'),
 							render: (data: ITeamChild) => <>{data.totalUser || 0}</>,
 						},
 						{
-							title: 'Số thiết bị',
+							title: i18n.t('Team.NumberofDevices'),
 							render: (data: ITeamChild) => <>{data.totalDevices || 0}</>,
 						},
 					]}

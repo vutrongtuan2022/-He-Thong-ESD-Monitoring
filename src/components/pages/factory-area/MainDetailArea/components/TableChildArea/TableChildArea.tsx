@@ -74,19 +74,19 @@ function TableChildArea({}: PropsTableChildArea) {
 							),
 						},
 						{
-							title: 'Địa chỉ',
+							title: i18n.t('Common.Address'),
 							render: (data: IArea) => <>{data.address || '---'}</>,
 						},
 						{
-							title: 'Số team',
+							title: i18n.t('Area.NumberOfTeams'),
 							render: (data: IArea) => <>{data.totalTeam}</>,
 						},
 						{
-							title: 'Số thiết bị',
+							title: i18n.t('Team.NumberofDevices'),
 							render: (data: IArea) => <>{data.totalDevice}</>,
 						},
 						{
-							title: 'Ngày tạo',
+							title: i18n.t('Common.Datecreated'),
 							render: (data: IArea) => <Moment date={data?.timeCreated} format='HH:mm, DD/MM/YYYY' />,
 						},
 					]}

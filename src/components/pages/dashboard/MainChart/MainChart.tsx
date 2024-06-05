@@ -34,8 +34,8 @@ function MainChart({}: PropsMainChart) {
 				data?.dashboardChartResp?.map((v: any, i: number) => {
 					return {
 						time: `${v?.timeCheck}: 00`,
-						'Bộ phát hoạt động': v?.totalDeviceOnline || 0,
-						'Bộ phát NG': v?.totalDeviceNG || 0,
+						[i18n.t('Overview.GeneratorIsWorking')]: v?.totalDeviceOnline || 0,
+						[i18n.t('Overview.GeneratorNG')]: v?.totalDeviceNG || 0,
 					};
 				})
 			);
@@ -62,14 +62,7 @@ function MainChart({}: PropsMainChart) {
 						</p>
 					</div>
 
-					<DatePicker
-						name='date'
-						icon={true}
-						value={date}
-						onSetValue={setDate}
-						placeholder='Chọn ngày hiện tại'
-						className={styles.date}
-					/>
+					<DatePicker name='date' icon={true} value={date} onSetValue={setDate} placeholder='' className={styles.date} />
 				</div>
 			</div>
 			<div className={styles.main}>

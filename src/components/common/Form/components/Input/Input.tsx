@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import styles from './Input.module.scss';
 import {convertCoin, price} from '~/common/funcs/convertCoin';
 import {isEmail} from '~/common/funcs/validate';
+import i18n from '~/locale/i18n';
 
 function Input({
 	label,
@@ -51,7 +52,7 @@ function Input({
 		if (props.valueConfirm && data.form[name] !== props.valueConfirm && data.form[name] !== '') {
 			return data.setErrorText((prev: any) => ({
 				...prev,
-				[name]: props.textConfirm || 'Mật khẩu không trùng khớp',
+				[name]: props.textConfirm || i18n.t('Common.PasswordIncorect'),
 			}));
 		} else {
 			data.setErrorText((prev: any) => ({
@@ -132,7 +133,7 @@ function Input({
 		if ((props.isRequired && `${data.form[name]}`.trim() === '') || (!data.form[name] && props.isRequired)) {
 			return data.setErrorText((prev: any) => ({
 				...prev,
-				[name]: props.textRequired || 'Vui lòng nhập trường này',
+				[name]: props.textRequired || i18n.t('Common.PleaseEnterThisField'),
 			}));
 		}
 		if (!!data.form[name] && `${data.form[name]}`.trim() !== '') {
@@ -140,7 +141,7 @@ function Input({
 				if (!Number(data.form[name])) {
 					return data.setErrorText((prev: any) => ({
 						...prev,
-						[name]: 'Vui lòng chỉ nhập số',
+						[name]: i18n.t('Common.PleaseJustEnterNumbers'),
 					}));
 				}
 			}
@@ -149,7 +150,7 @@ function Input({
 				if (data.form[name]?.length !== 10) {
 					return data.setErrorText((prev: any) => ({
 						...prev,
-						[name]: 'Định dạng số điện thoại không đúng',
+						[name]: i18n.t('Common.PleaseJustEnterNumbers'),
 					}));
 				}
 
@@ -157,7 +158,7 @@ function Input({
 					if (isNaN(Number(i))) {
 						return data.setErrorText((prev: any) => ({
 							...prev,
-							[name]: 'Định dạng số điện thoại không đúng',
+							[name]: i18n.t('Common.PleaseJustEnterNumbers'),
 						}));
 					}
 				}
@@ -166,28 +167,28 @@ function Input({
 			if (props.valueConfirm && data.form[name] !== props.valueConfirm) {
 				return data.setErrorText((prev: any) => ({
 					...prev,
-					[name]: props.textConfirm || 'Mật khẩu không trùng khớp',
+					[name]: props.textConfirm || i18n.t('Common.PasswordIncorect'),
 				}));
 			}
 
 			if (props.isEmail && !isEmail(data.form[name])) {
 				return data.setErrorText((prev: any) => ({
 					...prev,
-					[name]: 'Định dạng email không chính xác',
+					[name]: i18n.t('Common.EmailFormatIncorrect'),
 				}));
 			}
 
 			if (props.max && `${data.form[name]}`.trim().length > Number(props.max)) {
 				return data.setErrorText((prev: any) => ({
 					...prev,
-					[name]: `Nhập tối đa ${props.max} kí tự`,
+					[name]: i18n.t('Common.Entermaximum') + props.max + i18n.t('Common.Characters'),
 				}));
 			}
 
 			if (props.min && `${data.form[name]}`.trim().length < Number(props.min)) {
 				return data.setErrorText((prev: any) => ({
 					...prev,
-					[name]: `Nhập tối thiểu ${props.min} kí tự`,
+					[name]: i18n.t('Common.Enterminimum') + props.min + i18n.t('Common.Characters'),
 				}));
 			}
 		}

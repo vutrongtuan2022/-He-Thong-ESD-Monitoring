@@ -237,7 +237,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 							},
 							{
 								pathname: router.pathname,
-								query: 'bo-phat',
+								query: 'list-device',
 								title: i18n.t('Area.ListOfDevices'),
 							},
 						]}
@@ -245,7 +245,7 @@ function MainDetailArea({}: PropsMainDetailArea) {
 					<div className={styles.main_table}>
 						{!_table && <TableChildArea />}
 						{_table == 'list-team' && <TableTeam />}
-						{_table == 'bo-phat' && <TableDevice />}
+						{_table == 'list-device' && <TableDevice />}
 					</div>
 				</div>
 			</WrapperContainer>

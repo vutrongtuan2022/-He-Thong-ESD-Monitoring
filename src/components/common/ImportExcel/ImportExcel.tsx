@@ -11,6 +11,7 @@ import {PropsImportExcel} from './interfaces';
 import {convertFileSize} from '~/common/funcs/optionConvert';
 import background from '~/constants/images/background';
 import {toastError, toastWarn} from '~/common/funcs/toast';
+import i18n from '~/locale/i18n';
 
 function ImportExcel({name, file, pathTemplate, setDataReadFile, setFile, onClose, onSubmit}: PropsImportExcel) {
 	const [dragging, setDragging] = useState<boolean>(false);
@@ -50,13 +51,13 @@ function ImportExcel({name, file, pathTemplate, setDataReadFile, setFile, onClos
 					setDataReadFile && setDataReadFile(data);
 					setFile(file);
 				} else {
-					return toastWarn({msg: 'Không có dữ liệu trong file đầu vào'});
+					return toastWarn({msg: i18n.t('Common.NoDataFileInput')});
 				}
 			};
 			reader.readAsBinaryString(file);
 		} catch (err) {
 			return toastError({
-				msg: 'Không nạp được dữ liệu, vui lòng kiểm tra file đầu vào',
+				msg: i18n.t('Common.ImportError'),
 			});
 		}
 	}
@@ -65,13 +66,13 @@ function ImportExcel({name, file, pathTemplate, setDataReadFile, setFile, onClos
 		<Fragment>
 			<div className={styles.container}>
 				<div className={styles.header}>
-					<h2 className={styles.title}>Nhập file từ Excel</h2>
-					<p className={styles.note}>Bạn có thể tải tệp .xls, .xlsx, .csv lên bản của mình</p>
+					<h2 className={styles.title}>{i18n.t('Common.ImportFileFromExcel')}</h2>
+					<p className={styles.note}>{i18n.t('Common.CanInputFile')}</p>
 					<p className={styles.download}>
 						<a download href={pathTemplate} style={{color: '#2A85FF'}}>
-							Tải xuống{' '}
+							{i18n.t('Common.Download')}
 						</a>
-						Tệp tài liệu mẫu
+						{i18n.t('Common.FileBase')}
 					</p>
 				</div>
 				<div className={styles.main}>
@@ -99,10 +100,10 @@ function ImportExcel({name, file, pathTemplate, setDataReadFile, setFile, onClos
 											}}
 											onChange={handleFileChange}
 										/>
-										Thay thế
+										{i18n.t('Common.Replace')}
 									</label>
 									<div className={styles.clear} onClick={() => setFile(null)}>
-										Xóa
+										{i18n.t('Common.Delete')}
 									</div>
 								</div>
 							</div>
@@ -122,8 +123,8 @@ function ImportExcel({name, file, pathTemplate, setDataReadFile, setFile, onClos
 								<div className={styles.imageEmpty}>
 									<Image alt='Image ' width={200} height={150} className={styles.image} src={background.emptyFile} />
 								</div>
-								<p>Kéo và thả tệp của bạn vào đây hoặc</p>
-								<p>Tải lên</p>
+								<p>{i18n.t('Common.DragAndDropFile')}</p>
+								<p>{i18n.t('Common.Upload')}</p>
 							</div>
 							<input
 								hidden
@@ -140,10 +141,10 @@ function ImportExcel({name, file, pathTemplate, setDataReadFile, setFile, onClos
 				</div>
 				<div className={styles.groupBtn}>
 					<Button p_8_40 maxContent bold grey_2 rounded_6 div onClick={onClose}>
-						Đóng
+						{i18n.t('Common.Close')}
 					</Button>
 					<Button p_8_40 maxContent div bold primary disable={!file} rounded_6 onClick={onSubmit}>
-						Lựa chọn
+						{i18n.t('Common.Options')}
 					</Button>
 				</div>
 			</div>
