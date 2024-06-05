@@ -5,6 +5,7 @@ import styles from './TextArea.module.scss';
 import {ContextData} from '../Input/interfaces';
 import {FormContext} from '../../contexts';
 import clsx from 'clsx';
+import i18n from '~/locale/i18n';
 
 function TextArea({placeholder, name, isRequired = false, textRequired, max, min, label, blur, showDone, ...props}: PropsTextArea) {
 	const data = useContext<ContextData>(FormContext);
@@ -38,21 +39,21 @@ function TextArea({placeholder, name, isRequired = false, textRequired, max, min
 		if ((isRequired && `${data.form[name]}`.trim() === '') || (!data.form[name] && isRequired)) {
 			return data.setErrorText((prev: any) => ({
 				...prev,
-				[name]: textRequired || 'Vui lòng nhập trường này',
+				[name]: textRequired || i18n.t('Common.PleaseEnterThisField'),
 			}));
 		}
 		if (!!data.form[name] && `${data.form[name]}`.trim() !== '') {
 			if (max && `${data.form[name]}`.trim().length > Number(max)) {
 				return data.setErrorText((prev: any) => ({
 					...prev,
-					[name]: `Nhập tối đa ${max} kí tự`,
+					[name]: i18n.t('Common.Entermaximum') + max + i18n.t('Common.characters'),
 				}));
 			}
 
 			if (min && `${data.form[name]}`.trim().length < Number(min)) {
 				return data.setErrorText((prev: any) => ({
 					...prev,
-					[name]: `Nhập tối thiểu ${min} kí tự`,
+					[name]: i18n.t('Common.Enterminimum') + min + i18n.t('Common.characters'),
 				}));
 			}
 		}

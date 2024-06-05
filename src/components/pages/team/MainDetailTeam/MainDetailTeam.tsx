@@ -225,7 +225,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 							},
 							{
 								pathname: router.pathname,
-								query: 'bo-phat',
+								query: 'list-device',
 								title: i18n.t('Team.ListDevice'),
 							},
 							{
@@ -239,7 +239,7 @@ function MainDetailTeam({}: PropsMainDetailTeam) {
 					<div className={styles.main_table}>
 						{!_table && <TableTeam />}
 						{_table == 'nhan-vien' && <TableUser />}
-						{_table == 'bo-phat' && <TableDevice />}
+						{_table == 'list-device' && <TableDevice />}
 						{_table == 'lich-su' && <TableHistory />}
 					</div>
 				</div>
