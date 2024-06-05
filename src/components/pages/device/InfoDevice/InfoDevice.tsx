@@ -100,7 +100,7 @@ function InfoDevice({}: PropsInfoDevice) {
 						</colgroup>
 						<tr>
 							<td>
-								<span style={{marginRight: 6}}>{i18n.t('Device.DeviceMacAddress')} </span>
+								<span style={{marginRight: 6}}>{i18n.t('Device.DeviceMacAddress')}: </span>
 								{data?.macNumber}
 							</td>
 							<td>

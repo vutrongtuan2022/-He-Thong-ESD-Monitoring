@@ -147,9 +147,11 @@ function MainUpdateArea({onClose}: PropsMainUpdateArea) {
 						}
 						label={<span>{i18n.t('Area.BelongsToRegion')}</span>}
 					>
-						{listAreas?.data?.map((v: any) => (
-							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
-						))}
+						{listAreas?.data
+							?.filter((x: any) => x?.uuid != _uuid)
+							?.map((v: any) => (
+								<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+							))}
 					</Select>
 				</div>
 

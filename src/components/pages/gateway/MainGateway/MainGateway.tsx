@@ -113,9 +113,7 @@ function MainGateway({}: PropsMainGateway) {
 			return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
 		}
 
-		// Check trùng code
 		for (let index = 0; index < dataConvert.length; index++) {
-			// Kiểm tra trùng code
 			if (dataConvert[index]?.code == dataConvert[index + 1]?.code) {
 				return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
 			}

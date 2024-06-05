@@ -29,6 +29,14 @@ import {httpRequest} from '~/services';
 import areaServices from '~/services/areaServices';
 import i18n from '~/locale/i18n';
 import ImportExcel from '~/components/common/ImportExcel';
+import {toastWarn} from '~/common/funcs/toast';
+
+interface IDataExcelArea {
+	code: string;
+	codeParent: string;
+	name: string;
+	notes: string;
+}
 
 function MainFactoryArea({}: PropsMainFactoryArea) {
 	const router = useRouter();
@@ -37,6 +45,7 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 	const {_open, _view, _page, _pageSize, _keyword, _status, importExcel} = router.query;
 
 	const [file, setFile] = useState<any>(null);
+	const [dataExcel, setDataExcel] = useState<any[]>([]);
 
 	const sumAreas = useQuery([QUERY_KEY.thong_so_chung_khu_vuc], {
 		queryFn: () =>
@@ -122,6 +131,29 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 			undefined,
 			{scroll: false}
 		);
+	};
+
+	const handleImportExcel = async () => {
+		const dataConvert: IDataExcelArea[] = dataExcel?.map((v: any) => ({
+			code: v['Mã khu vực'],
+			codeParent: v['Mã khu vực quản lý'],
+			name: v['Tên khu vực'],
+			notes: v['Ghi chú'],
+		}));
+
+		const isValid = dataConvert.every((item) => item.code && item.name);
+
+		if (!isValid) {
+			return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+		}
+
+		for (let index = 0; index < dataConvert.length; index++) {
+			if (dataConvert[index]?.code == dataConvert[index + 1]?.code) {
+				return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+			}
+		}
+
+		return fucnImportExcel.mutate();
 	};
 
 	return (
@@ -365,8 +397,9 @@ function MainFactoryArea({}: PropsMainFactoryArea) {
 					file={file}
 					pathTemplate='/static/files/Mau_Import_FactoryArea.xlsx'
 					setFile={setFile}
+					setDataReadFile={setDataExcel}
 					onClose={handleCloseImportExcel}
-					onSubmit={fucnImportExcel.mutate}
+					onSubmit={handleImportExcel}
 				/>
 			</Popup>
 		</div>

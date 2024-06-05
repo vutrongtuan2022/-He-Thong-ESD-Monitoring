@@ -36,6 +36,18 @@ import i18n from '~/locale/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '~/redux/store';
 
+interface IDataExcelUser {
+	codeUser: string;
+	nameUser: string;
+	teamCode: string;
+	gender: string;
+	email: string;
+	phone: string;
+	address: string;
+	regency: string;
+	birthday: string;
+}
+
 function MainPageUser({}: PropsMainPageUser) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
@@ -45,6 +57,7 @@ function MainPageUser({}: PropsMainPageUser) {
 	const {_page, _pageSize, _status, _isHaveAcc, _username, importExcel, _keyword, _regency} = router.query;
 
 	const [file, setFile] = useState<any>(null);
+	const [dataExcel, setDataExcel] = useState<any[]>([]);
 	const [dataChangeStatus, setDataChangeStatus] = useState<IUser | null>(null);
 	const [dataCreateAccount, setDataCreateAccount] = useState<IUser | null>(null);
 
@@ -166,11 +179,41 @@ function MainPageUser({}: PropsMainPageUser) {
 	};
 
 	const handleExportExcel = async () => {
-		exportExcel.mutate();
+		return exportExcel.mutate();
 	};
 
 	const handleImportExcel = async () => {
-		fucnImportExcel.mutate();
+		const dataConvert: IDataExcelUser[] = dataExcel?.map((v: any) => ({
+			codeUser: v['Mã Nhân viên'],
+			nameUser: v['Họ và tên'],
+			teamCode: v['Mã Team'],
+			email: v['Email'],
+			gender: v['Giới tính'],
+			phone: v['Số điện thoại'],
+			regency: v['Chức vụ'],
+			birthday: v['Ngày  sinh'],
+			address: v['Địa chỉ'],
+		}));
+
+		const isValid = dataConvert.every((item) => item.codeUser && item.nameUser && item.gender && item.email && item.regency);
+
+		if (!isValid) {
+			return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+		}
+
+		for (let index = 0; index < dataConvert.length; index++) {
+			if (dataConvert[index]?.codeUser == dataConvert[index + 1]?.codeUser) {
+				return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+			}
+		}
+
+		for (let index = 0; index < dataConvert.length; index++) {
+			if (dataConvert[index]?.email == dataConvert[index + 1]?.email) {
+				return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
+			}
+		}
+
+		return fucnImportExcel.mutate();
 	};
 	return (
 		<div className={styles.container}>
@@ -452,6 +495,7 @@ function MainPageUser({}: PropsMainPageUser) {
 							file={file}
 							pathTemplate='/static/files/Mau_Import_User.xlsx'
 							setFile={setFile}
+							setDataReadFile={setDataExcel}
 							onClose={handleCloseImportExcel}
 							onSubmit={handleImportExcel}
 						/>
