@@ -102,7 +102,7 @@ function MainGateway({}: PropsMainGateway) {
 		const dataConvert: IDataExcelGetway[] = dataExcel?.map((v: any) => ({
 			code: v['Mã gateway'],
 			name: v['Tên gateway'],
-			factoryArea: v['Tên khu vực quản lý'],
+			factoryArea: v['Mã khu vực quản lý'],
 			notes: v['Ghi chú'],
 		}));
 
@@ -110,14 +110,14 @@ function MainGateway({}: PropsMainGateway) {
 		const isValid = dataConvert.every((item) => item.code && item.name);
 
 		if (!isValid) {
-			return toastWarn({msg: 'Dữ liệu đầu vào không hợp lệ!'});
+			return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
 		}
 
 		// Check trùng code
 		for (let index = 0; index < dataConvert.length; index++) {
 			// Kiểm tra trùng code
 			if (dataConvert[index]?.code == dataConvert[index + 1]?.code) {
-				return toastWarn({msg: 'Dữ liệu đầu vào không hợp lệ!'});
+				return toastWarn({msg: i18n.t('Common.DataInputIncorect')});
 			}
 		}
 
