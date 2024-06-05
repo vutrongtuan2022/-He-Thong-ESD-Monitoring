@@ -32,7 +32,7 @@ import i18n from '~/locale/i18n';
 function MainProfile({}: PropsMainProfile) {
 	const queryClient = useQueryClient();
 
-	const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+	const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
 	const {infoUser} = useSelector((state: RootState) => state.user);
 
@@ -72,7 +72,7 @@ function MainProfile({}: PropsMainProfile) {
 	});
 
 	const handleSubmit = () => {
-		if (regex.test(form?.newPass) == false) {
+		if (!regex.test(form?.newPass)) {
 			return toastWarn({
 				msg: i18n.t('Profile.TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers'),
 			});

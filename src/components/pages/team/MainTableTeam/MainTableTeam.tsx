@@ -86,16 +86,15 @@ function MainTableTeam({}: PropsMainTableTeam) {
 						},
 						{
 							title: i18n.t('Overview.TeamCode'),
-							render: (data: ITeam) => <>{data.code || '---'}</>,
-						},
-
-						{
-							title: i18n.t('Team.TeamName'),
 							render: (data: ITeam) => (
 								<Link href={`/team/${data.uuid}`} className={styles.link}>
-									{data.name || '---'}
+									{data.code || '---'}
 								</Link>
 							),
+						},
+						{
+							title: i18n.t('Team.TeamName'),
+							render: (data: ITeam) => <>{data.name || '---'}</>,
 						},
 						{
 							title: i18n.t('Team.TeamManager'),
