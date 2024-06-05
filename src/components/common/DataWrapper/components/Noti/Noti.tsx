@@ -3,13 +3,14 @@ import styles from './Noti.module.scss';
 import icons from '~/constants/images/icons';
 import Button from '~/components/common/Button';
 import ImageFill from '~/components/common/ImageFill';
+import i18n from '~/locale/i18n';
 
 function Noti({
 	disableButton,
 	img = icons.icon_table_empty,
-	title = 'Dữ liệu trống',
-	des = 'Hiện tại dữ liệu đang trống!',
-	titleButton = ' Tạo ngay',
+	title = i18n.t('Common.DataEmpty'),
+	des = i18n.t('Common.NowDateEmpty'),
+	titleButton = i18n.t('Common.CreateDay'),
 	onClick = () => {},
 }: PropsNoti) {
 	return (

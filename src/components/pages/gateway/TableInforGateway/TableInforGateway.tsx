@@ -49,7 +49,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: i18n.t('Common.Doyouwanttochangestatus'),
+				msgSuccess: i18n.t('Common.Changestatussuccessfully'),
 				http: gatewayServices.updateStatusGateway({
 					uuid: data?.uuid!,
 					status: data?.status == STATUS_GENERAL.SU_DUNG ? STATUS_GENERAL.KHONG_SU_DUNG : STATUS_GENERAL.SU_DUNG,
@@ -65,7 +65,7 @@ function TableInforGateway({}: PropsTableInforGateway) {
 
 	const handleChangeStatusGateway = async () => {
 		if (!data?.uuid) {
-			return toastWarn({msg: i18n.t('Gateway.Khongtimthaygateway')});
+			return toastWarn({msg: i18n.t('Gateway.GatwayNotFound')});
 		}
 
 		return funcChangeStatusGateway.mutate();

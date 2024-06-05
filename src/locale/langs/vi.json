@@ -27,6 +27,11 @@
 		"AreYouSureProcessTheseDevices": "Bạn có chắc chắn xử lý cho các thiết bị này không?"
 	},
 	"Common": {
+		"CreateDay": "Tạo ngày",
+		"DataEmpty": "Dữ liệu trống!",
+		"NowDateEmpty": "Hiện tại dữ liệu trống!",
+		"WaitLoading": "Vui lòng chờ, đang tải dữ liệu!",
+		"Loading": "Đang tải...",
 		"Options": "Lựa chọn",
 		"Close": "Đóng",
 		"Upload": "Tải lên",
@@ -68,6 +73,7 @@
 		"ListIsEmpty": "Danh sách trống!",
 		"Unlock": "Mở khóa",
 		"Changestatus": "Thay đổi trạng thái",
+		"GatwayNotFound": "Không tìm thấy gateway!",
 		"Doyouwanttochangestatus": "Bạn có chắc chắn muốn chuyển trạng thái này?",
 		"Cancel": "Hủy bỏ",
 		"Save": "Lưu lại",
@@ -131,6 +137,7 @@
 		"LastOnline": "Online lần cuối",
 		"AddGateway": "Thêm gateway",
 		"GatewayID": "ID gateway",
+		"GatwayNotFound": "Không tìm thấy gateway!",
 		"NameGateway": "Tên gateway",
 		"AreYouSureYouWantToChangeTheStatusOfThisGateway": "Bạn có chắc chắn muốn chuyển trạng thái cho gateway này?",
 		"PleaseEnterTheGatewayID": "Vui lòng nhập ID gateway!",
