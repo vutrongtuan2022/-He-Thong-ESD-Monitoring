@@ -431,5 +431,8 @@
 		"Enterphonenumber": "Nhập số điện thoại",
 		"UpdateSuccessful": "Cập nhật thành công!",
 		"Selectdateofbirth": "Chọn ngày sinh"
+	},
+	"Setting": {
+		"Setting": "Cài đặt"
 	}
 }
