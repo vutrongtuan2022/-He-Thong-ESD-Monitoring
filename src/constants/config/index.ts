@@ -49,30 +49,30 @@ export const Menu: {
 }[] = [
 	{
 		title: 'OVERVIEW',
-		group: [{title: i18n.t('Overview.Overview'), icon: RxDashboard, path: PATH.Home}],
+		group: [{title: 'Overview.Overview', icon: RxDashboard, path: PATH.Home}],
 	},
 	{
-		title: i18n.t('Device.Device'),
+		title: 'Device.Device',
 		group: [
-			{title: i18n.t('Gateway.GatewayManagament'), icon: IoWifiSharp, path: PATH.Gateway},
-			{title: i18n.t('Device.TransmitterManagement'), icon: FaChromecast, path: PATH.Device},
+			{title: 'Gateway.GatewayManagament', icon: IoWifiSharp, path: PATH.Gateway},
+			{title: 'Device.TransmitterManagement', icon: FaChromecast, path: PATH.Device},
 		],
 	},
 	{
-		title: i18n.t('User.User'),
+		title: 'User.User',
 		group: [
-			{title: i18n.t('Account.AccountManagement'), icon: HiOutlineUser, path: PATH.Account},
-			{title: i18n.t('Team.TeamManagement'), icon: RiGroupLine, path: PATH.Team},
-			{title: i18n.t('User.UserManagement'), icon: LuUserCircle2, path: PATH.User},
+			{title: 'Account.AccountManagement', icon: HiOutlineUser, path: PATH.Account},
+			{title: 'Team.TeamManagement', icon: RiGroupLine, path: PATH.Team},
+			{title: 'User.UserManagement', icon: LuUserCircle2, path: PATH.User},
 		],
 	},
 	{
-		title: i18n.t('Area.Area'),
-		group: [{title: i18n.t('Area.AreaManagement'), icon: GrMap, path: PATH.FactoryArea}],
+		title: 'Area.Area',
+		group: [{title: 'Area.AreaManagement', icon: GrMap, path: PATH.FactoryArea}],
 	},
 	{
-		title: i18n.t('Report.Report'),
-		group: [{title: i18n.t('Report.ReportManagement'), icon: TbClipboardText, path: PATH.Report}],
+		title: 'Report.Report',
+		group: [{title: 'Report.ReportManagement', icon: TbClipboardText, path: PATH.Report}],
 	},
 	// {
 	// 	title: 'HỆ THỐNG',

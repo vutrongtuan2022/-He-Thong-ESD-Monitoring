@@ -12,6 +12,7 @@ import {useSelector} from 'react-redux';
 import {setFullMenu} from '~/redux/reducer/site';
 import ImageFill from '~/components/common/ImageFill';
 import AvicLogo from '../AvicLogo';
+import i18n from '~/locale/i18n';
 
 function MenuTab({}: PropsMenuTab) {
 	const router = useRouter();
@@ -45,7 +46,7 @@ function MenuTab({}: PropsMenuTab) {
 			>
 				{Menu.map((v, i) => (
 					<div className={styles.group} key={i}>
-						<div className={styles.groupTitle}>{v.title}</div>
+						<div className={styles.groupTitle}>{i18n.t(v.title)}</div>
 						<div className={styles.menuGroup}>
 							{v.group.map((item, j) => (
 								<Link
@@ -62,7 +63,7 @@ function MenuTab({}: PropsMenuTab) {
 									<div className={styles.icon}>
 										<item.icon size={20} />
 									</div>
-									{fullMenu ? <p className={styles.item_text}>{item.title}</p> : null}
+									{fullMenu ? <p className={styles.item_text}>{i18n.t(item.title)}</p> : null}
 								</Link>
 							))}
 						</div>

@@ -373,9 +373,9 @@ function MainDevice({}: PropsMainDevice) {
 										// render: (data: IDevice) => <StateDevice status={data.state} />,
 										render: (data: IDevice) => (
 											<>
-												{data?.ngStatus == STATE_GATEWAY.ONLINE ? (
+												{data?.state == STATE_GATEWAY.ONLINE ? (
 													<p style={{color: '#35C244', fontWeight: 600}}>Online</p>
-												) : data.ngStatus == STATE_GATEWAY.OFFLINE ? (
+												) : data.state == STATE_GATEWAY.OFFLINE ? (
 													<p style={{color: '#E85A5A', fontWeight: 600}}>Offline</p>
 												) : (
 													'---'
