@@ -22,11 +22,11 @@ function MainForgotPassword({}: PropsMainForgotPassword) {
 	}[] = [
 		{
 			title: i18n.t('ForgotPass.ForgotPassword'),
-			des: i18n.t('ForgotPass.EnterTheEmailAddressLinkedToYourAccountToRetrieveYourPassword'),
+			des: i18n.t('ForgotPass.TextEnterEmailForgotPass'),
 		},
 		{
 			title: i18n.t('ForgotPass.SetPassword'),
-			des: i18n.t('ForgotPass.TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers'),
+			des: i18n.t('ForgotPass.TextValidatePassword'),
 		},
 	];
 

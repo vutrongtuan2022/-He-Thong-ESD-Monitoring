@@ -10,6 +10,11 @@ import Button from '~/components/common/Button';
 import {useRouter} from 'next/router';
 import {obfuscateEmail} from '~/common/funcs/optionConvert';
 import i18n from '~/locale/i18n';
+import {IoClose} from 'react-icons/io5';
+import {useMutation} from '@tanstack/react-query';
+import {httpRequest} from '~/services';
+import accountServices from '~/services/accountServices';
+import Loading from '~/components/common/Loading';
 
 function FormOTP({}: PropsFormOTP) {
 	const TIME_OTP = 60;
@@ -31,26 +36,67 @@ function FormOTP({}: PropsFormOTP) {
 		}
 	}, [countDown]);
 
+	// Gửi lại OTP
+	const funcSendOTP = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: i18n.t('ForgotPass.MessageSendOTP'),
+				http: accountServices.sendOTP({
+					email: context?.form?.email!,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				setCoutDown(TIME_OTP);
+			}
+		},
+	});
+
+	// FUCN submit OTP
+	const funcSubmitOTP = useMutation({
+		mutationFn: () => {
+			return httpRequest({
+				showMessageFailed: true,
+				showMessageSuccess: true,
+				msgSuccess: i18n.t('ForgotPass.VerifyOTPSucsses'),
+				http: accountServices.enterOTP({
+					email: context?.form?.email!,
+					otp: context?.form?.otp!,
+				}),
+			});
+		},
+		onSuccess(data) {
+			if (data) {
+				context?.setType(1);
+				router.replace(
+					{
+						query: rest,
+					},
+					undefined,
+					{scroll: false}
+				);
+			}
+		},
+	});
+
 	const handleSendcode = () => {
-		setCoutDown(TIME_OTP);
+		return funcSendOTP.mutate();
 	};
 
 	const handleSubmit = () => {
-		context?.setType(1);
-		router.replace(
-			{
-				query: rest,
-			},
-			undefined,
-			{scroll: false}
-		);
+		return funcSubmitOTP.mutate();
 	};
 
 	return (
 		<div className={styles.container}>
+			<Loading loading={funcSendOTP.isLoading || funcSubmitOTP.isLoading} />
 			<h4 className={styles.title}>{i18n.t('ForgotPass.VerifyOTPCode')}</h4>
 			<p className={styles.text}>
-			{i18n.t('ForgotPass.AVerificationCodeHasBeenSentToYourEmailAddress')}<span>{obfuscateEmail(context?.form?.email!)}</span>
+				{i18n.t('ForgotPass.TextSendOTPForgotPass')}
+				<span>{obfuscateEmail(context?.form?.email!)}</span>
 			</p>
 
 			<div className={styles.form}>
@@ -61,7 +107,9 @@ function FormOTP({}: PropsFormOTP) {
 				<p className={styles.countDown}>
 					{i18n.t('ForgotPass.DidntReceiveTheCode')}{' '}
 					{countDown > 0 ? (
-						<span className={clsx(styles.textGreen, styles.btnOtp)}>{i18n.t('ForgotPass.ResendOTP')}({fancyTimeFormat(countDown)})</span>
+						<span className={clsx(styles.textGreen, styles.btnOtp)}>
+							{i18n.t('ForgotPass.ResendOTP')}({fancyTimeFormat(countDown)})
+						</span>
 					) : (
 						<span className={clsx(styles.textGreen, styles.btnOtp)} onClick={handleSendcode}>
 							{i18n.t('ForgotPass.ResendOTP')}
@@ -71,8 +119,23 @@ function FormOTP({}: PropsFormOTP) {
 
 				<div className={styles.btn}>
 					<Button primary bold rounded_8 disable={context?.form?.otp?.length! < 6} onClick={handleSubmit}>
-					{i18n.t('ForgotPass.VerifyEmail')}
+						{i18n.t('ForgotPass.VerifyEmail')}
 					</Button>
+				</div>
+
+				<div
+					className={styles.close}
+					onClick={() =>
+						router.replace(
+							{
+								query: rest,
+							},
+							undefined,
+							{scroll: false}
+						)
+					}
+				>
+					<IoClose />
 				</div>
 			</div>
 		</div>

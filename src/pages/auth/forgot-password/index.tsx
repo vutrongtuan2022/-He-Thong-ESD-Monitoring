@@ -8,8 +8,8 @@ export default function PageForgotPassword() {
 	return (
 		<Fragment>
 			<Head>
-				<title>{i18n.t('ForgotPass.ForgotPassWord')}</title>
-				<meta name='description' content={i18n.t('ForgotPass.ForgotPassWord')} />
+				<title>{i18n.t('ForgotPass.PageForgotPassword')}</title>
+				<meta name='description' content={i18n.t('ForgotPass.PageForgotPassword')} />
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>

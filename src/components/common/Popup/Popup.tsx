@@ -10,11 +10,12 @@ interface props {
 	isFull?: boolean;
 	onClose: () => void;
 	children?: React.ReactNode;
+	onClickNotOutside?: boolean;
 	[props: string]: any;
 }
 
 /*===========> MAIN COMPONENT <==========*/
-function Overlay({open, onClose, isFull, children}: props) {
+function Overlay({open, onClose, isFull, children, onClickNotOutside = false}: props) {
 	useEffect(() => {
 		if (open) {
 			document.body.style.overflowY = 'hidden';
@@ -31,7 +32,16 @@ function Overlay({open, onClose, isFull, children}: props) {
 		<Fragment>
 			{open && (
 				<Portal>
-					<div className={clsx(style.overlay, 'click')} onClick={onClose}></div>
+					<div
+						className={clsx(style.overlay, 'click')}
+						onClick={() => {
+							if (onClickNotOutside) {
+								return null;
+							} else {
+								onClose();
+							}
+						}}
+					></div>
 					<div className={clsx(style.main, {[style.isFull]: isFull})}>{children}</div>
 				</Portal>
 			)}

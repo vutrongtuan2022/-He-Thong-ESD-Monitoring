@@ -74,7 +74,7 @@ function MainProfile({}: PropsMainProfile) {
 	const handleSubmit = () => {
 		if (!regex.test(form?.newPass)) {
 			return toastWarn({
-				msg: i18n.t('Profile.TheNewPasswordMustBeAtLeast6CharactersLongAndIncludeUppercaseLowercaseLettersAndNumbers'),
+				msg: i18n.t('Profile.TextValidatePassword'),
 			});
 		}
 
