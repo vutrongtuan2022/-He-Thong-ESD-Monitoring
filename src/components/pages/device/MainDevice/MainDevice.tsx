@@ -354,7 +354,7 @@ function MainDevice({}: PropsMainDevice) {
 									},
 									{
 										title: i18n.t('Device.DeviceName'),
-										render: (data: IDevice) => <>{data.name}</>,
+										render: (data: IDevice) => <p className={styles.deviceName}>{data.name || '---'}</p>,
 									},
 									{
 										title: i18n.t('Common.BelongToTeam'),

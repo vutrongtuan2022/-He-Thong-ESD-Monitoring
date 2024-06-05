@@ -57,7 +57,8 @@ function FormPassword({}: PropsFormPassword) {
 					icon={<ShieldSecurity size='20' variant='Bold' />}
 					label={
 						<span>
-							{i18n.t('ForgotPass.ConfirmNewPassword')}<span style={{color: 'red'}}>*</span>
+							{i18n.t('ForgotPass.ConfirmNewPassword')}
+							<span style={{color: 'red'}}>*</span>
 						</span>
 					}
 				/>

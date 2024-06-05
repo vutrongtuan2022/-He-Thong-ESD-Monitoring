@@ -52,21 +52,21 @@ function TableChildArea({}: PropsTableChildArea) {
 			<DataWrapper
 				data={listAreaChild?.data?.items}
 				loading={listAreaChild.isLoading}
-				noti={<Noti title='Khu vực trống' des='Danh sách khu vực trống!' disableButton />}
+				noti={<Noti title={i18n.t('Area.EmptyAreas')} des={i18n.t('Area.AreaListIsEmpty')} disableButton />}
 			>
 				<Table
 					data={listAreaChild?.data?.items}
 					column={[
 						{
-							title: 'STT',
+							title: i18n.t('Common.No'),
 							render: (data: IArea, index: number) => <>{index + 1}</>,
 						},
 						{
-							title: 'Mã khu vực',
+							title: i18n.t('Area.AreaCode'),
 							render: (data: IArea) => <>{data.code}</>,
 						},
 						{
-							title: 'Tên khu vực',
+							title: i18n.t('Area.AreaName'),
 							render: (data: IArea) => (
 								<Link href={`/factory-area/${data.uuid}`} className={styles.link}>
 									{data.name || '---'}

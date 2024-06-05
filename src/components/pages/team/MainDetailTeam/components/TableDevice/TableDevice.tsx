@@ -79,7 +79,7 @@ function TableDevice({}: PropsTableDevice) {
 						},
 						{
 							title: i18n.t('Team.NameDevice'),
-							render: (data: IDevice) => <>{data.name || '---'}</>,
+							render: (data: IDevice) => <p className={styles.deviceName}>{data.name || '---'}</p>,
 						},
 						{
 							title: i18n.t('Team.BateryPercent'),
