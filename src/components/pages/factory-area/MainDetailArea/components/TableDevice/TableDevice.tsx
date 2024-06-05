@@ -79,7 +79,7 @@ function TableDevice({}: PropsTableDevice) {
 						},
 						{
 							title: 'Tên thiết bị',
-							render: (data: IDevice) => <>{data.name || '---'}</>,
+							render: (data: IDevice) => <>{data.name ? `${data.name}` : '---'}</>,
 						},
 						{
 							title: 'Phần trăm pin',

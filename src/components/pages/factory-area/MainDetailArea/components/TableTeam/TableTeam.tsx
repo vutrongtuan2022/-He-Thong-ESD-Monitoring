@@ -78,7 +78,7 @@ function TableTeam({}: PropsTableTeam) {
 							render: (data: ITeamChild) => <>{data.leaderName || '---'}</>,
 						},
 						{
-							title: 'Số thành viên',
+							title: 'Số nhân viên',
 							render: (data: ITeamChild) => <>{data.totalUser || 0}</>,
 						},
 						{

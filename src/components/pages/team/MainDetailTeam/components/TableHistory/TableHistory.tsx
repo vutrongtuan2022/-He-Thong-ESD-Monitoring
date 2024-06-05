@@ -73,7 +73,7 @@ function TableHistory({}: PropsTableHistory) {
 						},
 						{
 							title: i18n.t('Team.NameDevice'),
-							render: (data: IDeviceNGHistory) => <>{data.deviceName || '---'}</>,
+							render: (data: IDeviceNGHistory) => <p className={styles.deviceName}>{data.deviceName || '---'}</p>,
 						},
 						{
 							title: i18n.t('Team.ElectrostaticValue'),

@@ -434,5 +434,17 @@
 	},
 	"Setting": {
 		"Setting": "Cài đặt"
+	},
+	"Page404": {
+		"Page404": "Page 404",
+		"NotFound": "Oops! Không tìm thấy trang.",
+		"Page404Sorry": "Xin lỗi! Trang bạn đang tìm không tồn tại. Nếu bạn cho rằng có gì đó bị hỏng, hãy báo cáo sự cố cho đội ngũ kỹ thuật.",
+		"BackHome": "Quay về trang chủ"
+	},
+	"Page502": {
+		"Page502": "Page 4502",
+		"ServerError": "Oops! Lỗi máy chủ nội bộ.",
+		"Page502Sorry": "Xin lỗi! Hiện tại máy chủ đang gặp sự cố. Bạn vui lòng chờ trong giây lát hoặc thử lại sau.",
+		"BackHome": "Quay về trang chủ"
 	}
 }
