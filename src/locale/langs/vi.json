@@ -27,7 +27,7 @@
 		"AreYouSureProcessTheseDevices": "Bạn có chắc chắn xử lý cho các thiết bị này không?"
 	},
 	"Common": {
-		"DataInputIncorect": "Dữ liệu đầu vào vào không hợp lệ!",
+		"DataInputIncorect": "Dữ liệu đầu vào không hợp lệ!",
 		"CreateDay": "Tạo ngày",
 		"DataEmpty": "Dữ liệu trống!",
 		"NowDateEmpty": "Hiện tại dữ liệu trống!",

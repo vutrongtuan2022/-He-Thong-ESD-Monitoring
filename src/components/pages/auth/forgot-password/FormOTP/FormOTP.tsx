@@ -25,6 +25,7 @@ function FormOTP({}: PropsFormOTP) {
 	const context = useContext<IContextForgotPassword>(ContextForgotPassword);
 
 	const [countDown, setCoutDown] = useState<number>(TIME_OTP);
+	const [resetOtp, setResetOtp] = useState<boolean>(false);
 
 	// Đếm ngược thời gian gửi lại code
 	useEffect(() => {
@@ -83,10 +84,16 @@ function FormOTP({}: PropsFormOTP) {
 	});
 
 	const handleSendcode = () => {
+		// Reset OTP
+		setResetOtp(!resetOtp);
+
 		return funcSendOTP.mutate();
 	};
 
 	const handleSubmit = () => {
+		// Reset OTP
+		setResetOtp(!resetOtp);
+
 		return funcSubmitOTP.mutate();
 	};
 
@@ -102,7 +109,7 @@ function FormOTP({}: PropsFormOTP) {
 			<div className={styles.form}>
 				<p className={styles.des}>{i18n.t('ForgotPass.EnterOTPCode')}</p>
 				<div className={styles.box_code}>
-					<InputSingle onSetValue={context.setForm} name='otp' lenght={6} />
+					<InputSingle reset={resetOtp} onSetValue={context.setForm} name='otp' lenght={6} />
 				</div>
 				<p className={styles.countDown}>
 					{i18n.t('ForgotPass.DidntReceiveTheCode')}{' '}
