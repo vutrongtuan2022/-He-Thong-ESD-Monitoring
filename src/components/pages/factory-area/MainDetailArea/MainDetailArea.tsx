@@ -185,7 +185,8 @@ function MainDetailArea({}: PropsMainDetailArea) {
 							</tr>
 							<tr>
 								<td>
-									<span style={{marginRight: 6}}>{i18n.t('Area.AreaParentName')}: </span> {dataDetail?.parentName}
+									<span style={{marginRight: 6}}>{i18n.t('Area.AreaParentName')}: </span>{' '}
+									{dataDetail?.parentName || '---'}
 								</td>
 								<td>
 									<span style={{marginRight: 6}}>{i18n.t('Area.NumberofMember')}: </span>
