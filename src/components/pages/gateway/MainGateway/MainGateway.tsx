@@ -65,7 +65,7 @@ function MainGateway({}: PropsMainGateway) {
 			return httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Import file thành công!',
+				msgSuccess: i18n.t('Common.FileImportedSuccessfully'),
 				http: gatewayServices.importExcel({
 					FileData: file,
 					Type: 1,

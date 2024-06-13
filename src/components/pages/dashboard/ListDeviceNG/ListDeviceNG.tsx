@@ -13,7 +13,7 @@ import Button from '~/components/common/Button';
 import Image from 'next/image';
 import icons from '~/constants/images/icons';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {QUERY_KEY} from '~/constants/config/enum';
+import {QUERY_KEY, STATE_TAKE_CARE_NG} from '~/constants/config/enum';
 import {httpRequest} from '~/services';
 import dashboardServices from '~/services/dashboardServices';
 import Moment from 'react-moment';
@@ -26,12 +26,14 @@ import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import {RiLoader2Line} from 'react-icons/ri';
 import i18n from '~/locale/i18n';
+import categoryServices from '~/services/categoryServices';
+import FilterCustom from '~/components/common/FilterCustom';
 
 function ListDeviceNG({}: PropsListDeviceNG) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
-	const {_page, _pageSize, _keyword} = router.query;
+	const {_page, _pageSize, _keyword, _teamUuid, _isTakeCare} = router.query;
 
 	const {infoUser} = useSelector((state: RootState) => state.user);
 
@@ -40,7 +42,19 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [dataSubmit, setDataSubmit] = useState<any[]>([]);
 
-	useQuery([QUERY_KEY.trang_chu_danh_sach_thiet_bi, _page, _pageSize, _keyword], {
+	const listTeams = useQuery([QUERY_KEY.dropdown_danh_sach_team], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listTeam({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
+
+	useQuery([QUERY_KEY.trang_chu_danh_sach_thiet_bi, _page, _pageSize, _keyword, _teamUuid, _isTakeCare], {
 		queryFn: () =>
 			httpRequest({
 				setLoading,
@@ -48,7 +62,9 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 					keyword: _keyword ? (_keyword as string) : '',
 					page: Number(_page) || 1,
 					pageSize: Number(_pageSize) || 20,
-					teamNames: null,
+					userUuid: '',
+					isTakeCare: !!_isTakeCare ? Number(_isTakeCare) : null,
+					teamUuid: [_teamUuid as string],
 				}),
 			}),
 		onSuccess(data) {
@@ -117,7 +133,6 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 	return (
 		<div className={styles.container}>
 			<Loading loading={fucnCheckDeviceNG.isLoading || exportExcel.isLoading} />
-
 			<h4>
 				{i18n.t('Overview.ListOfNGTransmitters')}({total})
 			</h4>
@@ -138,6 +153,27 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 					)}
 					<div style={{minWidth: 360}}>
 						<Search keyName='_keyword' placeholder={i18n.t('Overview.SearchTransmitterID')} />
+					</div>
+					<div className={styles.filter}>
+						<FilterCustom
+							isSearch
+							name='Team'
+							query='_teamUuid'
+							listFilter={listTeams?.data?.map((v: any) => ({
+								id: v?.uuid,
+								name: v?.name,
+							}))}
+						/>
+					</div>
+					<div className={styles.filter}>
+						<FilterCustom
+							name={i18n.t('Overview.Status')}
+							query='_isTakeCare'
+							listFilter={[
+								{id: STATE_TAKE_CARE_NG.CHUA_TAKE_CARE, name: i18n.t('Overview.NoProcess')},
+								{id: STATE_TAKE_CARE_NG.DA_TAKE_CARE, name: i18n.t('Overview.Processing')},
+							]}
+						/>
 					</div>
 				</div>
 				<div>
@@ -251,7 +287,7 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 					currentPage={Number(_page) || 1}
 					total={total}
 					pageSize={Number(_pageSize) || 20}
-					dependencies={[_pageSize, _keyword]}
+					dependencies={[_pageSize, _keyword, _teamUuid, _isTakeCare]}
 				/>
 
 				<Dialog

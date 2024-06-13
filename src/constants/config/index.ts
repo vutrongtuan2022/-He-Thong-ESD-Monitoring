@@ -49,30 +49,30 @@ export const Menu: {
 }[] = [
 	{
 		title: 'OVERVIEW',
-		group: [{title: 'Overview.Overview', icon: RxDashboard, path: PATH.Home}],
+		group: [{title: 'Setting.Overview', icon: RxDashboard, path: PATH.Home}],
 	},
 	{
 		title: 'Device.Device',
 		group: [
-			{title: 'Gateway.GatewayManagament', icon: IoWifiSharp, path: PATH.Gateway},
-			{title: 'Device.TransmitterManagement', icon: FaChromecast, path: PATH.Device},
+			{title: 'Setting.GatewayManagament', icon: IoWifiSharp, path: PATH.Gateway},
+			{title: 'Setting.DeviceManagament', icon: FaChromecast, path: PATH.Device},
 		],
 	},
 	{
 		title: 'User.User',
 		group: [
-			{title: 'Account.AccountManagement', icon: HiOutlineUser, path: PATH.Account},
-			{title: 'Team.TeamManagement', icon: RiGroupLine, path: PATH.Team},
-			{title: 'User.UserManagement', icon: LuUserCircle2, path: PATH.User},
+			{title: 'Setting.AccountManagament', icon: HiOutlineUser, path: PATH.Account},
+			{title: 'Setting.TeamManagament', icon: RiGroupLine, path: PATH.Team},
+			{title: 'Setting.UserManagament', icon: LuUserCircle2, path: PATH.User},
 		],
 	},
 	{
 		title: 'Area.Area',
-		group: [{title: 'Area.AreaManagement', icon: GrMap, path: PATH.FactoryArea}],
+		group: [{title: 'Setting.AreaManagament', icon: GrMap, path: PATH.FactoryArea}],
 	},
 	{
 		title: 'Report.Report',
-		group: [{title: 'Report.ReportManagement', icon: TbClipboardText, path: PATH.Report}],
+		group: [{title: 'Setting.ReportManagament', icon: TbClipboardText, path: PATH.Report}],
 	},
 	// {
 	// 	title: 'HỆ THỐNG',

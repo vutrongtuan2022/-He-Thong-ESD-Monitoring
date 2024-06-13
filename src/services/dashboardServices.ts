@@ -1,3 +1,4 @@
+import {STATE_TAKE_CARE_NG} from '~/constants/config/enum';
 import axiosClient from '.';
 
 const dashboardServices = {
@@ -11,7 +12,9 @@ const dashboardServices = {
 			pageSize: number;
 			page: number;
 			keyword: string;
-			teamNames: string[] | null;
+			userUuid: string;
+			teamUuid: string[];
+			isTakeCare: STATE_TAKE_CARE_NG | null;
 		},
 		tokenAxios?: any
 	) => {

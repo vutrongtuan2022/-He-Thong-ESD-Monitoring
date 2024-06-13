@@ -14,6 +14,7 @@ import {useMutation} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import authServices from '~/services/authServices';
 import {setInfoUser} from '~/redux/reducer/user';
+import i18n from '~/locale/i18n';
 
 function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 	const router = useRouter();
@@ -33,7 +34,7 @@ function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 			httpRequest({
 				showMessageFailed: true,
 				showMessageSuccess: true,
-				msgSuccess: 'Đăng xuất thành công!',
+				msgSuccess: i18n.t('Setting.LogoutSuccess'),
 				http: authServices.logout({}),
 			}),
 		onSuccess(data) {
@@ -56,7 +57,7 @@ function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 					<div className={styles.icon}>
 						<UserOctagon size='20' color='#6F767E' />
 					</div>
-					<p className={styles.text}>Thông tin cá nhân</p>
+					<p className={styles.text}>{i18n.t('Setting.Profile')}</p>
 				</Link>
 				<div
 					className={styles.item}
@@ -68,7 +69,7 @@ function BoxMenuProfile({onCLose}: PropsBoxMenuProfile) {
 					<div className={styles.icon}>
 						<Logout size='22' color='#6F767E' />
 					</div>
-					<p className={styles.text}>Đăng xuất</p>
+					<p className={styles.text}>{i18n.t('Setting.Logout')}</p>
 				</div>
 			</div>
 

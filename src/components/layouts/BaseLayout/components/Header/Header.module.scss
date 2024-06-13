@@ -60,6 +60,16 @@
 	user-select: none;
 	width: 24px;
 	height: 24px;
+
+	.dotNoti {
+		position: absolute;
+		top: 0px;
+		right: 2px;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background-color: #2d74ff;
+	}
 }
 
 .info {

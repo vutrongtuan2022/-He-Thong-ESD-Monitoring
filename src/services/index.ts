@@ -2,6 +2,7 @@ import axios from 'axios';
 import {delay} from '~/common/funcs/delay';
 import {getKeyCert} from '~/common/funcs/optionConvert';
 import {toastInfo, toastSuccess, toastWarn} from '~/common/funcs/toast';
+import i18n from '~/locale/i18n';
 import {logout} from '~/redux/reducer/auth';
 import {setInfoUser} from '~/redux/reducer/user';
 import {store} from '~/redux/store';
@@ -49,7 +50,7 @@ export default axiosClient;
 export const httpRequest = async ({
 	http,
 	setLoading,
-	msgSuccess = 'Thành công',
+	msgSuccess = i18n.t('Setting.Success'),
 	showMessageSuccess = false,
 	showMessageFailed = false,
 	onError,

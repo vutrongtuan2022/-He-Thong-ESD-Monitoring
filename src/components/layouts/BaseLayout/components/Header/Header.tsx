@@ -17,6 +17,10 @@ import {useRouter} from 'next/router';
 import {RiArrowDownSFill} from 'react-icons/ri';
 import Image from 'next/image';
 import ImageFill from '~/components/common/ImageFill';
+import {useQuery} from '@tanstack/react-query';
+import {QUERY_KEY} from '~/constants/config/enum';
+import {httpRequest} from '~/services';
+import notificationsServices from '~/services/notificationsServices';
 
 function Header({title}: PropsHeader) {
 	const router = useRouter();
@@ -29,6 +33,19 @@ function Header({title}: PropsHeader) {
 	const [openLanguagese, setOpenLanguagese] = useState<boolean>(false);
 
 	const chooseLang = useMemo(() => Languageses.find((v) => v.code == router.locale), [router.locale]);
+
+	const numberNoti = useQuery([QUERY_KEY.tong_so_thong_bao_chua_doc, infoUser?.uuid], {
+		queryFn: () =>
+			httpRequest({
+				http: notificationsServices.numberNoti({
+					uuid: infoUser?.uuid!,
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+		refetchInterval: 10000,
+	});
 
 	return (
 		<div className={styles.container}>
@@ -90,10 +107,11 @@ function Header({title}: PropsHeader) {
 					visible={openNoti}
 					onClickOutside={() => setOpenNoti(false)}
 					placement='bottom'
-					render={(attrs: any) => <BoxNoti />}
+					render={(attrs: any) => <BoxNoti onClose={() => setOpenNoti(false)} numberNoti={numberNoti?.data?.totalUnseenNotify} />}
 				>
 					<div className={styles.icon_bell} onClick={() => setOpenNoti(!openNoti)}>
 						<ImageFill style_1_1='true' src={icons.bell} />
+						{numberNoti?.data?.totalUnseenNotify > 0 && <div className={styles.dotNoti}></div>}
 					</div>
 				</TippyHeadless>
 				<TippyHeadless
