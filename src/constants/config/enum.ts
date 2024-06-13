@@ -35,6 +35,8 @@ export enum QUERY_KEY {
 	danh_sach_khu_vuc_con,
 	chi_tiet_khu_vuc,
 	chi_tiet_nguoi_dung,
+	danh_sach_thong_bao,
+	tong_so_thong_bao_chua_doc,
 }
 
 export enum TYPE_DATE {
@@ -69,6 +71,11 @@ export enum STATE_DEVICE_NG {
 	BI_NG,
 }
 
+export enum STATE_TAKE_CARE_NG {
+	CHUA_TAKE_CARE,
+	DA_TAKE_CARE,
+}
+
 export enum STATE_ONLINE_DEVICE {
 	OFFLINE,
 	ONLINE,
@@ -88,6 +95,11 @@ export enum STATE_GATEWAY {
 export enum STATUS_ACCOUNT {
 	NOACCOUNT,
 	HAVEACCOUNT,
+}
+
+export enum STATUS_NOTI {
+	CHUA_DOC,
+	DA_DOC,
 }
 
 export enum TYPE_BATTERY {

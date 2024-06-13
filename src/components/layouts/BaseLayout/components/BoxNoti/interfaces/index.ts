@@ -1,1 +1,4 @@
-export interface PropsBoxNoti {}
+export interface PropsBoxNoti {
+	onClose: () => void;
+	numberNoti: number;
+}

@@ -22,9 +22,14 @@
 		"TimeDetection": "Thời gian phát hiện",
 		"TimeNG": "Thời gian NG",
 		"Action": "Tác vụ",
-		"Processing": "Đang xử lý",
 		"ConfirmProcessing": "Xác nhận xử lý",
-		"AreYouSureProcessTheseDevices": "Bạn có chắc chắn xử lý cho các thiết bị này không?"
+		"AreYouSureProcessTheseDevices": "Bạn có chắc chắn xử lý cho các thiết bị này không?",
+		"NoProcess": "Chưa xử lý",
+		"Processing": "Đang xử lý",
+		"Status": "Trạng thái",
+		"Notify": "Thông báo",
+		"ReadAll": "Đọc tất cả",
+		"NotifyEmpty": "Bạn chưa có thông báo nào!"
 	},
 	"Common": {
 		"DataInputIncorect": "Dữ liệu đầu vào không hợp lệ!",
@@ -472,7 +477,19 @@
 		"Selectdateofbirth": "Chọn ngày sinh"
 	},
 	"Setting": {
-		"Setting": "Cài đặt"
+		"Setting": "Cài đặt",
+		"Overview": "Tổng quan",
+		"GatewayManagament": "Quản lý gateway",
+		"DeviceManagament": "Quản lý thiết bị",
+		"AccountManagament": "Quản lý tài khoản",
+		"TeamManagament": "Quản lý team",
+		"UserManagament": "Quản lý nhân viên",
+		"AreaManagament": "Quản lý khu vực",
+		"ReportManagament": "Quản lý báo cáo",
+		"Profile": "Thông tin cá nhân",
+		"Logout": "Đăng xuất",
+		"LogoutSuccess": "Đăng xuất thành công!",
+		"Success": "Thành công"
 	},
 	"Page404": {
 		"Page404": "Page 404",
@@ -481,7 +498,7 @@
 		"BackHome": "Quay về trang chủ"
 	},
 	"Page502": {
-		"Page502": "Page 4502",
+		"Page502": "Page 502",
 		"ServerError": "Oops! Lỗi máy chủ nội bộ.",
 		"Page502Sorry": "Xin lỗi! Hiện tại máy chủ đang gặp sự cố. Bạn vui lòng chờ trong giây lát hoặc thử lại sau.",
 		"BackHome": "Quay về trang chủ"

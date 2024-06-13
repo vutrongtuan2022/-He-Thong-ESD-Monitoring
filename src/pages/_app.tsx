@@ -3,6 +3,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'tippy.js/dist/tippy.css';
 import '~/styles/_globals.scss';
+import 'moment/locale/vi';
 
 import Head from 'next/head';
 import {NextPage} from 'next';

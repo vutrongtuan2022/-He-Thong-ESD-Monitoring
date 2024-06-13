@@ -47,9 +47,23 @@
 	overflow: auto;
 }
 
+.empty {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .item {
 	padding: 12px 24px;
 	border-top: 1px solid var(--border-color);
+	background-color: #f7fbff;
+	cursor: pointer;
+	user-select: none;
+
+	&.isRead {
+		background-color: #fff;
+	}
 
 	.text {
 		color: var(--dark-2);
