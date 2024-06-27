@@ -64,7 +64,7 @@ function ListDeviceNG({}: PropsListDeviceNG) {
 					pageSize: Number(_pageSize) || 20,
 					userUuid: '',
 					isTakeCare: !!_isTakeCare ? Number(_isTakeCare) : null,
-					teamUuid: [_teamUuid as string],
+					teamUuid: _teamUuid ? [_teamUuid as string] : null,
 				}),
 			}),
 		onSuccess(data) {

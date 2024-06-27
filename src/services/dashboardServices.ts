@@ -13,7 +13,7 @@ const dashboardServices = {
 			page: number;
 			keyword: string;
 			userUuid: string;
-			teamUuid: string[];
+			teamUuid: string[] | null;
 			isTakeCare: STATE_TAKE_CARE_NG | null;
 		},
 		tokenAxios?: any
