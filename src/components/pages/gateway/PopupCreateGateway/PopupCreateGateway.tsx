@@ -6,7 +6,7 @@ import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
 import Form, {FormContext, Input} from '~/components/common/Form';
 import TextArea from '~/components/common/Form/components/TextArea';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import gatewayServices from '~/services/gatewayServices';
 import {QUERY_KEY, STATE_GATEWAY, STATUS_GENERAL} from '~/constants/config/enum';
@@ -14,6 +14,8 @@ import {useRouter} from 'next/router';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import i18n from '~/locale/i18n';
+import categoryServices from '~/services/categoryServices';
+import Select, {Option} from '~/components/common/Select';
 
 function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 	const router = useRouter();
@@ -24,8 +26,21 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 	const [form, setForm] = useState<{
 		code: string;
 		name: string;
+		factoryAreaUuid: string;
 		description: string;
-	}>({code: '', name: '', description: ''});
+	}>({code: '', name: '', factoryAreaUuid: '', description: ''});
+
+	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listArea({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
 
 	const upsertGateway = useMutation({
 		mutationFn: () =>
@@ -41,7 +56,7 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 					status: STATUS_GENERAL.SU_DUNG,
 					state: STATE_GATEWAY.ONLINE,
 					connection: 0,
-					factoryAreaUuid: null,
+					factoryAreaUuid: form.factoryAreaUuid,
 					ipConnect: '',
 					timeLastOnline: null,
 				}),
@@ -53,6 +68,7 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 				setForm({
 					code: '',
 					name: '',
+					factoryAreaUuid: '',
 					description: '',
 				});
 			}
@@ -65,6 +81,9 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 		}
 		if (!form.name) {
 			return toastWarn({msg: i18n.t('Gateway.PleaseEnterTheGatewayName')});
+		}
+		if (!form?.factoryAreaUuid) {
+			return toastWarn({msg: i18n.t('Gateway.ChooseManagementArea')});
 		}
 		if (form?.description?.length > 255) {
 			return toastWarn({msg: i18n.t('Common.MaxLengthNote')});
@@ -104,6 +123,29 @@ function PopupCreateGateway({onClose}: PropsPopupCreateGateway) {
 						</span>
 					}
 				/>
+				<div className='mt'>
+					<Select
+						isSearch
+						name='factoryAreaUuid'
+						value={form.factoryAreaUuid || null}
+						placeholder={i18n.t('Area.SelectManagementArea')}
+						onChange={(e) =>
+							setForm((prev) => ({
+								...prev,
+								factoryAreaUuid: e.target.value,
+							}))
+						}
+						label={
+							<span>
+								{i18n.t('Area.BelongsToRegion')} <span style={{color: 'red'}}>*</span>
+							</span>
+						}
+					>
+						{listAreas?.data?.map((v: any) => (
+							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+						))}
+					</Select>
+				</div>
 				<div className={clsx('mt')}>
 					<TextArea
 						placeholder={i18n.t('Common.EnterNote')}

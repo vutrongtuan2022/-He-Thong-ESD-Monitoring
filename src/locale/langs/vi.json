@@ -155,7 +155,8 @@
 		"GatewayDetails": "Chi tiết gateway",
 		"ConnectingIP": "IP đang kết nối",
 		"GatewayManagament": "Quản lý gateway",
-		"EditedGatewaysuccessfully": "Chỉnh sửa gateway thành công!"
+		"EditedGatewaysuccessfully": "Chỉnh sửa gateway thành công!",
+		"ChooseManagementArea": "Chọn khu vực quản lý"
 	},
 	"Login": {
 		"LoginSuccessful": "Đăng nhập thành công!",

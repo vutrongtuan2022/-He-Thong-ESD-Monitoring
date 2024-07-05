@@ -6,7 +6,7 @@ import Button from '~/components/common/Button';
 import {IoClose} from 'react-icons/io5';
 import Form, {FormContext, Input} from '~/components/common/Form';
 import TextArea from '~/components/common/Form/components/TextArea';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {httpRequest} from '~/services';
 import gatewayServices from '~/services/gatewayServices';
 import {QUERY_KEY} from '~/constants/config/enum';
@@ -14,6 +14,8 @@ import {useRouter} from 'next/router';
 import {toastWarn} from '~/common/funcs/toast';
 import Loading from '~/components/common/Loading';
 import i18n from '~/locale/i18n';
+import Select, {Option} from '~/components/common/Select';
+import categoryServices from '~/services/categoryServices';
 
 function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 	const router = useRouter();
@@ -25,8 +27,21 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 		uuid: string;
 		code: string;
 		name: string;
+		factoryAreaUuid: string;
 		description: string;
-	}>({uuid: '', code: '', name: '', description: ''});
+	}>({uuid: '', code: '', name: '', factoryAreaUuid: '', description: ''});
+
+	const listAreas = useQuery([QUERY_KEY.dropdown_danh_sach_khu_vuc], {
+		queryFn: () =>
+			httpRequest({
+				http: categoryServices.listArea({
+					keyword: '',
+				}),
+			}),
+		select(data) {
+			return data;
+		},
+	});
 
 	useEffect(() => {
 		if (dataUpdate) {
@@ -34,6 +49,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 				uuid: dataUpdate.uuid || '',
 				code: dataUpdate.code || '',
 				name: dataUpdate.name || '',
+				factoryAreaUuid: dataUpdate.factoryAreaUuid || '',
 				description: dataUpdate.notes || '',
 			});
 		}
@@ -50,10 +66,10 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 					code: form.code,
 					name: form.name,
 					notes: form.description,
+					factoryAreaUuid: form?.factoryAreaUuid,
 					status: dataUpdate?.status!,
 					state: dataUpdate?.state!,
 					connection: dataUpdate?.connection,
-					factoryAreaUuid: dataUpdate?.factoryAreaUuid,
 					ipConnect: dataUpdate?.ipConnect,
 					timeLastOnline: dataUpdate?.timeLastOnline,
 				}),
@@ -67,6 +83,7 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 					uuid: '',
 					code: '',
 					name: '',
+					factoryAreaUuid: '',
 					description: '',
 				});
 			}
@@ -79,6 +96,9 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 		}
 		if (!form.name) {
 			return toastWarn({msg: i18n.t('Gateway.PleaseEnterTheGatewayName')});
+		}
+		if (!form?.factoryAreaUuid) {
+			return toastWarn({msg: i18n.t('Gateway.ChooseManagementArea')});
 		}
 		if (form?.description?.length > 255) {
 			return toastWarn({msg: i18n.t('Common.MaxLengthNote')});
@@ -119,6 +139,29 @@ function PopupUpdateGateway({dataUpdate, onClose}: PropsPopupUpdateGateway) {
 						</span>
 					}
 				/>
+				<div className='mt'>
+					<Select
+						isSearch
+						name='factoryAreaUuid'
+						value={form.factoryAreaUuid || null}
+						placeholder={i18n.t('Area.SelectManagementArea')}
+						onChange={(e) =>
+							setForm((prev) => ({
+								...prev,
+								factoryAreaUuid: e.target.value,
+							}))
+						}
+						label={
+							<span>
+								{i18n.t('Area.BelongsToRegion')} <span style={{color: 'red'}}>*</span>
+							</span>
+						}
+					>
+						{listAreas?.data?.map((v: any) => (
+							<Option key={v?.uuid} title={v?.name} value={v?.uuid} />
+						))}
+					</Select>
+				</div>
 				<div className={clsx('mt')}>
 					<TextArea
 						placeholder={i18n.t('Common.EnterNote')}
