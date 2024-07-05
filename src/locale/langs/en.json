@@ -155,7 +155,8 @@
 		"GatewayDetails": "Gateway details",
 		"ConnectingIP": "Connecting IP",
 		"GatewayManagament": "Gateway management",
-		"EditedGatewaysuccessfully": "Edited gateway successfully!"
+		"EditedGatewaysuccessfully": "Edited gateway successfully!",
+		"ChooseManagementArea": "Choose management area"
 	},
 	"Login": {
 		"LoginSuccessful": "Login successful!",
